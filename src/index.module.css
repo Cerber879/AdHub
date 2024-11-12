@@ -1,0 +1,28 @@
+body {
+  background-color: #e5e5e5;
+}
+  
+.page {
+  overflow: hidden;
+  position: relative;
+  top: 42px;
+  left: 0px;
+}
+
+svg, img, span, div {
+  -webkit-user-select: none;
+  -khtml-user-select: none;
+  -moz-user-select: none;
+  -o-user-select: none;
+  user-select: none;
+}
+  
+.app_container {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+.app_content {
+  flex: 1;
+}
