@@ -29,7 +29,9 @@ const AdvertisementList: React.FC = () => {
       <div className={styles.search_bar}>
         <form>
           <input type="text" placeholder="Искать здесь..."/>
-          <button type="submit"></button>
+          <button type="submit">
+            <img className={styles.search_icon} src="/images/ImagesHomePage/search.svg" alt="Icon" />
+          </button>
         </form>
       </div>
       <div></div>
