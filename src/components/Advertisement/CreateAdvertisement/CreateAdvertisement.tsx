@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { createAdvertisement } from '../../services/api';
+import { createAdvertisement } from '../../../services/api';
 
 const CreateAdvertisement: React.FC = () => {
   const [name, setName] = useState('');

@@ -1,5 +1,5 @@
 import React from 'react';
-import AdvertisementList from '../../components/Advertisement/ViewAdvertisementList';
+import AdvertisementList from '../../components/Advertisement/ViewAdvertisementList/ViewAdvertisementList';
 
 const Home: React.FC = () => {
   return (
