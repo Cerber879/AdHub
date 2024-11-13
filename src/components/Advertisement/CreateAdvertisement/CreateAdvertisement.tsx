@@ -20,8 +20,9 @@ const CreateAdvertisement: React.FC = () => {
   return (
     <div className={styles.item}>
       <h2>Create Advertisement</h2>
-      <label className="text-field__label" for="login">Логин</label>
+      <label className="text-field__label" htmlFor="name">Логин</label>
       <input
+        id="name"
         className={styles.item__name}
         type="text"
         placeholder="Name"
