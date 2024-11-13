@@ -3,6 +3,8 @@ import { useDispatch, useSelector } from 'react-redux';
 import { setAdvertisements } from '../../store/slices/advertisementSlice';
 import { getAdvertisements } from '../../services/api';
 import { RootState } from '../../store/store';
+import styles from './advertisment.module.css'
+
 
 const AdvertisementList: React.FC = () => {
   const dispatch = useDispatch();
@@ -23,7 +25,7 @@ const AdvertisementList: React.FC = () => {
 
   return (
     <div>
-      <h2>Advertisements</h2>
+      <h2 className={styles.catalogue}>Каталог Объявлений</h2>
       <ul>
         {advertisements.map((ad) => (
           <li key={ad.AdvertisementID}>{ad.Name}</li>
