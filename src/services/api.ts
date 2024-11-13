@@ -17,9 +17,9 @@ export const login = async (login: string, password: string) => {
 };
 
 // Функция для регистрации
-export const register = async (login: string, password: string, email: string) => {
+export const register = async (login: string, password: string, email: string, type: string) => {
   try {
-    const response = await api.post('/register', { login, password, email });
+    const response = await api.post('/register', { login, password, email, type });
     return response.data;
   } catch (error) {
     throw error;
@@ -29,7 +29,7 @@ export const register = async (login: string, password: string, email: string) =
 // Функция для создания объявления
 export const createAdvertisement = async (advertisement: any) => {
   try {
-    const response = await api.post('/advertisements', advertisement);
+    const response = await api.post('/create-ad', advertisement);
     return response.data;
   } catch (error) {
     throw error;
