@@ -1,10 +1,10 @@
 import React from 'react';
-import CreateChtoTo from '../../components/AboutUs/CreateChtoTo';
+import AboutUsContent from '../../components/AboutUs/AboutUs';
 
 const AboutUs: React.FC = () => {
   return (
     <div>
-      <CreateChtoTo/>
+      <AboutUsContent/>
       {/* Add more content here */}
     </div>
   );

@@ -14,7 +14,7 @@ const CreateChtoTo: React.FC = () => {
       </div>
 
       <div className={styles.items__text}>
-        <div>
+        <div className={styles.ul_block}>
           <h2 className={styles.title__text}>Наши ценности</h2>
           <ul className={styles.info_text__contetnt}>
             <li>
@@ -32,7 +32,7 @@ const CreateChtoTo: React.FC = () => {
           </ul>
         </div>
 
-        <div>
+        <div className={styles.ul_block}>
         <h2 className={styles.title__text}>Наши преимущества</h2>
         <ul className={styles.info_text__contetnt}>
             <li>
