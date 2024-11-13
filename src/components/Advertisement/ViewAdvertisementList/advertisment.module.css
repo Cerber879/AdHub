@@ -37,15 +37,18 @@ form
     width: 50px;
     height: 44px;
     border: none;
-    background: #7BA7AB;
+    background: #0af;
     border-radius: 0 3px 3px 0;
     cursor: pointer;
 }
 .search_bar button:before 
 {
-    content: "\f002";
+    content: url(../../../../public/images/ImagesHomePage/search-4-svgrepo-com.svg);
     font-family: FontAwesome;
     font-size: 16px;
+    width: 10px;
+    height: 40px;
+    display: flex;
     color: #F9F0DA;
 }
 .advertisment{
