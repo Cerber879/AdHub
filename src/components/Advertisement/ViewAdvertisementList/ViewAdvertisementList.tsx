@@ -26,7 +26,14 @@ const AdvertisementList: React.FC = () => {
   return (
     <div>
       <h2 className={styles.catalogue}>Каталог Объявлений</h2>
-      <ul>
+      <div className={styles.search_bar}>
+        <form>
+          <input type="text" placeholder="Искать здесь..."/>
+          <button type="submit"></button>
+        </form>
+      </div>
+      <div></div>
+      <ul className={styles.advertisment}>
         {advertisements.map((ad) => (
           <li key={ad.AdvertisementID}>{ad.Name}</li>
         ))}

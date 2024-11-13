@@ -1,13 +1,53 @@
-.catalogue {
-    background-color: #333;
+.catalogue 
+{
+    /* background-color: #333;
     color: #fff;
-    padding: 20px 0;
+    padding: 20px 0; */
     display: flex;
     justify-content: center;
     align-items: center;
-    gap: 20px;
+    /* gap: 20px;
     width: 100%;
     height: 60px;
     padding: 0;
-    bottom: 0;
+    bottom: 0; */
+}
+form 
+{
+    position: relative;
+    width: 600px;
+    margin: 0 auto;
+}
+.search_bar input 
+{
+    width: 100%;
+    height: 42px;
+    padding-left: 10px;
+    border: 2px solid #000000;
+    border-radius: 5px;
+    outline: none;
+    background: #ffffff;
+    color: #000000;
+}
+.search_bar button 
+{
+    position: absolute; 
+    top: 2px;
+    right: -14px;
+    width: 50px;
+    height: 44px;
+    border: none;
+    background: #7BA7AB;
+    border-radius: 0 3px 3px 0;
+    cursor: pointer;
+}
+.search_bar button:before 
+{
+    content: "\f002";
+    font-family: FontAwesome;
+    font-size: 16px;
+    color: #F9F0DA;
+}
+.advertisment{
+    
 }
