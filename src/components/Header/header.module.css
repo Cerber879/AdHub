@@ -37,16 +37,21 @@
 }
 
 .logo{
+    margin-right: 70px;
+}
+
+.logo_icon{
     object-fit: cover;
     max-height: 35px;
 }
 
 .logo_name {
+    position: absolute;
     font-weight: bold; 
     letter-spacing: 2px; 
     font-size: 23px; 
     color: #333; 
-    padding: -10 -10 0 0;
+    margin: 8px 0px 0px -22px;
 }
 
 .button_add_advertisment{

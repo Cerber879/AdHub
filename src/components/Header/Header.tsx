@@ -1,14 +1,30 @@
-import styles from './panel.module.css'
+import { useState } from 'react';
+import styles from './header.module.css'
+import LoginModal from '../Modals/Login/LoginModal';
+import RegisterModal from '../Modals/Register/RegisterModal';
 
-export function TopPanel() {
+export function Header() {
+
+    const [showLoginModal, setShowLoginModal] = useState(false);
+    const [showRegisterModal, setShowRegisterModal] = useState(false);
+
+    const handleRegister = () => {
+        setShowRegisterModal(true)
+        setShowLoginModal(false)
+    }
+
+    const handleLogin = () => {
+        setShowRegisterModal(false)
+        setShowLoginModal(true)
+    }
 
     return(
         <div className={styles.setBar}>
             <div className={styles.flex_block}>
                 <a 
                 href="http://localhost:3000/"
-                className={styles.button_link}>
-                <img className={styles.logo} src="/favicons.png" alt="Icon" />
+                className={`${styles.button_link} ${styles.logo}`}>
+                <img className={styles.logo_icon} src="/favicons.png" alt="Icon" />
                 <span className={styles.logo_name}>ADHUB</span>
                 </a>
 
@@ -25,6 +41,12 @@ export function TopPanel() {
                 </a>
             </div>
             <div className={styles.flex_block}>
+
+                <button 
+                className={styles.button_link}
+                onClick={() => setShowLoginModal(true)}>
+                    Вход и Регистрация
+                </button>
                 <a 
                 href="http://localhost:3000/ads"
                 className={styles.button_link}>
@@ -55,6 +77,8 @@ export function TopPanel() {
                 <img src="/images/ImagesTopPanel/profile.svg" alt="Icon" width="16px" height="16px" />
                 </a>
             </div>
+            {showLoginModal && <LoginModal onClose={() => {setShowLoginModal(false)}} onOpenRegister={handleRegister} />}
+            {showRegisterModal && <RegisterModal onClose={() => {setShowRegisterModal(false)}} onOpenLogin={handleLogin} />}
         </div>
     )
 }
