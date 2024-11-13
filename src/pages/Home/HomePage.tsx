@@ -4,7 +4,6 @@ import AdvertisementList from '../../components/Advertisement/ViewAdvertisementL
 const Home: React.FC = () => {
   return (
     <div>
-      <h1>Welcome to the Shopping Site</h1>
       <AdvertisementList/>
       {/* Add more content here */}
     </div>
