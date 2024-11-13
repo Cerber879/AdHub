@@ -76,7 +76,6 @@ const CreateAdvertisement: React.FC = () => {
             {files.map(file => (
             <div key={file.name} className={styles.input__file_list_item}>
             <img className={styles.input__file_list_item_img} src={URL.createObjectURL(file)} alt={file.name} />
-            <span className={styles.input__file_list_name}>{file.name}</span>
             <a href="###" onClick={() => removeFilesItem(file.name)} className={styles.input__file_list_remove}>x</a>
             </div> ))} 
 	        </div>

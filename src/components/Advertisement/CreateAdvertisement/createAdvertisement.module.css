@@ -107,7 +107,7 @@
 }
 
 .item__button_create{
-    width: 30%;
+    width: 17%;
     margin-top: 10px;
     padding: 10px 20px;
     font-size: 14px;
@@ -116,6 +116,7 @@
     border: none;
     border-radius: 4px;
     cursor: pointer;
+    height: 40px;
 }
 
 .item__button_create:hover{
@@ -146,7 +147,7 @@
 	color: rgb(255 255 255);
 	text-align: center;
 	border-radius: 4px;
-	background-color: #419152;
+	background-color: #0099f7;
 	line-height: 22px;
 	height: 40px;
 	padding: 10px 20px;
@@ -171,10 +172,12 @@
  
 /* Hover/active */
 .input__file:hover span {
-	background-color: #59be6e;
+    background-color: #0099f7
+
 }
 .input__file:active span {
-	background-color: #2E703A;
+    background-color: #008aed
+
 }
  
 /* Disabled */
@@ -188,13 +191,14 @@
 }
 .input__file_list_item {
 	display: inline-block;
-	margin: 0 15px 15px;
+	margin-right:15px;
 	width: 150px;
 	vertical-align: top;
 	position: relative;
 }
 .input__file_list_item_img {
 	width: 150px;
+    height: 150px;
 }
 .input__file_list_name {
 	text-align: center;
