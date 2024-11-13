@@ -15,12 +15,5 @@
 .logo{
     object-fit: cover;
     max-height: 35px;
-}
-
-.logo_name {
-    font-weight: bold; 
-    letter-spacing: 2px; 
-    font-size: 24px; 
-    color: #d0c5c5; 
-    padding: -10 -10 0 0;
+    margin-right: -15px;
 }
