@@ -32,7 +32,7 @@ const AdvertisementList: React.FC = () => {
           <button type="submit"></button>
         </form>
       </div>
-      <ul className={styles.advertisment_1}>
+      <ul className={styles.advertisment_1_1}>
         {advertisements.map((ad) => (
           <li key={ad.AdvertisementID}>{ad.Name}</li>
         ))}
