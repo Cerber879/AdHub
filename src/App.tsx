@@ -9,6 +9,7 @@ import store from './store/store';
 import styles from './index.module.css'
 import { TopPanel } from './components/TopPanel/TopPanel';
 import { Footer } from './components/Footer/Footer';
+import  AboutUs from './pages/AboutUs/AboutUs';
 
 const App: React.FC = () => {
   return (
@@ -22,6 +23,7 @@ const App: React.FC = () => {
               <Route path="/login" element={<LoginPage />} />
               <Route path="/register" element={<RegisterPage />} />
               <Route path="/create-ad" element={<CreateAdvertisementPage />} />
+              <Route path="/about" element = {< AboutUs/>} />
             </Routes>
           </div>
           <Footer/>

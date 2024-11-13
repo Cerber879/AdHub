@@ -1,0 +1,62 @@
+.container
+{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 50px;
+    background-image: url("../../../public/images/ImagesBackground/background.webp");
+    background-size: cover; /* Покрывает весь элемент */
+    background-position: center; /* Центрирует изображение */
+    background-repeat: no-repeat; /* Не повторяет изображение */
+    width: 90%;
+    height: 100vh; /* Высота экрана */
+    gap: 50px;
+}
+
+.container__item
+{
+    width: 1024px;
+}
+
+.title 
+{
+    color: black;
+    text-align: center;
+}
+
+.item__content
+{
+    color: orange; /* Оранжевый цвет текста */
+    text-shadow:
+        -1px -1px 0 black,
+        1px -1px 0 black,
+        -1px 1px 0 black,
+        1px 1px 0 black; /* Черная обводка */
+    text-indent: 40px;
+    font-size: 20px;
+    font-weight: 400;
+}
+
+.items__text
+{
+    display: flex;
+    flex-wrap: flex;
+}
+
+.title__text
+{
+    text-align: center;
+}
+
+.info_text__contetnt
+{
+    color: orange; /* Оранжевый цвет текста */
+    text-shadow:
+        -1px -1px 0 black,
+        1px -1px 0 black,
+        -1px 1px 0 black,
+        1px 1px 0 black; /* Черная обводка */
+    text-indent: 40px;
+    font-size: 20px;
+    list-style-type: circle;
+}
