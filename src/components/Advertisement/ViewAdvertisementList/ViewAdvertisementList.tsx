@@ -1,5 +1,7 @@
 import React, { useEffect } from 'react';
+
 import { useDispatch, useSelector } from 'react-redux';
+
 import { setAdvertisements } from '../../../store/slices/advertisementSlice';
 import { getAdvertisements } from '../../../services/api';
 import { RootState } from '../../../store/store';

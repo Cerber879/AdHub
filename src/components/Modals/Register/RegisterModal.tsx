@@ -17,82 +17,74 @@ const RegisterModal: React.FC<{ onClose: () => void, onOpenLogin: () => void }> 
   const [nameError, setNameError] = useState('');
   const [typeError, setTypeError] = useState('');
   const [loginError, setLoginError] = useState('');
-  const [passwordError, setPasswordError] = useState('');
+  const [passwordError, setPasswordError] = useState('Пароль должен содержать не менее 8 символов.');
 
   const [formValid, setFormValid] = useState(false);
 
   const handleRegister = async () => {
     try {
-      onClose();
       await register(login, password, name, type);
+      onClose();
     } catch (error) {
       //setError('Registration failed');
+      console.clear();
+      console.log(error);
     }
   };
 
-  const blurHandler = (e: { target: { name: string; }; }) => {
-    switch(e.target.name) {
-      case 'name':
-        setNameDirty(true)
-        break
-      case 'type':
-        setTypeDirty(true)
-        break
-      case 'login':
-        setLoginDirty(true)
-        break
-      case 'password':
-        setPasswordDirty(true)
-        break
-    }
-  }
-
   const nameHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setNameDirty(true)
     const value = e.target.value;
     setName(value);
     if (value.length < 4 || value.length > 25) {
-      setNameError('*Имя должно содержать от 4 до 25 символов');
+      setNameError('*Имя должно содержать от 4 до 25 символов.');
+    } else if (value.length === 0) {
+      setNameError('Укажите своё имя или название организации.')
     } else {
       setNameError('')
     }
   };
 
   const typeHandler = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    setTypeDirty(true)
     const value = e.target.value;
     setType(value);
-    if (value === '') {
-      setTypeError('Выберите тип профиля');
+    console.log(value)
+    if (value === "") {
+      setTypeError('Обязательное поле выбора.');
     } else {
       setTypeError('')
     }
   };
 
   const loginHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setLoginDirty(true)
     const value = e.target.value;
     setLogin(value);
 
     if (value.includes('@')) {
       if (!validateEmail(value)) {
-        setLoginError('Некорректная почта');
+        setLoginError('Некорректная почта.');
       } else {
         setLoginError('');
       }
-    } else if (/^[0-9]+$/.test(value)) {
+    } else if (/^[+0-9]+$/.test(value)) {
       if (!validatePhoneNumber(value)) {
-        setLoginError('Неправильный телефон');
+        setLoginError('Неправильный телефон.');
       } else {
         setLoginError('');
       }
-    } else if (value.length !== 0) {
+    } else {
       setLoginError('Укажите мобильный телефон или эл. почту.');
     }
   };
 
   const passwordHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setPasswordDirty(true)
     const value = e.target.value;
     setPassword(value);
     if (value.length < 8) {
-      setPasswordError('Пароль должен содержать не менее 8 символов.');
+      setPasswordError('Пароль должен содержать не менее 8 символов.')
     } else {
       setPasswordError('')
     }
@@ -104,12 +96,14 @@ const RegisterModal: React.FC<{ onClose: () => void, onOpenLogin: () => void }> 
   }
 
   useEffect(() => {
-    if(login === '' || password === ''){
+    if(login === '' || password === '' || name === '' || type === '' ||
+      loginError || passwordError || nameError || typeError
+    ){
       setFormValid(false)
     } else {
       setFormValid(true)
     }
-  }, [login, password])
+  }, [login, loginError, name, nameError, password, passwordError, type, typeError])
 
   return (
     <div className={styles.modal_overlay}>
@@ -127,7 +121,6 @@ const RegisterModal: React.FC<{ onClose: () => void, onOpenLogin: () => void }> 
         <div className={styles.block_input}>
           <span className={styles.name_input}>Имя</span>
           <input
-            onBlur={e => blurHandler(e)}
             name='name'
             type="name"
             placeholder="Введите ваше имя"
@@ -139,7 +132,6 @@ const RegisterModal: React.FC<{ onClose: () => void, onOpenLogin: () => void }> 
         </div>
         <div className={styles.block_input}>
           <select
-            onBlur={e => blurHandler(e)}
             name='type'
             typeof="type"
             value={type}
@@ -156,7 +148,6 @@ const RegisterModal: React.FC<{ onClose: () => void, onOpenLogin: () => void }> 
         <div className={styles.block_input}>
           <span className={styles.name_input}>Логин</span>
           <input
-            onBlur={e => blurHandler(e)}
             name='login'
             type="login"
             placeholder="Введите эл. почту или телефон"
@@ -169,7 +160,7 @@ const RegisterModal: React.FC<{ onClose: () => void, onOpenLogin: () => void }> 
         <div className={styles.block_input}>
           <span className={styles.name_input}>Пароль</span>
           <input
-            onBlur={e => blurHandler(e)}
+            onBlur={() => setPasswordDirty(true)}
             name='password'
             type="password"
             placeholder="Введите пароль"
