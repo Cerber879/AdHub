@@ -7,5 +7,7 @@ export const ROUTES = {
     PROFILE: '/profile',
     MESSENGER: '/messenger',
     MESSEGES: '/messenger/messeges',
-    FAVOURITES: '/favourites'
+    FAVOURITES: '/favourites',
+    LOGIN: '/login',
+    REGISTER: '/register'
 }
