@@ -2,13 +2,11 @@
 export interface User {
     UserID: string;
     FullName: string;
-    INN: string;
     Rating: number;
-    Passport: string;
     PhoneNumber: string;
+    Email: string;
     Login: string;
     Password: string;
-    Email: string;
   }
   
   // Тип данных для объявления
