@@ -25,7 +25,8 @@ export function Header() {
             <div className={styles.flex_block}>
                 <Link 
                     to={ROUTES.HOME}
-                    className={`${styles.button_link} ${styles.logo}`}>
+                    className={`${styles.button_link} ${styles.logo}`}
+                >
                         <img className={styles.logo_icon} src="/favicons.png" alt="Icon" />
                         <span className={styles.logo_name}>ADHUB</span>
                 </Link>

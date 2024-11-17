@@ -9,10 +9,14 @@ export interface User {
     Password: string;
   }
   
+type TypeConditionAdvertisement = 'Новый' | 'Б/у'
+
   // Тип данных для объявления
   export interface Advertisement {
     AdvertisementID: string;
     UserID: string;
+    Condition: TypeConditionAdvertisement;
+    Date: string;
     CategoryID: string;
     Name: string;
     Price: number;

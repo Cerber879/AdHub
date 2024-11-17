@@ -6,6 +6,8 @@ import { setAdvertisements } from '../../../store/slices/advertisementSlice';
 import { getAdvertisements } from '../../../services/api';
 import { RootState } from '../../../store/store';
 import styles from './advertisment.module.css'
+import PreviewBigAdvertisment from '../PreviewAdvertisment/PreviewBigAdvertisment/PreviewBigAdvertisment';
+import PreviewSmallAdvertisment from '../PreviewAdvertisment/PreviewSmallAdvertisment/PreviewSmallAdvertisment';
 
 
 const AdvertisementList: React.FC = () => {
@@ -36,12 +38,13 @@ const AdvertisementList: React.FC = () => {
           </button>
         </form>
       </div>
-      <div></div>
       <ul className={styles.advertisment}>
         {advertisements.map((ad) => (
           <li key={ad.AdvertisementID}>{ad.Name}</li>
         ))}
       </ul>
+      <PreviewBigAdvertisment />
+      <PreviewSmallAdvertisment />
     </div>
   );
 };
