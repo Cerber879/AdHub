@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect, useRef  } from 'react';
 import styles from './messenger.module.css'
 
 interface Message 
@@ -11,6 +11,7 @@ const CreateMessageComponent: React.FC = () =>
 {
     const [messages, setMessages] = useState<Message[]>([]);
     const [inputValue, setInputValue] = useState<string>('');
+    const chatBoxRef = useRef<HTMLDivElement>(null);
 
     const sendMessage = () => {
         if (inputValue.trim() !== '') {
@@ -32,14 +33,21 @@ const CreateMessageComponent: React.FC = () =>
         }
     };
 
+    useEffect(() => {
+        if (chatBoxRef.current) {
+            chatBoxRef.current.scrollTop = chatBoxRef.current.scrollHeight;
+        }
+    }, [messages]);
+
     React.useEffect(() => {
         receiveMessage('Привет! Как дела?');
     }, []); //эксперимент с не своим сообщением
 
 
+
     return (
         <div className={styles.chat__container}>
-            <div className={styles.chat__box} id="chatBox">
+            <div className={styles.chat__box} id="chatBox" ref={chatBoxRef}>
                 {messages.map((message, index) => (
                             <div key={index} className={`${styles.message} ${styles[message.sender]}`}>
                                 {message.text}
