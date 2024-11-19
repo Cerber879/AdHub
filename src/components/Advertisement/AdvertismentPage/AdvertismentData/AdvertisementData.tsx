@@ -1,9 +1,12 @@
-import React from 'react'
+import React, { useState } from 'react';
 import styles from './advertisementdata.module.css'
 import { initialAdvertisement as ad } from '../../../../modules/data'
 import {initialUser as user} from '../../../../modules/data'
+import { photos } from '../../../../modules/data'
 
 const AdvertisementData = () => {
+  const [currentImage, setCurrentImage] = useState(0);
+  const images = photos
   return (
     <div className={styles.container}>
         <div >
@@ -29,7 +32,22 @@ const AdvertisementData = () => {
         </div>
         <div className={styles.main_block}>
           <div className={styles.main_image_description}>
-            <img className={styles.image_block} src={'https://avatars.mds.yandex.net/i?id=61db66a2245d8ffc75e4b746a73a26d2_l-5252229-images-thumbs&n=13'} alt="image"/>
+            <img
+              className={styles.image_block}
+              src={images[currentImage]}
+              alt="image"
+            />
+            <div className={styles.thumbnails}>
+            {images.map((img, index) => (
+              <img 
+                key={index}
+                className={`${styles.thumbnail} ${currentImage === index ? styles.active : ''}`}
+                src={img}
+                alt={`thumbnail ${index}`}
+                onClick={() => setCurrentImage(index)}
+              />
+              ))}
+            </div>
             <div className={styles.characteristics}>
             <h2>Характеристики</h2>
             <dl className={styles.characteristics_list}>

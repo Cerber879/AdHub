@@ -31,7 +31,7 @@ li:first-child {
 
 .image_block {
     max-width: 700px;
-    max-height: 960px;
+    height: 460px;
     min-width: 360px;
     display: flex;
     justify-content: center;
@@ -157,3 +157,24 @@ dd {
     margin: 0;
 }
   
+.thumbnails {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap; 
+    margin-top: 16px;
+    gap: 8px; 
+}
+
+.thumbnail {
+    width: 80px;
+    height: 60px;
+    margin: 0 8px;
+    cursor: pointer;
+    border: 2px solid transparent;
+    flex: 0 0 auto; 
+}
+
+.thumbnail.active,
+.thumbnail:hover {
+    border-color: #007bff;
+}
