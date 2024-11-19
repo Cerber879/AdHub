@@ -1,21 +1,14 @@
-.container{
-    padding-left: 16px;
-    padding-right: 16px;
-    width: 1316px;
-    margin: auto;
-}
-.flex_block{
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-    margin: 0 0 0 0;
-    padding: 0 0 0 0;
-}
-.heart_icon{
-    width: 30px;
-    height: 30px;
+.container {
+    padding: 16px;
+    max-width: 1316px;
+    margin: 0 auto;
+    font-family: Arial, sans-serif;
+    color: #333;
 
 }
+  
+
+  
 
 li:first-child {
     margin: 0;
@@ -37,10 +30,122 @@ li:first-child {
 }   
 
 .image_block {
-    max-width: 550px;
+    max-width: 700px;
     max-height: 960px;
     min-width: 360px;
     display: flex;
     justify-content: center;
+}
+.flex_block {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 16px;
+}
+.title{
+    font-size: 30px;
+    margin: 0;
+    font-weight: 600;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+.price{
+    font-size: 32px;
+    margin: 0 0 0 150px;
+    font-weight: 600;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+.heart_icon {
+    width: 48px;
+    height: 48px;
+    cursor: pointer
+}
+.flex_block :last-child {
+    margin-right: 300px; 
+}
+
+.main_block{
+    display: flex;
+    flex-direction: row;
+    margin-bottom: 16px;
+}
+.info_block{
+    margin: 16px 0 0 60px;
+}
+.user_info{
+    display: flex;
+    flex-direction: row;
+    justify-content:space-between;
+}
+.user_name{
+
+    color: #333;
+    text-decoration: none;
+    cursor: pointer;
+    font-size: 32px;
+    
+}
+
+.avatar {
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 2px solid #ddd;
+}
+.buttons {
+    
+    display: flex;
+    gap: 12px;
+}
+  
+.button {
+    background-color: #007bff;
+    color: white;
+    border: none;
+    padding: 10px 16px;
+    border-radius: 5px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+  
+.button:hover {
+    background-color: #0056b3;
+}
+.main_image_description{
+    max-width: 700px;
+}
+.description{
+    font-family: Arial, sans-serif;
+}
+.characteristics {
+    margin-top: 20px;
+}
+  
+.characteristics_list {
+    display: flex;
+    flex-wrap: wrap;
+    column-gap: 20px;
+    row-gap: 10px;
+    margin: 0;
+    padding: 0;
+}
+
+.characteristic_item {
+    display: flex;
+    width: calc(50% - 10px); 
+}
+
+dt {
+    font-weight: bold;
+    margin-right: 5px;
+    min-width: 150px; 
+    white-space: nowrap;
+}
+
+dd {
+    margin: 0;
 }
   
