@@ -25,8 +25,7 @@ const AdvertisementData = () => {
         </div>
         <div className={styles.flex_block}>
           <h2 className={styles.title}>{ad.Name}</h2>
-          <p className={styles.price}>{ad.Price} ₽</p>
-          <img className={styles.heart_icon} src="./images/Advertisment/heart.svg" alt="heart"></img>
+          
         </div>
         <div className={styles.main_block}>
           <div className={styles.main_image_description}>
@@ -60,7 +59,13 @@ const AdvertisementData = () => {
             
           </div>
           <div className={styles.info_block}>
+            <div className={styles.price_heart}>
+              <p className={styles.price}>{ad.Price} ₽</p>
+              <img className={styles.heart_icon} src="./images/Advertisment/heart.svg" alt="heart"></img>
+            </div>
+            
             <div className={styles.user_info}>
+              
               <h3>
                 <a className={styles.user_name} href="/">{user.FullName}</a>
               </h3>

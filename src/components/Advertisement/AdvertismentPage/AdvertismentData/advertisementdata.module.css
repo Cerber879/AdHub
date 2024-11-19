@@ -51,7 +51,7 @@ li:first-child {
 }
 .price{
     font-size: 32px;
-    margin: 0 0 0 150px;
+    margin: 0 70px 0 0;
     font-weight: 600;
     overflow: hidden;
     text-overflow: ellipsis;
@@ -59,7 +59,12 @@ li:first-child {
 .heart_icon {
     width: 48px;
     height: 48px;
-    cursor: pointer
+    cursor: pointer;
+    margin: -10px 0 20px 0;
+}
+.price_heart{
+    display: flex;
+    flex-direction: row;
 }
 .flex_block :last-child {
     margin-right: 300px; 
@@ -72,6 +77,9 @@ li:first-child {
 }
 .info_block{
     margin: 16px 0 0 60px;
+    position: sticky;
+    top: 20px;
+    max-height: 960px;
 }
 .user_info{
     display: flex;
