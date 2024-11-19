@@ -1,0 +1,46 @@
+.container{
+    padding-left: 16px;
+    padding-right: 16px;
+    width: 1316px;
+    margin: auto;
+}
+.flex_block{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    margin: 0 0 0 0;
+    padding: 0 0 0 0;
+}
+.heart_icon{
+    width: 30px;
+    height: 30px;
+
+}
+
+li:first-child {
+    margin: 0;
+    list-style-type: none;
+    margin: 0 0 0 -40px;
+}
+.complex_list{
+    display: flex;
+    flex-direction: row;
+}
+.complex_list_item{
+    margin: 0 0 0 23px;
+
+}
+.link{
+    text-decoration: none;
+    color: gray;
+    font-family: 'Geneva';
+}   
+
+.image_block {
+    max-width: 550px;
+    max-height: 960px;
+    min-width: 360px;
+    display: flex;
+    justify-content: center;
+}
+  

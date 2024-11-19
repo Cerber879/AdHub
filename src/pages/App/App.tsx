@@ -16,6 +16,7 @@ import { Footer } from '../../components/Footer/Footer';
 import { ROUTES } from '../../utils/routes';
 import RegisterModal from '../../components/Modals/Register/RegisterModal';
 import LoginModal from '../../components/Modals/Login/LoginModal';
+import AdvertismentPage from '../AdvertismentPage/AdvertismentPage';
 
 const App: React.FC = () => {
   return (
@@ -30,6 +31,7 @@ const App: React.FC = () => {
               <Route path={ROUTES.ABOUT} element = {< AboutUs/>} />
               <Route path={ROUTES.REGISTER} element = {< RegisterModal onClose={()=>{}} onOpenLogin={()=>{}}/>} />
               <Route path={ROUTES.LOGIN} element = {< LoginModal onClose={()=>{}} onOpenRegister={()=>{}}/>} />
+              <Route path={ROUTES.ADVERTISMENT} element = {< AdvertismentPage/>} />
             </Routes>
           </div>
           <Footer/>
