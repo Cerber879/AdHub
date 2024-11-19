@@ -60,6 +60,7 @@ const CreateMessageComponent: React.FC = () =>
                 id="messageInput" 
                 placeholder="Введите сообщение..."
                 onChange={(e) => setInputValue(e.target.value)}
+                value={inputValue}
                 onKeyDown={handleKeyDown}
                 
                 />
