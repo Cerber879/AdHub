@@ -106,15 +106,17 @@ const CreateMessageComponent: React.FC = () =>
         <div className={styles.appContainer}>
             <div className={styles.usersContainer}>
                 <span className={styles.name_container}>Сообщения</span>
-                {users.map((user) => (
-                    <div
-                        key={user.id}
-                        className={`${styles.userItem} ${selectedUser?.id === user.id ? styles.selectedUser : ''}`}
-                        onClick={() => handleUserClick(user)}
-                    >
-                        {user.name}
-                    </div>
-                ))}
+                <div className={styles.list_users}>
+                    {users.map((user) => (
+                        <div
+                            key={user.id}
+                            className={`${styles.userItem} ${selectedUser?.id === user.id ? styles.selectedUser : ''}`}
+                            onClick={() => handleUserClick(user)}
+                        >
+                            {user.name}
+                        </div>
+                    ))}
+                </div>
             </div>
             <div className={styles.chat__container}>
                 {selectedUser && (
