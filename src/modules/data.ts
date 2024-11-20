@@ -6,7 +6,10 @@ export const photos = [
   "https://i.ytimg.com/vi/gIyLUPxf83U/maxresdefault.jpg",
   'https://avatars.mds.yandex.net/i?id=2ee40a4e2fa0866cade2086262ae1b62_l-4034321-images-thumbs&n=13',
   'https://steamuserimages-a.akamaihd.net/ugc/1839171845737875078/03A9B87FA220C15AABB72F5FDE52F18490A15A58/?imw=512&amp;imh=320&amp;ima=fit&amp;impolicy=Letterbox&amp;imcolor=%23000000&amp;letterbox=true',
-  'https://get.wallhere.com/photo/landscape-mountains-lake-nature-reflection-grass-sky-river-national-park-valley-wilderness-Alps-tree-autumn-leaf-mountain-season-tarn-loch-mountainous-landforms-mountain-range-590185.jpg'
+  'https://get.wallhere.com/photo/landscape-mountains-lake-nature-reflection-grass-sky-river-national-park-valley-wilderness-Alps-tree-autumn-leaf-mountain-season-tarn-loch-mountainous-landforms-mountain-range-590185.jpg',
+  'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTBkJigufyq00dk5hZq_acK0ix6Gq5LMj59Kg&s',
+  'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTpnDR_juCifCfNFAdXQ5mv2l9kg5TsDQkLhQ&s',
+  'https://img1.akspic.ru/previews/5/3/0/9/7/179035/179035-voda-gora-gidroresursy-rastenie-oblako-500x.jpg'
 ]
 
 // Начальные данные для пользователя

@@ -1,0 +1,18 @@
+.container{
+    display: flex;
+    flex-direction: row;
+
+}
+.complex_list{
+    display: flex;
+    flex-direction: row;
+}
+.complex_list_item{
+    margin: 0 0 0 23px;
+
+}
+.link{
+    text-decoration: none;
+    color: gray;
+    font-family: 'Geneva';
+}   

@@ -34,6 +34,7 @@ const App: React.FC = () => {
               <Route path={ROUTES.ABOUT} element = {< AboutUs/>} />
               <Route path={ROUTES.REGISTER} element = {< RegisterModal onClose={()=>{}} onOpenLogin={()=>{}}/>} />
               <Route path={ROUTES.LOGIN} element = {< LoginModal onClose={()=>{}} onOpenRegister={()=>{}}/>} />
+              <Route path={ROUTES.ADVERTISMENT} element = {< AdvertismentPage/>} />
             </Routes>
           </div>
           <Footer/>
