@@ -16,6 +16,8 @@ import { Footer } from '../../components/Footer/Footer';
 import { ROUTES } from '../../utils/routes';
 import RegisterModal from '../../components/Modals/Register/RegisterModal';
 import LoginModal from '../../components/Modals/Login/LoginModal';
+import Profile from '../Profile/ProfileMain/Profile';
+import Favourites from '../Profile/FavouritesPage/Favourites';
 
 const App: React.FC = () => {
   return (
@@ -26,6 +28,8 @@ const App: React.FC = () => {
           <div className={styles.app_content}>
             <Routes>
               <Route path={ROUTES.HOME} element={<Home />} />
+              <Route path={ROUTES.PROFILE} element={<Profile />} />
+              <Route path={ROUTES.FAVOURITES} element={<Favourites />} />
               <Route path={ROUTES.CREATE_ADVERTISMENT} element={<CreateAdvertisementPage />} />
               <Route path={ROUTES.ABOUT} element = {< AboutUs/>} />
               <Route path={ROUTES.REGISTER} element = {< RegisterModal onClose={()=>{}} onOpenLogin={()=>{}}/>} />

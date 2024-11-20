@@ -7,6 +7,7 @@ export interface User {
     Email: string;
     Login: string;
     Password: string;
+    LinkPhoto: string;
   }
   
 type TypeConditionAdvertisement = 'Новый' | 'Б/у'

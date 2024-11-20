@@ -1,0 +1,56 @@
+.data_block {
+    width: 470px;
+    height: 170px;
+}
+
+.heart_icon {
+    width: 30px;
+    height: 30px;
+}
+  
+.name_ad {
+    display: -webkit-box;
+    max-height: 65px;
+    -webkit-line-clamp: 4;
+    line-clamp: 4;
+    -webkit-box-orient: vertical;
+    font-size: 24px;
+    margin: 0;
+    font-weight: 600;
+    color: #0af;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+  
+.price {
+    color: black;
+    font-size: 20px;
+    font-weight: 600;
+    margin: 0;
+}
+  
+.condition_ad {
+    font-size: 16px;
+    color: #555;
+    margin: 0;
+}
+  
+.description {
+    display: -webkit-box;
+    max-width: 460px;
+    max-height: 100px;
+    -webkit-line-clamp: 4;
+    line-clamp: 4;
+    -webkit-box-orient: vertical;
+    font-size: 14px;
+    color: #777;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+  
+.date {
+    align-self: start;
+    font-size: 12px;
+    color: #999;
+    margin: 0;
+}

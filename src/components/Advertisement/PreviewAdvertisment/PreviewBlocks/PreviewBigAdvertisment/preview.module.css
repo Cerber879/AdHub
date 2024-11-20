@@ -1,0 +1,16 @@
+.container {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    padding: 20px;
+    border-radius: 8px;
+    width: 980px;
+    height: 220px;
+    gap: 20px;
+    cursor: pointer;
+    text-decoration: none;
+}
+  
+.container:hover {
+    background-color: #eeeeee;
+}

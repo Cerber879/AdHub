@@ -57,7 +57,7 @@
 .button_add_advertisment{
     background-color: rgb(73, 73, 248);
     color: white;
-    border-radius: 5%;
+    text-decoration: none;
 }
 
 .button_add_advertisment:hover{

@@ -1,0 +1,43 @@
+.container {
+    width: 100%;
+    height: auto;
+}
+
+.name {
+    font-size: 35px;
+    padding-bottom: 20px;
+    font-weight: 500;
+}
+
+.bar_block {
+    display: flex;
+    gap: 20px;
+    border-bottom: 1px solid rgb(150, 150, 150);
+    margin-top: 30px;
+}
+
+.bar_button {
+    background-color: white;
+    font-size: 20px;
+    padding: 10px 0px;
+    border-radius: 0;
+}
+
+.activeButton {
+    border-bottom: 3px solid black;
+}
+
+.passiveButton {
+    opacity: 0.6;
+}
+
+.passiveButton:hover {
+    color: rgb(132, 132, 132);
+}
+
+.ads {
+    padding: 20px 0px;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
