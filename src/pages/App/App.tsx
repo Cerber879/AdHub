@@ -9,6 +9,8 @@ import styles from './app.module.css'
 import Home from '../Home/HomePage';
 import CreateAdvertisementPage from '../CreateAdvertisement/CreateAdvertisementPage';
 import AboutUs from '../AboutUs/AboutUs';
+import CreateMessageComponent from '../../components/Profile/Messenger/Messenger'
+
 
 import { Header } from '../../components/Header/Header';
 import { Footer } from '../../components/Footer/Footer';
@@ -19,6 +21,7 @@ import LoginModal from '../../components/Modals/Login/LoginModal';
 import Profile from '../Profile/ProfileMain/Profile';
 import Favourites from '../Profile/FavouritesPage/Favourites';
 import AdvertismentPage from '../AdvertismentPage/AdvertismentPage';
+
 
 const App: React.FC = () => {
   return (
@@ -36,6 +39,7 @@ const App: React.FC = () => {
               <Route path={ROUTES.REGISTER} element = {< RegisterModal onClose={()=>{}} onOpenLogin={()=>{}}/>} />
               <Route path={ROUTES.LOGIN} element = {< LoginModal onClose={()=>{}} onOpenRegister={()=>{}}/>} />
               <Route path={ROUTES.ADVERTISMENT} element = {< AdvertismentPage/>} />
+              <Route path={ROUTES.MESSENGER} element = {< CreateMessageComponent/>} />
             </Routes>
           </div>
           <Footer/>
