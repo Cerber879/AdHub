@@ -46,7 +46,7 @@ const AdvertisementData = () => {
                 alt={`thumbnail ${index}`}
                 onClick={() => setCurrentImage(index)}
               />
-              ))}
+              ))} {/*переключатель на картинки справа слева*/}
             </div>
             <div className={styles.characteristics}>
             <h2>Характеристики</h2>
@@ -79,7 +79,7 @@ const AdvertisementData = () => {
           <div className={styles.info_block}>
             <div className={styles.price_heart}>
               <p className={styles.price}>{ad.Price} ₽</p>
-              <img className={styles.heart_icon} src="./images/Advertisment/heart.svg" alt="heart"></img>
+              <img className={styles.heart_icon} src="./images/Advertisment/heart.svg" alt="heart"></img> {/*button heart*/}
             </div>
             
             <div className={styles.user_info}>
@@ -99,7 +99,7 @@ const AdvertisementData = () => {
               <button className={styles.button}>Написать</button>
             </div>
           </div>
-          
+          {/*отзывы*/}
         </div>
         
     </div>
