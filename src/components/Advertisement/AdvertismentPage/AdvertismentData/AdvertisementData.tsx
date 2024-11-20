@@ -35,7 +35,7 @@ const AdvertisementData = () => {
             <img
               className={styles.image_block}
               src={images[currentImage]}
-              alt="image"
+              alt="img"
             />
             <div className={styles.thumbnails}>
             {images.map((img, index) => (

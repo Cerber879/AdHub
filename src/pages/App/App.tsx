@@ -18,6 +18,7 @@ import RegisterModal from '../../components/Modals/Register/RegisterModal';
 import LoginModal from '../../components/Modals/Login/LoginModal';
 import Profile from '../Profile/ProfileMain/Profile';
 import Favourites from '../Profile/FavouritesPage/Favourites';
+import AdvertismentPage from '../AdvertismentPage/AdvertismentPage';
 
 const App: React.FC = () => {
   return (

@@ -5,10 +5,7 @@
     font-family: Arial, sans-serif;
     color: #333;
 
-}
-  
-
-  
+}  
 
 li:first-child {
     margin: 0;
@@ -78,7 +75,6 @@ li:first-child {
 }
 .info_block{
     margin: 16px 0 0 60px;
-    position: sticky;
     top: 20px;
     max-height: 960px;
 }

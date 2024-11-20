@@ -1,18 +1,13 @@
-.container{
+.container {
     display: flex;
-    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+}
 
+.button_catalogue {
+    padding: 10px 20px;
+    background-color: #0af;
+    color: white;
+    border-radius: 15px;
 }
-.complex_list{
-    display: flex;
-    flex-direction: row;
-}
-.complex_list_item{
-    margin: 0 0 0 23px;
-
-}
-.link{
-    text-decoration: none;
-    color: gray;
-    font-family: 'Geneva';
-}   

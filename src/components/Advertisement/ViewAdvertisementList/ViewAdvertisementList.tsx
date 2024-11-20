@@ -9,7 +9,7 @@ import styles from './advertisment.module.css'
 import PreviewBigAdvertisment from '../PreviewAdvertisment/PreviewBlocks/PreviewBigAdvertisment/PreviewBigAdvertisment';
 import PreviewSmallAdvertisment from '../PreviewAdvertisment/PreviewBlocks/PreviewSmallAdvertisment/PreviewSmallAdvertisment';
 
-import SearchBar from '../../SearchBar/SearchBar';
+import AdvertisementTop from '../AdvertismentPage/AdvertismentTop/AdvertismentTop';
 const AdvertisementList: React.FC = () => {
   const dispatch = useDispatch();
   const advertisements = useSelector((state: RootState) => state.advertisement.advertisements);
@@ -30,16 +30,7 @@ const AdvertisementList: React.FC = () => {
   return (
     <div>
       <h2 className={styles.catalogue}>Каталог Объявлений</h2>
-      <div className={styles.search_bar}>
-        <SearchBar/>
-        <div className={styles.sort_by}>
-          <select>
-            <option value="relevance">По релевантности</option>
-            <option value="date">По дате</option>
-            <option value="price">По цене</option>
-          </select>
-        </div>
-      </div>
+      <AdvertisementTop/>
       <ul className={styles.advertisment}>
         {advertisements.map((ad) => (
           <li key={ad.AdvertisementID}>{ad.Name}</li>
