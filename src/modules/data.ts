@@ -1,12 +1,19 @@
 import { User, Advertisement, Category, Chat, Message, Review, Favourite, Photo, ChatMember } from './types';
 
+export const photos = [
+  'https://avatars.mds.yandex.net/i?id=61db66a2245d8ffc75e4b746a73a26d2_l-5252229-images-thumbs&n=13',
+  'https://i.ytimg.com/vi/AZiFoyaOSe4/maxresdefault.jpg',
+  "https://i.ytimg.com/vi/gIyLUPxf83U/maxresdefault.jpg",
+  'https://avatars.mds.yandex.net/i?id=2ee40a4e2fa0866cade2086262ae1b62_l-4034321-images-thumbs&n=13',
+  'https://steamuserimages-a.akamaihd.net/ugc/1839171845737875078/03A9B87FA220C15AABB72F5FDE52F18490A15A58/?imw=512&amp;imh=320&amp;ima=fit&amp;impolicy=Letterbox&amp;imcolor=%23000000&amp;letterbox=true',
+  'https://get.wallhere.com/photo/landscape-mountains-lake-nature-reflection-grass-sky-river-national-park-valley-wilderness-Alps-tree-autumn-leaf-mountain-season-tarn-loch-mountainous-landforms-mountain-range-590185.jpg'
+]
+
 // Начальные данные для пользователя
 export const initialUser: User = {
   UserID: '1',
   FullName: 'John Doe',
-  INN: '1234567890',
   Rating: 4.5,
-  Passport: '1234567890',
   PhoneNumber: '1234567890',
   Login: 'johndoe',
   Password: 'password123',
@@ -17,10 +24,12 @@ export const initialUser: User = {
 export const initialAdvertisement: Advertisement = {
   AdvertisementID: '1',
   UserID: '1',
+  Condition: 'Новый',
+  Date: '14.08.2024 г.',
   CategoryID: '1',
-  Name: 'iPhone 12',
-  Price: 1000,
-  Description: 'New iPhone 12 in excellent condition.',
+  Name: 'iPhone 12 кватро турбо 4 на 4 120гб',
+  Price: 120000,
+  Description: 'Существуют две основные трактовки понятия «текст»: имманентная (расширенная, философски нагруженная) и репрезентативная (более частная). Имманентный подход подразумевает отношение к тексту как к автономной реальности, нацеленность на выявление его внутренней структуры. Репрезентативный — рассмотрение текста как особой формы представления информации о внешней тексту действительности.',
   Status: 1,
 };
 

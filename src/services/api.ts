@@ -7,7 +7,7 @@ const api = axios.create({
 });
 
 // Функция для входа в систему
-export const login = async (login: string, password: string) => {
+export const loginApi = async (login: string, password: string) => {
   try {
     const response = await api.post('/login', { login, password });
     return response.data;

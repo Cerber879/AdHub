@@ -2,6 +2,8 @@ import { useState } from 'react';
 import styles from './header.module.css'
 import LoginModal from '../Modals/Login/LoginModal';
 import RegisterModal from '../Modals/Register/RegisterModal';
+import { Link } from 'react-router-dom';
+import { ROUTES } from '../../utils/routes';
 
 export function Header() {
 
@@ -21,62 +23,65 @@ export function Header() {
     return(
         <div className={styles.setBar}>
             <div className={styles.flex_block}>
-                <a 
-                href="http://localhost:3000/"
-                className={`${styles.button_link} ${styles.logo}`}>
-                <img className={styles.logo_icon} src="/favicons.png" alt="Icon" />
-                <span className={styles.logo_name}>ADHUB</span>
-                </a>
+                <Link 
+                    to={ROUTES.HOME}
+                    className={`${styles.button_link} ${styles.logo}`}
+                >
+                        <img className={styles.logo_icon} src="/favicons.png" alt="Icon" />
+                        <span className={styles.logo_name}>ADHUB</span>
+                </Link>
 
-                <a 
-                href="http://localhost:3000/about"  
-                className={styles.button_link}>
-                <span>О нас</span>
-                </a>
+                <Link 
+                    to={ROUTES.ABOUT}  
+                    className={styles.button_link}>
+                        <span>О нас</span>
+                </Link>
 
-                <a 
-                href="http://localhost:3000/catalog"
-                className={styles.button_link}>
-                <span>Каталог</span>
-                </a>
+                <Link 
+                    to={ROUTES.CATALOG}
+                    className={styles.button_link}>
+                        <span>Каталог</span>
+                </Link>
             </div>
             <div className={styles.flex_block}>
 
                 <button 
-                className={styles.button_link}
-                onClick={() => setShowLoginModal(true)}>
-                    Вход и Регистрация
+                    className={styles.button_link}
+                    onClick={() => setShowLoginModal(true)}>
+                        Вход и Регистрация
                 </button>
-                <a 
-                href="http://localhost:3000/ads"
-                className={styles.button_link}>
-                <span>Мои Объявления</span>
-                </a>
+
+                <Link 
+                    to={ROUTES.PROFILE}
+                    className={styles.button_link}>
+                        <span>Мои Объявления</span>
+                </Link>
         
-                <a 
-                href="http://localhost:3000/create-ad"
-                className={`${styles.button_link} ${styles.button_add_advertisment}`}>
-                <span>Создать Объявление</span>
-                </a>
+                <Link 
+                    to={ROUTES.CREATE_ADVERTISMENT}
+                    className={`${styles.button_link} ${styles.button_add_advertisment}`}>
+                        <span>Создать Объявление</span>
+                </Link>
 
-                <a 
-                href="http://localhost:3000/messages"
-                className={styles.button_link}>
-                <img src="/images/ImagesTopPanel/message.svg" alt="Icon" width="16px" height="16px" />
-                </a>
+                <Link 
+                    to={ROUTES.MESSENGER}
+                    className={styles.button_link}>
+                        <img src="/images/ImagesTopPanel/message.svg" alt="Icon" width="16px" height="16px" />
+                </Link>
 
-                <a 
-                href="http://localhost:3000/favorite"
-                className={styles.button_link}>
-                <img src="/images/ImagesTopPanel/favorite.svg" alt="Icon" width="16px" height="16px" />
-                </a>
+                <Link 
+                    to={ROUTES.FAVOURITES}
+                    className={styles.button_link}>
+                        <img src="/images/ImagesTopPanel/favorite.svg" alt="Icon" width="16px" height="16px" />
+                </Link>
 
-                <a 
-                href="http://localhost:3000/profile"
-                className={styles.button_link}>
-                <img src="/images/ImagesTopPanel/profile.svg" alt="Icon" width="16px" height="16px" />
-                </a>
+                <Link 
+                    to={ROUTES.PROFILE}
+                    className={styles.button_link}>
+                        <img src="/images/ImagesTopPanel/profile.svg" alt="Icon" width="16px" height="16px" />
+                </Link>
             </div>
+
             {showLoginModal && <LoginModal onClose={() => {setShowLoginModal(false)}} onOpenRegister={handleRegister} />}
             {showRegisterModal && <RegisterModal onClose={() => {setShowRegisterModal(false)}} onOpenLogin={handleLogin} />}
         </div>

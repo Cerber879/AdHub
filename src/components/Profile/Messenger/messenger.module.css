@@ -1,0 +1,128 @@
+.appContainer 
+{
+    display: flex;
+    justify-content: center;
+    padding: 20px;
+    height: 500px;
+    background-color: white;
+}
+
+.usersContainer 
+{
+    width: 250px;
+    overflow-y: auto;
+    padding: 10px;
+}
+
+.list_users {
+    margin-top: 15px;
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+
+.name_container {
+    font-size: 20px;
+    font-weight: 700;
+    padding-bottom: 15px;
+}
+
+.userItem {
+    padding: 10px;
+    cursor: pointer;
+    border-radius: 10px;
+}
+
+.userItem:hover {
+    background-color: #e0e0e0;
+}
+
+.selectedUser {
+    background-color: #d0d0d0;
+}
+
+.chatHeader {
+    display: flex;
+    align-items: center;
+    padding: 10px;
+    background-color: #fff;
+    border-bottom: 1px solid #ccc;
+}
+
+.avatar {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background-color: #ccc; /* Временный цвет для аватарки */
+    margin-right: 10px;
+}
+
+
+.chat__container {
+    padding: 10px;
+    width: 100%;
+    gap: 10px;
+    background-color: #fff;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+}
+
+.chat__box {
+    flex: 1;
+    width: 100%;
+    overflow-y: auto;
+    padding: 10px;
+    border-bottom: 1px solid #ccc;
+    display: flex;
+    flex-direction: column;
+    height: 500px;
+    
+}
+
+.message {
+    margin: 5px 100px;
+    padding: 10px;
+    border-radius: 5px;
+    max-width: 70%;
+    word-wrap: break-word;
+}
+
+.message.user {
+    background-color: #dcf8c6;
+    align-self: flex-end;
+}
+
+.message.other {
+    background-color: #ed4242;
+    align-self: flex-start;
+}
+
+.input__container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+}
+
+.input__container input {
+    flex: 1;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    margin: 0;
+}
+
+.input__container button {
+    height: 36px;
+    border: none;
+    background-color: #007bff;
+    color: #fff;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.input__container button:hover {
+    background-color: #0056b3;
+}

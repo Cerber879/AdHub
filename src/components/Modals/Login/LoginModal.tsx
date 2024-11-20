@@ -1,32 +1,78 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { setUser } from '../../../store/slices/userSlise';
-import { login } from '../../../services/api';
+import { loginApi } from '../../../services/api';
 import { User } from '../../../modules/types';
 import styles from '../modals.module.css'; 
+import { validateEmail, validatePhoneNumber } from '../modals';
 
 const LoginModal: React.FC<{ onClose: () => void, onOpenRegister: () => void }> = ({ onClose, onOpenRegister }) => {
-  const [loginInput, setLoginInput] = useState('');
+  const [login, setLogin] = useState('');
   const [password, setPassword] = useState('');
-  const [error, setError] = useState('');
+
+  const [loginDirty, setLoginDirty] = useState(false);
+  //const [passwordDirty, setPasswordDirty] = useState(false);
+
+  const [loginError, setLoginError] = useState('');
+  //const [passwordError, setPasswordError] = useState('');
+
+  const [formValid, setFormValid] = useState(false);
+
   const dispatch = useDispatch();
 
   const handleLogin = async () => {
-    try {
-      const user: User = await login(loginInput, password);
-      dispatch(setUser(user));
-      onClose();
-    } catch (error) {
-      setError('Invalid login or password');
+    if (!loginError){
+      try {
+        onClose();
+        const user: User = await loginApi(login, password);
+        dispatch(setUser(user));
+      } catch (error) {
+        //setError('Invalid login or password');
+      }
+    } else {
+      setLoginDirty(true)
     }
   };
+
+  const loginHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setLoginDirty(false);
+    const value = e.target.value;
+    setLogin(value);
+
+    if (value.includes('@')) {
+      if (!validateEmail(value)) {
+        setLoginError('Некорректная эл. почта');
+      } else {
+        setLoginError('');
+      }
+    } else if (/[a-zA-Zа-яА-Я]/.test(value)) {
+      if (!validatePhoneNumber(value)) {
+        setLoginError('Неправильный телефон');
+      } else {
+        setLoginError('');
+      }
+    } else if (value.length !== 0) {
+      setLoginError('Укажите мобильный телефон или почту');
+    }
+  };
+
+  const passwordHandler = (e: { target: { value: React.SetStateAction<string>; }; }) => {
+    const value = e.target.value
+    setPassword(value);
+  }
 
   const swapToRegister = () => {
     onClose();
     onOpenRegister();
   }
 
-  const isValid = loginInput && password;
+  useEffect(() => {
+    if(login === '' || password === ''){
+      setFormValid(false)
+    } else {
+      setFormValid(true)
+    }
+  }, [login, password])
 
   return (
     <div className={styles.modal_overlay}>
@@ -41,19 +87,16 @@ const LoginModal: React.FC<{ onClose: () => void, onOpenRegister: () => void }> 
          <img src="/favicons.png" alt="Icon" width={50}/>
          <h2>Войти в AdHub</h2>
         </div>
-        {error && <p className={styles.error_message}>{error}</p>}
         <div className={styles.block_input}>
           <span className={styles.name_input}>Логин</span>
           <input
-            type="text"
-            placeholder="Введите почту или телефон"
-            value={loginInput}
-            onChange={(e) => {
-              setLoginInput(e.target.value);
-              setError('');
-            }}
-            className={error ? styles.input_error : ''}
+            type="login"
+            placeholder="Введите электронную почту или телефон"
+            value={login}
+            onChange={(e) => {loginHandler(e)}}
+            className={loginDirty ? styles.input_error : ''}
           />
+          {loginDirty && <span className={styles.error_message}>{loginError}</span>}
         </div>
         <div className={styles.block_input}>
           <span className={styles.name_input}>Пароль</span>
@@ -61,14 +104,10 @@ const LoginModal: React.FC<{ onClose: () => void, onOpenRegister: () => void }> 
             type="password"
             placeholder="Введите пароль"
             value={password}
-            onChange={(e) => {
-              setPassword(e.target.value);
-              setError('');
-            }}
-            className={error ? styles.input_error : ''}
+            onChange={(e) => {passwordHandler(e)}}
           />
         </div>
-        <button onClick={handleLogin} disabled={!isValid} className={`${!isValid ? styles.button_disabled : ''} ${styles.button_handle}`}>
+        <button onClick={handleLogin} disabled={!formValid} className={!formValid ? styles.button_disabled : styles.button_handle}>
           <span>Войти</span>
         </button>
         <button onClick={swapToRegister} className={styles.button_handle_swap}>

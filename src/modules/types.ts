@@ -2,19 +2,21 @@
 export interface User {
     UserID: string;
     FullName: string;
-    INN: string;
     Rating: number;
-    Passport: string;
     PhoneNumber: string;
+    Email: string;
     Login: string;
     Password: string;
-    Email: string;
   }
   
+type TypeConditionAdvertisement = 'Новый' | 'Б/у'
+
   // Тип данных для объявления
   export interface Advertisement {
     AdvertisementID: string;
     UserID: string;
+    Condition: TypeConditionAdvertisement;
+    Date: string;
     CategoryID: string;
     Name: string;
     Price: number;

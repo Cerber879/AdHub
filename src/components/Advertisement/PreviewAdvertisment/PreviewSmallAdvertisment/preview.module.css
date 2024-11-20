@@ -1,0 +1,106 @@
+.container {
+    display: flex;
+    flex-direction: column;
+    border-radius: 8px;
+    width: 240px;
+    height: 320px;
+    gap: 5px;
+    text-decoration: none;
+}
+  
+.image_block {
+    width: 220px;
+    height: 220px;
+}
+  
+.image_block img {
+    max-width: 100%;
+    border-radius: 8px;
+    width: 220px;
+    height: 220px;
+    object-fit: cover; 
+    object-position: center; 
+}
+
+.thumbnails {
+    width: 205px;
+    height: 215px;
+    position: absolute;
+    justify-content: center;
+    align-items: end;
+    display: flex;
+    gap: 2px;
+}
+  
+.thumbnail {
+    border-radius: 4px;
+    width: 30px;
+    height: 3px;
+    background-color: #777;
+    transition: opacity 0.3s;
+}
+  
+.thumbnail.active {
+    background-color: #0af;
+}
+  
+.overlay {
+    position: absolute;
+    width: 220px;
+    height: 220px;
+    background-color: #555;
+    opacity: 0.4;
+}
+
+.last_photo_text {
+    position: absolute;
+    display: flex;
+    flex-direction: column;
+    width: 220px;
+    height: 220px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: white;
+    font-size: 20px;
+    font-weight: 500;
+}
+  
+.data_block {
+    width: 220px;
+    height: 80px;
+}
+
+.name_block {
+    display: flex;
+    gap: 15px;
+    margin: 0px;
+    justify-content: space-between
+}
+
+.heart_icon {
+    width: 20px;
+    height: 20px;
+}
+
+.name_ad {
+    display: -webkit-box;
+    max-width: 220px;
+    max-height: 40px;
+    -webkit-line-clamp: 4;
+    line-clamp: 4;
+    -webkit-box-orient: vertical;
+    font-size: 14px;
+    margin: 0;
+    font-weight: 600;
+    color: #0af;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+  
+.price {
+    color: black;
+    font-size: 16px;
+    font-weight: 600;
+    margin: 0;
+}
