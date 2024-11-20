@@ -9,7 +9,7 @@ import styles from './advertisment.module.css'
 import PreviewBigAdvertisment from '../PreviewAdvertisment/PreviewBigAdvertisment/PreviewBigAdvertisment';
 import PreviewSmallAdvertisment from '../PreviewAdvertisment/PreviewSmallAdvertisment/PreviewSmallAdvertisment';
 
-
+import SearchBar from '../../SearchBar/SearchBar';
 const AdvertisementList: React.FC = () => {
   const dispatch = useDispatch();
   const advertisements = useSelector((state: RootState) => state.advertisement.advertisements);
@@ -31,12 +31,7 @@ const AdvertisementList: React.FC = () => {
     <div>
       <h2 className={styles.catalogue}>Каталог Объявлений</h2>
       <div className={styles.search_bar}>
-        <form className={styles.search_form}>
-          <input className={styles.search_input} type="text" placeholder="Искать здесь..."/>
-          <button className={styles.search_button}type="submit">
-            <img className={styles.search_icon} src="/images/ImagesHomePage/search.svg" alt="Icon" />
-          </button>
-        </form>
+        <SearchBar/>
         <div className={styles.sort_by}>
           <select>
             <option value="relevance">По релевантности</option>
