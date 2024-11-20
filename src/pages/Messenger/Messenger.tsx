@@ -96,6 +96,12 @@ const CreateMessageComponent: React.FC = () =>
         }
     }, []);
 
+    useEffect(() => {
+        if (chatBoxRef.current && selectedUser) {
+            chatBoxRef.current.scrollTop = chatBoxRef.current.scrollHeight;
+        }
+    }, [selectedUser]);
+
     return (
         <div className={styles.appContainer}>
                 <div className={styles.usersContainer}>
