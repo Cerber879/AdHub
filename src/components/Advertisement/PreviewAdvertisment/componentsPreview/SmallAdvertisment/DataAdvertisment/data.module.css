@@ -1,0 +1,38 @@
+.data_block {
+    width: 220px;
+    height: 80px;
+}
+
+.name_block {
+    display: flex;
+    gap: 15px;
+    margin: 0px;
+    justify-content: space-between
+}
+
+.heart_icon {
+    width: 20px;
+    height: 20px;
+}
+
+.name_ad {
+    display: -webkit-box;
+    max-width: 220px;
+    max-height: 40px;
+    -webkit-line-clamp: 4;
+    line-clamp: 4;
+    -webkit-box-orient: vertical;
+    font-size: 14px;
+    margin: 0;
+    font-weight: 600;
+    color: #0af;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+  
+.price {
+    color: black;
+    font-size: 16px;
+    font-weight: 600;
+    margin: 0;
+}

@@ -1,0 +1,73 @@
+.bar_block {
+    display: flex;
+    flex-direction: column;
+    width: 250px;
+    height: 500px;
+}
+
+.user_block {
+    /* подумать здесь еще */
+    padding-left: 20px;  
+    display: flex;
+    flex-direction: column;
+
+}
+
+.user_logo {
+    width: 100px;
+    height: 100px;
+    background-color: antiquewhite;
+    border-radius: 50%;
+}
+
+.user_name {
+    margin-top: 20px;
+    font-size: 26px;
+}
+
+.user_rating_block {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-top: 5px;
+}
+  
+.user_rating_number {
+    font-size: 18px;
+    font-weight: bold;
+    color: #ff9800;
+}
+  
+.user_count_feedback {
+    font-size: 16px;
+    color: #777;
+}
+
+.links {
+    margin-top: 30px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.link {
+    display: inline-block;
+    padding: 10px 20px;
+    text-decoration: none;
+    color: black;
+    font-size: 20px;
+    border-radius: 15px;
+}
+
+.link:hover {
+    background-color: #e7e7e7;
+}
+
+.active {
+    background-color: #007bff;
+    color: white;
+}
+
+.active:hover {
+    background-color: #007bff;
+}

@@ -21,6 +21,7 @@ export const initialUser: User = {
   Login: 'johndoe',
   Password: 'password123',
   Email: 'johndoe@example.com',
+  LinkPhoto: 'https://avatars.mds.yandex.net/i?id=0f7cf436170dc2ecbeca202d337903a2_l-5378083-images-thumbs&n=13'
 };
 
 // Начальные данные для объявления

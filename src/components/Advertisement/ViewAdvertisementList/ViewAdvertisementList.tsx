@@ -6,8 +6,8 @@ import { setAdvertisements } from '../../../store/slices/advertisementSlice';
 import { getAdvertisements } from '../../../services/api';
 import { RootState } from '../../../store/store';
 import styles from './advertisment.module.css'
-import PreviewBigAdvertisment from '../PreviewAdvertisment/PreviewBigAdvertisment/PreviewBigAdvertisment';
-import PreviewSmallAdvertisment from '../PreviewAdvertisment/PreviewSmallAdvertisment/PreviewSmallAdvertisment';
+import PreviewBigAdvertisment from '../PreviewAdvertisment/PreviewBlocks/PreviewBigAdvertisment/PreviewBigAdvertisment';
+import PreviewSmallAdvertisment from '../PreviewAdvertisment/PreviewBlocks/PreviewSmallAdvertisment/PreviewSmallAdvertisment';
 
 import SearchBar from '../../SearchBar/SearchBar';
 const AdvertisementList: React.FC = () => {

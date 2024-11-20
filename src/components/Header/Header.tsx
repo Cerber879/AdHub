@@ -57,10 +57,12 @@ export function Header() {
                         <span>Мои Объявления</span>
                 </Link>
         
-                <Link 
+                <Link
                     to={ROUTES.CREATE_ADVERTISMENT}
-                    className={`${styles.button_link} ${styles.button_add_advertisment}`}>
-                        <span>Создать Объявление</span>
+                >
+                        <button className={`${styles.button_link} ${styles.button_add_advertisment}`}>
+                            <span>Создать Объявление</span>
+                        </button>
                 </Link>
 
                 <Link 
