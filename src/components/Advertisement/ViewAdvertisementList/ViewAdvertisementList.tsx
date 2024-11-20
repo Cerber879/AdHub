@@ -29,7 +29,6 @@ const AdvertisementList: React.FC = () => {
 
   return (
     <div>
-      <h2 className={styles.catalogue}>Каталог Объявлений</h2>
       <AdvertisementTop/>
       <ul className={styles.advertisment}>
         {advertisements.map((ad) => (

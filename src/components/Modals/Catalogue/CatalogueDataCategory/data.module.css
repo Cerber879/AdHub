@@ -1,0 +1,11 @@
+.container {
+    width: 100%;
+    height: auto;
+    padding: 20px;
+}
+
+.name {
+    font-size: 35px;
+    padding-bottom: 20px;
+    font-weight: 500;
+}
