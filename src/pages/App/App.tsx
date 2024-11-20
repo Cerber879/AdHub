@@ -9,7 +9,7 @@ import styles from './app.module.css'
 import Home from '../Home/HomePage';
 import CreateAdvertisementPage from '../CreateAdvertisement/CreateAdvertisementPage';
 import AboutUs from '../AboutUs/AboutUs';
-import CreateMessageComponent from '../Messenger/Messenger'
+import CreateMessageComponent from '../../components/Profile/Messenger/Messenger'
 
 
 import { Header } from '../../components/Header/Header';

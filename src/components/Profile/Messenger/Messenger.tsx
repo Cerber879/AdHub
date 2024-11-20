@@ -104,7 +104,8 @@ const CreateMessageComponent: React.FC = () =>
 
     return (
         <div className={styles.appContainer}>
-                <div className={styles.usersContainer}>
+            <div className={styles.usersContainer}>
+                <span className={styles.name_container}>Сообщения</span>
                 {users.map((user) => (
                     <div
                         key={user.id}
@@ -114,21 +115,21 @@ const CreateMessageComponent: React.FC = () =>
                         {user.name}
                     </div>
                 ))}
-                </div>
-                <div className={styles.chat__container}>
-                    {selectedUser && (
+            </div>
+            <div className={styles.chat__container}>
+                {selectedUser && (
                     <div className={styles.chatHeader}>
                         <div className={styles.avatar}></div>
                         <div className={styles.username}>{selectedUser.name}</div>
                     </div>
-                    )}
-                    <div className={styles.chat__box} id="chatBox" ref={chatBoxRef}>
-                        {selectedUser && messages[selectedUser.id]?.map((message, index) => (
-                            <div key={index} className={`${styles.message} ${styles[message.sender]}`}>
-                                {message.text}
-                            </div>
-                        ))}
-                    </div>
+                )}
+                <div className={styles.chat__box} id="chatBox" ref={chatBoxRef}>
+                    {selectedUser && messages[selectedUser.id]?.map((message, index) => (
+                        <div key={index} className={`${styles.message} ${styles[message.sender]}`}>
+                            {message.text}
+                        </div>
+                    ))}
+                </div>
                 <div className={styles.input__container}>
                     <input 
                         type="text" 
