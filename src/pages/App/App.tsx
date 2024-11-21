@@ -9,7 +9,7 @@ import styles from './app.module.css'
 import Home from '../Home/HomePage';
 import CreateAdvertisementPage from '../CreateAdvertisement/CreateAdvertisementPage';
 import AboutUs from '../AboutUs/AboutUs';
-import CreateMessageComponent from '../../components/Profile/Messenger/Messenger'
+import CreateMessageComponent from '../../components/Profile/ProfileMessenger/Messenger'
 
 
 import { Header } from '../../components/Header/Header';
@@ -21,6 +21,7 @@ import LoginModal from '../../components/Modals/Login/LoginModal';
 import Profile from '../Profile/ProfileMain/Profile';
 import Favourites from '../Profile/FavouritesPage/Favourites';
 import AdvertismentPage from '../AdvertismentPage/AdvertismentPage';
+import Chat from '../Profile/ChatPage/Chat';
 
 
 const App: React.FC = () => {
@@ -34,6 +35,7 @@ const App: React.FC = () => {
               <Route path={ROUTES.HOME} element={<Home />} />
               <Route path={ROUTES.PROFILE} element={<Profile />} />
               <Route path={ROUTES.FAVOURITES} element={<Favourites />} />
+              <Route path={ROUTES.MESSENGER} element={<Chat />} />
               <Route path={ROUTES.CREATE_ADVERTISMENT} element={<CreateAdvertisementPage />} />
               <Route path={ROUTES.ABOUT} element = {< AboutUs/>} />
               <Route path={ROUTES.REGISTER} element = {< RegisterModal onClose={()=>{}} onOpenLogin={()=>{}}/>} />

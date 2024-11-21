@@ -28,7 +28,7 @@
 }
 
 .passiveButton {
-    opacity: 0.6;
+    color: rgb(193, 193, 193);
 }
 
 .passiveButton:hover {
