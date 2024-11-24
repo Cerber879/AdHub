@@ -17,7 +17,7 @@ const PreviewSmallAdvertisment = () => {
       to={ROUTES.ADVERTISMENT} 
       className={styles.container}
     >
-      <PhotosBlock active={activeAd} />
+      <PhotosBlock active={activeAd} useStylesProfile={false}  />
       <DataAdvertisment />
     </Link>
   )

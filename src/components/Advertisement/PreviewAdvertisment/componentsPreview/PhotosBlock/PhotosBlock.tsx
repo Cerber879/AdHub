@@ -2,11 +2,14 @@ import React, { useRef, useState } from 'react'
 
 import { photos } from '../../../../../modules/data';
 
-import styles from './photos.module.css'
+import stylesProfile from './photoProfile.module.css';
+import stylesStandart from './photoStandart.module.css';
 
-const PhotosBlock: React.FC<{active: boolean;}> = ({ active }) => {
+const PhotosBlock: React.FC<{active: boolean; useStylesProfile: boolean}> = ({ active, useStylesProfile  }) => {
 
-    const [blockWidth, setBlockWidth] = useState(0);
+    const styles = useStylesProfile ? stylesProfile : stylesStandart;
+
+    const [blockWidth, setBlockWidth] = useState(1);
 
     const [currentImageIndex, setCurrentImageIndex] = useState(0);
     const imageBlockRef = useRef<HTMLDivElement>(null);
@@ -16,7 +19,12 @@ const PhotosBlock: React.FC<{active: boolean;}> = ({ active }) => {
         const rect = imageBlockRef.current.getBoundingClientRect();
         const x = e.clientX - rect.left;
         setBlockWidth(rect.width / Math.min(photos.length, 5));
-        const index = Math.floor(x / blockWidth);
+        let index = Math.floor(x / blockWidth);
+
+        if (index < 0 || index >= photos.length) {
+            index = 0;
+        } 
+
         setCurrentImageIndex(index);
         }
     };

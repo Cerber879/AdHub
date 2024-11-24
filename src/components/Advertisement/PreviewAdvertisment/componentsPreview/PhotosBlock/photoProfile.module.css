@@ -1,6 +1,6 @@
 .image_block {
-    width: 220px;
-    height: 220px;
+    width: 200px;
+    height: 170px;
     display: flex;
     justify-content: center;
 }
@@ -8,15 +8,15 @@
 .image_block img {
     max-width: 100%;
     border-radius: 8px;
-    width: 220px;
-    height: 220px;
+    width: 200px;
+    height: 170px;
     object-fit: cover; 
     object-position: center; 
 }
 
 .thumbnails {
-    width: 205px;
-    height: 215px;
+    width: 185px;
+    height: 165px;
     position: absolute;
     justify-content: center;
     align-items: end;
@@ -38,46 +38,23 @@
   
 .overlay {
     position: absolute;
-    width: 220px;
-    height: 220px;
+    width: 200px;
+    height: 170px;
     background-color: #555;
     opacity: 0.4;
+    border-radius: 8px;
 }
 
 .last_photo_text {
     position: absolute;
     display: flex;
     flex-direction: column;
-    width: 220px;
-    height: 220px;
+    width: 200px;
+    height: 170px;
     display: flex;
     justify-content: center;
     align-items: center;
     color: white;
     font-size: 20px;
     font-weight: 500;
-}
-
-.placeholder {
-    position: absolute;
-    width: 220px;
-    height: 220px;
-    background-color: #ddd;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 16px;
-    color: #888;
-}
-  
-.error {
-    position: absolute;
-    width: 220px;
-    height: 220px;
-    background-color: #f8d7da;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 16px;
-    color: #721c24;
 }

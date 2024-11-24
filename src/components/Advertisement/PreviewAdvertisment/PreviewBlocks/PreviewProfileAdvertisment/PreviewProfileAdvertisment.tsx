@@ -7,7 +7,7 @@ import { Link } from 'react-router-dom'
 import { ROUTES } from '../../../../../utils/routes'
 
 import DataAdvertisment from '../../componentsPreview/ProfileAdvertisment/DataAdvertisment/DataAdvertisment'
-import PhotosBlock from '../../componentsPreview/ProfileAdvertisment/PhotosBlock/PhotosBlock'
+import PhotosBlock from '../../componentsPreview/PhotosBlock/PhotosBlock'
 
 const PreviewProfileAdvertisment = () => {
 
@@ -20,7 +20,7 @@ const PreviewProfileAdvertisment = () => {
         to={ROUTES.ADVERTISMENT} 
         className={styles.container}
     >
-        <PhotosBlock active={activeAd}/>
+        <PhotosBlock active={activeAd} useStylesProfile={true}/>
         <DataAdvertisment />
     </Link>
   )

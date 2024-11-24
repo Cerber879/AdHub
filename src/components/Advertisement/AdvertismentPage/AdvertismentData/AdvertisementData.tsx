@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import styles from './advertisementdata.module.css'
 import { initialAdvertisement as ad } from '../../../../modules/data'
 import {initialUser as user} from '../../../../modules/data'
@@ -7,6 +7,15 @@ import { photos } from '../../../../modules/data'
 const AdvertisementData = () => {
   const [currentImage, setCurrentImage] = useState(0);
   const images = photos
+
+  const imageDivRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+      if (images[currentImage] && imageDivRef.current) {
+          imageDivRef.current.style.setProperty('--background-image', `url('${images[currentImage]}')`);
+      }
+  }, [currentImage, images]);
+
   return (
     <div className={styles.container}>
         <div >
@@ -28,20 +37,22 @@ const AdvertisementData = () => {
         </div>
         <div className={styles.flex_block}>
           <h2 className={styles.title}>{ad.Name}</h2>
-          
         </div>
+
         <div className={styles.main_block}>
           <div className={styles.main_image_description}>
-            <img
-              className={styles.image_block}
-              src={images[currentImage]}
-              alt="img"
-            />
+            <div className={styles.image_div} ref={imageDivRef}>
+              <img
+                className={styles.image_block}
+                src={images[currentImage]}
+                alt="img"
+              />
+            </div>
             <div className={styles.thumbnails}>
             {images.map((img, index) => (
               <img 
                 key={index}
-                className={`${styles.thumbnail} ${currentImage === index ? styles.active : ''}`}
+                className={`${styles.thumbnail} ${currentImage === index ? styles.active : styles.passive}`}
                 src={img}
                 alt={`thumbnail ${index}`}
                 onClick={() => setCurrentImage(index)}

@@ -1,6 +1,6 @@
 .image_block {
-    width: 200px;
-    height: 170px;
+    width: 220px;
+    height: 220px;
     display: flex;
     justify-content: center;
 }
@@ -8,15 +8,15 @@
 .image_block img {
     max-width: 100%;
     border-radius: 8px;
-    width: 200px;
-    height: 170px;
+    width: 220px;
+    height: 220px;
     object-fit: cover; 
     object-position: center; 
 }
 
 .thumbnails {
-    width: 185px;
-    height: 165px;
+    width: 205px;
+    height: 215px;
     position: absolute;
     justify-content: center;
     align-items: end;
@@ -38,18 +38,19 @@
   
 .overlay {
     position: absolute;
-    width: 200px;
-    height: 170px;
+    width: 220px;
+    height: 220px;
     background-color: #555;
     opacity: 0.4;
+    border-radius: 8px;
 }
 
 .last_photo_text {
     position: absolute;
     display: flex;
     flex-direction: column;
-    width: 200px;
-    height: 170px;
+    width: 220px;
+    height: 220px;
     display: flex;
     justify-content: center;
     align-items: center;
