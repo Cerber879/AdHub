@@ -11,8 +11,8 @@ datasource db {
 model User {
   id String @id @default(uuid())
 
-  phoneNumber String? @unique @map("phone_number")
   email       String? @unique
+  phoneNumber String? @unique @map("phone_number")
   password    String
 
   displayName String @map("display_name")
