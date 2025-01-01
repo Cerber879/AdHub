@@ -94,7 +94,7 @@ const CreateMessageComponent: React.FC = () =>
         {
             handleUserClick(users[0]); // Выбираем первого пользователя по умолчанию
         }
-    }, [handleUserClick, users]);
+    }, []);
 
     useEffect(() => {
         if (chatBoxRef.current && selectedUser) {

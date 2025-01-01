@@ -2,6 +2,15 @@
 # THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
 # ------------------------------------------------------
 
+input ChangePasswordInput {
+  newPassword: String!
+  oldPassword: String!
+}
+
+input ChangePhoneNumberInput {
+  phoneNumber: String!
+}
+
 input CreateUserInput {
   displayName: String!
   email: String
@@ -34,6 +43,8 @@ input LoginInput {
 }
 
 type Mutation {
+  changeEmail(data: ChangePhoneNumberInput!): Boolean!
+  changePassword(data: ChangePasswordInput!): Boolean!
   changeProfileAvatar(avatar: Upload!): Boolean!
   clearSessionCookie: Boolean!
   createUser(data: CreateUserInput!): Boolean!

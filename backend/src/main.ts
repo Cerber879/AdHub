@@ -11,7 +11,6 @@ import { ValidationPipe } from '@nestjs/common';
 import { ms, type StringValue } from './shared/utils/ms.util';
 import { parseBoolean } from './shared/utils/parse-boolean.util';
 
-
 async function bootstrap() {
 	const app = await NestFactory.create(CoreModule);
 
