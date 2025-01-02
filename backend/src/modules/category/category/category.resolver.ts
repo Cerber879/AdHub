@@ -8,7 +8,7 @@ import { CategoryModel } from './models/category.model';
 export class CategoryResolver {
   constructor(private readonly categoryService: CategoryService) {}
 
-  @Mutation(() => CategoryModel)
+  @Mutation(() => CategoryModel, { name: 'createCategory' })
   async createCategory(@Args('input') input: CreateCategoryInput) {
     return this.categoryService.create(input);
   }
@@ -23,7 +23,7 @@ export class CategoryResolver {
     return this.categoryService.findSubcategories(parentId);
   }
 
-  @Mutation(() => CategoryModel)
+  @Mutation(() => CategoryModel, { name: 'updateCategory' })
   async updateCategory(
     @Args('id') id: string,
     @Args('input') input: UpdateCategoryInput
@@ -31,7 +31,7 @@ export class CategoryResolver {
     return this.categoryService.update(id, input);
   }
 
-  @Mutation(() => Boolean)
+  @Mutation(() => Boolean, { name: 'deleteCategory' })
   async deleteCategory(@Args('id') id: string) {
     return this.categoryService.delete(id);
   }

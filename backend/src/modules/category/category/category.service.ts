@@ -11,7 +11,11 @@ export class CategoryService {
     return this.prisma.category.create({
       data: {
         name: input.name,
-        parent: input.parentId ? { connect: { id: input.parentId } } : null,
+        parent: input.parentId ? {
+             connect: { 
+                id: input.parentId 
+            } 
+        } : null,
       },
     });
   }

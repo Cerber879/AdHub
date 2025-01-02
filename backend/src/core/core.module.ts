@@ -12,6 +12,8 @@ import { RedisModule } from './redis/redis.module';
 import { SessionModule } from '../modules/auth/session/session.module';
 import { ProfileModule } from '../modules/auth/profile/profile.module';
 import { AnnouncementModule } from '../modules/announcement/announcement.module';
+import { CategoryModel } from '../modules/category/category/models/category.model';
+import { PhotoModule } from '../modules/photo/photo.module';
 
 @Module({
   imports: [
@@ -30,7 +32,9 @@ import { AnnouncementModule } from '../modules/announcement/announcement.module'
 		AccountModule,
 		SessionModule,
 		ProfileModule,
-		AnnouncementModule
+		AnnouncementModule,
+		CategoryModel,
+		PhotoModule
   ],
 })
 export class CoreModule {}
