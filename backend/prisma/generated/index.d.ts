@@ -3141,19 +3141,19 @@ export namespace Prisma {
   export type CategoryMinAggregateOutputType = {
     id: string | null
     name: string | null
-    parent_id: string | null
+    parentId: string | null
   }
 
   export type CategoryMaxAggregateOutputType = {
     id: string | null
     name: string | null
-    parent_id: string | null
+    parentId: string | null
   }
 
   export type CategoryCountAggregateOutputType = {
     id: number
     name: number
-    parent_id: number
+    parentId: number
     _all: number
   }
 
@@ -3161,19 +3161,19 @@ export namespace Prisma {
   export type CategoryMinAggregateInputType = {
     id?: true
     name?: true
-    parent_id?: true
+    parentId?: true
   }
 
   export type CategoryMaxAggregateInputType = {
     id?: true
     name?: true
-    parent_id?: true
+    parentId?: true
   }
 
   export type CategoryCountAggregateInputType = {
     id?: true
     name?: true
-    parent_id?: true
+    parentId?: true
     _all?: true
   }
 
@@ -3252,7 +3252,7 @@ export namespace Prisma {
   export type CategoryGroupByOutputType = {
     id: string
     name: string
-    parent_id: string | null
+    parentId: string | null
     _count: CategoryCountAggregateOutputType | null
     _min: CategoryMinAggregateOutputType | null
     _max: CategoryMaxAggregateOutputType | null
@@ -3275,7 +3275,7 @@ export namespace Prisma {
   export type CategorySelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
     name?: boolean
-    parent_id?: boolean
+    parentId?: boolean
     children?: boolean | Category$childrenArgs<ExtArgs>
     announcement?: boolean | Category$announcementArgs<ExtArgs>
     characteristic?: boolean | Category$characteristicArgs<ExtArgs>
@@ -3286,14 +3286,14 @@ export namespace Prisma {
   export type CategorySelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
     name?: boolean
-    parent_id?: boolean
+    parentId?: boolean
     parent?: boolean | Category$parentArgs<ExtArgs>
   }, ExtArgs["result"]["category"]>
 
   export type CategorySelectScalar = {
     id?: boolean
     name?: boolean
-    parent_id?: boolean
+    parentId?: boolean
   }
 
   export type CategoryInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -3318,7 +3318,7 @@ export namespace Prisma {
     scalars: $Extensions.GetPayloadResult<{
       id: string
       name: string
-      parent_id: string | null
+      parentId: string | null
     }, ExtArgs["result"]["category"]>
     composites: {}
   }
@@ -3718,7 +3718,7 @@ export namespace Prisma {
   interface CategoryFieldRefs {
     readonly id: FieldRef<"Category", 'String'>
     readonly name: FieldRef<"Category", 'String'>
-    readonly parent_id: FieldRef<"Category", 'String'>
+    readonly parentId: FieldRef<"Category", 'String'>
   }
     
 
@@ -12798,7 +12798,7 @@ export namespace Prisma {
   export const CategoryScalarFieldEnum: {
     id: 'id',
     name: 'name',
-    parent_id: 'parent_id'
+    parentId: 'parentId'
   };
 
   export type CategoryScalarFieldEnum = (typeof CategoryScalarFieldEnum)[keyof typeof CategoryScalarFieldEnum]
@@ -13119,7 +13119,7 @@ export namespace Prisma {
     NOT?: CategoryWhereInput | CategoryWhereInput[]
     id?: StringFilter<"Category"> | string
     name?: StringFilter<"Category"> | string
-    parent_id?: StringNullableFilter<"Category"> | string | null
+    parentId?: StringNullableFilter<"Category"> | string | null
     children?: CategoryListRelationFilter
     announcement?: AnnouncementListRelationFilter
     characteristic?: CharacteristicListRelationFilter
@@ -13129,7 +13129,7 @@ export namespace Prisma {
   export type CategoryOrderByWithRelationInput = {
     id?: SortOrder
     name?: SortOrder
-    parent_id?: SortOrderInput | SortOrder
+    parentId?: SortOrderInput | SortOrder
     children?: CategoryOrderByRelationAggregateInput
     announcement?: AnnouncementOrderByRelationAggregateInput
     characteristic?: CharacteristicOrderByRelationAggregateInput
@@ -13142,7 +13142,7 @@ export namespace Prisma {
     OR?: CategoryWhereInput[]
     NOT?: CategoryWhereInput | CategoryWhereInput[]
     name?: StringFilter<"Category"> | string
-    parent_id?: StringNullableFilter<"Category"> | string | null
+    parentId?: StringNullableFilter<"Category"> | string | null
     children?: CategoryListRelationFilter
     announcement?: AnnouncementListRelationFilter
     characteristic?: CharacteristicListRelationFilter
@@ -13152,7 +13152,7 @@ export namespace Prisma {
   export type CategoryOrderByWithAggregationInput = {
     id?: SortOrder
     name?: SortOrder
-    parent_id?: SortOrderInput | SortOrder
+    parentId?: SortOrderInput | SortOrder
     _count?: CategoryCountOrderByAggregateInput
     _max?: CategoryMaxOrderByAggregateInput
     _min?: CategoryMinOrderByAggregateInput
@@ -13164,7 +13164,7 @@ export namespace Prisma {
     NOT?: CategoryScalarWhereWithAggregatesInput | CategoryScalarWhereWithAggregatesInput[]
     id?: StringWithAggregatesFilter<"Category"> | string
     name?: StringWithAggregatesFilter<"Category"> | string
-    parent_id?: StringNullableWithAggregatesFilter<"Category"> | string | null
+    parentId?: StringNullableWithAggregatesFilter<"Category"> | string | null
   }
 
   export type AnnouncementWhereInput = {
@@ -13809,7 +13809,7 @@ export namespace Prisma {
   export type CategoryUncheckedCreateInput = {
     id?: string
     name: string
-    parent_id?: string | null
+    parentId?: string | null
     children?: CategoryUncheckedCreateNestedManyWithoutParentInput
     announcement?: AnnouncementUncheckedCreateNestedManyWithoutCategoryInput
     characteristic?: CharacteristicUncheckedCreateNestedManyWithoutCategoryInput
@@ -13827,7 +13827,7 @@ export namespace Prisma {
   export type CategoryUncheckedUpdateInput = {
     id?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
-    parent_id?: NullableStringFieldUpdateOperationsInput | string | null
+    parentId?: NullableStringFieldUpdateOperationsInput | string | null
     children?: CategoryUncheckedUpdateManyWithoutParentNestedInput
     announcement?: AnnouncementUncheckedUpdateManyWithoutCategoryNestedInput
     characteristic?: CharacteristicUncheckedUpdateManyWithoutCategoryNestedInput
@@ -13836,7 +13836,7 @@ export namespace Prisma {
   export type CategoryCreateManyInput = {
     id?: string
     name: string
-    parent_id?: string | null
+    parentId?: string | null
   }
 
   export type CategoryUpdateManyMutationInput = {
@@ -13847,7 +13847,7 @@ export namespace Prisma {
   export type CategoryUncheckedUpdateManyInput = {
     id?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
-    parent_id?: NullableStringFieldUpdateOperationsInput | string | null
+    parentId?: NullableStringFieldUpdateOperationsInput | string | null
   }
 
   export type AnnouncementCreateInput = {
@@ -14584,19 +14584,19 @@ export namespace Prisma {
   export type CategoryCountOrderByAggregateInput = {
     id?: SortOrder
     name?: SortOrder
-    parent_id?: SortOrder
+    parentId?: SortOrder
   }
 
   export type CategoryMaxOrderByAggregateInput = {
     id?: SortOrder
     name?: SortOrder
-    parent_id?: SortOrder
+    parentId?: SortOrder
   }
 
   export type CategoryMinOrderByAggregateInput = {
     id?: SortOrder
     name?: SortOrder
-    parent_id?: SortOrder
+    parentId?: SortOrder
   }
 
   export type FloatFilter<$PrismaModel = never> = {
@@ -16423,7 +16423,7 @@ export namespace Prisma {
   export type CategoryUncheckedCreateWithoutChildrenInput = {
     id?: string
     name: string
-    parent_id?: string | null
+    parentId?: string | null
     announcement?: AnnouncementUncheckedCreateNestedManyWithoutCategoryInput
     characteristic?: CharacteristicUncheckedCreateNestedManyWithoutCategoryInput
   }
@@ -16455,7 +16455,7 @@ export namespace Prisma {
     NOT?: CategoryScalarWhereInput | CategoryScalarWhereInput[]
     id?: StringFilter<"Category"> | string
     name?: StringFilter<"Category"> | string
-    parent_id?: StringNullableFilter<"Category"> | string | null
+    parentId?: StringNullableFilter<"Category"> | string | null
   }
 
   export type AnnouncementUpsertWithWhereUniqueWithoutCategoryInput = {
@@ -16522,7 +16522,7 @@ export namespace Prisma {
   export type CategoryUncheckedUpdateWithoutChildrenInput = {
     id?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
-    parent_id?: NullableStringFieldUpdateOperationsInput | string | null
+    parentId?: NullableStringFieldUpdateOperationsInput | string | null
     announcement?: AnnouncementUncheckedUpdateManyWithoutCategoryNestedInput
     characteristic?: CharacteristicUncheckedUpdateManyWithoutCategoryNestedInput
   }
@@ -16669,7 +16669,7 @@ export namespace Prisma {
   export type CategoryUncheckedCreateWithoutAnnouncementInput = {
     id?: string
     name: string
-    parent_id?: string | null
+    parentId?: string | null
     children?: CategoryUncheckedCreateNestedManyWithoutParentInput
     characteristic?: CharacteristicUncheckedCreateNestedManyWithoutCategoryInput
   }
@@ -16833,7 +16833,7 @@ export namespace Prisma {
   export type CategoryUncheckedUpdateWithoutAnnouncementInput = {
     id?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
-    parent_id?: NullableStringFieldUpdateOperationsInput | string | null
+    parentId?: NullableStringFieldUpdateOperationsInput | string | null
     children?: CategoryUncheckedUpdateManyWithoutParentNestedInput
     characteristic?: CharacteristicUncheckedUpdateManyWithoutCategoryNestedInput
   }
@@ -16849,7 +16849,7 @@ export namespace Prisma {
   export type CategoryUncheckedCreateWithoutCharacteristicInput = {
     id?: string
     name: string
-    parent_id?: string | null
+    parentId?: string | null
     children?: CategoryUncheckedCreateNestedManyWithoutParentInput
     announcement?: AnnouncementUncheckedCreateNestedManyWithoutCategoryInput
   }
@@ -16903,7 +16903,7 @@ export namespace Prisma {
   export type CategoryUncheckedUpdateWithoutCharacteristicInput = {
     id?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
-    parent_id?: NullableStringFieldUpdateOperationsInput | string | null
+    parentId?: NullableStringFieldUpdateOperationsInput | string | null
     children?: CategoryUncheckedUpdateManyWithoutParentNestedInput
     announcement?: AnnouncementUncheckedUpdateManyWithoutCategoryNestedInput
   }

@@ -134,7 +134,7 @@ exports.Prisma.UserScalarFieldEnum = {
 exports.Prisma.CategoryScalarFieldEnum = {
   id: 'id',
   name: 'name',
-  parent_id: 'parent_id'
+  parentId: 'parentId'
 };
 
 exports.Prisma.AnnouncementScalarFieldEnum = {

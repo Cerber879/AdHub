@@ -39,13 +39,13 @@ model Category {
   id             String     @id @default(uuid())
 
   name           String    
-  parent_id      String?     
+  parentId       String?     
 
   children       Category[] @relation("CategoryParent") 
   announcement   Announcement[]
   characteristic Characteristic[]
 
-  parent         Category?  @relation("CategoryParent", fields: [parent_id], references: [id])
+  parent         Category?  @relation("CategoryParent", fields: [parentId], references: [id])
 
   @@map("categories") 
 }
