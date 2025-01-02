@@ -2,6 +2,24 @@
 # THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
 # ------------------------------------------------------
 
+type AnnouncementModel {
+  announcementCharacteristic: [String!]
+  categoryId: Float!
+  condition: String!
+  createdAt: DateTime!
+  description: String!
+  favourites: [String!]
+  id: ID!
+  name: String!
+  photo: [String!]
+  placementDate: DateTime!
+  price: Float!
+  review: [String!]
+  status: String!
+  updatedAt: DateTime!
+  userId: String!
+}
+
 input ChangePasswordInput {
   newPassword: String!
   oldPassword: String!
@@ -9,6 +27,16 @@ input ChangePasswordInput {
 
 input ChangePhoneNumberInput {
   phoneNumber: String!
+}
+
+input CreateAnnouncementInput {
+  categoryId: Float!
+  condition: String!
+  description: String!
+  name: String!
+  placementDate: DateTime!
+  price: Float!
+  status: String!
 }
 
 input CreateUserInput {
@@ -47,17 +75,22 @@ type Mutation {
   changePassword(data: ChangePasswordInput!): Boolean!
   changeProfileAvatar(avatar: Upload!): Boolean!
   clearSessionCookie: Boolean!
+  createAnnouncement(input: CreateAnnouncementInput!): Boolean!
   createUser(data: CreateUserInput!): Boolean!
+  deleteAnnouncement(id: String!): Boolean!
   loginUser(data: LoginInput!): UserModel!
   logoutUser: Boolean!
   removeProfileAvatar: Boolean!
   removeSession(id: String!): Boolean!
+  updateAnnouncement(id: String!, input: UpdateAnnouncementInput!): Boolean!
 }
 
 type Query {
   findCurrentSession: SessionModel!
   findProfile: UserModel!
   findSessionsByUser: [SessionModel!]!
+  getAnnouncementById(id: String!): AnnouncementModel!
+  getAnnouncementsByCategory(categoryId: String!): [AnnouncementModel!]!
 }
 
 type SessionMetadataModel {
@@ -71,6 +104,15 @@ type SessionModel {
   id: ID!
   metadata: SessionMetadataModel!
   userId: String!
+}
+
+input UpdateAnnouncementInput {
+  categoryId: Float
+  condition: String
+  description: String
+  name: String
+  price: Float
+  status: String
 }
 
 """The `Upload` scalar type represents a file upload."""
