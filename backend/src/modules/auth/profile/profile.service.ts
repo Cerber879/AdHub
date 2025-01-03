@@ -77,7 +77,7 @@ export class ProfileService {
   public async changeInfo(user: User, input: ChangeProfileInfoInput) {
     const { displayName, bio } = input
 
-    if (displayName !== '') {
+    if (displayName === '') {
         throw new BadRequestException('Имя не должно быть пустым')
     }
 

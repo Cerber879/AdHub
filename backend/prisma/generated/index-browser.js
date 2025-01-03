@@ -131,6 +131,79 @@ exports.Prisma.UserScalarFieldEnum = {
   updatedAt: 'updatedAt'
 };
 
+exports.Prisma.CategoryScalarFieldEnum = {
+  id: 'id',
+  name: 'name',
+  parentId: 'parentId'
+};
+
+exports.Prisma.AnnouncementScalarFieldEnum = {
+  id: 'id',
+  name: 'name',
+  price: 'price',
+  description: 'description',
+  placementDate: 'placementDate',
+  status: 'status',
+  condition: 'condition',
+  userId: 'userId',
+  categoryId: 'categoryId'
+};
+
+exports.Prisma.CharacteristicScalarFieldEnum = {
+  id: 'id',
+  name: 'name',
+  type: 'type',
+  categoryId: 'categoryId'
+};
+
+exports.Prisma.AnnouncementCharacteristicScalarFieldEnum = {
+  id: 'id',
+  value: 'value',
+  productId: 'productId',
+  characteristicId: 'characteristicId'
+};
+
+exports.Prisma.ChatScalarFieldEnum = {
+  id: 'id'
+};
+
+exports.Prisma.MessageScalarFieldEnum = {
+  id: 'id',
+  Content: 'Content',
+  Status: 'Status',
+  Date: 'Date',
+  userID: 'userID',
+  chatID: 'chatID'
+};
+
+exports.Prisma.ChatMembersScalarFieldEnum = {
+  id: 'id',
+  chatID: 'chatID',
+  userID: 'userID'
+};
+
+exports.Prisma.ReviewScalarFieldEnum = {
+  id: 'id',
+  grade: 'grade',
+  description: 'description',
+  userID: 'userID',
+  announcementID: 'announcementID'
+};
+
+exports.Prisma.FavouritesScalarFieldEnum = {
+  id: 'id',
+  userID: 'userID',
+  announcementID: 'announcementID'
+};
+
+exports.Prisma.PhotoScalarFieldEnum = {
+  id: 'id',
+  name: 'name',
+  resolution: 'resolution',
+  link: 'link',
+  announcementID: 'announcementID'
+};
+
 exports.Prisma.SortOrder = {
   asc: 'asc',
   desc: 'desc'
@@ -145,10 +218,31 @@ exports.Prisma.NullsOrder = {
   first: 'first',
   last: 'last'
 };
+exports.AnnouncementStatus = exports.$Enums.AnnouncementStatus = {
+  ACTIVE: 'ACTIVE',
+  SOLD: 'SOLD',
+  INACTIVE: 'INACTIVE',
+  EXPIRED: 'EXPIRED'
+};
 
+exports.ProductCondition = exports.$Enums.ProductCondition = {
+  NEW: 'NEW',
+  USED: 'USED',
+  REFURBISHED: 'REFURBISHED'
+};
 
 exports.Prisma.ModelName = {
-  User: 'User'
+  User: 'User',
+  Category: 'Category',
+  Announcement: 'Announcement',
+  Characteristic: 'Characteristic',
+  AnnouncementCharacteristic: 'AnnouncementCharacteristic',
+  Chat: 'Chat',
+  Message: 'Message',
+  ChatMembers: 'ChatMembers',
+  Review: 'Review',
+  Favourites: 'Favourites',
+  Photo: 'Photo'
 };
 
 /**

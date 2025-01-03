@@ -11,6 +11,9 @@ import { getGraphQLConfig } from './config/graphql.config'
 import { RedisModule } from './redis/redis.module';
 import { SessionModule } from '../modules/auth/session/session.module';
 import { ProfileModule } from '../modules/auth/profile/profile.module';
+import { AnnouncementModule } from '../modules/announcement/announcement.module';
+import { CategoryModel } from '../modules/category/category/models/category.model';
+import { PhotoModule } from '../modules/photo/photo.module';
 
 @Module({
   imports: [
@@ -28,7 +31,10 @@ import { ProfileModule } from '../modules/auth/profile/profile.module';
     	RedisModule,
 		AccountModule,
 		SessionModule,
-		ProfileModule
+		ProfileModule,
+		AnnouncementModule,
+		CategoryModel,
+		PhotoModule
   ],
 })
 export class CoreModule {}

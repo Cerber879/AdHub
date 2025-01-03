@@ -26,5 +26,157 @@ model User {
   createdAt DateTime @default(now()) @map("created_at")
   updatedAt DateTime @updatedAt @map("updated_at")
 
+  announcement Announcement[]
+  message      Message[]
+  chatMembers  ChatMembers[]
+  Review       Review[]
+  Favourites   Favourites[]
+
   @@map("users")
+}
+
+model Category {
+  id String @id @default(uuid())
+
+  name     String
+  parentId String?
+
+  children       Category[]       @relation("CategoryParent")
+  announcement   Announcement[]
+  characteristic Characteristic[]
+
+  parent Category? @relation("CategoryParent", fields: [parentId], references: [id])
+
+  @@map("categories")
+}
+
+model Announcement {
+  id String @id @default(uuid())
+
+  name          String
+  price         Float
+  description   String
+  placementDate DateTime
+
+  status    AnnouncementStatus
+  condition ProductCondition
+
+  userId     String
+  categoryId String
+
+  photo                      Photo[]
+  review                     Review[]
+  favourites                 Favourites[]
+  announcementCharacteristic AnnouncementCharacteristic[]
+
+  user     User     @relation(fields: [userId], references: [id])
+  category Category @relation(fields: [categoryId], references: [id])
+
+  @@map("announcements")
+}
+
+model Characteristic {
+  id String @id @default(uuid())
+
+  name String
+  type String
+
+  categoryId String
+
+  category Category @relation(fields: [categoryId], references: [id])
+
+  announcementCharacteristic AnnouncementCharacteristic[]
+
+  @@map("characteristics")
+}
+
+model AnnouncementCharacteristic {
+  id String @id @default(uuid())
+
+  value String
+
+  productId        String
+  characteristicId String
+
+  announcement   Announcement   @relation(fields: [productId], references: [id])
+  characteristic Characteristic @relation(fields: [characteristicId], references: [id])
+}
+
+model Chat {
+  id String @id @default(uuid())
+
+  messages    Message[]
+  chatMembers ChatMembers[]
+}
+
+model Message {
+  id String @id @default(uuid())
+
+  Content String   @db.VarChar(1000)
+  Status  Int      @default(0) // 0 - непрочитанное, 1 - прочитанное
+  Date    DateTime @default(now())
+
+  userID String
+  chatID String
+
+  user User @relation(fields: [userID], references: [id])
+  chat Chat @relation(fields: [chatID], references: [id])
+}
+
+model ChatMembers {
+  id String @id @default(uuid())
+
+  chatID String
+  userID String
+
+  user User @relation(fields: [userID], references: [id])
+  chat Chat @relation(fields: [chatID], references: [id])
+}
+
+model Review {
+  id String @id @default(uuid())
+
+  grade       Float
+  description String @db.Text
+
+  userID         String
+  announcementID String
+
+  user         User         @relation(fields: [userID], references: [id])
+  announcement Announcement @relation(fields: [announcementID], references: [id])
+}
+
+model Favourites {
+  id String @id @default(uuid())
+
+  userID         String
+  announcementID String
+
+  user         User         @relation(fields: [userID], references: [id])
+  announcement Announcement @relation(fields: [announcementID], references: [id])
+}
+
+model Photo {
+  id String @id @default(uuid())
+
+  name       String @db.VarChar(50)
+  resolution String @db.VarChar(15)
+  link       String @db.VarChar(200)
+
+  announcementID String
+
+  announcement Announcement @relation(fields: [announcementID], references: [id])
+}
+
+enum AnnouncementStatus {
+  ACTIVE
+  SOLD
+  INACTIVE
+  EXPIRED
+}
+
+enum ProductCondition {
+  NEW
+  USED
+  REFURBISHED
 }

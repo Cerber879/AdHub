@@ -36,21 +36,22 @@ model User {
 }
 
 model Category {
-  id             Int        @id @default(autoincrement()) 
+  id             String     @id @default(uuid())
+
   name           String    
-  parent_id      Int?     
+  parentId       String?     
 
   children       Category[] @relation("CategoryParent") 
   announcement   Announcement[]
   characteristic Characteristic[]
 
-  parent         Category?  @relation("CategoryParent", fields: [parent_id], references: [id])
+  parent         Category?  @relation("CategoryParent", fields: [parentId], references: [id])
 
   @@map("categories") 
 }
 
 model Announcement {
-  id              Int       @id @default(autoincrement())
+  id              String     @id @default(uuid())
 
   name            String    
   price           Float     
@@ -61,7 +62,7 @@ model Announcement {
   condition       ProductCondition  
 
   userId          String     
-  categoryId      Int
+  categoryId      String
 
   photo                      Photo[]
   review                     Review[]
@@ -75,11 +76,12 @@ model Announcement {
 }
 
 model Characteristic {
-  id            Int       @id @default(autoincrement()) 
+  id            String    @id @default(uuid())
 
   name          String    
   type          String   
-  categoryId    Int     
+
+  categoryId    String  
 
   category      Category  @relation(fields: [categoryId], references: [id])
 
@@ -89,12 +91,12 @@ model Characteristic {
 }
 
 model AnnouncementCharacteristic {
-  id               Int            @id @default(autoincrement()) 
+  id               String         @id @default(uuid())
  
   value            String      
 
-  productId        Int       
-  characteristicId Int         
+  productId        String       
+  characteristicId String         
 
   announcement     Announcement   @relation(fields: [productId], references: [id]) 
   characteristic   Characteristic @relation(fields: [characteristicId], references: [id]) 
@@ -102,15 +104,14 @@ model AnnouncementCharacteristic {
 
 model Chat {
   id     String  @id @default(uuid())
-  name   String  @db.VarChar(50) // ???????????????????????????
-
+  
   messages     Message[]
   chatMembers  ChatMembers[]
 }
 
-
 model Message {
   id        String   @id @default(uuid())
+
   Content   String   @db.VarChar(1000)
   Status    Int      @default(0) // 0 - непрочитанное, 1 - прочитанное
   Date      DateTime @default(now())
@@ -139,7 +140,7 @@ model Review {
   description     String @db.Text
 
   userID          String
-  announcementID  Int
+  announcementID  String
 
   user            User            @relation(fields: [userID], references: [id])
   announcement    Announcement    @relation(fields: [announcementID], references: [id])
@@ -149,27 +150,27 @@ model Favourites {
   id               String  @id @default(uuid())
 
   userID           String
-  announcementID   Int
+  announcementID   String
 
   user             User          @relation(fields: [userID], references: [id])
   announcement     Announcement  @relation(fields: [announcementID], references: [id])
 }
 
 model Photo {
-  PhotoID          String  @id @default(uuid())
+  id               String  @id @default(uuid())
 
   name             String  @db.VarChar(50)
   resolution       String  @db.VarChar(15)
   link             String  @db.VarChar(200)
 
-  announcementID  Int
+  announcementID   String
 
-  announcement    Announcement @relation(fields: [announcementID], references: [id])
+  announcement     Announcement @relation(fields: [announcementID], references: [id])
 }
 
 
 enum AnnouncementStatus {
-  ACTIVE   
+  ACTIVE
   SOLD      
   INACTIVE  
   EXPIRED   
