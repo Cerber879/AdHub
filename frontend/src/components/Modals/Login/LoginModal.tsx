@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { setUser } from '../../../store/slices/userSlise';
-import { loginApi } from '../../../services/api';
 import { User } from '../../../modules/types';
 import styles from '../modals.module.css'; 
 import { validateEmail, validatePhoneNumber } from '../modals';
@@ -22,13 +21,7 @@ const LoginModal: React.FC<{ onClose: () => void, onOpenRegister: () => void }> 
 
   const handleLogin = async () => {
     if (!loginError){
-      try {
-        onClose();
-        const user: User = await loginApi(login, password);
-        dispatch(setUser(user));
-      } catch (error) {
-        //setError('Invalid login or password');
-      }
+
     } else {
       setLoginDirty(true)
     }

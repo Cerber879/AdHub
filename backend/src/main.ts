@@ -16,7 +16,7 @@ async function bootstrap() {
 
 	const config = app.get(ConfigService)
 	const redis = app.get(RedisService)
-
+	
 	app.use(cookieParser(config.getOrThrow<string>('COOKIES_SECRET')))
 
 	app.useGlobalPipes(
@@ -55,6 +55,7 @@ async function bootstrap() {
 		exposedHeaders: ['set-cookie']
 	})
 
-		await app.listen(config.getOrThrow<number>('APPLICATION_PORT'))
+	await app.listen(config.getOrThrow<number>('APPLICATION_PORT'))
 }
 bootstrap();
+

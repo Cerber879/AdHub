@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from 'react';
-import { register } from '../../../services/api';
 import styles from '../modals.module.css'; 
 import { validateEmail, validatePhoneNumber } from '../modals';
+
+import { useCreateUserMutation } from '../../../graphql/generated/output';
 
 const RegisterModal: React.FC<{ onClose: () => void, onOpenLogin: () => void }> = ({ onClose, onOpenLogin }) => {
   const [name, setName] = useState('');
@@ -19,16 +20,27 @@ const RegisterModal: React.FC<{ onClose: () => void, onOpenLogin: () => void }> 
   const [loginError, setLoginError] = useState('');
   const [passwordError, setPasswordError] = useState('Пароль должен содержать не менее 8 символов.');
 
+  const [isEmail, setIsEmail] = useState(false);
   const [formValid, setFormValid] = useState(false);
+
+  const [createUser] = useCreateUserMutation()
 
   const handleRegister = async () => {
     try {
-      await register(login, password, name, type);
-      onClose();
-    } catch (error) {
-      //setError('Registration failed');
-      console.clear();
-      console.log(error);
+      console.log(name, type, login, password);
+      const variables = {
+        data: {
+          displayName: name,
+          typeProfile: type,
+          [isEmail ? 'email' : 'phoneNumber']: login,
+          password: password,
+        },
+      };
+      await createUser({ variables });
+      alert('Пользователь зарегистрирован!');
+    } catch (error: any) {
+      console.error('Ошибка при регистрации:', error);
+      alert(error.message || 'Ошибка регистрации. Попробуйте снова.');
     }
   };
 
@@ -49,7 +61,6 @@ const RegisterModal: React.FC<{ onClose: () => void, onOpenLogin: () => void }> 
     setTypeDirty(true)
     const value = e.target.value;
     setType(value);
-    console.log(value)
     if (value === "") {
       setTypeError('Обязательное поле выбора.');
     } else {
@@ -66,12 +77,15 @@ const RegisterModal: React.FC<{ onClose: () => void, onOpenLogin: () => void }> 
       if (!validateEmail(value)) {
         setLoginError('Некорректная почта.');
       } else {
+        setIsEmail(true)
+        console.log("test email")
         setLoginError('');
       }
     } else if (/^[+0-9]+$/.test(value)) {
       if (!validatePhoneNumber(value)) {
         setLoginError('Неправильный телефон.');
       } else {
+        setIsEmail(false)
         setLoginError('');
       }
     } else {
@@ -96,14 +110,12 @@ const RegisterModal: React.FC<{ onClose: () => void, onOpenLogin: () => void }> 
   }
 
   useEffect(() => {
-    if(login === '' || password === '' || name === '' || type === '' ||
-      loginError || passwordError || nameError || typeError
-    ){
-      setFormValid(false)
-    } else {
-      setFormValid(true)
-    }
-  }, [login, loginError, name, nameError, password, passwordError, type, typeError])
+    setFormValid(
+      !loginError && !passwordError && !nameError && !typeError &&
+      login !== '' && password !== '' && name !== '' && type !== ''
+    );
+  }, [login, loginError, name, nameError, password, passwordError, type, typeError]);
+  
 
   return (
     <div className={styles.modal_overlay}>
@@ -139,8 +151,8 @@ const RegisterModal: React.FC<{ onClose: () => void, onOpenLogin: () => void }> 
             className={typeDirty && typeError ? styles.input_error : ''}
           >
             <option value="">Выберите тип профиля</option>
-            <option value="organization">Организация</option>
-            <option value="individual">Часное лицо</option>
+            <option value="Организация">Организация</option>
+            <option value="Часное лицо">Часное лицо</option>
           </select>
           {typeDirty && typeError && <span className={styles.error_message}>{typeError}</span>}
         </div>

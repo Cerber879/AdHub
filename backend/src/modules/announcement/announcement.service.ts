@@ -13,7 +13,7 @@ export class AnnouncementService {
     const { categoryId, status, condition, ...rest } = input;
 
     const announcementStatus = parseAnnouncementStatus(status)
-    const announcementCondition = parseAnnouncementCondition(status)
+    const announcementCondition = parseAnnouncementCondition(condition)
 
     await this.prismaService.announcement.create({
       data: { 

@@ -13,9 +13,9 @@ export class AnnouncementResolver {
 
   @Authorization()
   @Mutation(() => Boolean, { name: 'createAnnouncement' })
-  async create(
+  async createAnnouncement(
     @Authorized() user: User,
-    @Args('input') input: CreateAnnouncementInput
+    @Args('data') input: CreateAnnouncementInput
   ) {
     return this.announcementService.create(input, user);
   }

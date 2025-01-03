@@ -22,5 +22,5 @@
   },
   "include": [
     "src"
-  ]
+, "graphql.config.ts", "apollo.config.js", "graphql.d.ts"  ]
 }

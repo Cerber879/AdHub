@@ -1,4 +1,5 @@
-import { AnnouncementStatus, ProductCondition } from '../../../prisma/generated';
+import { AnnouncementStatus, ProductCondition } from '../../../prisma/generated'
+import { AnnouncementStatusType, ProductConditionType } from '../types/announcement-types'
 
 export function parseAnnouncementStatus(status: string): AnnouncementStatus {
     const upperStatus = status.toUpperCase();

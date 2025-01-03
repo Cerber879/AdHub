@@ -8,7 +8,7 @@ import { PhotoModel } from './models/photo.model';
 export class PhotoResolver {
   constructor(private readonly photoService: PhotoService) {}
 
-  @Mutation(() => PhotoModel)
+  @Mutation(() => PhotoModel, { name: 'addPhotoToAnnouncement' })
   async addPhotoToAnnouncement(@Args('input') input: CreatePhotoInput) {
     return this.photoService.create(input);
   }
@@ -18,12 +18,12 @@ export class PhotoResolver {
     return this.photoService.findByAnnouncementID(announcementID);
   }
 
-  @Mutation(() => PhotoModel)
+  @Mutation(() => PhotoModel, { name: 'updatePhoto' })
   async updatePhoto(@Args('id') id: string, @Args('input') input: UpdatePhotoInput) {
     return this.photoService.update(id, input);
   }
 
-  @Mutation(() => Boolean)
+  @Mutation(() => Boolean, { name: 'deletePhoto' })
   async deletePhoto(@Args('id') id: string) {
     return this.photoService.delete(id);
   }

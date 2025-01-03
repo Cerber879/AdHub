@@ -19,5 +19,6 @@ export class CreatePhotoInput {
   public link: string;
 
   @Field(() => String)
+  @IsString()
   public announcementID: string;
 }

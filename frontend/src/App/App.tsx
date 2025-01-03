@@ -2,26 +2,26 @@ import React from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import { Provider } from 'react-redux';
 
-import store from '../../store/store';
+import store from '../store/store';
 
 import styles from './app.module.css'
 
-import Home from '../Home/HomePage';
-import CreateAdvertisementPage from '../CreateAdvertisement/CreateAdvertisementPage';
-import AboutUs from '../AboutUs/AboutUs';
-import CreateMessageComponent from '../../components/Profile/ProfileMessenger/Messenger'
+import Home from '../pages/Home/HomePage';
+import CreateAdvertisementPage from '../pages/CreateAdvertisement/CreateAdvertisementPage';
+import AboutUs from '../pages/AboutUs/AboutUs';
+import CreateMessageComponent from '../components/Profile/ProfileMessenger/Messenger'
 
 
-import { Header } from '../../components/Header/Header';
-import { Footer } from '../../components/Footer/Footer';
+import { Header } from '../components/Header/Header';
+import { Footer } from '../components/Footer/Footer';
 
-import { ROUTES } from '../../utils/routes';
-import RegisterModal from '../../components/Modals/Register/RegisterModal';
-import LoginModal from '../../components/Modals/Login/LoginModal';
-import Profile from '../Profile/ProfileMain/Profile';
-import Favourites from '../Profile/FavouritesPage/Favourites';
-import AdvertismentPage from '../AdvertismentPage/AdvertismentPage';
-import Chat from '../Profile/ChatPage/Chat';
+import { ROUTES } from '../utils/routes';
+import RegisterModal from '../components/Modals/Register/RegisterModal';
+import LoginModal from '../components/Modals/Login/LoginModal';
+import Profile from '../pages/Profile/ProfileMain/Profile';
+import Favourites from '../pages/Profile/FavouritesPage/Favourites';
+import AdvertismentPage from '../pages/AdvertismentPage/AdvertismentPage';
+import Chat from '../pages/Profile/ChatPage/Chat';
 
 
 const App: React.FC = () => {

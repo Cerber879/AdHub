@@ -1,5 +1,4 @@
 import React, { useRef, useState } from 'react';
-import { createAdvertisement } from '../../../services/api';
 import styles from './createAdvertisement.module.css'
 const CreateAdvertisement: React.FC = () => {
   const [name, setName] = useState('');
@@ -8,15 +7,8 @@ const CreateAdvertisement: React.FC = () => {
   const [categoryId, setCategoryId] = useState('');
 
   const handleCreateAdvertisement = async () => {
-    try {
-      const advertisement = { name, description, price, categoryId };
-      await createAdvertisement(advertisement);
-      alert('Advertisement created successfully');
-    } catch (error) {
-      console.error('Failed to create advertisement', error);
-    }
-  };
 
+  };
 
   // это машина жесткая
   const [files, setFiles] = useState<File[]>([]);

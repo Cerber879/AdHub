@@ -33,8 +33,8 @@ export class CreateAnnouncementInput {
   @IsNotEmpty()
   public condition: string;
 
-  @Field(() => Number)
-  @IsNumber()
-  @IsPositive()
+  @Field(() => String)
+  @IsString()
+  @IsNotEmpty()
   public categoryId: string
 }

@@ -3,7 +3,6 @@ import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
 import { setAdvertisements } from '../../../store/slices/advertisementSlice';
-import { getAdvertisements } from '../../../services/api';
 import { RootState } from '../../../store/store';
 import styles from './advertisment.module.css'
 import PreviewBigAdvertisment from '../PreviewAdvertisment/PreviewBlocks/PreviewBigAdvertisment/PreviewBigAdvertisment';
@@ -16,12 +15,7 @@ const AdvertisementList: React.FC = () => {
 
   useEffect(() => {
     const fetchAdvertisements = async () => {
-      try {
-        const data = await getAdvertisements();
-        dispatch(setAdvertisements(data));
-      } catch (error) {
-        console.error('Failed to fetch advertisements', error);
-      }
+
     };
 
     fetchAdvertisements();

@@ -31,10 +31,9 @@ export class UpdateAnnouncementInput {
   @IsString()
   public condition?: string;
 
-  @Field(() => Number, { nullable: true })
+  @Field(() => String, { nullable: true })
   @IsOptional()
-  @IsNumber()
-  @IsPositive()
+  @IsString()
   public categoryId?: string;
 }
 
