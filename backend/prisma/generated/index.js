@@ -133,7 +133,7 @@ const config = {
       "value": "prisma-client-js"
     },
     "output": {
-      "value": "C:\\Users\\User\\source\\repos\\AdHub\\backend\\prisma\\generated",
+      "value": "C:\\Users\\user\\Desktop\\projects\\BD\\AdHub\\backend\\prisma\\generated",
       "fromEnvVar": null
     },
     "config": {
@@ -147,7 +147,7 @@ const config = {
       }
     ],
     "previewFeatures": [],
-    "sourceFilePath": "C:\\Users\\User\\source\\repos\\AdHub\\backend\\prisma\\schema.prisma",
+    "sourceFilePath": "C:\\Users\\user\\Desktop\\projects\\BD\\AdHub\\backend\\prisma\\schema.prisma",
     "isCustomOutput": true
   },
   "relativeEnvPaths": {
@@ -161,7 +161,6 @@ const config = {
     "db"
   ],
   "activeProvider": "postgresql",
-  "postinstall": true,
   "inlineDatasources": {
     "db": {
       "url": {
