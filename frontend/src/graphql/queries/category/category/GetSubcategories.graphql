@@ -1,0 +1,6 @@
+query GetSubcategories($id: String!) {
+  getSubcategories(id: $id) {
+    id
+    name
+  }
+}	

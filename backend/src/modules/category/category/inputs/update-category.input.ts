@@ -13,3 +13,12 @@ export class UpdateCategoryInput {
   @IsOptional()
   public parentId?: string;
 }
+
+@InputType()
+export class UpdateCategoryMixedInput {
+  @Field(() => String)
+  public id: string;
+
+  @Field(() => UpdateCategoryInput)
+  public input: UpdateCategoryInput;
+}

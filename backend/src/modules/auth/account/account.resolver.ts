@@ -1,4 +1,4 @@
-import { ChangePhoneNumberInput } from './inputs/change-email.input copy';
+import { ChangePhoneNumberInput } from './inputs/change-phone.input';
 import { Args, Mutation, Query, Resolver } from '@nestjs/graphql';
 import { AccountService } from './account.service';
 import { UserModel } from './models/user.model';
@@ -34,7 +34,7 @@ export class AccountResolver {
   }
 
   @Authorization()
-  @Mutation(() => Boolean, { name: 'changeEmail' })
+  @Mutation(() => Boolean, { name: 'changePhoneNumber' })
   public async changePhoneNumber(
 	  @Authorized() user: User,
 	  @Args('data') input: ChangePhoneNumberInput

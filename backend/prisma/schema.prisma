@@ -41,11 +41,11 @@ model Category {
   name           String    
   parentId       String?     
 
-  children       Category[] @relation("CategoryParent") 
+  children       Category[] @relation("parent") 
   announcement   Announcement[]
   characteristic Characteristic[]
 
-  parent         Category?  @relation("CategoryParent", fields: [parentId], references: [id])
+  parent         Category?  @relation("parent", fields: [parentId], references: [id])
 
   @@map("categories") 
 }

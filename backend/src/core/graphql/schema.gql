@@ -4,7 +4,7 @@
 
 type AnnouncementModel {
   announcementCharacteristic: [String!]
-  categoryId: Float!
+  categoryId: String!
   condition: String!
   createdAt: DateTime!
   description: String!
@@ -18,6 +18,16 @@ type AnnouncementModel {
   status: String!
   updatedAt: DateTime!
   userId: String!
+}
+
+type CategoryModel {
+  id: ID!
+  name: String!
+  parentId: String
+}
+
+input ChangeEmailInput {
+  email: String!
 }
 
 input ChangePasswordInput {
@@ -37,6 +47,11 @@ input CreateAnnouncementInput {
   placementDate: DateTime!
   price: Float!
   status: String!
+}
+
+input CreateCategoryInput {
+  name: String!
+  parentId: String
 }
 
 input CreatePhotoInput {
@@ -78,21 +93,25 @@ input LoginInput {
 }
 
 type Mutation {
-  addPhotoToAnnouncement(input: CreatePhotoInput!): PhotoModel!
-  changeEmail(data: ChangePhoneNumberInput!): Boolean!
+  addPhotoToAnnouncement(data: CreatePhotoInput!): Boolean!
+  changeEmail(data: ChangeEmailInput!): Boolean!
   changePassword(data: ChangePasswordInput!): Boolean!
+  changePhoneNumber(data: ChangePhoneNumberInput!): Boolean!
   changeProfileAvatar(avatar: Upload!): Boolean!
   clearSessionCookie: Boolean!
   createAnnouncement(data: CreateAnnouncementInput!): Boolean!
+  createCategory(data: CreateCategoryInput!): Boolean!
   createUser(data: CreateUserInput!): Boolean!
   deleteAnnouncement(id: String!): Boolean!
+  deleteCategory(id: String!): Boolean!
   deletePhoto(id: String!): Boolean!
   loginUser(data: LoginInput!): UserModel!
   logoutUser: Boolean!
   removeProfileAvatar: Boolean!
   removeSession(id: String!): Boolean!
-  updateAnnouncement(id: String!, input: UpdateAnnouncementInput!): Boolean!
-  updatePhoto(id: String!, input: UpdatePhotoInput!): PhotoModel!
+  updateAnnouncement(data: UpdateAnnouncementMixedInput!): Boolean!
+  updateCategory(data: UpdateCategoryMixedInput!): Boolean!
+  updatePhotos(deletePhotoIds: [String!]!, newPhotos: [CreatePhotoInput!]!): Boolean!
 }
 
 type PhotoModel {
@@ -108,8 +127,10 @@ type Query {
   findProfile: UserModel!
   findSessionsByUser: [SessionModel!]!
   getAnnouncementById(id: String!): AnnouncementModel!
-  getAnnouncementsByCategory(categoryId: String!): [AnnouncementModel!]!
-  getPhotosByAnnouncementID(announcementID: String!): [PhotoModel!]!
+  getAnnouncementsByCategory(id: String!): [AnnouncementModel!]!
+  getCategoryById(id: String!): CategoryModel!
+  getPhotosByAnnouncementID(id: String!): [PhotoModel!]!
+  getSubcategories(id: String!): [CategoryModel!]!
 }
 
 type SessionMetadataModel {
@@ -134,10 +155,19 @@ input UpdateAnnouncementInput {
   status: String
 }
 
-input UpdatePhotoInput {
-  link: String
+input UpdateAnnouncementMixedInput {
+  id: String!
+  input: UpdateAnnouncementInput!
+}
+
+input UpdateCategoryInput {
   name: String
-  resolution: String
+  parentId: String
+}
+
+input UpdateCategoryMixedInput {
+  id: String!
+  input: UpdateCategoryInput!
 }
 
 """The `Upload` scalar type represents a file upload."""

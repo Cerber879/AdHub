@@ -6,9 +6,9 @@ export class CategoryModel implements Category {
   @Field(() => ID)
   id: string;
 
-  @Field()
+  @Field(() => String)
   name: string;
 
-  @Field({ nullable: true })
+  @Field(() => String, { nullable: true })
   parentId: string;
 }

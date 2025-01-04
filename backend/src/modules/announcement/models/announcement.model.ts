@@ -27,7 +27,7 @@ export class AnnouncementModel implements Announcement {
   @Field(() => String)
   public userId: string;
 
-  @Field(() => Number)
+  @Field(() => String)
   public categoryId: string;
 
   @Field(() => [String], { nullable: true })

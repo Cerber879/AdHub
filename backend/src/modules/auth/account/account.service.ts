@@ -6,7 +6,7 @@ import { hash, verify } from 'argon2';
 import { User } from '@/prisma/generated';
 import { ChangeEmailInput } from './inputs/change-email.input';
 import { ChangePasswordInput } from './inputs/change-password.input';
-import { ChangePhoneNumberInput } from './inputs/change-email.input copy';
+import { ChangePhoneNumberInput } from './inputs/change-phone.input';
 
 @Injectable()
 export class AccountService {

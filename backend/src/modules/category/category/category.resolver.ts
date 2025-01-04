@@ -1,15 +1,15 @@
 import { Resolver, Mutation, Query, Args } from '@nestjs/graphql';
 import { CategoryService } from './category.service';
 import { CreateCategoryInput } from './inputs/create-category.input';
-import { UpdateCategoryInput } from './inputs/update-category.input';
+import { UpdateCategoryInput, UpdateCategoryMixedInput } from './inputs/update-category.input';
 import { CategoryModel } from './models/category.model';
 
 @Resolver('Category')
 export class CategoryResolver {
   constructor(private readonly categoryService: CategoryService) {}
 
-  @Mutation(() => CategoryModel, { name: 'createCategory' })
-  async createCategory(@Args('input') input: CreateCategoryInput) {
+  @Mutation(() => Boolean, { name: 'createCategory' })
+  async createCategory(@Args('data') input: CreateCategoryInput) {
     return this.categoryService.create(input);
   }
 
@@ -19,16 +19,15 @@ export class CategoryResolver {
   }
 
   @Query(() => [CategoryModel], { name: 'getSubcategories' })
-  async findSubcategories(@Args('parentId') parentId: string) {
+  async findSubcategories(@Args('id') parentId: string) {
     return this.categoryService.findSubcategories(parentId);
   }
 
-  @Mutation(() => CategoryModel, { name: 'updateCategory' })
+  @Mutation(() => Boolean, { name: 'updateCategory' })
   async updateCategory(
-    @Args('id') id: string,
-    @Args('input') input: UpdateCategoryInput
+    @Args('data') data: UpdateCategoryMixedInput
   ) {
-    return this.categoryService.update(id, input);
+    return this.categoryService.update(data.id, data.input);
   }
 
   @Mutation(() => Boolean, { name: 'deleteCategory' })

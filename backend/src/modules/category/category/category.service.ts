@@ -5,23 +5,23 @@ import { UpdateCategoryInput } from './inputs/update-category.input';
 
 @Injectable()
 export class CategoryService {
-  constructor(private readonly prisma: PrismaService) {}
+  constructor(private readonly prismaService: PrismaService) {}
 
   async create(input: CreateCategoryInput) {
-    return this.prisma.category.create({
+    const { name, parentId } = input
+
+    await this.prismaService.category.create({
       data: {
-        name: input.name,
-        parent: input.parentId ? {
-             connect: { 
-                id: input.parentId 
-            } 
-        } : null,
+        name,
+        parentId: parentId || null,
       },
     });
+
+    return true
   }
 
   async findById(id: string) {
-    return this.prisma.category.findUnique({
+    return this.prismaService.category.findUnique({
       where: {
         id 
       },
@@ -29,7 +29,7 @@ export class CategoryService {
   }
 
   async findSubcategories(parentId: string) {
-    return this.prisma.category.findMany({
+    return this.prismaService.category.findMany({
       where: {
         parentId: parentId
     },
@@ -37,16 +37,18 @@ export class CategoryService {
   }
 
   async update(id: string, input: UpdateCategoryInput) {
-    return this.prisma.category.update({
+    await this.prismaService.category.update({
       where: { 
         id 
       },
       data: input,
     });
+
+    return true
   }
 
   async delete(id: string) {
-    await this.prisma.category.delete({
+    await this.prismaService.category.delete({
       where: {
         id 
       },

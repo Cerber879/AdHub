@@ -8,23 +8,38 @@ import { PhotoModel } from './models/photo.model';
 export class PhotoResolver {
   constructor(private readonly photoService: PhotoService) {}
 
-  @Mutation(() => PhotoModel, { name: 'addPhotoToAnnouncement' })
-  async addPhotoToAnnouncement(@Args('input') input: CreatePhotoInput) {
+  @Mutation(() => Boolean, { name: 'addPhotoToAnnouncement' })
+  async addPhotoToAnnouncement(@Args('data') input: CreatePhotoInput) {
     return this.photoService.create(input);
   }
 
   @Query(() => [PhotoModel], { name: 'getPhotosByAnnouncementID' })
-  async getPhotosByAnnouncementID(@Args('announcementID') announcementID: string) {
+  async getPhotosByAnnouncementID(@Args('id') announcementID: string) {
     return this.photoService.findByAnnouncementID(announcementID);
-  }
-
-  @Mutation(() => PhotoModel, { name: 'updatePhoto' })
-  async updatePhoto(@Args('id') id: string, @Args('input') input: UpdatePhotoInput) {
-    return this.photoService.update(id, input);
   }
 
   @Mutation(() => Boolean, { name: 'deletePhoto' })
   async deletePhoto(@Args('id') id: string) {
     return this.photoService.delete(id);
+  }
+
+  @Mutation(() => Boolean)
+  async updatePhotos(
+    @Args('deletePhotoIds', { type: () => [String] }) deletePhotoIds: string[],
+    @Args('newPhotos', { type: () => [CreatePhotoInput] }) newPhotos: CreatePhotoInput[]
+  ) {
+    if (deletePhotoIds && deletePhotoIds.length > 0) {
+      for (const photoId of deletePhotoIds) {
+        await this.deletePhoto(photoId);  
+      }
+    }
+
+    if (newPhotos && newPhotos.length > 0) {
+      for (const photo of newPhotos) {
+        await this.addPhotoToAnnouncement(photo);  
+      }
+    }
+
+    return true; 
   }
 }

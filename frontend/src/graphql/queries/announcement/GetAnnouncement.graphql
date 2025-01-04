@@ -1,0 +1,11 @@
+query GetAnnouncement($id: String!) {
+  getAnnouncementById(id: $id) {
+    id
+    name
+    placementDate
+    description
+    status
+    condition
+    categoryId
+  }
+}

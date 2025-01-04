@@ -40,7 +40,7 @@ export class AnnouncementService {
   async findById(id: string) {
     const announcement = await this.prismaService.announcement.findUnique({ 
         where: { 
-            id
+          id
         }
     });
 
@@ -64,7 +64,7 @@ export class AnnouncementService {
 
     const existing = await this.prismaService.announcement.findUnique({ 
         where: {
-            id
+          id
         } 
     });
 
@@ -72,24 +72,25 @@ export class AnnouncementService {
       throw new NotFoundException('Объявление не найдено');
     }
 
-    this.prismaService.announcement.update({
+    return this.prismaService.announcement.update({
       where: { 
         id 
       },
       data: 
         {
-            ...rest,
-            status: parseAnnouncementStatus(status),
-            condition: parseAnnouncementCondition(condition),
+            name: rest.name ? rest.name : existing.name,
+            price: rest.price ? rest.price : existing.price,
+            description: rest.description ? rest.description : existing.description,
+            status: status ? parseAnnouncementStatus(status) : existing.status,
+            condition: condition ? parseAnnouncementCondition(condition) : existing.condition,
             category: {
                 connect: {
-                    id: categoryId
+                    id: categoryId ? categoryId : existing.categoryId
                 }
             },
         },
     });
 
-    return true
   }
 
   async delete(id: string) {

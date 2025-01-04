@@ -1,0 +1,8 @@
+query GetPhotosByAnnouncementID($id: String!) {
+  getPhotosByAnnouncementID(id: $id) {
+    id
+    name
+    resolution
+    link
+  }
+}

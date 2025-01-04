@@ -1,0 +1,9 @@
+mutation updatePhotos(
+  $deletePhotoIds: [String!]!,
+  $newPhotos: [CreatePhotoInput!]!
+) {
+  updatePhotos(
+    deletePhotoIds: $deletePhotoIds,
+    newPhotos: $newPhotos
+  )
+}

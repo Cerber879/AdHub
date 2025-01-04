@@ -1,0 +1,3 @@
+mutation CreateAnnouncement($data: CreateAnnouncementInput!) {
+  createAnnouncement(data: $data) 
+}

@@ -1,0 +1,3 @@
+mutation AddPhotoToAnnouncement($data: CreatePhotoInput!) {
+  addPhotoToAnnouncement(data: $data)
+}

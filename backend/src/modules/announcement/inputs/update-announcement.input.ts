@@ -1,5 +1,5 @@
 import { Field, Float, InputType } from "@nestjs/graphql";
-import { IsNumber, IsOptional, IsPositive, IsString, MaxLength } from "class-validator";
+import { IsNotEmpty, IsNumber, IsOptional, IsPositive, IsString, MaxLength } from "class-validator";
 
 @InputType()
 export class UpdateAnnouncementInput {
@@ -37,3 +37,13 @@ export class UpdateAnnouncementInput {
   public categoryId?: string;
 }
 
+@InputType()
+export class UpdateAnnouncementMixedInput {
+  @Field(() => String)
+  @IsNotEmpty()
+  @IsString()
+  public id: string
+
+  @Field(() => UpdateAnnouncementInput)
+  public input: UpdateAnnouncementInput
+}
