@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
-import styles from '../modals.module.css'; 
-import { validateEmail, validatePhoneNumber } from '../modals';
+import styles from '../auth.module.css'; 
+import { validateEmail, validatePhoneNumber } from '../../../utils/auth-validate';
 
 import { useCreateUserMutation } from '../../../graphql/generated/output';
 import { auth } from '../../../store/slices/userSlise';
@@ -34,6 +34,7 @@ const RegisterModal: React.FC<{ onClose: () => void, onOpenLogin: () => void }> 
       onCompleted: () => {
         dispatch(auth())
         onClose()
+        window.location.reload();
       },
       onError: (error) => {
         setError(error.message);

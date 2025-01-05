@@ -1,7 +1,7 @@
 import React from 'react';
 import SearchBar from '../../../SearchBar/SearchBar';
 import styles from './advertismenttop.module.css';
-import CatalogueModal from '../../../Modals/Catalogue/CatalogueModal';
+import CatalogueModal from '../../../Catalogue/CatalogueModal';
 
 import { useDispatch, useSelector } from 'react-redux';
 import { setShowCatalogueModal } from '../../../../store/slices/categorySlice';

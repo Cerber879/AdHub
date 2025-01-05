@@ -54,6 +54,26 @@ export class CategoryService {
     });
   }
 
+  async findParentCategories(id: string): Promise<string[]> {
+    const parentNames: string[] = [];
+  
+    let currentCategory = await this.prismaService.category.findUnique({
+      where: { id },
+      include: { parent: true }, 
+    });
+  
+    while (currentCategory?.parent) {
+      parentNames.push(currentCategory.parent.name);
+  
+      currentCategory = await this.prismaService.category.findUnique({
+        where: { id: currentCategory.parent.id },
+        include: { parent: true },
+      });
+    }
+  
+    return parentNames.reverse(); 
+  }
+
   async update(id: string, input: UpdateCategoryInput) {
     await this.prismaService.category.update({
       where: { 

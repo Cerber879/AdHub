@@ -1,4 +1,3 @@
-import { useState } from 'react'
 import { Link } from 'react-router-dom'
 
 import styles from './preview.module.css'
@@ -12,21 +11,19 @@ import { FindAllAnnouncementsQuery } from '../../../../../graphql/generated/outp
 
 interface PreviewBigAdvertismentProps {
   input: FindAllAnnouncementsQuery['findAllAnnouncements'][number] 
+  useStylesProfile: boolean
 }
 
-const PreviewBigAdvertisment: React.FC<PreviewBigAdvertismentProps> = ({ input }) => { 
-  const [activeAd, setActiveAd] = useState(false);
+const PreviewBigAdvertisment: React.FC<PreviewBigAdvertismentProps> = ({ input, useStylesProfile }) => { 
   
   return (
     <Link 
-        onMouseEnter={() => setActiveAd(true)} 
-        onMouseLeave={() => setActiveAd(false)} 
         to={ROUTES.ITEMS + "/" + input.name + "/" + input.id} 
         className={styles.container}
     >
-        <PhotosBlock active={activeAd} useStylesProfile={false}/>
+        <PhotosBlock useStylesProfile={useStylesProfile}/>
         <DataAdvertisment input={input} /> 
-        <UserAdvertisment />
+        <UserAdvertisment input={input} />
     </Link>
   )
 }

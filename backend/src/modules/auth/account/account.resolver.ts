@@ -19,6 +19,11 @@ export class AccountResolver {
     return this.accountService.me(id)
   }
 
+  @Query(() => UserModel, { name: 'findUser' })
+  public async findUserById(@Args('id') id: string) {
+  return this.accountService.findUser(id)
+  }
+
   @Mutation(() => Boolean, { name: 'createUser' })
   public async createUser(@Args('data') input: CreateUserInput) {
     return this.accountService.create(input)

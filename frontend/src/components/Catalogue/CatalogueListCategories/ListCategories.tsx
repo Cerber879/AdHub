@@ -1,8 +1,8 @@
 import { useDispatch, useSelector } from 'react-redux';
-import { setCurrentCategory, setShowCatalogueModal } from '../../../../store/slices/categorySlice';
+import { setCurrentCategory, setShowCatalogueModal } from '../../../store/slices/categorySlice';
 import styles from './categories.module.css';
 
-import { useGetMainCategoriesQuery } from '../../../../graphql/generated/output';
+import { useGetMainCategoriesQuery } from '../../../graphql/generated/output';
 import { Link } from 'react-router-dom';
 
 const ListCategories = () => {

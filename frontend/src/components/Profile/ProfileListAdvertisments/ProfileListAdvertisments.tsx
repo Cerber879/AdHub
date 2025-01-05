@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 
 import styles from './ads.module.css'
 
-import PreviewProfileAdvertisment from '../../Advertisement/PreviewAdvertisment/PreviewBlocks/PreviewProfileAdvertisment/PreviewProfileAdvertisment';
+import PreviewSmallAdvertisment from '../../Advertisement/PreviewAdvertisment/PreviewBlocks/PreviewSmallAdvertisment/PreviewSmallAdvertisment';
 
 const ProfileListAdvertisments = () => {
 

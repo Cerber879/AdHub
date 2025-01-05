@@ -15,7 +15,7 @@
     height: 30px;
 }
   
-.name_ad {
+.name_input {
     display: -webkit-box;
     max-height: 65px;
     -webkit-line-clamp: 4;
@@ -36,10 +36,11 @@
     margin: 0;
 }
   
-.condition_ad {
+.condition_input {
     font-size: 16px;
     color: #555;
     margin: 0;
+    text-decoration: none;
 }
   
 .description {

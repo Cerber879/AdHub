@@ -31,12 +31,17 @@ export class CategoryResolver {
 
   @Query(() => [SubCutegoryModel], { name: 'findPrewiewSubcategories' })
   async findPrewiewSubcategories(@Args('id') parentId: string) {
-  const categories = await this.categoryService.findSubcategories(parentId);
-  return categories.map(async category => ({
-    ...category,
-    subcategories: await this.categoryService.findSubcategories(category.id)
-  }));
-}
+    const categories = await this.categoryService.findSubcategories(parentId);
+    return categories.map(async category => ({
+      ...category,
+      subcategories: await this.categoryService.findSubcategories(category.id)
+    }));
+  }
+
+  @Query(() => [String], { name: 'findParentCategories' })
+  async findParentCategories(@Args('id') id: string) {
+    return this.categoryService.findParentCategories(id);
+  }
 
   @Mutation(() => Boolean, { name: 'updateCategory' })
   async updateCategory(

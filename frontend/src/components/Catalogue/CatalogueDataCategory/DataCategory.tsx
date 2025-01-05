@@ -2,7 +2,7 @@ import React from 'react';
 import { useSelector } from 'react-redux';
 import styles from './data.module.css';
 import { Link } from 'react-router-dom';
-import { useFindPrewiewSubcategoriesQuery } from '../../../../graphql/generated/output';
+import { useFindPrewiewSubcategoriesQuery } from '../../../graphql/generated/output';
 import RenderSubcategories from './RenderSubcategories';
 
 const DataCategory = () => {

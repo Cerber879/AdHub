@@ -1,24 +1,26 @@
 import React, { useEffect, useRef, useState } from 'react';
 import styles from './advertisementdata.module.css'
-import {initialUser as user} from '../../../../modules/data'
+import { initialUser as user } from '../../../../modules/data'
 import { photos } from '../../../../modules/data'
 import { Link, useParams } from 'react-router-dom';
 import { ROUTES } from '../../../../utils/routes';
-
-import { useGetAnnouncementQuery } from '../../../../graphql/generated/output';
+import { useFindParentCategoriesQuery, useGetAnnouncementQuery } from '../../../../graphql/generated/output';
+import { parseAnnouncementCondition, parseAnnouncementStatus } from '../../../../utils/parse-types-ad';
 
 const AdvertisementData = () => {
   const [currentImage, setCurrentImage] = useState(0);
-  const images = photos
+  const images = photos;
 
   const { adId } = useParams();
-  console.log(adId)
+  console.log(adId);
 
   const imageDivRef = useRef<HTMLDivElement>(null);
 
-  const { data } = useGetAnnouncementQuery({variables: { id: adId || '' }})
-  const advertisment = data?.getAnnouncementById
-  console.log("advertisment", advertisment)
+  const { data: advertismentData } = useGetAnnouncementQuery({ variables: { id: adId || '' } });
+  const advertisment = advertismentData?.getAnnouncementById;
+
+  const { data: categoriesData } = useFindParentCategoriesQuery({ variables: { id: advertisment?.categoryId || '' } });
+  const categories = categoriesData?.findParentCategories;
 
   const handlePrevImage = () => {
     setCurrentImage((prevImage) => (prevImage - 1 + images.length) % images.length);
@@ -29,50 +31,62 @@ const AdvertisementData = () => {
   };
 
   useEffect(() => {
-      if (images[currentImage] && imageDivRef.current) {
-        imageDivRef.current.style.setProperty('--background-image', `url('${images[currentImage]}')`);
-      }
+    if (images[currentImage] && imageDivRef.current) {
+      imageDivRef.current.style.setProperty('--background-image', `url('${images[currentImage]}')`);
+    }
   }, [currentImage, images]);
 
   return (
     <div className={styles.container}>
-        <div >
-          <ul className={styles.complex_list}>
-            <li className={styles.complex_list_item}>
-              <a className={styles.link}href="/">{advertisment?.categoryId}</a>
+      <div>
+        <ul className={styles.complex_list}>
+          { categories?.map((category) => (
+            <li key={category} className={styles.complex_list_item}>
+              <Link className={styles.link} to={`/${category}`}>{category}</Link>
             </li>
-          </ul>
-        </div>
-        <div className={styles.flex_block}>
-          <h2 className={styles.title}>{advertisment?.name}</h2>
-        </div>
+          ))}
+        </ul>
+      </div>
 
-        <div className={styles.main_block}>
-          <div className={styles.main_image_description}>
-            <div className={styles.image_div} ref={imageDivRef}>
-              <img
-                className={styles.image_block}
-                src={images[currentImage]}
-                alt="img"
-              />
+      <div className={styles.main_block}>
+        <div className={styles.main_image_description}>
+          <div className={styles.header}>
+            <h2 className={styles.title}>{advertisment?.name}</h2>
+          </div>
+          <div className={styles.image_div} ref={imageDivRef}>
+            <img
+              className={styles.image_block}
+              src={images[currentImage]}
+              alt="img"
+            />
+            <div className={styles.switch_buttons} >
+              <button className={styles.prev_button} onClick={handlePrevImage}>
+                &lt; {/* Стрелка влево */}
+              </button>
+              <button className={styles.next_button} onClick={handleNextImage}>
+                &gt; {/* Стрелка вправо */}
+              </button>
             </div>
-            <div className={styles.thumbnails}>
+          </div>
+
+          <div className={styles.thumbnails}>
             {images.map((img, index) => (
-              <img 
+              <img
                 key={index}
                 className={`${styles.thumbnail} ${currentImage === index ? styles.active : styles.passive}`}
                 src={img}
                 alt={`thumbnail ${index}`}
                 onClick={() => setCurrentImage(index)}
               />
-              ))} {/*переключатель на картинки справа слева*/}
-            </div>
-            <div className={styles.characteristics}>
+            ))}
+          </div>
+
+          <div className={styles.characteristics}>
             <h2>Характеристики</h2>
             <dl className={styles.characteristics_list}>
               <div className={styles.characteristic_item}>
                 <dt>Состояние:</dt>
-                <dd>{advertisment?.condition}</dd>
+                <dd>{parseAnnouncementCondition(advertisment?.condition)}</dd>
               </div>
               <div className={styles.characteristic_item}>
                 <dt>Дата размещения:</dt>
@@ -80,7 +94,7 @@ const AdvertisementData = () => {
               </div>
               <div className={styles.characteristic_item}>
                 <dt>Статус:</dt>
-                <dd>{advertisment?.status}</dd>
+                <dd>{parseAnnouncementStatus(advertisment?.status)}</dd>
               </div>
               <div className={styles.characteristic_item}>
                 <dt>Цена:</dt>
@@ -88,44 +102,40 @@ const AdvertisementData = () => {
               </div>
             </dl>
           </div>
-            <div>
-              <h2>Описание</h2>
-              <p className={styles.description}>{advertisment?.description}</p>
-            </div>
-              
-            
+
+          <div>
+            <h2>Описание</h2>
+            <p className={styles.description}>{advertisment?.description}</p>
           </div>
-          <div className={styles.info_block}>
-            <div className={styles.price_heart}>
-              <p className={styles.price}>{advertisment?.price} ₽</p>
-              <img className={styles.heart_icon} src="/images/Advertisment/heart.svg" alt="heart"></img> {/*button heart*/}
-            </div>
-            
-            <Link className={styles.user_info}
-              to={ROUTES.USER + '/' + advertisment?.userId}
-            >
-              <h3>
-                <a className={styles.user_name} href="/">{user.FullName}</a>
-              </h3>
-              <img
-                className={styles.avatar}
-                src="https://i.pravatar.cc/150?img=10"
-                alt="User Avatar"
-              />
-            </Link>
-            
-            <div className={styles.buttons}>
-              <button className={styles.button}>Показать номер</button>
-              <Link to={ROUTES.MESSENGER}>
-                <button className={styles.button}>Написать</button>
-              </Link>
-            </div>
-          </div>
-          {/*отзывы*/}
         </div>
-        
+
+        <div className={styles.info_block}>
+          <div className={styles.header}>
+            <p className={styles.price}>{advertisment?.price} ₽</p>
+            <img className={styles.heart_icon} src="/images/Advertisment/heart.svg" alt="heart" /> 
+          </div>
+          <Link className={styles.user_info}
+            to={ROUTES.USER + '/' + advertisment?.userId}
+          >
+            <span className={styles.user_name}>{user.FullName}</span>
+            <img
+              className={styles.avatar}
+              src="https://i.pravatar.cc/150?img=10"
+              alt="User Avatar"
+            />
+          </Link>
+
+          <div className={styles.social_buttons}>
+            <button className={styles.social}>Показать номер</button>
+            <Link to={ROUTES.MESSENGER}>
+              <button className={styles.social}>Написать</button>
+            </Link>
+          </div>
+        </div>
+        {/*отзывы*/}
+      </div>
     </div>
   )
 }
 
-export default AdvertisementData
+export default AdvertisementData;

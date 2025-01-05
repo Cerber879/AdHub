@@ -1,0 +1,3 @@
+query FindParentCategories($id: String!){
+  findParentCategories(id: $id)
+}

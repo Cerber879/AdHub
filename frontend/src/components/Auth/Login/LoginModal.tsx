@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { auth } from '../../../store/slices/userSlise';
-import styles from '../modals.module.css'; 
-import { validateEmail, validatePhoneNumber } from '../modals';
+import styles from '../auth.module.css'; 
+import { validateEmail, validatePhoneNumber } from '../../../utils/auth-validate';
 import { useLoginUserMutation } from '../../../graphql/generated/output';
 import { useDispatch } from 'react-redux';
 
@@ -21,6 +21,7 @@ const LoginModal: React.FC<{ onClose: () => void, onOpenRegister: () => void }> 
     onCompleted: () => {
       dispatch(auth())
       onClose()
+      window.location.reload();
     },
     onError: (error) => {
       setError(error.message);

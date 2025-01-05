@@ -17,6 +17,7 @@ const AdvertisementList: React.FC = () => {
   {
     filters = {...filters, categoryId};
   }
+  
   const { data: filteredData } = useFindAnnouncementsByFiltersQuery({ variables: { filters: filters } });
   const advertisements = filteredData?.findAnnouncementsByFilters;
 
@@ -37,19 +38,16 @@ const AdvertisementList: React.FC = () => {
   return (
     <div>
       <div>
-        <AdvertisementTop/>
-        <div>
-          <button onClick={() => handleDisplayTypeChange('small')}>Маленькие объявления</button>
-          <button onClick={() => handleDisplayTypeChange('big')}>Большие объявления</button>
-          <button onClick={() => handleSortChange('price_asc')}>Сортировка по цене (возрастание)</button>
-          <button onClick={() => handleSortChange('price_desc')}>Сортировка по цене (убывание)</button>
-        </div>
-        {advertisements?.map((announcement: any, index: React.Key | null | undefined) => (
-          filters.displayType === 'small'
-            ? <PreviewSmallAdvertisment key={index} input={announcement} />
-            : <PreviewBigAdvertisment key={index} input={announcement} />
-        ))}
+        <button onClick={() => handleDisplayTypeChange('small')}>Маленькие объявления</button>
+        <button onClick={() => handleDisplayTypeChange('big')}>Большие объявления</button>
+        <button onClick={() => handleSortChange('price_asc')}>Сортировка по цене (возрастание)</button>
+        <button onClick={() => handleSortChange('price_desc')}>Сортировка по цене (убывание)</button>
       </div>
+      {advertisements?.map((announcement: any, index: React.Key | null | undefined) => (
+        filters.displayType === 'small'
+          ? <PreviewSmallAdvertisment key={index} input={announcement} />
+          : <PreviewBigAdvertisment key={index} input={announcement} useStylesProfile={false} />
+      ))}
     </div>
   );
 };

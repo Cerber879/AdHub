@@ -12,13 +12,15 @@ import Profile from '../pages/Profile/ProfileMain/Profile';
 import Favourites from '../pages/Profile/FavouritesPage/Favourites';
 import AdvertismentPage from '../pages/AdvertismentPage/AdvertismentPage';
 import Chat from '../pages/Profile/ChatPage/Chat';
+import AdvertisementList from '../components/Advertisement/ViewAdvertisementList/ViewAdvertisementList';
+import NotFoundPage from '../pages/NotFoundPage/NotFoundPage';
 
 import { Header } from '../components/Header/Header';
 import { Footer } from '../components/Footer/Footer';
 import { ROUTES } from '../utils/routes';
-import AdvertisementList from '../components/Advertisement/ViewAdvertisementList/ViewAdvertisementList';
 
 const App: React.FC = () => {
+
   return (
     <Provider store={store}>
       <Router>
@@ -29,13 +31,15 @@ const App: React.FC = () => {
               <Route path={ROUTES.HOME} element={<Home />} />
               <Route path={ROUTES.PROFILE} element={<Profile />} />
               <Route path={ROUTES.FAVOURITES} element={<Favourites />} />
-              <Route path={ROUTES.MESSENGER} element={<Chat />} />
+              <Route path={ROUTES.MESSENGER} element={<Chat />} />a
               <Route path={'/:category/:categoryId'} element={<AdvertisementList />} />
               <Route path={ROUTES.ADDITEM} element={<CreateAdvertisementPage />} />
               <Route path={ROUTES.ABOUT} element={<AboutUs />} />
               <Route path={ROUTES.PROFILE + '/:userId'} element={<Profile />} /> 
               <Route path={ROUTES.ITEMS + '/:adName/:adId'} element={<AdvertismentPage />} />
               <Route path={ROUTES.ITEMS + ROUTES.EDIT + '/:adId'} element={<></>} />
+              
+              <Route path="*" element={<NotFoundPage />} />
             </Routes>
           </div>
           <Footer/>

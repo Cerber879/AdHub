@@ -1,7 +1,7 @@
 .container {
     padding: 16px;
-    max-width: 1316px;
-    margin: 0 auto;
+    max-width: 1000px;
+    margin-left: 100px;
     font-family: Arial, sans-serif;
     color: #333;
 }  
@@ -55,36 +55,75 @@ li:first-child {
     transform: translate(-50%, -50%);
 }
 
-.flex_block {
+.switch_buttons {
+    margin-top: 30px;
+    position: absolute;
+    top: 50%; 
+    left: 0;   
+    right: 0;
     display: flex;
-    align-items: center;
+    justify-content: space-between; 
+    align-items: center; 
+    transform: translateY(-50%); 
+    z-index: 10;
+    padding: 0px 20px ;
+}
+
+.prev_button, .next_button {
+    width: 40px;
+    height: 60px;
+    transform: translateY(-50%);
+    background-color: rgba(0, 0, 0, 0.5);
+    color: white;
+    border: none;
+    font-size: 2rem;
+    padding: 10px;
+    cursor: pointer;
+    z-index: 10;
+  }
+  
+  .prev_button {
+    left: 10px; 
+  }
+  
+  .next_button {
+    right: 10px; 
+  }
+  
+  .prev_button:hover, .next_button:hover {
+    background-color: rgba(0, 0, 0, 0.8);
+  }
+
+.header {
+    display: flex;
     justify-content: space-between;
+    align-items: center;
     margin-bottom: 16px;
 }
-.title{
-    font-size: 30px;
-    margin: 0;
-    font-weight: 600;
-    overflow: hidden;
-    text-overflow: ellipsis;
-}
+
 .price{
-    font-size: 32px;
-    margin: 0 70px 0 0;
+    font-size: 40px;
     font-weight: 600;
+    margin: 0;
     overflow: hidden;
     text-overflow: ellipsis;
 }
 .heart_icon {
     width: 48px;
+    padding-right: 10px;
     height: 48px;
     cursor: pointer;
-    margin: -10px 0 20px 0;
 }
-.price_heart{
-    display: flex;
-    flex-direction: row;
+
+.title{
+    font-size: 40px;
+    margin: 0;
+    font-weight: 600;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    width: 700px;
 }
+
 .flex_block :last-child {
     margin-right: 300px; 
 }
@@ -95,22 +134,23 @@ li:first-child {
     margin-bottom: 16px;
 }
 .info_block{
-    margin: 16px 0 0 60px;
-    top: 20px;
+    margin-left: 40px;
     max-height: 960px;
 }
 .user_info{
     display: flex;
     flex-direction: row;
     justify-content:space-between;
-}
-.user_name{
-
-    color: #333;
     text-decoration: none;
+    align-items: center;
+    padding: 0px 0px 20px 0px;
+}
+
+.user_name{
+    color: #333;
     cursor: pointer;
     font-size: 32px;
-    
+    font-weight: 600;
 }
 
 .avatar {
@@ -120,21 +160,24 @@ li:first-child {
     object-fit: cover;
     border: 2px solid #ddd;
 }
-.buttons {
-    
+
+.social_buttons {
     display: flex;
+    flex-direction: column;
     gap: 12px;
 }
   
-.button {
+.social {
     background-color: #007bff;
     color: white;
     border: none;
+    width: 270px;
+    height: 40px;
     padding: 10px 16px;
     border-radius: 5px;
     font-size: 16px;
     cursor: pointer;
-    transition: background-color 0.3s ease;
+    transition: background-color 0.2s ease;
 }
   
 .button:hover {

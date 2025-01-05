@@ -1,5 +1,6 @@
-import { Field, Float, ID, ObjectType, InputType } from '@nestjs/graphql';
-import type { Announcement, AnnouncementStatus, ProductCondition } from '@/prisma/generated';
+import { Field, Float, ID, ObjectType } from '@nestjs/graphql';
+import { Announcement } from '@/prisma/generated';
+import { AnnouncementStatus, ProductCondition } from '@/src/shared/types/announcement-types';
 
 @ObjectType()
 export class AnnouncementModel implements Announcement {
@@ -18,10 +19,10 @@ export class AnnouncementModel implements Announcement {
   @Field(() => Date)
   public placementDate: Date;
 
-  @Field(() => String)
+  @Field(() => AnnouncementStatus)
   public status: AnnouncementStatus;
 
-  @Field(() => String)
+  @Field(() => ProductCondition)
   public condition: ProductCondition;
 
   @Field(() => String)

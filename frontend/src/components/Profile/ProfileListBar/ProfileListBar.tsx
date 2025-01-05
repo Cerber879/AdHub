@@ -1,18 +1,28 @@
-import React from 'react';
-import { useLocation, Link } from 'react-router-dom';
+import { useLocation, Link, useNavigate } from 'react-router-dom';
 import styles from './list.module.css';
 import { ROUTES } from '../../../utils/routes';
-import { useFindProfileQuery } from '../../../graphql/generated/output';
+import { useFindProfileQuery, useLogoutUserMutation } from '../../../graphql/generated/output';
+import { useDispatch } from 'react-redux';
+import { exit } from '../../../store/slices/userSlise';
 
 const ProfileListBar = () => {
-
-  const { data } = useFindProfileQuery()
-  const user = data?.findProfile
-
+  const dispatch = useDispatch();
+  const [logoutUser] = useLogoutUserMutation();
+  
+  const { data, refetch } = useFindProfileQuery();
+  const user = data?.findProfile;
+  
   const location = useLocation();
 
   const isActive = (path: string) => {
     return location.pathname === path ? styles.active : '';
+  };
+
+  const handleExit = () => {
+    dispatch(exit());
+    logoutUser(); 
+    refetch(); 
+    window.location.reload()
   };
 
   return (
@@ -39,7 +49,7 @@ const ProfileListBar = () => {
           <span>Настройки</span>
         </Link>
         <Link to={ROUTES.HOME} className={`${styles.link} ${styles.exit}`}>
-          <span>Выйти</span>
+          <span onClick={handleExit}>Выйти</span>
         </Link>
       </div>
     </div>

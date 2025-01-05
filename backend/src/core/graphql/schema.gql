@@ -18,7 +18,7 @@ input AnnouncementFiltersInput {
 type AnnouncementModel {
   announcementCharacteristic: [String!]
   categoryId: String!
-  condition: String!
+  condition: ProductCondition!
   createdAt: DateTime!
   description: String!
   favourites: [String!]
@@ -28,9 +28,17 @@ type AnnouncementModel {
   placementDate: DateTime!
   price: Float!
   review: [String!]
-  status: String!
+  status: AnnouncementStatus!
   updatedAt: DateTime!
   userId: String!
+}
+
+"""Статус объявления"""
+enum AnnouncementStatus {
+  ACTIVE
+  EXPIRED
+  INACTIVE
+  SOLD
 }
 
 type CategoryModel {
@@ -135,13 +143,22 @@ type PhotoModel {
   resolution: String!
 }
 
+"""Состояние товара"""
+enum ProductCondition {
+  NEW
+  REFURBISHED
+  USED
+}
+
 type Query {
   findAllAnnouncements: [AnnouncementModel!]!
   findAnnouncementsByFilters(data: AnnouncementFiltersInput!): [AnnouncementModel!]!
   findCurrentSession: SessionModel!
+  findParentCategories(id: String!): [String!]!
   findPrewiewSubcategories(id: String!): [SubCutegoryModel!]!
   findProfile: UserModel!
   findSessionsByUser: [SessionModel!]!
+  findUser(id: String!): UserModel!
   getAnnouncementById(id: String!): AnnouncementModel!
   getAnnouncementByName(name: String!): AnnouncementModel!
   getAnnouncementsByCategory(id: String!): [AnnouncementModel!]!

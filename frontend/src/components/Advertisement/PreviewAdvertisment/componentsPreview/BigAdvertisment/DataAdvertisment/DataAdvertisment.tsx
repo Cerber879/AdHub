@@ -3,6 +3,8 @@ import { FindAllAnnouncementsQuery } from '../../../../../../graphql/generated/o
 
 import styles from './data.module.css'
 
+import { parseAnnouncementCondition } from '../../../../../../utils/parse-types-ad'
+
 interface DataAdvertismentProps {
   input: FindAllAnnouncementsQuery['findAllAnnouncements'][number]
 }
@@ -15,7 +17,7 @@ const DataAdvertisment: React.FC<DataAdvertismentProps> = ({ input }) => {
         <img className={styles.heart_icon} src="/images/Advertisment/heart.svg" alt="heart" />
       </div>
       <p className={styles.price}>{input.price} ₽</p>
-      <p className={styles.condition_input}>{input.condition}</p>
+      <p className={styles.condition_input}>{parseAnnouncementCondition(input.condition)}</p>
       <div className={styles.description}>{input.description}</div>
       <span className={styles.date}>{new Date(input.placementDate).toLocaleDateString()}</span> 
     </div>

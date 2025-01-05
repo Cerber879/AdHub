@@ -1,18 +1,17 @@
-import { AnnouncementStatus, ProductCondition } from '../../../prisma/generated'
-import { AnnouncementStatusType, ProductConditionType } from '../types/announcement-types'
+import { AnnouncementStatus, ProductCondition } from '../types/announcement-types'
 
 export function parseAnnouncementStatus(status: string): AnnouncementStatus | null {
     try {
         if(status) {
             const upperStatus = status.toUpperCase();
             
-            if (upperStatus == AnnouncementStatusType.ACTIVE) {
+            if (upperStatus == AnnouncementStatus.ACTIVE) {
                 return AnnouncementStatus.ACTIVE
-            } else if (upperStatus == AnnouncementStatusType.SOLD) {
+            } else if (upperStatus == AnnouncementStatus.SOLD) {
                 return AnnouncementStatus.SOLD
-            } else if (upperStatus == AnnouncementStatusType.INACTIVE) {
+            } else if (upperStatus == AnnouncementStatus.INACTIVE) {
                 return AnnouncementStatus.INACTIVE
-            } else if (upperStatus == AnnouncementStatusType.EXPIRED) {
+            } else if (upperStatus == AnnouncementStatus.EXPIRED) {
                 return AnnouncementStatus.EXPIRED
             } 
         }   
@@ -29,13 +28,13 @@ export function parseAnnouncementCondition(condition: string): ProductCondition 
         if(condition) {
             const upperCondition = condition.toUpperCase();
 
-            if (upperCondition == ProductConditionType.NEW) {
+            if (upperCondition == ProductCondition.NEW) {
                 return ProductCondition.NEW
-            } else if (upperCondition == ProductConditionType.USED) {
+            } else if (upperCondition == ProductCondition.USED) {
                 return ProductCondition.USED
-            } else if (upperCondition == ProductConditionType.REFURBISHED) {
+            } else if (upperCondition == ProductCondition.REFURBISHED) {
                 return ProductCondition.REFURBISHED
-            } else if (upperCondition == ProductConditionType.REFURBISHED) {
+            } else if (upperCondition == ProductCondition.REFURBISHED) {
                 return ProductCondition.REFURBISHED
             }
         }

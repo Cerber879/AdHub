@@ -1,0 +1,13 @@
+query FindUser($id: String!) {
+  findUser(id: $id) {
+    id
+    email
+    phoneNumber
+    typeProfile
+    displayName
+    avatar
+    bio
+    rating
+    createdAt
+ }
+}
