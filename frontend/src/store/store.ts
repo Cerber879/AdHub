@@ -3,6 +3,7 @@ import userReducer from './slices/userSlise';
 import advertisementReducer from './slices/advertisementSlice';
 import categoryReducer from './slices/categorySlice';
 import chatReducer from './slices/chatSlice';
+import filtersSearchReducer from './slices/filtersSearchSlice';
 
 const store = configureStore({
   reducer: {
@@ -10,6 +11,7 @@ const store = configureStore({
     advertisement: advertisementReducer,
     category: categoryReducer,
     chat: chatReducer,
+    filtersSearch: filtersSearchReducer
   },
 });
 

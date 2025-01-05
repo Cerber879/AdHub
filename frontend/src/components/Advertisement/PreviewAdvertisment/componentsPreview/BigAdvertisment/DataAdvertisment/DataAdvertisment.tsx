@@ -1,20 +1,23 @@
 import React from 'react'
-
-import { initialAdvertisement as ad } from '../../../../../../modules/data'
+import { FindAllAnnouncementsQuery } from '../../../../../../graphql/generated/output' 
 
 import styles from './data.module.css'
 
-const DataAdvertisment = () => {
+interface DataAdvertismentProps {
+  input: FindAllAnnouncementsQuery['findAllAnnouncements'][number]
+}
+
+const DataAdvertisment: React.FC<DataAdvertismentProps> = ({ input }) => {
   return (
     <div className={styles.data_block}>
-        <div className={styles.name_block}>
-            <p className={styles.name_ad}>{ad.Name}</p>
-            <img className={styles.heart_icon} src="./images/Advertisment/heart.svg" alt="heart" />
-        </div>
-        <p className={styles.price}>{ad.Price} ₽</p>
-        <p className={styles.condition_ad}>{ad.Condition}</p>
-        <div className={styles.description}>{ad.Description}</div>
-        <span className={styles.date}>{ad.Date}</span>
+      <div className={styles.name_block}>
+        <p className={styles.name_input}>{input.name}</p>
+        <img className={styles.heart_icon} src="/images/Advertisment/heart.svg" alt="heart" />
+      </div>
+      <p className={styles.price}>{input.price} ₽</p>
+      <p className={styles.condition_input}>{input.condition}</p>
+      <div className={styles.description}>{input.description}</div>
+      <span className={styles.date}>{new Date(input.placementDate).toLocaleDateString()}</span> 
     </div>
   )
 }

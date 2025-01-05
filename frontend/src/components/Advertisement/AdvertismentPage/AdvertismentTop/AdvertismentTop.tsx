@@ -1,16 +1,21 @@
-import React, { useState } from 'react';
+import React from 'react';
 import SearchBar from '../../../SearchBar/SearchBar';
 import styles from './advertismenttop.module.css';
 import CatalogueModal from '../../../Modals/Catalogue/CatalogueModal';
+
+import { useDispatch, useSelector } from 'react-redux';
+import { setShowCatalogueModal } from '../../../../store/slices/categorySlice';
 const AdvertisementTop: React.FC = () => {
   
-  const [showCatalogueModal, setCatalogueModal] = useState(false);
+  const dispatch = useDispatch();
+  
+  const showCatalogueModal = useSelector((state: any) => state.category.showCatalogueModal);
 
   const handleClick = () => {
     if (showCatalogueModal){
-      setCatalogueModal(false)
+      dispatch(setShowCatalogueModal(false))
     } else {
-      setCatalogueModal(true)
+      dispatch(setShowCatalogueModal(true))
     }
   }
 

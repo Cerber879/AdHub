@@ -3,6 +3,7 @@ import { CategoryService } from './category.service';
 import { CreateCategoryInput } from './inputs/create-category.input';
 import { UpdateCategoryInput, UpdateCategoryMixedInput } from './inputs/update-category.input';
 import { CategoryModel } from './models/category.model';
+import { SubCutegoryModel } from './models/SubCateroty.model';
 
 @Resolver('Category')
 export class CategoryResolver {
@@ -11,6 +12,11 @@ export class CategoryResolver {
   @Mutation(() => Boolean, { name: 'createCategory' })
   async createCategory(@Args('data') input: CreateCategoryInput) {
     return this.categoryService.create(input);
+  }
+
+  @Query(() => [CategoryModel], { name: 'getMainCategories' })
+  async getMainCategories() {
+    return this.categoryService.getMainCategories();
   }
 
   @Query(() => CategoryModel, { name: 'getCategoryById' })
@@ -22,6 +28,15 @@ export class CategoryResolver {
   async findSubcategories(@Args('id') parentId: string) {
     return this.categoryService.findSubcategories(parentId);
   }
+
+  @Query(() => [SubCutegoryModel], { name: 'findPrewiewSubcategories' })
+  async findPrewiewSubcategories(@Args('id') parentId: string) {
+  const categories = await this.categoryService.findSubcategories(parentId);
+  return categories.map(async category => ({
+    ...category,
+    subcategories: await this.categoryService.findSubcategories(category.id)
+  }));
+}
 
   @Mutation(() => Boolean, { name: 'updateCategory' })
   async updateCategory(

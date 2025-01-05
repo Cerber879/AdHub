@@ -2,9 +2,13 @@ import React from 'react';
 import { useLocation, Link } from 'react-router-dom';
 import styles from './list.module.css';
 import { ROUTES } from '../../../utils/routes';
-import { initialUser } from '../../../modules/data';
+import { useFindProfileQuery } from '../../../graphql/generated/output';
 
 const ProfileListBar = () => {
+
+  const { data } = useFindProfileQuery()
+  const user = data?.findProfile
+
   const location = useLocation();
 
   const isActive = (path: string) => {
@@ -14,10 +18,10 @@ const ProfileListBar = () => {
   return (
     <div className={styles.bar_block}>
       <div className={styles.user_block}>
-        <img className={styles.user_logo} src={initialUser.LinkPhoto} alt="" />
-        <span className={styles.user_name}>{initialUser.FullName}</span>
+        <img className={styles.user_logo} src={user?.avatar != null ? user.avatar : ''} alt="" />
+        <span className={styles.user_name}>{user?.displayName}</span>
         <div className={styles.user_rating_block}>
-          <span className={styles.user_rating_number}>{initialUser.Rating}</span>
+          <span className={styles.user_rating_number}>{user?.rating}</span>
           <span className={styles.user_count_feedback}>126 отзывов</span>
         </div>
       </div>
@@ -25,11 +29,17 @@ const ProfileListBar = () => {
         <Link to={ROUTES.PROFILE} className={`${styles.link} ${isActive(ROUTES.PROFILE)}`}>
           <span>Мои объявления</span>
         </Link>
+        <Link to={ROUTES.FAVOURITES} className={`${styles.link} ${isActive(ROUTES.FAVOURITES)}`}>
+          <span>Избранное</span>
+        </Link>
         <Link to={ROUTES.MESSENGER} className={`${styles.link} ${isActive(ROUTES.MESSENGER)}`}>
           <span>Сообщения</span>
         </Link>
-        <Link to={ROUTES.FAVOURITES} className={`${styles.link} ${isActive(ROUTES.FAVOURITES)}`}>
-          <span>Избранное</span>
+        <Link to={ROUTES.SETTINGS} className={`${styles.link} ${isActive(ROUTES.SETTINGS)}`}>
+          <span>Настройки</span>
+        </Link>
+        <Link to={ROUTES.HOME} className={`${styles.link} ${styles.exit}`}>
+          <span>Выйти</span>
         </Link>
       </div>
     </div>

@@ -19,6 +19,18 @@ export type Scalars = {
   Upload: { input: any; output: any; }
 };
 
+export type AnnouncementFiltersInput = {
+  categoryId?: InputMaybe<Scalars['String']['input']>;
+  condition?: InputMaybe<Scalars['String']['input']>;
+  maxPrice?: InputMaybe<Scalars['Int']['input']>;
+  minPrice?: InputMaybe<Scalars['Int']['input']>;
+  search?: InputMaybe<Scalars['String']['input']>;
+  skip?: InputMaybe<Scalars['Int']['input']>;
+  sort?: InputMaybe<Scalars['String']['input']>;
+  status?: InputMaybe<Scalars['String']['input']>;
+  take?: InputMaybe<Scalars['Int']['input']>;
+};
+
 export type AnnouncementModel = {
   __typename?: 'AnnouncementModel';
   announcementCharacteristic?: Maybe<Array<Scalars['String']['output']>>;
@@ -223,19 +235,39 @@ export type PhotoModel = {
 
 export type Query = {
   __typename?: 'Query';
+  findAllAnnouncements: Array<AnnouncementModel>;
+  findAnnouncementsByFilters: Array<AnnouncementModel>;
   findCurrentSession: SessionModel;
+  findPrewiewSubcategories: Array<SubCutegoryModel>;
   findProfile: UserModel;
   findSessionsByUser: Array<SessionModel>;
   getAnnouncementById: AnnouncementModel;
+  getAnnouncementByName: AnnouncementModel;
   getAnnouncementsByCategory: Array<AnnouncementModel>;
   getCategoryById: CategoryModel;
+  getMainCategories: Array<CategoryModel>;
   getPhotosByAnnouncementID: Array<PhotoModel>;
   getSubcategories: Array<CategoryModel>;
 };
 
 
+export type QueryFindAnnouncementsByFiltersArgs = {
+  data: AnnouncementFiltersInput;
+};
+
+
+export type QueryFindPrewiewSubcategoriesArgs = {
+  id: Scalars['String']['input'];
+};
+
+
 export type QueryGetAnnouncementByIdArgs = {
   id: Scalars['String']['input'];
+};
+
+
+export type QueryGetAnnouncementByNameArgs = {
+  name: Scalars['String']['input'];
 };
 
 
@@ -271,6 +303,13 @@ export type SessionModel = {
   id: Scalars['ID']['output'];
   metadata: SessionMetadataModel;
   userId: Scalars['String']['output'];
+};
+
+export type SubCutegoryModel = {
+  __typename?: 'SubCutegoryModel';
+  id: Scalars['ID']['output'];
+  name: Scalars['String']['output'];
+  subcategories?: Maybe<Array<CategoryModel>>;
 };
 
 export type UpdateAnnouncementInput = {
@@ -428,19 +467,38 @@ export type RemoveSessionMutationVariables = Exact<{
 
 export type RemoveSessionMutation = { __typename?: 'Mutation', removeSession: boolean };
 
+export type FindAnnouncementsByFiltersQueryVariables = Exact<{
+  filters: AnnouncementFiltersInput;
+}>;
+
+
+export type FindAnnouncementsByFiltersQuery = { __typename?: 'Query', findAnnouncementsByFilters: Array<{ __typename?: 'AnnouncementModel', id: string, userId: string, name: string, price: number, description: string, condition: string, status: string, placementDate: any, categoryId: string }> };
+
+export type FindAllAnnouncementsQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type FindAllAnnouncementsQuery = { __typename?: 'Query', findAllAnnouncements: Array<{ __typename?: 'AnnouncementModel', id: string, userId: string, categoryId: string, name: string, price: number, placementDate: any, description: string, status: string, condition: string, createdAt: any, updatedAt: any }> };
+
 export type GetAnnouncementQueryVariables = Exact<{
   id: Scalars['String']['input'];
 }>;
 
 
-export type GetAnnouncementQuery = { __typename?: 'Query', getAnnouncementById: { __typename?: 'AnnouncementModel', id: string, name: string, placementDate: any, description: string, status: string, condition: string, categoryId: string } };
+export type GetAnnouncementQuery = { __typename?: 'Query', getAnnouncementById: { __typename?: 'AnnouncementModel', id: string, userId: string, categoryId: string, name: string, price: number, placementDate: any, description: string, status: string, condition: string } };
 
 export type GetAnnouncementsByCategoryQueryVariables = Exact<{
   id: Scalars['String']['input'];
 }>;
 
 
-export type GetAnnouncementsByCategoryQuery = { __typename?: 'Query', getAnnouncementsByCategory: Array<{ __typename?: 'AnnouncementModel', id: string, name: string, placementDate: any, description: string, status: string, condition: string, categoryId: string }> };
+export type GetAnnouncementsByCategoryQuery = { __typename?: 'Query', getAnnouncementsByCategory: Array<{ __typename?: 'AnnouncementModel', id: string, name: string, price: number, placementDate: any, description: string, status: string, condition: string, categoryId: string }> };
+
+export type FindPrewiewSubcategoriesQueryVariables = Exact<{
+  id: Scalars['String']['input'];
+}>;
+
+
+export type FindPrewiewSubcategoriesQuery = { __typename?: 'Query', findPrewiewSubcategories: Array<{ __typename?: 'SubCutegoryModel', id: string, name: string, subcategories?: Array<{ __typename?: 'CategoryModel', id: string, name: string }> | null }> };
 
 export type GetCategoryByIdQueryVariables = Exact<{
   id: Scalars['String']['input'];
@@ -448,6 +506,11 @@ export type GetCategoryByIdQueryVariables = Exact<{
 
 
 export type GetCategoryByIdQuery = { __typename?: 'Query', getCategoryById: { __typename?: 'CategoryModel', id: string, name: string, parentId?: string | null } };
+
+export type GetMainCategoriesQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type GetMainCategoriesQuery = { __typename?: 'Query', getMainCategories: Array<{ __typename?: 'CategoryModel', id: string, name: string, parentId?: string | null }> };
 
 export type GetSubcategoriesQueryVariables = Exact<{
   id: Scalars['String']['input'];
@@ -466,7 +529,7 @@ export type GetPhotosByAnnouncementIdQuery = { __typename?: 'Query', getPhotosBy
 export type FindProfileQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type FindProfileQuery = { __typename?: 'Query', findProfile: { __typename?: 'UserModel', id: string, email?: string | null, displayName: string, password: string } };
+export type FindProfileQuery = { __typename?: 'Query', findProfile: { __typename?: 'UserModel', id: string, email?: string | null, phoneNumber?: string | null, typeProfile: string, displayName: string, avatar?: string | null, bio?: string | null, rating?: number | null, createdAt: any } };
 
 export type FindSessionByUserQueryVariables = Exact<{ [key: string]: never; }>;
 
@@ -1008,16 +1071,115 @@ export function useRemoveSessionMutation(baseOptions?: Apollo.MutationHookOption
 export type RemoveSessionMutationHookResult = ReturnType<typeof useRemoveSessionMutation>;
 export type RemoveSessionMutationResult = Apollo.MutationResult<RemoveSessionMutation>;
 export type RemoveSessionMutationOptions = Apollo.BaseMutationOptions<RemoveSessionMutation, RemoveSessionMutationVariables>;
-export const GetAnnouncementDocument = gql`
-    query GetAnnouncement($id: String!) {
-  getAnnouncementById(id: $id) {
+export const FindAnnouncementsByFiltersDocument = gql`
+    query FindAnnouncementsByFilters($filters: AnnouncementFiltersInput!) {
+  findAnnouncementsByFilters(data: $filters) {
     id
+    userId
     name
+    price
+    description
+    condition
+    status
+    placementDate
+    categoryId
+  }
+}
+    `;
+
+/**
+ * __useFindAnnouncementsByFiltersQuery__
+ *
+ * To run a query within a React component, call `useFindAnnouncementsByFiltersQuery` and pass it any options that fit your needs.
+ * When your component renders, `useFindAnnouncementsByFiltersQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useFindAnnouncementsByFiltersQuery({
+ *   variables: {
+ *      filters: // value for 'filters'
+ *   },
+ * });
+ */
+export function useFindAnnouncementsByFiltersQuery(baseOptions: Apollo.QueryHookOptions<FindAnnouncementsByFiltersQuery, FindAnnouncementsByFiltersQueryVariables> & ({ variables: FindAnnouncementsByFiltersQueryVariables; skip?: boolean; } | { skip: boolean; }) ) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<FindAnnouncementsByFiltersQuery, FindAnnouncementsByFiltersQueryVariables>(FindAnnouncementsByFiltersDocument, options);
+      }
+export function useFindAnnouncementsByFiltersLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<FindAnnouncementsByFiltersQuery, FindAnnouncementsByFiltersQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<FindAnnouncementsByFiltersQuery, FindAnnouncementsByFiltersQueryVariables>(FindAnnouncementsByFiltersDocument, options);
+        }
+export function useFindAnnouncementsByFiltersSuspenseQuery(baseOptions?: Apollo.SkipToken | Apollo.SuspenseQueryHookOptions<FindAnnouncementsByFiltersQuery, FindAnnouncementsByFiltersQueryVariables>) {
+          const options = baseOptions === Apollo.skipToken ? baseOptions : {...defaultOptions, ...baseOptions}
+          return Apollo.useSuspenseQuery<FindAnnouncementsByFiltersQuery, FindAnnouncementsByFiltersQueryVariables>(FindAnnouncementsByFiltersDocument, options);
+        }
+export type FindAnnouncementsByFiltersQueryHookResult = ReturnType<typeof useFindAnnouncementsByFiltersQuery>;
+export type FindAnnouncementsByFiltersLazyQueryHookResult = ReturnType<typeof useFindAnnouncementsByFiltersLazyQuery>;
+export type FindAnnouncementsByFiltersSuspenseQueryHookResult = ReturnType<typeof useFindAnnouncementsByFiltersSuspenseQuery>;
+export type FindAnnouncementsByFiltersQueryResult = Apollo.QueryResult<FindAnnouncementsByFiltersQuery, FindAnnouncementsByFiltersQueryVariables>;
+export const FindAllAnnouncementsDocument = gql`
+    query FindAllAnnouncements {
+  findAllAnnouncements {
+    id
+    userId
+    categoryId
+    name
+    price
     placementDate
     description
     status
     condition
+    createdAt
+    updatedAt
+  }
+}
+    `;
+
+/**
+ * __useFindAllAnnouncementsQuery__
+ *
+ * To run a query within a React component, call `useFindAllAnnouncementsQuery` and pass it any options that fit your needs.
+ * When your component renders, `useFindAllAnnouncementsQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useFindAllAnnouncementsQuery({
+ *   variables: {
+ *   },
+ * });
+ */
+export function useFindAllAnnouncementsQuery(baseOptions?: Apollo.QueryHookOptions<FindAllAnnouncementsQuery, FindAllAnnouncementsQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<FindAllAnnouncementsQuery, FindAllAnnouncementsQueryVariables>(FindAllAnnouncementsDocument, options);
+      }
+export function useFindAllAnnouncementsLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<FindAllAnnouncementsQuery, FindAllAnnouncementsQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<FindAllAnnouncementsQuery, FindAllAnnouncementsQueryVariables>(FindAllAnnouncementsDocument, options);
+        }
+export function useFindAllAnnouncementsSuspenseQuery(baseOptions?: Apollo.SkipToken | Apollo.SuspenseQueryHookOptions<FindAllAnnouncementsQuery, FindAllAnnouncementsQueryVariables>) {
+          const options = baseOptions === Apollo.skipToken ? baseOptions : {...defaultOptions, ...baseOptions}
+          return Apollo.useSuspenseQuery<FindAllAnnouncementsQuery, FindAllAnnouncementsQueryVariables>(FindAllAnnouncementsDocument, options);
+        }
+export type FindAllAnnouncementsQueryHookResult = ReturnType<typeof useFindAllAnnouncementsQuery>;
+export type FindAllAnnouncementsLazyQueryHookResult = ReturnType<typeof useFindAllAnnouncementsLazyQuery>;
+export type FindAllAnnouncementsSuspenseQueryHookResult = ReturnType<typeof useFindAllAnnouncementsSuspenseQuery>;
+export type FindAllAnnouncementsQueryResult = Apollo.QueryResult<FindAllAnnouncementsQuery, FindAllAnnouncementsQueryVariables>;
+export const GetAnnouncementDocument = gql`
+    query GetAnnouncement($id: String!) {
+  getAnnouncementById(id: $id) {
+    id
+    userId
     categoryId
+    name
+    price
+    placementDate
+    description
+    status
+    condition
   }
 }
     `;
@@ -1059,6 +1221,7 @@ export const GetAnnouncementsByCategoryDocument = gql`
   getAnnouncementsByCategory(id: $id) {
     id
     name
+    price
     placementDate
     description
     status
@@ -1100,6 +1263,51 @@ export type GetAnnouncementsByCategoryQueryHookResult = ReturnType<typeof useGet
 export type GetAnnouncementsByCategoryLazyQueryHookResult = ReturnType<typeof useGetAnnouncementsByCategoryLazyQuery>;
 export type GetAnnouncementsByCategorySuspenseQueryHookResult = ReturnType<typeof useGetAnnouncementsByCategorySuspenseQuery>;
 export type GetAnnouncementsByCategoryQueryResult = Apollo.QueryResult<GetAnnouncementsByCategoryQuery, GetAnnouncementsByCategoryQueryVariables>;
+export const FindPrewiewSubcategoriesDocument = gql`
+    query FindPrewiewSubcategories($id: String!) {
+  findPrewiewSubcategories(id: $id) {
+    id
+    name
+    subcategories {
+      id
+      name
+    }
+  }
+}
+    `;
+
+/**
+ * __useFindPrewiewSubcategoriesQuery__
+ *
+ * To run a query within a React component, call `useFindPrewiewSubcategoriesQuery` and pass it any options that fit your needs.
+ * When your component renders, `useFindPrewiewSubcategoriesQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useFindPrewiewSubcategoriesQuery({
+ *   variables: {
+ *      id: // value for 'id'
+ *   },
+ * });
+ */
+export function useFindPrewiewSubcategoriesQuery(baseOptions: Apollo.QueryHookOptions<FindPrewiewSubcategoriesQuery, FindPrewiewSubcategoriesQueryVariables> & ({ variables: FindPrewiewSubcategoriesQueryVariables; skip?: boolean; } | { skip: boolean; }) ) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<FindPrewiewSubcategoriesQuery, FindPrewiewSubcategoriesQueryVariables>(FindPrewiewSubcategoriesDocument, options);
+      }
+export function useFindPrewiewSubcategoriesLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<FindPrewiewSubcategoriesQuery, FindPrewiewSubcategoriesQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<FindPrewiewSubcategoriesQuery, FindPrewiewSubcategoriesQueryVariables>(FindPrewiewSubcategoriesDocument, options);
+        }
+export function useFindPrewiewSubcategoriesSuspenseQuery(baseOptions?: Apollo.SkipToken | Apollo.SuspenseQueryHookOptions<FindPrewiewSubcategoriesQuery, FindPrewiewSubcategoriesQueryVariables>) {
+          const options = baseOptions === Apollo.skipToken ? baseOptions : {...defaultOptions, ...baseOptions}
+          return Apollo.useSuspenseQuery<FindPrewiewSubcategoriesQuery, FindPrewiewSubcategoriesQueryVariables>(FindPrewiewSubcategoriesDocument, options);
+        }
+export type FindPrewiewSubcategoriesQueryHookResult = ReturnType<typeof useFindPrewiewSubcategoriesQuery>;
+export type FindPrewiewSubcategoriesLazyQueryHookResult = ReturnType<typeof useFindPrewiewSubcategoriesLazyQuery>;
+export type FindPrewiewSubcategoriesSuspenseQueryHookResult = ReturnType<typeof useFindPrewiewSubcategoriesSuspenseQuery>;
+export type FindPrewiewSubcategoriesQueryResult = Apollo.QueryResult<FindPrewiewSubcategoriesQuery, FindPrewiewSubcategoriesQueryVariables>;
 export const GetCategoryByIdDocument = gql`
     query GetCategoryById($id: String!) {
   getCategoryById(id: $id) {
@@ -1142,6 +1350,47 @@ export type GetCategoryByIdQueryHookResult = ReturnType<typeof useGetCategoryByI
 export type GetCategoryByIdLazyQueryHookResult = ReturnType<typeof useGetCategoryByIdLazyQuery>;
 export type GetCategoryByIdSuspenseQueryHookResult = ReturnType<typeof useGetCategoryByIdSuspenseQuery>;
 export type GetCategoryByIdQueryResult = Apollo.QueryResult<GetCategoryByIdQuery, GetCategoryByIdQueryVariables>;
+export const GetMainCategoriesDocument = gql`
+    query GetMainCategories {
+  getMainCategories {
+    id
+    name
+    parentId
+  }
+}
+    `;
+
+/**
+ * __useGetMainCategoriesQuery__
+ *
+ * To run a query within a React component, call `useGetMainCategoriesQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGetMainCategoriesQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useGetMainCategoriesQuery({
+ *   variables: {
+ *   },
+ * });
+ */
+export function useGetMainCategoriesQuery(baseOptions?: Apollo.QueryHookOptions<GetMainCategoriesQuery, GetMainCategoriesQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<GetMainCategoriesQuery, GetMainCategoriesQueryVariables>(GetMainCategoriesDocument, options);
+      }
+export function useGetMainCategoriesLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<GetMainCategoriesQuery, GetMainCategoriesQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<GetMainCategoriesQuery, GetMainCategoriesQueryVariables>(GetMainCategoriesDocument, options);
+        }
+export function useGetMainCategoriesSuspenseQuery(baseOptions?: Apollo.SkipToken | Apollo.SuspenseQueryHookOptions<GetMainCategoriesQuery, GetMainCategoriesQueryVariables>) {
+          const options = baseOptions === Apollo.skipToken ? baseOptions : {...defaultOptions, ...baseOptions}
+          return Apollo.useSuspenseQuery<GetMainCategoriesQuery, GetMainCategoriesQueryVariables>(GetMainCategoriesDocument, options);
+        }
+export type GetMainCategoriesQueryHookResult = ReturnType<typeof useGetMainCategoriesQuery>;
+export type GetMainCategoriesLazyQueryHookResult = ReturnType<typeof useGetMainCategoriesLazyQuery>;
+export type GetMainCategoriesSuspenseQueryHookResult = ReturnType<typeof useGetMainCategoriesSuspenseQuery>;
+export type GetMainCategoriesQueryResult = Apollo.QueryResult<GetMainCategoriesQuery, GetMainCategoriesQueryVariables>;
 export const GetSubcategoriesDocument = gql`
     query GetSubcategories($id: String!) {
   getSubcategories(id: $id) {
@@ -1231,8 +1480,13 @@ export const FindProfileDocument = gql`
   findProfile {
     id
     email
+    phoneNumber
+    typeProfile
     displayName
-    password
+    avatar
+    bio
+    rating
+    createdAt
   }
 }
     `;

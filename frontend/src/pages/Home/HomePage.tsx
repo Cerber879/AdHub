@@ -5,7 +5,6 @@ const Home: React.FC = () => {
   return (
     <div>
       <AdvertisementList/>
-      {/* Add more content here */}
     </div>
   );
 };

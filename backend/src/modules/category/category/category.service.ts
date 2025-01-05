@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { ConflictException, Injectable } from '@nestjs/common';
 import { PrismaService } from '@/src/core/prisma/prisma.service';
 import { CreateCategoryInput } from './inputs/create-category.input';
 import { UpdateCategoryInput } from './inputs/update-category.input';
@@ -10,6 +10,16 @@ export class CategoryService {
   async create(input: CreateCategoryInput) {
     const { name, parentId } = input
 
+    const existingCategory = await this.prismaService.category.findFirst({
+      where: {
+        name,
+      },
+    })
+
+    if (existingCategory) {
+      throw new ConflictException('Такая категория уже существует');
+    }
+
     await this.prismaService.category.create({
       data: {
         name,
@@ -18,6 +28,14 @@ export class CategoryService {
     });
 
     return true
+  }
+
+  async getMainCategories() {
+    return this.prismaService.category.findMany({
+      where: {
+        parentId: null,
+      },
+    });
   }
 
   async findById(id: string) {
@@ -53,6 +71,7 @@ export class CategoryService {
         id 
       },
     });
+
     return true;
   }
 }

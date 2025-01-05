@@ -38,7 +38,7 @@ model User {
 model Category {
   id             String     @id @default(uuid())
 
-  name           String    
+  name           String     @unique  
   parentId       String?     
 
   children       Category[] @relation("parent") 
@@ -71,6 +71,9 @@ model Announcement {
 
   user            User      @relation(fields: [userId], references: [id]) 
   category        Category  @relation(fields: [categoryId], references: [id]) 
+
+  createdAt    DateTime @default(now()) @map("created_at")
+  updatedAt    DateTime @updatedAt @map("updated_at")
 
   @@map("announcements") 
 }

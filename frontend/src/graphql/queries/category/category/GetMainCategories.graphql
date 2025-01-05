@@ -1,0 +1,7 @@
+query GetMainCategories{
+  getMainCategories {
+    id
+    name
+    parentId
+  }
+}

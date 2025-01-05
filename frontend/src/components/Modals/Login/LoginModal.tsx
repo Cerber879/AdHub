@@ -1,27 +1,42 @@
 import React, { useEffect, useState } from 'react';
-import { useDispatch } from 'react-redux';
-import { setUser } from '../../../store/slices/userSlise';
-import { User } from '../../../modules/types';
+import { auth } from '../../../store/slices/userSlise';
 import styles from '../modals.module.css'; 
 import { validateEmail, validatePhoneNumber } from '../modals';
+import { useLoginUserMutation } from '../../../graphql/generated/output';
+import { useDispatch } from 'react-redux';
 
 const LoginModal: React.FC<{ onClose: () => void, onOpenRegister: () => void }> = ({ onClose, onOpenRegister }) => {
+ 
+  const dispatch = useDispatch()
+
+  const [error, setError] = useState('');
   const [login, setLogin] = useState('');
   const [password, setPassword] = useState('');
 
   const [loginDirty, setLoginDirty] = useState(false);
-  //const [passwordDirty, setPasswordDirty] = useState(false);
-
   const [loginError, setLoginError] = useState('');
-  //const [passwordError, setPasswordError] = useState('');
-
   const [formValid, setFormValid] = useState(false);
 
-  const dispatch = useDispatch();
+  const [loginUser] = useLoginUserMutation({
+    onCompleted: () => {
+      dispatch(auth())
+      onClose()
+    },
+    onError: (error) => {
+      setError(error.message);
+    }
+  })
 
   const handleLogin = async () => {
     if (!loginError){
-
+      setError('')
+      const variables = {
+        data: {
+          login,
+          password: password,
+        },
+      };
+      await loginUser({ variables });
     } else {
       setLoginDirty(true)
     }
@@ -80,6 +95,7 @@ const LoginModal: React.FC<{ onClose: () => void, onOpenRegister: () => void }> 
          <img src="/favicons.png" alt="Icon" width={50}/>
          <h2>Войти в AdHub</h2>
         </div>
+        {error && <span className={styles.error_message}>{error}</span>}
         <div className={styles.block_input}>
           <span className={styles.name_input}>Логин</span>
           <input

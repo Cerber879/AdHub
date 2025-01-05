@@ -6,11 +6,9 @@
 }
 
 .user_block {
-    /* подумать здесь еще */
     padding-left: 20px;  
     display: flex;
     flex-direction: column;
-
 }
 
 .user_logo {
@@ -18,11 +16,16 @@
     height: 100px;
     background-color: antiquewhite;
     border-radius: 50%;
+    object-fit: cover;
+    overflow: hidden;
 }
 
 .user_name {
     margin-top: 20px;
     font-size: 26px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
 }
 
 .user_rating_block {
@@ -70,4 +73,13 @@
 
 .active:hover {
     background-color: #007bff;
+}
+
+.exit {
+    color: tomato;
+}
+
+.exit:hover {
+    background-color: #fae7e7;
+    border: 1px solid tomato;
 }

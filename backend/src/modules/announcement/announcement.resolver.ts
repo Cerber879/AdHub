@@ -6,6 +6,7 @@ import { AnnouncementModel } from './models/announcement.model';
 import { Authorization } from '@/src/shared/decorators/auth.decorator';
 import { Authorized } from '@/src/shared/decorators/authorized.decorator';
 import { User } from '@/prisma/generated';
+import { AnnouncementFiltersInput } from './inputs/search-announcement.input';
 
 @Resolver('Announcement')
 export class AnnouncementResolver {
@@ -20,9 +21,27 @@ export class AnnouncementResolver {
     return this.announcementService.create(input, user);
   }
 
+  @Query(() => [AnnouncementModel], { name: 'findAllAnnouncements' })
+  async findAllAnnouncements() {
+    return this.announcementService.findAllAnnouncements();
+  }
+
+  @Query(() => [AnnouncementModel], { name: 'findAnnouncementsByFilters' })
+  async findAnnouncements(
+    @Args('data', { type: () => AnnouncementFiltersInput })
+    filters: AnnouncementFiltersInput,
+  ) {
+    return this.announcementService.findManyWithFilters(filters);
+  }
+
   @Query(() => AnnouncementModel, { name: 'getAnnouncementById' })
   async findById(@Args('id') id: string) {
     return this.announcementService.findById(id);
+  }
+
+  @Query(() => AnnouncementModel, { name: 'getAnnouncementByName' })
+  async findByName(@Args('name') name: string) {
+    return this.announcementService.findByName(name);
   }
 
   @Query(() => [AnnouncementModel], { name: 'getAnnouncementsByCategory' })

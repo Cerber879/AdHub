@@ -2,6 +2,7 @@ query GetAnnouncementsByCategory($id: String!) {
   getAnnouncementsByCategory(id: $id) {
     id
     name
+    price
     placementDate
     description
     status

@@ -6,19 +6,26 @@ import styles from './preview.module.css'
 import PhotosBlock from '../../componentsPreview/PhotosBlock/PhotosBlock'
 import DataAdvertisment from '../../componentsPreview/SmallAdvertisment/DataAdvertisment/DataAdvertisment'
 
-const PreviewSmallAdvertisment = () => {
 
+
+import { FindAllAnnouncementsQuery } from '../../../../../graphql/generated/output'
+
+interface PreviewSmallAdvertismentProps {
+  input: FindAllAnnouncementsQuery['findAllAnnouncements'][number] 
+}
+
+const PreviewSmallAdvertisment: React.FC<PreviewSmallAdvertismentProps> = ({ input }) => { 
   const [activeAd, setActiveAd] = useState(false);
 
   return (
     <Link         
       onMouseEnter={() => setActiveAd(true)} 
       onMouseLeave={() => setActiveAd(false)} 
-      to={ROUTES.ADVERTISMENT} 
+      to={ROUTES.ITEMS + '/' + input.name + '/' + input.id} 
       className={styles.container}
     >
       <PhotosBlock active={activeAd} useStylesProfile={false}  />
-      <DataAdvertisment />
+      <DataAdvertisment input={input} />
     </Link>
   )
 }

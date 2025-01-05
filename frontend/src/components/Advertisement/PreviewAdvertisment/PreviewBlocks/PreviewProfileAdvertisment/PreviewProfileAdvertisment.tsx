@@ -8,8 +8,13 @@ import { ROUTES } from '../../../../../utils/routes'
 
 import DataAdvertisment from '../../componentsPreview/ProfileAdvertisment/DataAdvertisment/DataAdvertisment'
 import PhotosBlock from '../../componentsPreview/PhotosBlock/PhotosBlock'
+import { FindAllAnnouncementsQuery } from '../../../../../graphql/generated/output'
 
-const PreviewProfileAdvertisment = () => {
+interface PreviewProfileAdvertismentProps {
+  input: FindAllAnnouncementsQuery['findAllAnnouncements'][number] 
+}
+
+const PreviewProfileAdvertisment = ({ input }: PreviewProfileAdvertismentProps) => {
 
     const [activeAd, setActiveAd] = useState(false);
       
@@ -17,11 +22,11 @@ const PreviewProfileAdvertisment = () => {
     <Link 
         onMouseEnter={() => setActiveAd(true)} 
         onMouseLeave={() => setActiveAd(false)} 
-        to={ROUTES.ADVERTISMENT} 
+        to={ROUTES.ITEMS} 
         className={styles.container}
     >
         <PhotosBlock active={activeAd} useStylesProfile={true}/>
-        <DataAdvertisment />
+        <DataAdvertisment input={input} />
     </Link>
   )
 }

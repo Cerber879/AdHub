@@ -2,7 +2,12 @@ query FindProfile {
   findProfile {
     id
     email
+    phoneNumber
+    typeProfile
     displayName
-    password
+    avatar
+    bio
+    rating
+    createdAt
  }
 }

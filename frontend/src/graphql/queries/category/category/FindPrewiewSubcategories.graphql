@@ -1,0 +1,10 @@
+	query FindPrewiewSubcategories($id: String!) {
+    findPrewiewSubcategories(id: $id) {
+      id
+      name
+      subcategories {
+        id
+        name
+      }
+	}
+}

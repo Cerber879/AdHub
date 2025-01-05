@@ -3,8 +3,12 @@ import styles from '../modals.module.css';
 import { validateEmail, validatePhoneNumber } from '../modals';
 
 import { useCreateUserMutation } from '../../../graphql/generated/output';
+import { auth } from '../../../store/slices/userSlise';
+import { useDispatch } from 'react-redux';
 
 const RegisterModal: React.FC<{ onClose: () => void, onOpenLogin: () => void }> = ({ onClose, onOpenLogin }) => {
+  const [error, setError] = useState('');
+
   const [name, setName] = useState('');
   const [type, setType] = useState('');
   const [login, setLogin] = useState('');
@@ -23,25 +27,32 @@ const RegisterModal: React.FC<{ onClose: () => void, onOpenLogin: () => void }> 
   const [isEmail, setIsEmail] = useState(false);
   const [formValid, setFormValid] = useState(false);
 
-  const [createUser] = useCreateUserMutation()
+  const dispatch = useDispatch()
+
+  const [createUser] = useCreateUserMutation(
+    {
+      onCompleted: () => {
+        dispatch(auth())
+        onClose()
+      },
+      onError: (error) => {
+        setError(error.message);
+      }
+    }
+  )
 
   const handleRegister = async () => {
-    try {
-      console.log(name, type, login, password);
-      const variables = {
-        data: {
-          displayName: name,
-          typeProfile: type,
-          [isEmail ? 'email' : 'phoneNumber']: login,
-          password: password,
-        },
-      };
-      await createUser({ variables });
-      alert('Пользователь зарегистрирован!');
-    } catch (error: any) {
-      console.error('Ошибка при регистрации:', error);
-      alert(error.message || 'Ошибка регистрации. Попробуйте снова.');
-    }
+    setError('')
+    console.log(name, type, login, password);
+    const variables = {
+      data: {
+        displayName: name,
+        typeProfile: type,
+        [isEmail ? 'email' : 'phoneNumber']: login,
+        password: password,
+      },
+    };
+    await createUser({ variables });
   };
 
   const nameHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -130,6 +141,7 @@ const RegisterModal: React.FC<{ onClose: () => void, onOpenLogin: () => void }> 
          <img src="/favicons.png" alt="Icon" width={50}/>
          <h2>Присоединяйтесь к AdHub</h2>
         </div>
+        {error && <span className={styles.error_message}>{error}</span>}
         <div className={styles.block_input}>
           <span className={styles.name_input}>Имя</span>
           <input
@@ -152,7 +164,7 @@ const RegisterModal: React.FC<{ onClose: () => void, onOpenLogin: () => void }> 
           >
             <option value="">Выберите тип профиля</option>
             <option value="Организация">Организация</option>
-            <option value="Часное лицо">Часное лицо</option>
+            <option value="Частное лицо">Частное лицо</option>
           </select>
           {typeDirty && typeError && <span className={styles.error_message}>{typeError}</span>}
         </div>

@@ -2,6 +2,19 @@
 # THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
 # ------------------------------------------------------
 
+input AnnouncementFiltersInput {
+  categoryId: String
+  condition: String
+  displayType: String
+  maxPrice: Int
+  minPrice: Int
+  search: String
+  skip: Int
+  sort: String
+  status: String
+  take: Int
+}
+
 type AnnouncementModel {
   announcementCharacteristic: [String!]
   categoryId: String!
@@ -123,12 +136,17 @@ type PhotoModel {
 }
 
 type Query {
+  findAllAnnouncements: [AnnouncementModel!]!
+  findAnnouncementsByFilters(data: AnnouncementFiltersInput!): [AnnouncementModel!]!
   findCurrentSession: SessionModel!
+  findPrewiewSubcategories(id: String!): [SubCutegoryModel!]!
   findProfile: UserModel!
   findSessionsByUser: [SessionModel!]!
   getAnnouncementById(id: String!): AnnouncementModel!
+  getAnnouncementByName(name: String!): AnnouncementModel!
   getAnnouncementsByCategory(id: String!): [AnnouncementModel!]!
   getCategoryById(id: String!): CategoryModel!
+  getMainCategories: [CategoryModel!]!
   getPhotosByAnnouncementID(id: String!): [PhotoModel!]!
   getSubcategories(id: String!): [CategoryModel!]!
 }
@@ -144,6 +162,12 @@ type SessionModel {
   id: ID!
   metadata: SessionMetadataModel!
   userId: String!
+}
+
+type SubCutegoryModel {
+  id: ID!
+  name: String!
+  subcategories: [CategoryModel!]
 }
 
 input UpdateAnnouncementInput {

@@ -3,26 +3,20 @@ import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import { Provider } from 'react-redux';
 
 import store from '../store/store';
-
-import styles from './app.module.css'
+import styles from './app.module.css';
 
 import Home from '../pages/Home/HomePage';
 import CreateAdvertisementPage from '../pages/CreateAdvertisement/CreateAdvertisementPage';
 import AboutUs from '../pages/AboutUs/AboutUs';
-import CreateMessageComponent from '../components/Profile/ProfileMessenger/Messenger'
-
-
-import { Header } from '../components/Header/Header';
-import { Footer } from '../components/Footer/Footer';
-
-import { ROUTES } from '../utils/routes';
-import RegisterModal from '../components/Modals/Register/RegisterModal';
-import LoginModal from '../components/Modals/Login/LoginModal';
 import Profile from '../pages/Profile/ProfileMain/Profile';
 import Favourites from '../pages/Profile/FavouritesPage/Favourites';
 import AdvertismentPage from '../pages/AdvertismentPage/AdvertismentPage';
 import Chat from '../pages/Profile/ChatPage/Chat';
 
+import { Header } from '../components/Header/Header';
+import { Footer } from '../components/Footer/Footer';
+import { ROUTES } from '../utils/routes';
+import AdvertisementList from '../components/Advertisement/ViewAdvertisementList/ViewAdvertisementList';
 
 const App: React.FC = () => {
   return (
@@ -36,17 +30,16 @@ const App: React.FC = () => {
               <Route path={ROUTES.PROFILE} element={<Profile />} />
               <Route path={ROUTES.FAVOURITES} element={<Favourites />} />
               <Route path={ROUTES.MESSENGER} element={<Chat />} />
-              <Route path={ROUTES.CREATE_ADVERTISMENT} element={<CreateAdvertisementPage />} />
-              <Route path={ROUTES.ABOUT} element = {< AboutUs/>} />
-              <Route path={ROUTES.REGISTER} element = {< RegisterModal onClose={()=>{}} onOpenLogin={()=>{}}/>} />
-              <Route path={ROUTES.LOGIN} element = {< LoginModal onClose={()=>{}} onOpenRegister={()=>{}}/>} />
-              <Route path={ROUTES.ADVERTISMENT} element = {< AdvertismentPage/>} />
-              <Route path={ROUTES.MESSENGER} element = {< CreateMessageComponent/>} />
+              <Route path={'/:category/:categoryId'} element={<AdvertisementList />} />
+              <Route path={ROUTES.ADDITEM} element={<CreateAdvertisementPage />} />
+              <Route path={ROUTES.ABOUT} element={<AboutUs />} />
+              <Route path={ROUTES.PROFILE + '/:userId'} element={<Profile />} /> 
+              <Route path={ROUTES.ITEMS + '/:adName/:adId'} element={<AdvertismentPage />} />
+              <Route path={ROUTES.ITEMS + ROUTES.EDIT + '/:adId'} element={<></>} />
             </Routes>
           </div>
           <Footer/>
         </div>
-
       </Router>
     </Provider>
   );

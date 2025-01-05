@@ -1,13 +1,16 @@
 export const ROUTES = {
     HOME: '/',
     ABOUT: '/about',
-    ADVERTISMENT: '/advertisment',
-    CREATE_ADVERTISMENT: '/create-advertisment',
+    ITEMS: '/items',
+    EDIT: '/edit',
+    ADDITEM: '/additem',
     CATALOG: '/catalog',
     PROFILE: '/profile',
+    USER: '/user',
     MESSENGER: '/messenger',
     MESSEGES: '/messenger/messeges',
-    FAVOURITES: '/favourites',
+    FAVOURITES: '/profile/favourites',
+    SETTINGS: '/profile/settings',
     LOGIN: '/login',
     REGISTER: '/register'
 }

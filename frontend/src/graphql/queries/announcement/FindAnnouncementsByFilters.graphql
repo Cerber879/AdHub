@@ -1,0 +1,13 @@
+query FindAnnouncementsByFilters($filters: AnnouncementFiltersInput!) {
+  findAnnouncementsByFilters(data: $filters) {
+    id
+    userId
+    name
+    price
+    description
+    condition
+    status
+    placementDate
+    categoryId
+  }
+}

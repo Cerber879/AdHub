@@ -35,9 +35,6 @@ const ProfileListAdvertisments = () => {
             </button>
         </div>
         <div className={styles.ads}>
-            <PreviewProfileAdvertisment />
-            <PreviewProfileAdvertisment />
-            <PreviewProfileAdvertisment />
         </div>
     </div>
   )

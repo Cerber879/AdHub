@@ -1,15 +1,18 @@
 import React from 'react'
 
-import { initialAdvertisement as ad } from '../../../../../../modules/data'
-
 import styles from './data.module.css'
+import { FindAllAnnouncementsQuery } from '../../../../../../graphql/generated/output'
 
-const DataAdvertisment = () => {
+interface PreviewProfileAdvertismentProps {
+  input: FindAllAnnouncementsQuery['findAllAnnouncements'][number] 
+}
+
+const DataAdvertisment = ({ input }: PreviewProfileAdvertismentProps) => {
   return (
     <div className={styles.data_block}>
-        <p className={styles.name_ad}>{ad.Name}</p>
-        <p className={styles.price}>{ad.Price} ₽</p>
-        <span className={styles.date}>{ad.Date}</span>
+        <p className={styles.name_ad}>{input.name}</p>
+        <p className={styles.price}>{input.price} ₽</p>
+        <span className={styles.date}>{new Date(input.placementDate).toLocaleDateString()}</span>
     </div>
   )
 }

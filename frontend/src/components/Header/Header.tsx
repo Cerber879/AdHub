@@ -4,11 +4,14 @@ import LoginModal from '../Modals/Login/LoginModal';
 import RegisterModal from '../Modals/Register/RegisterModal';
 import { Link } from 'react-router-dom';
 import { ROUTES } from '../../utils/routes';
+import { useSelector } from 'react-redux';
 
 export function Header() {
 
     const [showLoginModal, setShowLoginModal] = useState(false);
     const [showRegisterModal, setShowRegisterModal] = useState(false);
+
+    const isAuthenticated = useSelector((state: any) => state.user.isAuthenticated)
 
     const handleRegister = () => {
         setShowRegisterModal(true)
@@ -45,20 +48,25 @@ export function Header() {
             </div>
             <div className={styles.flex_block}>
 
-                <button 
-                    className={styles.button_link}
-                    onClick={() => setShowLoginModal(true)}>
-                        Вход и Регистрация
-                </button>
+                {!isAuthenticated &&
+                    <button 
+                        className={`${styles.button_link} ${styles.auth}`}
+                        onClick={() => setShowLoginModal(true)}>
+                            Вход и Регистрация
+                    </button>
+                }
 
-                <Link 
-                    to={ROUTES.PROFILE}
-                    className={styles.button_link}>
-                        <span>Мои Объявления</span>
-                </Link>
-        
+                {isAuthenticated &&
+                    <Link 
+                        to={ROUTES.PROFILE}
+                        className={styles.button_link}>
+                            <span>Мои Объявления</span>
+                    </Link>
+                }
+                
                 <Link
-                    to={ROUTES.CREATE_ADVERTISMENT}
+                    {...isAuthenticated ? {to: ROUTES.ADDITEM} : {onClick: () => setShowLoginModal(true)}}
+                    to={ROUTES.HOME}
                 >
                         <button className={`${styles.button_link} ${styles.button_add_advertisment}`}>
                             <span>Создать Объявление</span>

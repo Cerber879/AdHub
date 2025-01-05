@@ -3,6 +3,7 @@
     flex-direction: none;
     justify-content: center;
     align-items: center;
+    gap: 10px;
 }
 
 .setBar {
@@ -25,7 +26,7 @@
 
 .button_link {
     display: inline-block;
-    padding: 10px 20px;
+    padding: 7px 15px;
     font-size: 16px;
     color: black;
     border: none;
@@ -34,6 +35,11 @@
     text-decoration: none;
     cursor: pointer;
     transition: 0.3s ease;
+}
+
+.auth {
+    padding: 10px 20px;
+    font-size: 16px;
 }
 
 .button_add_advertisment{

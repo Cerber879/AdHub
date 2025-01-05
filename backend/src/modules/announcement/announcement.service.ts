@@ -1,46 +1,98 @@
-import { Injectable, NotFoundException } from '@nestjs/common';
+import { BadRequestException, Injectable, NotFoundException } from '@nestjs/common';
 import { PrismaService } from '@/src/core/prisma/prisma.service';
 import { CreateAnnouncementInput } from './inputs/create-announcement.input';
 import { UpdateAnnouncementInput } from './inputs/update-announcement.input';
 import { User} from '@/prisma/generated';
 import { parseAnnouncementCondition, parseAnnouncementStatus } from '@/src/shared/utils/parse-types-ad';
+import { AnnouncementFiltersInput } from './inputs/search-announcement.input';
 
 @Injectable()
 export class AnnouncementService {
   constructor(private readonly prismaService: PrismaService) {}
-
+  
   async create(input: CreateAnnouncementInput, user: User) {
     const { categoryId, status, condition, ...rest } = input;
-
+    
     const announcementStatus = parseAnnouncementStatus(status)
     const announcementCondition = parseAnnouncementCondition(condition)
-
+    
     await this.prismaService.announcement.create({
       data: { 
         ...rest,
         status: announcementStatus,
         condition: announcementCondition,
         category: {
-            connect: {
-                id: categoryId
-            }
+          connect: {
+            id: categoryId
+          }
         },
         user: {
-            connect: {
-                id: user.id
-            }
+          connect: {
+            id: user.id
+          }
         },
         
       },
     });
-
+    
     return true
+  }
+
+  findAllAnnouncements() {
+    return this.prismaService.announcement.findMany({});
+  }
+
+  async findManyWithFilters(filters: AnnouncementFiltersInput) {
+    const { minPrice, maxPrice, condition, status, search, sort, skip, take, categoryId } = filters;
+    
+    const announcementStatus = parseAnnouncementStatus(status)
+    const announcementCondition = parseAnnouncementCondition(condition)
+
+    if (filters.minPrice && filters.maxPrice && filters.minPrice > filters.maxPrice) {
+      throw new BadRequestException('minPrice не может быть больше maxPrice');
+    }
+
+    const query = this.prismaService.announcement.findMany({
+      where: {
+        AND: [
+          minPrice ? { price: { gte: minPrice } } : {},
+          maxPrice ? { price: { lte: maxPrice } } : {},
+          announcementCondition !== null ? { condition: announcementCondition } : {},
+          announcementStatus !== null ? { status: announcementStatus } : {},
+          search ? { name: { contains: search } } : {},
+          search ? { description: { contains: search } } : {},
+          categoryId ? { categoryId: categoryId } : {},
+        ],
+      },
+      orderBy: sort
+        ? sort === 'price_asc' 
+          ? { price: 'asc' } 
+          : { price: 'desc' }
+        : undefined,
+      skip,
+      take,
+    });
+    return query;
   }
 
   async findById(id: string) {
     const announcement = await this.prismaService.announcement.findUnique({ 
         where: { 
           id
+        }
+    });
+
+    if (!announcement) {
+      throw new NotFoundException('Объявление не найдено');
+    }
+
+    return announcement;
+  }
+
+  async findByName(name: string) {
+    const announcement = await this.prismaService.announcement.findMany({ 
+        where: { 
+          name
         }
     });
 

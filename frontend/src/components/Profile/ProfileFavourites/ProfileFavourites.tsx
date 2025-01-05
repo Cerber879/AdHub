@@ -35,9 +35,6 @@ const ProfileFavourites = () => {
             </button>
         </div>
         <div className={styles.ads}>
-            <PreviewBigAdvertisment />
-            <PreviewBigAdvertisment />
-            <PreviewBigAdvertisment />
         </div>
     </div>
   )

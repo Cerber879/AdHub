@@ -1,5 +1,5 @@
-query GetAnnouncement($id: String!) {
-  getAnnouncementById(id: $id) {
+query FindAllAnnouncements {
+  findAllAnnouncements {
     id
     userId
     categoryId
@@ -9,5 +9,7 @@ query GetAnnouncement($id: String!) {
     description
     status
     condition
+    createdAt
+    updatedAt
   }
 }
