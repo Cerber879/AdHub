@@ -42,7 +42,7 @@
     "express-session": "^1.18.1",
     "geoip-lite": "^1.4.10",
     "graphql": "^16.10.0",
-    "graphql-upload": "14",
+    "graphql-upload": "^17.0.0",
     "graphql-upload-minimal": "^1.6.1",
     "i18n-iso-countries": "^7.13.0",
     "ioredis": "^5.4.2",
