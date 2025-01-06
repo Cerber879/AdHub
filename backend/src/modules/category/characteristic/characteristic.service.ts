@@ -33,13 +33,15 @@ export class CharacteristicService {
             },
             data: input
         })
+        return true
     }
 
-    async delete(input: CreateCharacteristicInput) {
+    async delete(id: string) {
         await this.prismaService.characteristic.delete({
             where: {
-                id: input.categoryId
+                id
             }
         })
+        return true
     }
 }

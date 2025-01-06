@@ -15,7 +15,8 @@ import { AnnouncementModule } from '../modules/announcement/announcement.module'
 import { PhotoModule } from '../modules/photo/photo.module';
 import { CategoryModule } from '../modules/category/category/category.module';
 import { FavouritesModule } from '../modules/favourites/favourites.module';
-import { CharacteristicModule } from '../modules/characteristic/characteristic.module';
+import { CharacteristicModule } from '../modules/category/characteristic/characteristic.module';
+import { AnnouncementCharacteristicModule } from '../modules/category/announcement-characteristic/announcement-characteristic.module';
 
 @Module({
   imports: [
@@ -38,7 +39,8 @@ import { CharacteristicModule } from '../modules/characteristic/characteristic.m
 		CategoryModule,
 		PhotoModule,
 		FavouritesModule,
-		CharacteristicModule
+		CharacteristicModule,
+		AnnouncementCharacteristicModule
   ],
 })
 export class CoreModule {}

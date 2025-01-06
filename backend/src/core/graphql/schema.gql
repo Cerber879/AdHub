@@ -6,6 +6,11 @@ input AddFavouriteInput {
   announcementID: String!
 }
 
+input AddToAnnouncementMixedInput {
+  id: String!
+  input: String!
+}
+
 input AnnouncementFiltersInput {
   categoryId: String
   condition: String
@@ -136,7 +141,9 @@ type Mutation {
   createCharacteristic(data: CreateCharacteristicInput!): Boolean!
   createUser(data: CreateUserInput!): Boolean!
   deleteAnnouncement(id: String!): Boolean!
+  deleteAnnouncementCharacteristic(id: String!): Boolean!
   deleteCategory(id: String!): Boolean!
+  deleteCharacteristic(id: String!): Boolean!
   deletePhoto(id: String!): Boolean!
   loginUser(data: LoginInput!): UserModel!
   logoutUser: Boolean!
@@ -144,7 +151,9 @@ type Mutation {
   removeProfileAvatar: Boolean!
   removeSession(id: String!): Boolean!
   updateAnnouncement(data: UpdateAnnouncementMixedInput!): Boolean!
+  updateAnnouncementCharacteristic(data: AddToAnnouncementMixedInput!): Boolean!
   updateCategory(data: UpdateCategoryMixedInput!): Boolean!
+  updateCharacteristic(data: UpdateCharacteristicMixedInput!): Boolean!
   updatePhotos(deletePhotoIds: [String!]!, newPhotos: [CreatePhotoInput!]!): Boolean!
 }
 
@@ -166,6 +175,7 @@ enum ProductCondition {
 type Query {
   findAllAnnouncements: [AnnouncementModel!]!
   findAnnouncementsByFilters(data: AnnouncementFiltersInput!): [AnnouncementModel!]!
+  findCharacteristics(id: String!): [String!]!
   findCurrentSession: SessionModel!
   findParentCategories(id: String!): [String!]!
   findPrewiewSubcategories(id: String!): [SubCutegoryModel!]!
@@ -223,6 +233,17 @@ input UpdateCategoryInput {
 input UpdateCategoryMixedInput {
   id: String!
   input: UpdateCategoryInput!
+}
+
+input UpdateCharacteristicInput {
+  categoryId: String
+  name: String
+  type: String
+}
+
+input UpdateCharacteristicMixedInput {
+  id: String!
+  input: UpdateCharacteristicInput!
 }
 
 """The `Upload` scalar type represents a file upload."""

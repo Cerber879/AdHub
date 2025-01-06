@@ -21,7 +21,7 @@ export class UpdateCharacteristicInput {
 }
 
 @InputType()
-export class UpdateCharacteristicInputMixedInput {
+export class UpdateCharacteristicMixedInput {
   @Field(() => String)
   public id: string;
 
