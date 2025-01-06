@@ -24,7 +24,7 @@ export class FavouritesService {
                 },
             }
         })
-
+        return true
     }
     async delete(id: string) {
         const existing = await this.prismaService.favourites.findUnique({ where: { id } });

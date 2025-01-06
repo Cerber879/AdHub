@@ -19,6 +19,6 @@ export class AddToAnnouncementMixedInput {
   @Field(() => String)
   public id: string;
 
-  @Field(() => String)
+  @Field(() => AddToAnnouncementInput)
   public input: AddToAnnouncementInput
 }

@@ -19,6 +19,23 @@ export type Scalars = {
   Upload: { input: any; output: any; }
 };
 
+export type AddFavouriteInput = {
+  announcementID: Scalars['String']['input'];
+};
+
+export type AddToAnnouncementMixedInput = {
+  id: Scalars['String']['input'];
+  input: Scalars['String']['input'];
+};
+
+export type AnnouncementCharacteristicModel = {
+  __typename?: 'AnnouncementCharacteristicModel';
+  characteristicId: Scalars['String']['output'];
+  id: Scalars['ID']['output'];
+  productId: Scalars['String']['output'];
+  value: Scalars['String']['output'];
+};
+
 export type AnnouncementFiltersInput = {
   categoryId?: InputMaybe<Scalars['String']['input']>;
   condition?: InputMaybe<Scalars['String']['input']>;
@@ -79,6 +96,14 @@ export type ChangePhoneNumberInput = {
   phoneNumber: Scalars['String']['input'];
 };
 
+export type CharacteristicModel = {
+  __typename?: 'CharacteristicModel';
+  categoryId: Scalars['String']['output'];
+  id: Scalars['ID']['output'];
+  name: Scalars['String']['output'];
+  type: Scalars['String']['output'];
+};
+
 export type CreateAnnouncementInput = {
   categoryId: Scalars['String']['input'];
   condition: Scalars['String']['input'];
@@ -92,6 +117,12 @@ export type CreateAnnouncementInput = {
 export type CreateCategoryInput = {
   name: Scalars['String']['input'];
   parentId?: InputMaybe<Scalars['String']['input']>;
+};
+
+export type CreateCharacteristicInput = {
+  categoryId: Scalars['String']['input'];
+  name: Scalars['String']['input'];
+  type: Scalars['String']['input'];
 };
 
 export type CreatePhotoInput = {
@@ -116,6 +147,13 @@ export type DeviceModel = {
   type: Scalars['String']['output'];
 };
 
+export type FavouritesModel = {
+  __typename?: 'FavouritesModel';
+  announcementID?: Maybe<Scalars['String']['output']>;
+  id: Scalars['ID']['output'];
+  userID: Scalars['String']['output'];
+};
+
 export type LocationModel = {
   __typename?: 'LocationModel';
   city: Scalars['String']['output'];
@@ -131,6 +169,8 @@ export type LoginInput = {
 
 export type Mutation = {
   __typename?: 'Mutation';
+  addAnnouncementCharacteristic: Scalars['Boolean']['output'];
+  addFavourite: Scalars['Boolean']['output'];
   addPhotoToAnnouncement: Scalars['Boolean']['output'];
   changeEmail: Scalars['Boolean']['output'];
   changePassword: Scalars['Boolean']['output'];
@@ -139,17 +179,33 @@ export type Mutation = {
   clearSessionCookie: Scalars['Boolean']['output'];
   createAnnouncement: Scalars['Boolean']['output'];
   createCategory: Scalars['Boolean']['output'];
+  createCharacteristic: Scalars['Boolean']['output'];
   createUser: Scalars['Boolean']['output'];
   deleteAnnouncement: Scalars['Boolean']['output'];
+  deleteAnnouncementCharacteristic: Scalars['Boolean']['output'];
   deleteCategory: Scalars['Boolean']['output'];
+  deleteCharacteristic: Scalars['Boolean']['output'];
   deletePhoto: Scalars['Boolean']['output'];
   loginUser: UserModel;
   logoutUser: Scalars['Boolean']['output'];
+  removeFavourite: Scalars['Boolean']['output'];
   removeProfileAvatar: Scalars['Boolean']['output'];
   removeSession: Scalars['Boolean']['output'];
   updateAnnouncement: Scalars['Boolean']['output'];
+  updateAnnouncementCharacteristic: Scalars['Boolean']['output'];
   updateCategory: Scalars['Boolean']['output'];
+  updateCharacteristic: Scalars['Boolean']['output'];
   updatePhotos: Scalars['Boolean']['output'];
+};
+
+
+export type MutationAddAnnouncementCharacteristicArgs = {
+  data: AddToAnnouncementMixedInput;
+};
+
+
+export type MutationAddFavouriteArgs = {
+  data: AddFavouriteInput;
 };
 
 
@@ -188,6 +244,11 @@ export type MutationCreateCategoryArgs = {
 };
 
 
+export type MutationCreateCharacteristicArgs = {
+  data: CreateCharacteristicInput;
+};
+
+
 export type MutationCreateUserArgs = {
   data: CreateUserInput;
 };
@@ -198,7 +259,17 @@ export type MutationDeleteAnnouncementArgs = {
 };
 
 
+export type MutationDeleteAnnouncementCharacteristicArgs = {
+  id: Scalars['String']['input'];
+};
+
+
 export type MutationDeleteCategoryArgs = {
+  id: Scalars['String']['input'];
+};
+
+
+export type MutationDeleteCharacteristicArgs = {
   id: Scalars['String']['input'];
 };
 
@@ -213,6 +284,11 @@ export type MutationLoginUserArgs = {
 };
 
 
+export type MutationRemoveFavouriteArgs = {
+  id: Scalars['String']['input'];
+};
+
+
 export type MutationRemoveSessionArgs = {
   id: Scalars['String']['input'];
 };
@@ -223,8 +299,18 @@ export type MutationUpdateAnnouncementArgs = {
 };
 
 
+export type MutationUpdateAnnouncementCharacteristicArgs = {
+  data: UpdateAnnouncementCharacteristicMixedInput;
+};
+
+
 export type MutationUpdateCategoryArgs = {
   data: UpdateCategoryMixedInput;
+};
+
+
+export type MutationUpdateCharacteristicArgs = {
+  data: UpdateCharacteristicMixedInput;
 };
 
 
@@ -253,6 +339,7 @@ export type Query = {
   __typename?: 'Query';
   findAllAnnouncements: Array<AnnouncementModel>;
   findAnnouncementsByFilters: Array<AnnouncementModel>;
+  findCharacteristics: Array<CharacteristicModel>;
   findCurrentSession: SessionModel;
   findParentCategories: Array<Scalars['String']['output']>;
   findPrewiewSubcategories: Array<SubCutegoryModel>;
@@ -261,8 +348,10 @@ export type Query = {
   findUser: UserModel;
   getAnnouncementById: AnnouncementModel;
   getAnnouncementByName: AnnouncementModel;
+  getAnnouncementCharacteristics: Array<AnnouncementCharacteristicModel>;
   getAnnouncementsByCategory: Array<AnnouncementModel>;
   getCategoryById: CategoryModel;
+  getFavouritesByUserId: Array<FavouritesModel>;
   getMainCategories: Array<CategoryModel>;
   getPhotosByAnnouncementID: Array<PhotoModel>;
   getSubcategories: Array<CategoryModel>;
@@ -271,6 +360,11 @@ export type Query = {
 
 export type QueryFindAnnouncementsByFiltersArgs = {
   data: AnnouncementFiltersInput;
+};
+
+
+export type QueryFindCharacteristicsArgs = {
+  id: Scalars['String']['input'];
 };
 
 
@@ -299,6 +393,11 @@ export type QueryGetAnnouncementByNameArgs = {
 };
 
 
+export type QueryGetAnnouncementCharacteristicsArgs = {
+  id: Scalars['String']['input'];
+};
+
+
 export type QueryGetAnnouncementsByCategoryArgs = {
   id: Scalars['String']['input'];
 };
@@ -306,6 +405,11 @@ export type QueryGetAnnouncementsByCategoryArgs = {
 
 export type QueryGetCategoryByIdArgs = {
   id: Scalars['String']['input'];
+};
+
+
+export type QueryGetFavouritesByUserIdArgs = {
+  userId: Scalars['String']['input'];
 };
 
 
@@ -340,6 +444,11 @@ export type SubCutegoryModel = {
   subcategories?: Maybe<Array<CategoryModel>>;
 };
 
+export type UpdateAnnouncementCharacteristicMixedInput = {
+  id: Scalars['String']['input'];
+  input: Scalars['String']['input'];
+};
+
 export type UpdateAnnouncementInput = {
   categoryId?: InputMaybe<Scalars['String']['input']>;
   condition?: InputMaybe<Scalars['String']['input']>;
@@ -362,6 +471,17 @@ export type UpdateCategoryInput = {
 export type UpdateCategoryMixedInput = {
   id: Scalars['String']['input'];
   input: UpdateCategoryInput;
+};
+
+export type UpdateCharacteristicInput = {
+  categoryId?: InputMaybe<Scalars['String']['input']>;
+  name?: InputMaybe<Scalars['String']['input']>;
+  type?: InputMaybe<Scalars['String']['input']>;
+};
+
+export type UpdateCharacteristicMixedInput = {
+  id: Scalars['String']['input'];
+  input: UpdateCharacteristicInput;
 };
 
 export type UserModel = {

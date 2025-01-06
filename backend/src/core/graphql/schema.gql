@@ -6,9 +6,21 @@ input AddFavouriteInput {
   announcementID: String!
 }
 
+input AddToAnnouncementInput {
+  characteristicId: String!
+  value: String!
+}
+
 input AddToAnnouncementMixedInput {
   id: String!
-  input: String!
+  input: AddToAnnouncementInput!
+}
+
+type AnnouncementCharacteristicModel {
+  characteristicId: String!
+  id: ID!
+  productId: String!
+  value: String!
 }
 
 input AnnouncementFiltersInput {
@@ -69,6 +81,13 @@ input ChangePhoneNumberInput {
   phoneNumber: String!
 }
 
+type CharacteristicModel {
+  categoryId: String!
+  id: ID!
+  name: String!
+  type: String!
+}
+
 input CreateAnnouncementInput {
   categoryId: String!
   condition: String!
@@ -116,6 +135,12 @@ type DeviceModel {
   type: String!
 }
 
+type FavouritesModel {
+  announcementID: String
+  id: ID!
+  userID: String!
+}
+
 type LocationModel {
   city: String!
   country: String!
@@ -129,6 +154,7 @@ input LoginInput {
 }
 
 type Mutation {
+  addAnnouncementCharacteristic(data: AddToAnnouncementMixedInput!): Boolean!
   addFavourite(data: AddFavouriteInput!): Boolean!
   addPhotoToAnnouncement(data: CreatePhotoInput!): Boolean!
   changeEmail(data: ChangeEmailInput!): Boolean!
@@ -151,7 +177,7 @@ type Mutation {
   removeProfileAvatar: Boolean!
   removeSession(id: String!): Boolean!
   updateAnnouncement(data: UpdateAnnouncementMixedInput!): Boolean!
-  updateAnnouncementCharacteristic(data: AddToAnnouncementMixedInput!): Boolean!
+  updateAnnouncementCharacteristic(data: UpdateAnnouncementCharacteristicMixedInput!): Boolean!
   updateCategory(data: UpdateCategoryMixedInput!): Boolean!
   updateCharacteristic(data: UpdateCharacteristicMixedInput!): Boolean!
   updatePhotos(deletePhotoIds: [String!]!, newPhotos: [CreatePhotoInput!]!): Boolean!
@@ -175,7 +201,7 @@ enum ProductCondition {
 type Query {
   findAllAnnouncements: [AnnouncementModel!]!
   findAnnouncementsByFilters(data: AnnouncementFiltersInput!): [AnnouncementModel!]!
-  findCharacteristics(id: String!): [String!]!
+  findCharacteristics(id: String!): [CharacteristicModel!]!
   findCurrentSession: SessionModel!
   findParentCategories(id: String!): [String!]!
   findPrewiewSubcategories(id: String!): [SubCutegoryModel!]!
@@ -184,9 +210,10 @@ type Query {
   findUser(id: String!): UserModel!
   getAnnouncementById(id: String!): AnnouncementModel!
   getAnnouncementByName(name: String!): AnnouncementModel!
+  getAnnouncementCharacteristics(id: String!): [AnnouncementCharacteristicModel!]!
   getAnnouncementsByCategory(id: String!): [AnnouncementModel!]!
   getCategoryById(id: String!): CategoryModel!
-  getFavouritesByUserId(userId: String!): [String!]!
+  getFavouritesByUserId(userId: String!): [FavouritesModel!]!
   getMainCategories: [CategoryModel!]!
   getPhotosByAnnouncementID(id: String!): [PhotoModel!]!
   getSubcategories(id: String!): [CategoryModel!]!
@@ -209,6 +236,16 @@ type SubCutegoryModel {
   id: ID!
   name: String!
   subcategories: [CategoryModel!]
+}
+
+input UpdateAnnouncementCharacteristicInput {
+  characteristicId: String
+  value: String
+}
+
+input UpdateAnnouncementCharacteristicMixedInput {
+  id: String!
+  input: UpdateAnnouncementCharacteristicInput!
 }
 
 input UpdateAnnouncementInput {
