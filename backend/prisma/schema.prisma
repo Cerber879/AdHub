@@ -181,3 +181,4 @@ enum ProductCondition {
   USED
   REFURBISHED
 }
+

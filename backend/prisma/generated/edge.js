@@ -226,7 +226,7 @@ const config = {
       "value": "prisma-client-js"
     },
     "output": {
-      "value": "C:\\Users\\User\\source\\repos\\AdHub\\backend\\prisma\\generated",
+      "value": "C:\\Users\\nefon\\OneDrive\\Documents\\GitHub\\AdHub\\backend\\prisma\\generated",
       "fromEnvVar": null
     },
     "config": {
@@ -240,7 +240,7 @@ const config = {
       }
     ],
     "previewFeatures": [],
-    "sourceFilePath": "C:\\Users\\User\\source\\repos\\AdHub\\backend\\prisma\\schema.prisma",
+    "sourceFilePath": "C:\\Users\\nefon\\OneDrive\\Documents\\GitHub\\AdHub\\backend\\prisma\\schema.prisma",
     "isCustomOutput": true
   },
   "relativeEnvPaths": {
