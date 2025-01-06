@@ -1,0 +1,83 @@
+.container {
+    display: flex;
+    padding: 20px;
+    border-radius: 8px;
+    width: 980px;
+    height: 220px;
+    gap: 20px;
+    cursor: pointer;
+    text-decoration: none;
+    transition: all 2s ease-in-out;
+  }
+  
+  .image_block {
+    width: 230px;
+    height: 230px;
+    background-color: #e0e0e0;
+    border-radius: 8px;
+    transition: background-color 2s ease;
+  }
+  
+  .data_block {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    width: 470px;
+  }
+  
+  .title {
+    height: 26px;
+    width: 200px;
+    background-color: #e0e0e0;
+    border-radius: 4px;
+    transition: background-color 2s ease;
+  }
+  
+  .description {
+    height: 70px;
+    width: 300px;
+    background-color: #e0e0e0;
+    border-radius: 4px;
+    transition: background-color 2s ease;
+  }
+  
+  .user_block {
+    display: flex;
+    flex-direction: column;
+    justify-content: start;
+    gap: 15px;
+  }
+  
+  .avatar {
+    width: 40px;
+    height: 40px;
+    background-color: #e0e0e0;
+    border-radius: 50%;
+    transition: background-color 2s ease;
+  }
+  
+  .username {
+    height: 17px;
+    width: 120px;
+    background-color: #e0e0e0;
+    border-radius: 4px;
+    transition: background-color 2s ease;
+  }
+  
+  .skeleton {
+    animation: pulse 1.5s infinite ease-in-out;
+    transition: background-color 2s ease-in-out;
+  }
+  
+  @keyframes pulse {
+    0% {
+      background-color: #e0e0e0;
+    }
+    50% {
+      background-color: #c0c0c0;
+    }
+    100% {
+      background-color: #e0e0e0;
+    }
+  }
+  

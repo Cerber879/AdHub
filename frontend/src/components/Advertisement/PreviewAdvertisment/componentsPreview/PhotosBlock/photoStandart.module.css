@@ -1,6 +1,6 @@
 .image_block {
-    width: 220px;
-    height: 220px;
+    width: 230px;
+    height: 230px;
     display: flex;
     justify-content: center;
     position: relative;
@@ -9,8 +9,8 @@
 .image_block img {
     max-width: 100%;
     border-radius: 8px;
-    width: 220px;
-    height: 220px;
+    width: 230px;
+    height: 230px;
     object-fit: cover;
     object-position: center;
     transition: transform 0.3s ease-in-out;
@@ -44,8 +44,8 @@
 
 .overlay {
     position: absolute;
-    width: 220px;
-    height: 220px;
+    width: 230px;
+    height: 230px;
     background-color: #555;
     opacity: 0.4;
     border-radius: 8px;
@@ -55,8 +55,8 @@
     position: absolute;
     display: flex;
     flex-direction: column;
-    width: 220px;
-    height: 220px;
+    width: 230px;
+    height: 230px;
     display: flex;
     justify-content: center;
     align-items: center;

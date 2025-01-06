@@ -5,8 +5,6 @@ import styles from './preview.module.css'
 import PhotosBlock from '../../componentsPreview/PhotosBlock/PhotosBlock'
 import DataAdvertisment from '../../componentsPreview/SmallAdvertisment/DataAdvertisment/DataAdvertisment'
 
-
-
 import { FindAllAnnouncementsQuery } from '../../../../../graphql/generated/output'
 
 interface PreviewSmallAdvertismentProps {
@@ -23,6 +21,7 @@ const PreviewSmallAdvertisment: React.FC<PreviewSmallAdvertismentProps> = ({ inp
     >
       <PhotosBlock useStylesProfile={false}  />
       <DataAdvertisment input={input} />
+      <div className={styles.gradient}></div>
     </Link>
   )
 }

@@ -26,7 +26,7 @@
     width: 46px;
     height: 46px;
     border: none;
-    background: #007bff;
+    background-color: #3b9aff;
     border-radius: 50%;
     display: flex;
     justify-content: center;
@@ -38,8 +38,8 @@
 }
 
 .search_button:hover {
-    background-color: #0056b3;
-    transform: scale(1.1);
+    background-color: #1b7ce4;
+    transform: scale(1.05);
 }
 
 .search_icon {

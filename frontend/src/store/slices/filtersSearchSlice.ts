@@ -6,7 +6,6 @@ interface FiltersState {
   condition: string | null;
   status: string | null;
   search: string | null;
-  skip: number;
   take: number;
   sort: string | null; 
   displayType: string; 
@@ -19,8 +18,7 @@ const initialState: FiltersState = {
   condition: null,
   status: null,
   search: null,
-  skip: 0,
-  take: 10,
+  take: 12,
   sort: null,
   displayType: 'small',
   categoryId: null,
@@ -36,10 +34,12 @@ const filtersSearchSlice = createSlice({
       state.condition = action.payload.condition;
       state.status = action.payload.status;
       state.search = action.payload.search;
-      state.skip = action.payload.skip;
       state.take = action.payload.take;
       state.sort = action.payload.sort;
       state.displayType = action.payload.displayType;
+    },
+    setSearchValue: (state, action) => {
+      state.search = action.payload;
     },
     resetFilters: (state) => {
       state.minPrice = null;
@@ -47,13 +47,12 @@ const filtersSearchSlice = createSlice({
       state.condition = null;
       state.status = null;
       state.search = null;
-      state.skip = 0;
-      state.take = 10;
+      state.take = 12;
       state.sort = null;
       state.displayType = 'small';
     },
   },
 });
 
-export const { setFilters, resetFilters } = filtersSearchSlice.actions;
+export const { setFilters, resetFilters, setSearchValue } = filtersSearchSlice.actions;
 export default filtersSearchSlice.reducer;

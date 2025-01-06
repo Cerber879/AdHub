@@ -1,0 +1,41 @@
+.container {
+    display: grid;
+    align-items: center;
+    justify-content: center; 
+    gap: 15px;
+    width: 100%;
+    max-width: 980px; 
+}
+
+.small {
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+}
+
+.big {
+    grid-template-columns: repeat(auto-fit, minmax(980px, 1fr));
+}
+
+.placeholder {
+    background-color: #f0f0f0;
+    padding: 15px;
+    border-radius: 8px;
+    margin-bottom: 15px;
+    display: flex;
+    flex-direction: column;
+}
+
+.placeholderImage {
+    background-color: #dcdcdc;
+    width: 100%;
+    height: 150px;
+    border-radius: 8px;
+}
+
+.placeholderText {
+    background-color: #e0e0e0;
+    height: 20px;
+    margin-top: 10px;
+    width: 60%;
+    border-radius: 4px;
+}
+  

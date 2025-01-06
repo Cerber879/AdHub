@@ -59,19 +59,32 @@ export class AnnouncementService {
           maxPrice ? { price: { lte: maxPrice } } : {},
           announcementCondition !== null ? { condition: announcementCondition } : {},
           announcementStatus !== null ? { status: announcementStatus } : {},
-          search ? { name: { contains: search } } : {},
-          search ? { description: { contains: search } } : {},
           categoryId ? { categoryId: categoryId } : {},
+          search !== null && search !== ''
+            ? {
+                OR: [
+                  { name: { contains: search, mode: 'insensitive' } }, 
+                  { description: { contains: search, mode: 'insensitive' } },
+                ],
+              }
+            : {},
         ],
-      },
+      },      
       orderBy: sort
-        ? sort === 'price_asc' 
-          ? { price: 'asc' } 
-          : { price: 'desc' }
-        : undefined,
+        ? sort === 'price_asc'
+        ? { price: 'asc' }
+        : sort === 'price_desc'
+        ? { price: 'desc' }
+        : sort === 'date'
+        ? { placementDate: 'desc' }
+        : sort === 'popularity'
+        ? { name: 'asc' }
+        : { name: 'desc' } 
+      : {},
       skip,
       take,
     });
+    
     return query;
   }
 
