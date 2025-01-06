@@ -1,6 +1,6 @@
 import { User } from '@/prisma/generated';
 import { PrismaService } from '@/src/core/prisma/prisma.service';
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
 import { AddFavouriteInput } from './inputs/add-favourite.input';
 
 @Injectable()
@@ -26,6 +26,27 @@ export class FavouritesService {
         })
 
     }
-
+    async delete(id: string) {
+        const existing = await this.prismaService.favourites.findUnique({ where: { id } });
+    
+        if (!existing) {
+          throw new NotFoundException('Объявление не найдено');
+        }
+    
+        await this.prismaService.favourites.delete({ 
+            where: {
+                id
+            } 
+        });
+    
+        return true;
+      }
+    async getFavouritesByUserId(userId: string) {
+        return this.prismaService.favourites.findMany({
+            where: {
+                userID: userId
+            },
+        })
+    }
     
 }

@@ -2,6 +2,10 @@
 # THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
 # ------------------------------------------------------
 
+input AddFavouriteInput {
+  announcementID: String!
+}
+
 input AnnouncementFiltersInput {
   categoryId: String
   condition: String
@@ -75,6 +79,12 @@ input CreateCategoryInput {
   parentId: String
 }
 
+input CreateCharacteristicInput {
+  categoryId: String!
+  name: String!
+  type: String!
+}
+
 input CreatePhotoInput {
   announcementID: String!
   link: String!
@@ -114,6 +124,7 @@ input LoginInput {
 }
 
 type Mutation {
+  addFavourite(data: AddFavouriteInput!): Boolean!
   addPhotoToAnnouncement(data: CreatePhotoInput!): Boolean!
   changeEmail(data: ChangeEmailInput!): Boolean!
   changePassword(data: ChangePasswordInput!): Boolean!
@@ -122,12 +133,14 @@ type Mutation {
   clearSessionCookie: Boolean!
   createAnnouncement(data: CreateAnnouncementInput!): Boolean!
   createCategory(data: CreateCategoryInput!): Boolean!
+  createCharacteristic(data: CreateCharacteristicInput!): Boolean!
   createUser(data: CreateUserInput!): Boolean!
   deleteAnnouncement(id: String!): Boolean!
   deleteCategory(id: String!): Boolean!
   deletePhoto(id: String!): Boolean!
   loginUser(data: LoginInput!): UserModel!
   logoutUser: Boolean!
+  removeFavourite(id: String!): Boolean!
   removeProfileAvatar: Boolean!
   removeSession(id: String!): Boolean!
   updateAnnouncement(data: UpdateAnnouncementMixedInput!): Boolean!
@@ -163,6 +176,7 @@ type Query {
   getAnnouncementByName(name: String!): AnnouncementModel!
   getAnnouncementsByCategory(id: String!): [AnnouncementModel!]!
   getCategoryById(id: String!): CategoryModel!
+  getFavouritesByUserId(userId: String!): [String!]!
   getMainCategories: [CategoryModel!]!
   getPhotosByAnnouncementID(id: String!): [PhotoModel!]!
   getSubcategories(id: String!): [CategoryModel!]!

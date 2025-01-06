@@ -20,4 +20,13 @@ export class FavouritesResolver {
     ) {
       return this.favouritesService.add(input, user);
     }
+  @Authorization()
+  @Mutation(() => Boolean, { name: 'removeFavourite' })
+  async removeFavourite(@Args('id') id: string) {
+    return this.favouritesService.delete(id);
+  }
+  @Query(() => [String], { name: 'getFavouritesByUserId' })
+  async getFavouritesByUserId(@Args('userId') userId: string) {
+    return this.favouritesService.getFavouritesByUserId(userId);
+  }
 }

@@ -15,6 +15,7 @@ import { AnnouncementModule } from '../modules/announcement/announcement.module'
 import { PhotoModule } from '../modules/photo/photo.module';
 import { CategoryModule } from '../modules/category/category/category.module';
 import { FavouritesModule } from '../modules/favourites/favourites.module';
+import { CharacteristicModule } from '../modules/characteristic/characteristic.module';
 
 @Module({
   imports: [
@@ -36,7 +37,8 @@ import { FavouritesModule } from '../modules/favourites/favourites.module';
 		AnnouncementModule,
 		CategoryModule,
 		PhotoModule,
-		FavouritesModule
+		FavouritesModule,
+		CharacteristicModule
   ],
 })
 export class CoreModule {}
