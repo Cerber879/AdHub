@@ -60,6 +60,11 @@ input ChangePhoneNumberInput {
   phoneNumber: String!
 }
 
+type Chat {
+  """Example field (placeholder)"""
+  exampleField: Int!
+}
+
 input CreateAnnouncementInput {
   categoryId: String!
   condition: String!
@@ -73,6 +78,18 @@ input CreateAnnouncementInput {
 input CreateCategoryInput {
   name: String!
   parentId: String
+}
+
+input CreateChatInput {
+  messages: [String!]!
+}
+
+input CreateMessageInput {
+  Content: String!
+  Date: DateTime!
+  chatID: String!
+  status: Int!
+  userID: String!
 }
 
 input CreatePhotoInput {
@@ -113,7 +130,18 @@ input LoginInput {
   password: String!
 }
 
+type MessageModel {
+  Content: String!
+  Date: DateTime!
+  Status: Int!
+  chatID: String!
+  id: ID!
+  userID: String!
+}
+
 type Mutation {
+  CreatMessage(data: CreateMessageInput!): Boolean!
+  DeleteMessage(id: String!): Boolean!
   addPhotoToAnnouncement(data: CreatePhotoInput!): Boolean!
   changeEmail(data: ChangeEmailInput!): Boolean!
   changePassword(data: ChangePasswordInput!): Boolean!
@@ -122,16 +150,19 @@ type Mutation {
   clearSessionCookie: Boolean!
   createAnnouncement(data: CreateAnnouncementInput!): Boolean!
   createCategory(data: CreateCategoryInput!): Boolean!
+  createChat(createChatInput: CreateChatInput!): Chat!
   createUser(data: CreateUserInput!): Boolean!
   deleteAnnouncement(id: String!): Boolean!
   deleteCategory(id: String!): Boolean!
   deletePhoto(id: String!): Boolean!
   loginUser(data: LoginInput!): UserModel!
   logoutUser: Boolean!
+  removeChat(id: Int!): Chat!
   removeProfileAvatar: Boolean!
   removeSession(id: String!): Boolean!
   updateAnnouncement(data: UpdateAnnouncementMixedInput!): Boolean!
   updateCategory(data: UpdateCategoryMixedInput!): Boolean!
+  updateChat(updateChatInput: UpdateChatInput!): Chat!
   updatePhotos(deletePhotoIds: [String!]!, newPhotos: [CreatePhotoInput!]!): Boolean!
 }
 
@@ -151,6 +182,8 @@ enum ProductCondition {
 }
 
 type Query {
+  FindUniqMessage(id: String!): MessageModel!
+  chat(id: Int!): Chat!
   findAllAnnouncements: [AnnouncementModel!]!
   findAnnouncementsByFilters(data: AnnouncementFiltersInput!): [AnnouncementModel!]!
   findCurrentSession: SessionModel!
@@ -209,6 +242,11 @@ input UpdateCategoryInput {
 input UpdateCategoryMixedInput {
   id: String!
   input: UpdateCategoryInput!
+}
+
+input UpdateChatInput {
+  id: Int!
+  messages: [String!]
 }
 
 """The `Upload` scalar type represents a file upload."""

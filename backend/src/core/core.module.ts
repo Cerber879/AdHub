@@ -14,6 +14,8 @@ import { ProfileModule } from '../modules/auth/profile/profile.module';
 import { AnnouncementModule } from '../modules/announcement/announcement.module';
 import { PhotoModule } from '../modules/photo/photo.module';
 import { CategoryModule } from '../modules/category/category/category.module';
+import { ChatModule } from '../modules/chat/chat.module';
+import { MessageModule } from '../modules/message/message.module';
 
 @Module({
   imports: [
@@ -34,7 +36,9 @@ import { CategoryModule } from '../modules/category/category/category.module';
 		ProfileModule,
 		AnnouncementModule,
 		CategoryModule,
-		PhotoModule
+		PhotoModule,
+		ChatModule,
+		MessageModule
   ],
 })
 export class CoreModule {}
