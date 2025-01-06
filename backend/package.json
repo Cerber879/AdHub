@@ -22,7 +22,8 @@
     "db:studio": "prisma studio"
   },
   "dependencies": {
-    "@apollo/server": "^4.11.2",
+    "@apollo/client": "^3.12.4",
+    "@apollo/server": "^4.11.3",
     "@nestjs-modules/mailer": "^2.0.2",
     "@nestjs/apollo": "^12.2.2",
     "@nestjs/common": "^10.0.0",
@@ -42,7 +43,7 @@
     "express-session": "^1.18.1",
     "geoip-lite": "^1.4.10",
     "graphql": "^16.10.0",
-    "graphql-upload": "14",
+    "graphql-upload": "^13.0.0",
     "graphql-upload-minimal": "^1.6.1",
     "i18n-iso-countries": "^7.13.0",
     "ioredis": "^5.4.2",
