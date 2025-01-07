@@ -1,0 +1,3 @@
+mutation DeleteCharacteristic($id: String!) {
+  deleteCharacteristic(id: $id)
+}

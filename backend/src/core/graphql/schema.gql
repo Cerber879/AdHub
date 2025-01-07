@@ -2,6 +2,27 @@
 # THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
 # ------------------------------------------------------
 
+input AddFavouriteInput {
+  announcementID: String!
+}
+
+input AddToAnnouncementInput {
+  characteristicId: String!
+  value: String!
+}
+
+input AddToAnnouncementMixedInput {
+  id: String!
+  input: AddToAnnouncementInput!
+}
+
+type AnnouncementCharacteristicModel {
+  characteristicId: String!
+  id: ID!
+  productId: String!
+  value: String!
+}
+
 input AnnouncementFiltersInput {
   categoryId: String
   condition: String
@@ -60,6 +81,13 @@ input ChangePhoneNumberInput {
   phoneNumber: String!
 }
 
+type CharacteristicModel {
+  categoryId: String!
+  id: ID!
+  name: String!
+  type: String!
+}
+
 input CreateAnnouncementInput {
   categoryId: String!
   condition: String!
@@ -73,6 +101,12 @@ input CreateAnnouncementInput {
 input CreateCategoryInput {
   name: String!
   parentId: String
+}
+
+input CreateCharacteristicInput {
+  categoryId: String!
+  name: String!
+  type: String!
 }
 
 input CreatePhotoInput {
@@ -99,6 +133,12 @@ type DeviceModel {
   type: String!
 }
 
+type FavouritesModel {
+  announcementID: String
+  id: ID!
+  userID: String!
+}
+
 type LocationModel {
   city: String!
   country: String!
@@ -112,6 +152,8 @@ input LoginInput {
 }
 
 type Mutation {
+  addAnnouncementCharacteristic(data: AddToAnnouncementMixedInput!): Boolean!
+  addFavourite(data: AddFavouriteInput!): Boolean!
   addPhotoToAnnouncement(data: CreatePhotoInput!): Boolean!
   changeEmail(data: ChangeEmailInput!): Boolean!
   changePassword(data: ChangePasswordInput!): Boolean!
@@ -120,16 +162,22 @@ type Mutation {
   clearSessionCookie: Boolean!
   createAnnouncement(data: CreateAnnouncementInput!): Boolean!
   createCategory(data: CreateCategoryInput!): Boolean!
+  createCharacteristic(data: CreateCharacteristicInput!): Boolean!
   createUser(data: CreateUserInput!): Boolean!
   deleteAnnouncement(id: String!): Boolean!
+  deleteAnnouncementCharacteristic(id: String!): Boolean!
   deleteCategory(id: String!): Boolean!
+  deleteCharacteristic(id: String!): Boolean!
   deletePhoto(id: String!): Boolean!
   loginUser(data: LoginInput!): UserModel!
   logoutUser: Boolean!
+  removeFavourite(id: String!): Boolean!
   removeProfileAvatar: Boolean!
   removeSession(id: String!): Boolean!
   updateAnnouncement(data: UpdateAnnouncementMixedInput!): Boolean!
+  updateAnnouncementCharacteristic(data: UpdateAnnouncementCharacteristicMixedInput!): Boolean!
   updateCategory(data: UpdateCategoryMixedInput!): Boolean!
+  updateCharacteristic(data: UpdateCharacteristicMixedInput!): Boolean!
   updatePhotos(deletePhotoIds: [String!]!, newPhotos: [CreatePhotoInput!]!): Boolean!
 }
 
@@ -143,6 +191,7 @@ enum ProductCondition {
 type Query {
   findAllAnnouncements: [AnnouncementModel!]!
   findAnnouncementsByFilters(data: AnnouncementFiltersInput!): [AnnouncementModel!]!
+  findCharacteristics(id: String!): [CharacteristicModel!]!
   findCurrentSession: SessionModel!
   findParentCategories(id: String!): [String!]!
   findPrewiewSubcategories(id: String!): [SubCutegoryModel!]!
@@ -151,8 +200,10 @@ type Query {
   findUser(id: String!): UserModel!
   getAnnouncementById(id: String!): AnnouncementModel!
   getAnnouncementByName(name: String!): AnnouncementModel!
+  getAnnouncementCharacteristics(id: String!): [AnnouncementCharacteristicModel!]!
   getAnnouncementsByCategory(id: String!): [AnnouncementModel!]!
   getCategoryById(id: String!): CategoryModel!
+  getFavouritesByUserId(userId: String!): [FavouritesModel!]!
   getMainCategories: [CategoryModel!]!
   getPhotosByAnnouncementId(id: String!): [String!]!
   getSubcategories(id: String!): [CategoryModel!]!
@@ -177,6 +228,16 @@ type SubCutegoryModel {
   subcategories: [CategoryModel!]
 }
 
+input UpdateAnnouncementCharacteristicInput {
+  characteristicId: String
+  value: String
+}
+
+input UpdateAnnouncementCharacteristicMixedInput {
+  id: String!
+  input: UpdateAnnouncementCharacteristicInput!
+}
+
 input UpdateAnnouncementInput {
   categoryId: String
   condition: String
@@ -199,6 +260,17 @@ input UpdateCategoryInput {
 input UpdateCategoryMixedInput {
   id: String!
   input: UpdateCategoryInput!
+}
+
+input UpdateCharacteristicInput {
+  categoryId: String
+  name: String
+  type: String
+}
+
+input UpdateCharacteristicMixedInput {
+  id: String!
+  input: UpdateCharacteristicInput!
 }
 
 """The `Upload` scalar type represents a file upload."""

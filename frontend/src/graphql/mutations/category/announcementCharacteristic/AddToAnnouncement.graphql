@@ -1,0 +1,3 @@
+mutation AddToAnnouncement($data: AddToAnnouncementMixedInput!) {
+  addAnnouncementCharacteristic(data: $data)
+}

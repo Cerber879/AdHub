@@ -1,0 +1,8 @@
+query FindCharacteristics($id: String!) {
+  findCharacteristics(id: $id) {
+    id
+    name
+    type
+    categoryId
+  }
+}
