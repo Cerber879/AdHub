@@ -61,7 +61,7 @@ export class CategoryService {
       where: { id },
       include: { parent: true }, 
     });
-  
+    parentNames.push(currentCategory.id, currentCategory.name);
     while (currentCategory?.parent) {
       parentNames.push(currentCategory.parent.name);
   
