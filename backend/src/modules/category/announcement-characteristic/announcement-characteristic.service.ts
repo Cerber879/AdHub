@@ -8,6 +8,15 @@ export class AnnouncementCharacteristicService {
     constructor(private readonly prismaService: PrismaService) {}
     
     async addToAnnouncement(productId: string, input: AddToAnnouncementInput) {
+        const existing = await this.prismaService.announcementCharacteristic.findMany({
+            where: {
+                characteristicId: input.characteristicId,
+                productId: productId
+            }
+        })
+        if (existing.length > 0) {
+            throw new Error('Такая характеристика уже существует')
+        }
         await this.prismaService.announcementCharacteristic.create({
             data: {
                 value: input.value,

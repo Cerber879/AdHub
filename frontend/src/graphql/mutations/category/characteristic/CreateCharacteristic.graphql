@@ -1,0 +1,3 @@
+mutation CreateCharacteristic($data: CreateCharacteristicInput!) {
+  createCharacteristic(data: $data)
+}

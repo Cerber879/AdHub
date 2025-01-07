@@ -9,6 +9,11 @@ export class FavouritesService {
     
     async add(input: AddFavouriteInput, user: User) {
         const { announcementID, ...rest } = input;
+        const existing = await this.prismaService.favourites.findFirst({ where: { announcementID, userID: user.id } });
+        if (existing) {
+            throw new NotFoundException('Объявление уже добавлено в избранное');
+        }
+
         await this.prismaService.favourites.create({
             data: {
                 ...rest,
@@ -26,8 +31,8 @@ export class FavouritesService {
         })
         return true
     }
-    async delete(id: string) {
-        const existing = await this.prismaService.favourites.findUnique({ where: { id } });
+    async delete(id: string, user: User) {
+        const existing = await this.prismaService.favourites.findUnique({ where: { id, userID: user.id } });
     
         if (!existing) {
           throw new NotFoundException('Объявление не найдено');

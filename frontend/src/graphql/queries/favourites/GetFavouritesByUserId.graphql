@@ -1,0 +1,7 @@
+query GetFavouritesByUserId($userId: String!) {
+  getFavouritesByUserId(userId: $userId) {
+    id
+    userID
+    announcementID
+    }
+  }
