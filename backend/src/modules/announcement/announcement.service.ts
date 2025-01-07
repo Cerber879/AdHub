@@ -70,16 +70,18 @@ export class AnnouncementService {
             : {},
         ],
       },      
-      orderBy: sort
-        ? sort === 'price_asc'
+      orderBy: sort ?
+          sort === 'price_asc'
         ? { price: 'asc' }
         : sort === 'price_desc'
         ? { price: 'desc' }
         : sort === 'date'
         ? { placementDate: 'desc' }
-        : sort === 'popularity'
+        : sort === 'name_asc'
         ? { name: 'asc' }
-        : { name: 'desc' } 
+        : sort === 'name_desc'
+        ? { name: 'desc' } 
+        : {}
       : {},
       skip,
       take,

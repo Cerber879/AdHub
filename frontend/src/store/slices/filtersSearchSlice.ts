@@ -19,7 +19,7 @@ const initialState: FiltersState = {
   status: null,
   search: null,
   take: 12,
-  sort: null,
+  sort: "default",
   displayType: 'small',
   categoryId: null,
 };
