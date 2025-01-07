@@ -4,19 +4,31 @@ import styles from './categories.module.css';
 
 import { useGetMainCategoriesQuery } from '../../../graphql/generated/output';
 import { Link } from 'react-router-dom';
+import { useEffect, useMemo } from 'react';
 
 const ListCategories = () => {
   const dispatch = useDispatch();
   const { data } = useGetMainCategoriesQuery();
-  const categories = data?.getMainCategories;
-
+  
+  const categories = useMemo(() => data?.getMainCategories || [], [data]);
+  
   const currentIdCategory = useSelector((state: any) => state.category.currentIdCategory);
-  if (!currentIdCategory && categories) {
-    dispatch(setCurrentCategory({ id: categories[0].id, name: categories[0].name }));
-  }
+
+  useEffect(() => {
+    if (categories.length > 0) {
+      dispatch(setCurrentCategory({ id: categories[0].id, name: categories[0].name }));
+    }
+  }, [categories, dispatch]);
+
+  const handleMouseClick = (id: string, name: string) => {
+    dispatch(setCurrentCategory({ id, name }))
+    dispatch(setShowCatalogueModal(false))
+  };
 
   const handleMouseEnter = (id: string, name: string) => {
-    dispatch(setCurrentCategory({ id, name }));
+    if(id !== currentIdCategory) {
+      dispatch(setCurrentCategory({ id, name }))
+    }
   };
 
   return (
@@ -29,12 +41,10 @@ const ListCategories = () => {
             ? `${styles.category} ${styles.category_active}`
             : styles.category
           }
-          onClick={() => dispatch(setShowCatalogueModal(false))}
-          onMouseEnter={() => handleMouseEnter(category.id, category.name)} 
+          onClick={() => handleMouseClick(category.id, category.name)}
+          onMouseEnter={() => handleMouseEnter(category.id, category.name)}
           >
-          <div
-            key={category.id}
-          >
+          <div>
             {category.name}
           </div>
         </Link>

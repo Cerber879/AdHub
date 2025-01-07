@@ -1,0 +1,43 @@
+import React, { useState } from 'react'
+
+import styles from './settings.module.css'
+
+import PreviewSmallAdvertisment from '../../Advertisement/PreviewAdvertisment/PreviewBlocks/PreviewSmallAdvertisment/PreviewSmallAdvertisment';
+
+const ProfileListAdvertisments = () => {
+
+  const [releaseButton, setReleaseButton] = useState(true);
+  const [archiveButton, setArchiveButton] = useState(false);
+
+  const handleReleaseButton = () => {
+    setReleaseButton(true)
+    setArchiveButton(false)
+  }
+
+  const handleArchiveButton = () => {
+    setReleaseButton(false)
+    setArchiveButton(true)
+  }
+
+  return (
+    <div className={styles.container}>
+        <span className={styles.name}>Настройки</span>
+        <div className={styles.bar_block}>
+            <button 
+                onClick={handleReleaseButton}
+                className={`${releaseButton ? styles.activeButton : styles.passiveButton} ${styles.bar_button}`}>
+                <span>Активные</span>
+            </button>
+            <button 
+                onClick={handleArchiveButton}
+                className={`${archiveButton ? styles.activeButton : styles.passiveButton} ${styles.bar_button}`}>
+                <span>Архив</span>
+            </button>
+        </div>
+        <div className={styles.ads}>
+        </div>
+    </div>
+  )
+}
+
+export default ProfileListAdvertisments

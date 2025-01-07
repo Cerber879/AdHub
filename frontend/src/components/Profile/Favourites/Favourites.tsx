@@ -4,7 +4,7 @@ import styles from './favourites.module.css'
 
 import PreviewBigAdvertisment from '../../Advertisement/PreviewAdvertisment/PreviewBlocks/PreviewBigAdvertisment/PreviewBigAdvertisment';
 
-const ProfileFavourites = () => {
+const Favourites = () => {
 
     const [adsButton, setAdsButton] = useState(true);
     const [profilesButton, setProfilesButton] = useState(false);
@@ -40,4 +40,4 @@ const ProfileFavourites = () => {
   )
 }
 
-export default ProfileFavourites
+export default Favourites

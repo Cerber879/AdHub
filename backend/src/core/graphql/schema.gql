@@ -78,8 +78,6 @@ input CreateCategoryInput {
 input CreatePhotoInput {
   announcementID: String!
   link: String!
-  name: String!
-  resolution: String!
 }
 
 input CreateUserInput {
@@ -135,14 +133,6 @@ type Mutation {
   updatePhotos(deletePhotoIds: [String!]!, newPhotos: [CreatePhotoInput!]!): Boolean!
 }
 
-type PhotoModel {
-  announcementID: String!
-  id: ID!
-  link: String!
-  name: String!
-  resolution: String!
-}
-
 """Состояние товара"""
 enum ProductCondition {
   NEW
@@ -164,7 +154,7 @@ type Query {
   getAnnouncementsByCategory(id: String!): [AnnouncementModel!]!
   getCategoryById(id: String!): CategoryModel!
   getMainCategories: [CategoryModel!]!
-  getPhotosByAnnouncementID(id: String!): [PhotoModel!]!
+  getPhotosByAnnouncementId(id: String!): [String!]!
   getSubcategories(id: String!): [CategoryModel!]!
 }
 

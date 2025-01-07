@@ -1,10 +1,23 @@
 import React, { useState } from 'react';
-import { photos } from '../../../../../modules/data';
 import stylesProfile from './photoProfile.module.css';
 import stylesStandart from './photoStandart.module.css';
+import { FindAllAnnouncementsQuery, useGetPhotosByAnnouncementIdQuery } from '../../../../../graphql/generated/output';
 
-const PhotosBlock = ({ useStylesProfile }: { useStylesProfile: boolean }) => {
+interface PreviewSmallAdvertismentProps {
+  input: FindAllAnnouncementsQuery['findAllAnnouncements'][number] 
+  useStylesProfile: boolean
+}
+
+const PhotosBlock = ({ input, useStylesProfile }: PreviewSmallAdvertismentProps) => {
     const styles = useStylesProfile ? stylesProfile : stylesStandart;
+
+    const { data } = useGetPhotosByAnnouncementIdQuery({ 
+        variables: { 
+            id: input.id 
+        } 
+    }); 
+
+    const photos = data?.getPhotosByAnnouncementId || [];
 
     const [currentImageIndex, setCurrentImageIndex] = useState(0);
     const [visibleThumbnails, setVisibleThumbnails] = useState([0, 1, 2, 3]);

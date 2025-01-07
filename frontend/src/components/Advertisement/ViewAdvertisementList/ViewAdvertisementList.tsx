@@ -1,6 +1,5 @@
-import React, { useEffect, useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import { resetFilters } from '../../../store/slices/filtersSearchSlice';
+import React, { useEffect, useMemo, useState } from 'react';
+import { useSelector } from 'react-redux';
 import { useFindAnnouncementsByFiltersQuery } from '../../../graphql/generated/output';
 import PreviewBigAdvertisment from '../PreviewAdvertisment/PreviewBlocks/PreviewBigAdvertisment/PreviewBigAdvertisment';
 import PreviewSmallAdvertisment from '../PreviewAdvertisment/PreviewBlocks/PreviewSmallAdvertisment/PreviewSmallAdvertisment';
@@ -11,20 +10,19 @@ import { useParams } from 'react-router-dom';
 import BigSkeleton from '../Skeleton/BigSkeleton/BigSkeleton';
 
 const AdvertisementList: React.FC = () => {
-  const dispatch = useDispatch();
   const { categoryId } = useParams();
 
   const [skip, setSkip] = useState(0);
   const [allAdvertisements, setAllAdvertisements] = useState<any[]>([]);
-  console.log(allAdvertisements)
   const [loadingMore, setLoadingMore] = useState(false);
   const [hasMore, setHasMore] = useState(true); 
 
-  let filters = useSelector((state: any) => state.filtersSearch);
+  const [searchKey, setSearchKey] = useState(0); 
 
-  if (categoryId) {
-    filters = { ...filters, categoryId };
-  }
+  const globalFilters = useSelector((state: any) => state.filtersSearch);
+  const filters = useMemo(() => {
+    return categoryId ? { ...globalFilters, categoryId } : globalFilters;
+  }, [categoryId, globalFilters]);
 
   const { data: filteredData, loading } = useFindAnnouncementsByFiltersQuery({
     variables: { filters: { ...filters, skip } },
@@ -32,23 +30,29 @@ const AdvertisementList: React.FC = () => {
 
   useEffect(() => {
     if (filteredData?.findAnnouncementsByFilters) {
-      setAllAdvertisements((prev) => [
-        ...prev,
-        ...filteredData.findAnnouncementsByFilters,
-      ]);
+      setAllAdvertisements((prev) =>
+        skip === 0 
+          ? filteredData.findAnnouncementsByFilters
+          : [...prev, ...filteredData.findAnnouncementsByFilters]
+      );
       setHasMore(filteredData.findAnnouncementsByFilters.length === filters.take);
     }
     setLoadingMore(false);
-  }, [filteredData, filters.take]);
+  }, [filteredData, skip, filters.take]);
 
   useEffect(() => {
-    setAllAdvertisements([]);
-    setSkip(0);
-  }, [filters, categoryId, dispatch]);
+    setSearchKey((prev) => prev + 1); 
+    setSkip(0); 
+  }, [filters, categoryId]); 
 
   useEffect(() => {
     const handleScroll = () => {
-      if (window.innerHeight + window.scrollY >= document.body.offsetHeight - 200 && !loading && !loadingMore && hasMore) {
+      if (
+        window.innerHeight + window.scrollY >= document.body.offsetHeight - 200 &&
+        !loading &&
+        !loadingMore &&
+        hasMore
+      ) {
         setLoadingMore(true);
         setSkip((prevSkip) => prevSkip + filters.take); 
       }
@@ -59,16 +63,16 @@ const AdvertisementList: React.FC = () => {
   }, [loading, filters.take, loadingMore, hasMore]);
 
   const renderAdvertisements = () => {
-    if (loading) {
-      return Array.from({ length: filters.take }).map((_, index) => (
+    if (loading && skip === 0) {
+      return Array.from({ length: filters.take }).map((_, index) =>
         filters.displayType === 'small'
-        ? <SmallSkeleton key={index} />
-        : <BigSkeleton key={index} />  
-      ));
+          ? <SmallSkeleton key={index} />
+          : <BigSkeleton key={index} />
+      );
     }
 
     if (allAdvertisements.length === 0) {
-      return <div>Нет объявлений для отображения</div>;
+      return <div className={styles.empty}>Нет объявлений для отображения</div>;
     }
     
     return allAdvertisements.map((announcement: any, index: React.Key | null | undefined) => (
@@ -79,7 +83,10 @@ const AdvertisementList: React.FC = () => {
   };
 
   return (
-    <div className={`${styles.container} ${filters.displayType === 'small' ? styles.small : styles.big}`}>
+    <div
+      key={searchKey}
+      className={`${styles.container} ${filters.displayType === 'small' ? styles.small : styles.big}`}
+    >
       {renderAdvertisements()}
       
       {loadingMore && <div className={styles.loader}>Загрузка...</div>}

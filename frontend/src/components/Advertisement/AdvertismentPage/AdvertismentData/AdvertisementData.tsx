@@ -1,37 +1,38 @@
-import React, { useEffect, useRef, useState } from 'react';
+import { useEffect, useRef, useState, useMemo } from 'react';
 import styles from './advertisementdata.module.css'
-import { initialUser as user } from '../../../../modules/data'
-import { photos } from '../../../../modules/data'
 import { Link, useParams } from 'react-router-dom';
 import { ROUTES } from '../../../../utils/routes';
-import { useFindParentCategoriesQuery, useGetAnnouncementQuery } from '../../../../graphql/generated/output';
+import { useFindParentCategoriesQuery, useFindUserQuery, useGetAnnouncementQuery, useGetPhotosByAnnouncementIdQuery } from '../../../../graphql/generated/output';
 import { parseAnnouncementCondition, parseAnnouncementStatus } from '../../../../utils/parse-types-ad';
 
 const AdvertisementData = () => {
   const [currentImage, setCurrentImage] = useState(0);
-  const images = photos;
+  const imageDivRef = useRef<HTMLDivElement>(null);
 
   const { adId } = useParams();
-  console.log(adId);
 
-  const imageDivRef = useRef<HTMLDivElement>(null);
+  const { data: imagesData } = useGetPhotosByAnnouncementIdQuery({ variables: { id: adId || ''} }); 
+  const images = useMemo(() => imagesData?.getPhotosByAnnouncementId || [], [imagesData]);
 
   const { data: advertismentData } = useGetAnnouncementQuery({ variables: { id: adId || '' } });
   const advertisment = advertismentData?.getAnnouncementById;
 
   const { data: categoriesData } = useFindParentCategoriesQuery({ variables: { id: advertisment?.categoryId || '' } });
   const categories = categoriesData?.findParentCategories;
+  
+  const { data: userData } = useFindUserQuery({ variables: { id: adId || '' } });
+  const user = userData?.findUser;
 
   const handlePrevImage = () => {
-    setCurrentImage((prevImage) => (prevImage - 1 + images.length) % images.length);
+    setCurrentImage((prevImage) => (prevImage - 1 + images?.length) % images?.length);
   };
 
   const handleNextImage = () => {
-    setCurrentImage((prevImage) => (prevImage + 1) % images.length);
+    setCurrentImage((prevImage) => (prevImage + 1) % images?.length);
   };
 
   useEffect(() => {
-    if (images[currentImage] && imageDivRef.current) {
+    if (images && images[currentImage] && imageDivRef.current) {
       imageDivRef.current.style.setProperty('--background-image', `url('${images[currentImage]}')`);
     }
   }, [currentImage, images]);
@@ -70,7 +71,7 @@ const AdvertisementData = () => {
           </div>
 
           <div className={styles.thumbnails}>
-            {images.map((img, index) => (
+            {images?.map((img, index) => (
               <img
                 key={index}
                 className={`${styles.thumbnail} ${currentImage === index ? styles.active : styles.passive}`}
@@ -112,15 +113,15 @@ const AdvertisementData = () => {
         <div className={styles.info_block}>
           <div className={styles.header}>
             <p className={styles.price}>{advertisment?.price} ₽</p>
-            <img className={styles.heart_icon} src="/images/Advertisment/heart.svg" alt="heart" /> 
+            <img className={styles.heart_icon} src="/images?/Advertisment/heart.svg" alt="heart" /> 
           </div>
           <Link className={styles.user_info}
             to={ROUTES.USER + '/' + advertisment?.userId}
           >
-            <span className={styles.user_name}>{user.FullName}</span>
+            <span className={styles.user_name}>{user?.displayName}</span>
             <img
               className={styles.avatar}
-              src="https://i.pravatar.cc/150?img=10"
+              src={user?.avatar != null ? user.avatar : ''}
               alt="User Avatar"
             />
           </Link>
@@ -138,4 +139,4 @@ const AdvertisementData = () => {
   )
 }
 
-export default AdvertisementData;
+export default AdvertisementData

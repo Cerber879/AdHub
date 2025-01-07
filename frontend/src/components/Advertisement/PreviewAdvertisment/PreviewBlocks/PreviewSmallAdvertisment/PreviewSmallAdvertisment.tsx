@@ -9,7 +9,6 @@ import { FindAllAnnouncementsQuery } from '../../../../../graphql/generated/outp
 
 interface PreviewSmallAdvertismentProps {
   input: FindAllAnnouncementsQuery['findAllAnnouncements'][number] 
-
 }
 
 const PreviewSmallAdvertisment: React.FC<PreviewSmallAdvertismentProps> = ({ input }) => { 
@@ -19,7 +18,7 @@ const PreviewSmallAdvertisment: React.FC<PreviewSmallAdvertismentProps> = ({ inp
       to={ROUTES.ITEMS + '/' + input.name + '/' + input.id} 
       className={styles.container}
     >
-      <PhotosBlock useStylesProfile={false}  />
+      <PhotosBlock useStylesProfile={false} input={input}  />
       <DataAdvertisment input={input} />
       <div className={styles.gradient}></div>
     </Link>

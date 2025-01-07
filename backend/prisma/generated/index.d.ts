@@ -11843,24 +11843,18 @@ export namespace Prisma {
 
   export type PhotoMinAggregateOutputType = {
     id: string | null
-    name: string | null
-    resolution: string | null
     link: string | null
     announcementID: string | null
   }
 
   export type PhotoMaxAggregateOutputType = {
     id: string | null
-    name: string | null
-    resolution: string | null
     link: string | null
     announcementID: string | null
   }
 
   export type PhotoCountAggregateOutputType = {
     id: number
-    name: number
-    resolution: number
     link: number
     announcementID: number
     _all: number
@@ -11869,24 +11863,18 @@ export namespace Prisma {
 
   export type PhotoMinAggregateInputType = {
     id?: true
-    name?: true
-    resolution?: true
     link?: true
     announcementID?: true
   }
 
   export type PhotoMaxAggregateInputType = {
     id?: true
-    name?: true
-    resolution?: true
     link?: true
     announcementID?: true
   }
 
   export type PhotoCountAggregateInputType = {
     id?: true
-    name?: true
-    resolution?: true
     link?: true
     announcementID?: true
     _all?: true
@@ -11966,8 +11954,6 @@ export namespace Prisma {
 
   export type PhotoGroupByOutputType = {
     id: string
-    name: string
-    resolution: string
     link: string
     announcementID: string
     _count: PhotoCountAggregateOutputType | null
@@ -11991,8 +11977,6 @@ export namespace Prisma {
 
   export type PhotoSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
-    name?: boolean
-    resolution?: boolean
     link?: boolean
     announcementID?: boolean
     announcement?: boolean | AnnouncementDefaultArgs<ExtArgs>
@@ -12000,8 +11984,6 @@ export namespace Prisma {
 
   export type PhotoSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
-    name?: boolean
-    resolution?: boolean
     link?: boolean
     announcementID?: boolean
     announcement?: boolean | AnnouncementDefaultArgs<ExtArgs>
@@ -12009,8 +11991,6 @@ export namespace Prisma {
 
   export type PhotoSelectScalar = {
     id?: boolean
-    name?: boolean
-    resolution?: boolean
     link?: boolean
     announcementID?: boolean
   }
@@ -12029,8 +12009,6 @@ export namespace Prisma {
     }
     scalars: $Extensions.GetPayloadResult<{
       id: string
-      name: string
-      resolution: string
       link: string
       announcementID: string
     }, ExtArgs["result"]["photo"]>
@@ -12428,8 +12406,6 @@ export namespace Prisma {
    */ 
   interface PhotoFieldRefs {
     readonly id: FieldRef<"Photo", 'String'>
-    readonly name: FieldRef<"Photo", 'String'>
-    readonly resolution: FieldRef<"Photo", 'String'>
     readonly link: FieldRef<"Photo", 'String'>
     readonly announcementID: FieldRef<"Photo", 'String'>
   }
@@ -12889,8 +12865,6 @@ export namespace Prisma {
 
   export const PhotoScalarFieldEnum: {
     id: 'id',
-    name: 'name',
-    resolution: 'resolution',
     link: 'link',
     announcementID: 'announcementID'
   };
@@ -13629,8 +13603,6 @@ export namespace Prisma {
     OR?: PhotoWhereInput[]
     NOT?: PhotoWhereInput | PhotoWhereInput[]
     id?: StringFilter<"Photo"> | string
-    name?: StringFilter<"Photo"> | string
-    resolution?: StringFilter<"Photo"> | string
     link?: StringFilter<"Photo"> | string
     announcementID?: StringFilter<"Photo"> | string
     announcement?: XOR<AnnouncementScalarRelationFilter, AnnouncementWhereInput>
@@ -13638,8 +13610,6 @@ export namespace Prisma {
 
   export type PhotoOrderByWithRelationInput = {
     id?: SortOrder
-    name?: SortOrder
-    resolution?: SortOrder
     link?: SortOrder
     announcementID?: SortOrder
     announcement?: AnnouncementOrderByWithRelationInput
@@ -13650,8 +13620,6 @@ export namespace Prisma {
     AND?: PhotoWhereInput | PhotoWhereInput[]
     OR?: PhotoWhereInput[]
     NOT?: PhotoWhereInput | PhotoWhereInput[]
-    name?: StringFilter<"Photo"> | string
-    resolution?: StringFilter<"Photo"> | string
     link?: StringFilter<"Photo"> | string
     announcementID?: StringFilter<"Photo"> | string
     announcement?: XOR<AnnouncementScalarRelationFilter, AnnouncementWhereInput>
@@ -13659,8 +13627,6 @@ export namespace Prisma {
 
   export type PhotoOrderByWithAggregationInput = {
     id?: SortOrder
-    name?: SortOrder
-    resolution?: SortOrder
     link?: SortOrder
     announcementID?: SortOrder
     _count?: PhotoCountOrderByAggregateInput
@@ -13673,8 +13639,6 @@ export namespace Prisma {
     OR?: PhotoScalarWhereWithAggregatesInput[]
     NOT?: PhotoScalarWhereWithAggregatesInput | PhotoScalarWhereWithAggregatesInput[]
     id?: StringWithAggregatesFilter<"Photo"> | string
-    name?: StringWithAggregatesFilter<"Photo"> | string
-    resolution?: StringWithAggregatesFilter<"Photo"> | string
     link?: StringWithAggregatesFilter<"Photo"> | string
     announcementID?: StringWithAggregatesFilter<"Photo"> | string
   }
@@ -14280,55 +14244,41 @@ export namespace Prisma {
 
   export type PhotoCreateInput = {
     id?: string
-    name: string
-    resolution: string
     link: string
     announcement: AnnouncementCreateNestedOneWithoutPhotoInput
   }
 
   export type PhotoUncheckedCreateInput = {
     id?: string
-    name: string
-    resolution: string
     link: string
     announcementID: string
   }
 
   export type PhotoUpdateInput = {
     id?: StringFieldUpdateOperationsInput | string
-    name?: StringFieldUpdateOperationsInput | string
-    resolution?: StringFieldUpdateOperationsInput | string
     link?: StringFieldUpdateOperationsInput | string
     announcement?: AnnouncementUpdateOneRequiredWithoutPhotoNestedInput
   }
 
   export type PhotoUncheckedUpdateInput = {
     id?: StringFieldUpdateOperationsInput | string
-    name?: StringFieldUpdateOperationsInput | string
-    resolution?: StringFieldUpdateOperationsInput | string
     link?: StringFieldUpdateOperationsInput | string
     announcementID?: StringFieldUpdateOperationsInput | string
   }
 
   export type PhotoCreateManyInput = {
     id?: string
-    name: string
-    resolution: string
     link: string
     announcementID: string
   }
 
   export type PhotoUpdateManyMutationInput = {
     id?: StringFieldUpdateOperationsInput | string
-    name?: StringFieldUpdateOperationsInput | string
-    resolution?: StringFieldUpdateOperationsInput | string
     link?: StringFieldUpdateOperationsInput | string
   }
 
   export type PhotoUncheckedUpdateManyInput = {
     id?: StringFieldUpdateOperationsInput | string
-    name?: StringFieldUpdateOperationsInput | string
-    resolution?: StringFieldUpdateOperationsInput | string
     link?: StringFieldUpdateOperationsInput | string
     announcementID?: StringFieldUpdateOperationsInput | string
   }
@@ -14935,24 +14885,18 @@ export namespace Prisma {
 
   export type PhotoCountOrderByAggregateInput = {
     id?: SortOrder
-    name?: SortOrder
-    resolution?: SortOrder
     link?: SortOrder
     announcementID?: SortOrder
   }
 
   export type PhotoMaxOrderByAggregateInput = {
     id?: SortOrder
-    name?: SortOrder
-    resolution?: SortOrder
     link?: SortOrder
     announcementID?: SortOrder
   }
 
   export type PhotoMinOrderByAggregateInput = {
     id?: SortOrder
-    name?: SortOrder
-    resolution?: SortOrder
     link?: SortOrder
     announcementID?: SortOrder
   }
@@ -16529,15 +16473,11 @@ export namespace Prisma {
 
   export type PhotoCreateWithoutAnnouncementInput = {
     id?: string
-    name: string
-    resolution: string
     link: string
   }
 
   export type PhotoUncheckedCreateWithoutAnnouncementInput = {
     id?: string
-    name: string
-    resolution: string
     link: string
   }
 
@@ -16700,8 +16640,6 @@ export namespace Prisma {
     OR?: PhotoScalarWhereInput[]
     NOT?: PhotoScalarWhereInput | PhotoScalarWhereInput[]
     id?: StringFilter<"Photo"> | string
-    name?: StringFilter<"Photo"> | string
-    resolution?: StringFilter<"Photo"> | string
     link?: StringFilter<"Photo"> | string
     announcementID?: StringFilter<"Photo"> | string
   }
@@ -18032,8 +17970,6 @@ export namespace Prisma {
 
   export type PhotoCreateManyAnnouncementInput = {
     id?: string
-    name: string
-    resolution: string
     link: string
   }
 
@@ -18057,22 +17993,16 @@ export namespace Prisma {
 
   export type PhotoUpdateWithoutAnnouncementInput = {
     id?: StringFieldUpdateOperationsInput | string
-    name?: StringFieldUpdateOperationsInput | string
-    resolution?: StringFieldUpdateOperationsInput | string
     link?: StringFieldUpdateOperationsInput | string
   }
 
   export type PhotoUncheckedUpdateWithoutAnnouncementInput = {
     id?: StringFieldUpdateOperationsInput | string
-    name?: StringFieldUpdateOperationsInput | string
-    resolution?: StringFieldUpdateOperationsInput | string
     link?: StringFieldUpdateOperationsInput | string
   }
 
   export type PhotoUncheckedUpdateManyWithoutAnnouncementInput = {
     id?: StringFieldUpdateOperationsInput | string
-    name?: StringFieldUpdateOperationsInput | string
-    resolution?: StringFieldUpdateOperationsInput | string
     link?: StringFieldUpdateOperationsInput | string
   }
 

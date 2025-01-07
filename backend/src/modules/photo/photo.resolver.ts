@@ -13,9 +13,9 @@ export class PhotoResolver {
     return this.photoService.create(input);
   }
 
-  @Query(() => [PhotoModel], { name: 'getPhotosByAnnouncementID' })
-  async getPhotosByAnnouncementID(@Args('id') announcementID: string) {
-    return this.photoService.findByAnnouncementID(announcementID);
+  @Query(() => [String], { name: 'getPhotosByAnnouncementId' })
+  async getPhotosByAnnouncementId(@Args('id') id: string) {
+    return this.photoService.findByAnnouncementId(id);
   }
 
   @Mutation(() => Boolean, { name: 'deletePhoto' })

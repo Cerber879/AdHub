@@ -1,5 +1,5 @@
 import { AnnouncementStatus, ProductCondition } from '../../../backend/prisma/generated'
-import { conditionMap, statusMap } from '../modules/types'
+import { conditionMap, statusMap } from '../types'
 
 export function parseAnnouncementStatus(status: AnnouncementStatus | undefined): string  {
     try {

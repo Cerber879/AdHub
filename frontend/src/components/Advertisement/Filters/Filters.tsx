@@ -1,45 +1,58 @@
-import React, { useEffect } from 'react';
+import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { setFilters, resetFilters } from '../../../store/slices/filtersSearchSlice';
-import { useFindAnnouncementsByFiltersQuery } from '../../../graphql/generated/output';
-import PreviewBigAdvertisment from '../PreviewAdvertisment/PreviewBlocks/PreviewBigAdvertisment/PreviewBigAdvertisment';
-import PreviewSmallAdvertisment from '../PreviewAdvertisment/PreviewBlocks/PreviewSmallAdvertisment/PreviewSmallAdvertisment';
-import { useParams } from 'react-router-dom';
-import AdvertisementTop from '../AdvertismentPage/AdvertismentTop/AdvertismentTop';
+import { setFilters } from '../../../store/slices/filtersSearchSlice';
+import styles from './filters.module.css';
 
-const AdvertisementList: React.FC = () => {
+const Filters: React.FC = () => {
   const dispatch = useDispatch();
 
-  const { categoryId } = useParams();
+  const filters = useSelector((state: any) => state.filtersSearch);
 
-  let filters = useSelector((state: any) => state.filtersSearch);
-  if(categoryId)
-  {
-    filters = {...filters, categoryId};
-  }
-  
+  const [sort, setSort] = useState(filters.sort || 'default'); 
+
   const handleDisplayTypeChange = (type: string) => {
     dispatch(setFilters({ ...filters, displayType: type }));
   };
 
   const handleSortChange = (sort: string) => {
+    setSort(sort); // Локальное обновление сортировки
     dispatch(setFilters({ ...filters, sort }));
   };
 
-  useEffect(() => {
-    if (!categoryId) {
-      dispatch(resetFilters());
-    }
-  }, [categoryId, dispatch]);
-
   return (
-    <div>
-        <button onClick={() => handleDisplayTypeChange('small')}>Маленькие объявления</button>
-        <button onClick={() => handleDisplayTypeChange('big')}>Большие объявления</button>
-        <button onClick={() => handleSortChange('price_asc')}>Сортировка по цене (возрастание)</button>
-        <button onClick={() => handleSortChange('price_desc')}>Сортировка по цене (убывание)</button>
+    <div className={styles.container}>
+      <button className={styles.view} onClick={() => handleDisplayTypeChange('big')}>
+        <img className={styles.view_icon}  src="/images/Advertisment/big_ad.svg" alt="big"></img>
+      </button>
+      <button className={styles.view} onClick={() => handleDisplayTypeChange('small')}>
+        <img className={styles.view_icon} src="/images/Advertisment/small_ads.svg" alt="small"></img>
+      </button>
+
+      <div className={styles.sort_block}>
+        <img className={styles.sort_icon} src="/images/Advertisment/sort.svg" alt="sort" />
+        <select
+          value={sort}
+          onChange={(e) => handleSortChange(e.target.value)}
+          className={styles.select}
+        >
+          {sortOptions.map((option) => (
+            <option className={styles.option} key={option.value} value={option.value}>
+              {option.label}
+            </option>
+          ))}
+        </select>
+      </div>
     </div>
   );
 };
 
-export default AdvertisementList;
+export default Filters;
+
+const sortOptions = [
+  { label: 'Сортировка', value: 'default' },
+  { label: 'По возрастанию цены', value: 'price_asc' },
+  { label: 'По убыванию цены', value: 'price_desc' },
+  { label: 'По дате', value: 'date' },
+  { label: 'По названию (А-Я)', value: 'name_asc' },
+  { label: 'По названию (Я-А)', value: 'name_desc' },
+];

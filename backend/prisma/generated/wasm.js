@@ -198,8 +198,6 @@ exports.Prisma.FavouritesScalarFieldEnum = {
 
 exports.Prisma.PhotoScalarFieldEnum = {
   id: 'id',
-  name: 'name',
-  resolution: 'resolution',
   link: 'link',
   announcementID: 'announcementID'
 };

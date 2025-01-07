@@ -97,8 +97,6 @@ export type CreateCategoryInput = {
 export type CreatePhotoInput = {
   announcementID: Scalars['String']['input'];
   link: Scalars['String']['input'];
-  name: Scalars['String']['input'];
-  resolution: Scalars['String']['input'];
 };
 
 export type CreateUserInput = {
@@ -233,15 +231,6 @@ export type MutationUpdatePhotosArgs = {
   newPhotos: Array<CreatePhotoInput>;
 };
 
-export type PhotoModel = {
-  __typename?: 'PhotoModel';
-  announcementID: Scalars['String']['output'];
-  id: Scalars['ID']['output'];
-  link: Scalars['String']['output'];
-  name: Scalars['String']['output'];
-  resolution: Scalars['String']['output'];
-};
-
 /** Состояние товара */
 export enum ProductCondition {
   New = 'NEW',
@@ -264,7 +253,7 @@ export type Query = {
   getAnnouncementsByCategory: Array<AnnouncementModel>;
   getCategoryById: CategoryModel;
   getMainCategories: Array<CategoryModel>;
-  getPhotosByAnnouncementID: Array<PhotoModel>;
+  getPhotosByAnnouncementId: Array<Scalars['String']['output']>;
   getSubcategories: Array<CategoryModel>;
 };
 
@@ -559,7 +548,7 @@ export type GetPhotosByAnnouncementIdQueryVariables = Exact<{
 }>;
 
 
-export type GetPhotosByAnnouncementIdQuery = { __typename?: 'Query', getPhotosByAnnouncementID: Array<{ __typename?: 'PhotoModel', id: string, name: string, resolution: string, link: string }> };
+export type GetPhotosByAnnouncementIdQuery = { __typename?: 'Query', getPhotosByAnnouncementId: Array<string> };
 
 export type FindProfileQueryVariables = Exact<{ [key: string]: never; }>;
 
@@ -1513,13 +1502,8 @@ export type GetSubcategoriesLazyQueryHookResult = ReturnType<typeof useGetSubcat
 export type GetSubcategoriesSuspenseQueryHookResult = ReturnType<typeof useGetSubcategoriesSuspenseQuery>;
 export type GetSubcategoriesQueryResult = Apollo.QueryResult<GetSubcategoriesQuery, GetSubcategoriesQueryVariables>;
 export const GetPhotosByAnnouncementIdDocument = gql`
-    query GetPhotosByAnnouncementID($id: String!) {
-  getPhotosByAnnouncementID(id: $id) {
-    id
-    name
-    resolution
-    link
-  }
+    query GetPhotosByAnnouncementId($id: String!) {
+  getPhotosByAnnouncementId(id: $id)
 }
     `;
 

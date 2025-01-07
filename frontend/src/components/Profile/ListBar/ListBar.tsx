@@ -1,11 +1,11 @@
-import { useLocation, Link, useNavigate } from 'react-router-dom';
+import { useLocation, Link } from 'react-router-dom';
 import styles from './list.module.css';
 import { ROUTES } from '../../../utils/routes';
 import { useFindProfileQuery, useLogoutUserMutation } from '../../../graphql/generated/output';
 import { useDispatch } from 'react-redux';
 import { exit } from '../../../store/slices/userSlise';
 
-const ProfileListBar = () => {
+const ListBar = () => {
   const dispatch = useDispatch();
   const [logoutUser] = useLogoutUserMutation();
   
@@ -56,4 +56,4 @@ const ProfileListBar = () => {
   );
 };
 
-export default ProfileListBar;
+export default ListBar;

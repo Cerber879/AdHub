@@ -21,7 +21,7 @@ const PreviewBigAdvertisment: React.FC<PreviewBigAdvertismentProps> = ({ input, 
         to={ROUTES.ITEMS + "/" + input.name + "/" + input.id} 
         className={styles.container}
     >
-        <PhotosBlock useStylesProfile={useStylesProfile}/>
+        <PhotosBlock useStylesProfile={useStylesProfile} input={input}/>
         <DataAdvertisment input={input} /> 
         <UserAdvertisment input={input} />
     </Link>

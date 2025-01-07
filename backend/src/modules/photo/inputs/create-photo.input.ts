@@ -5,14 +5,6 @@ import { IsString, MaxLength } from "class-validator";
 export class CreatePhotoInput {
   @Field(() => String)
   @IsString()
-  public name: string;
-
-  @Field(() => String)
-  @IsString()
-  public resolution: string;
-
-  @Field(() => String)
-  @IsString()
   public link: string;
 
   @Field(() => String)

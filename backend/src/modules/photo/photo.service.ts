@@ -10,8 +10,6 @@ export class PhotoService {
   async create(input: CreatePhotoInput) {
     await this.prismaService.photo.create({
       data: {
-        name: input.name,
-        resolution: input.resolution,
         link: input.link,
         announcementID: input.announcementID,
       },
@@ -20,12 +18,15 @@ export class PhotoService {
     return true
   }
 
-  async findByAnnouncementID(announcementID: string) {
-    return this.prismaService.photo.findMany({
+  async findByAnnouncementId(announcementID: string){
+    const photos = await this.prismaService.photo.findMany({
       where: { 
         announcementID 
       },
+      select: { link: true } 
     });
+  
+    return photos.map((photo) => photo.link);
   }
 
   async delete(id: string) {

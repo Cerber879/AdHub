@@ -1,6 +1,6 @@
 import React from 'react'
-import ProfileListBar from '../../../components/Profile/ProfileListBar/ProfileListBar'
-import ProfileListAdvertisments from '../../../components/Profile/ProfileListAdvertisments/ProfileListAdvertisments'
+import ProfileListBar from '../../../components/Profile/ListBar/ListBar'
+import ListAdvertisments from '../../../components/Profile/ListAdvertisments/ListAdvertisments'
 
 import styles from './profile.module.css'
 
@@ -8,7 +8,7 @@ const ProfileMain = () => {
   return (
     <div className={styles.container}>
         <ProfileListBar/>
-        <ProfileListAdvertisments />
+        <ListAdvertisments />
     </div>
   )
 }

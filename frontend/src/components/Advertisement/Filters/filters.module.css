@@ -1,0 +1,80 @@
+.container {
+    position: relative;
+    width: 210px;
+    height: 25px;
+    padding: 0px 0px 10px 5px;
+    display: flex;
+    margin: 0;
+    flex-wrap: wrap;
+}
+
+.view {
+    position: relative;
+    width: 30px;
+    height: 30px;
+    cursor: pointer;
+    background-color: white;
+}
+
+.view:hover {
+    background-color: #e0e0e0;
+}
+
+.view_icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.sort_block {
+    margin-left: 5px;
+    position: relative;
+    height: 30px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.sort_icon {
+    pointer-events: none;
+    left: 0;
+    position: absolute;
+    width: 15px;
+    height: 15px;
+}
+
+.select {
+    padding: 0px 0px 0px 18px;
+    width: 125px;
+    margin: 0;
+    font-size: 15px;
+    cursor: pointer;
+    outline: none;
+    border-color: aliceblue;
+    border: none;
+    appearance: none; 
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    color: black;
+    transition: border-color 0.3s ease, background-color 0.3s ease;
+}
+  
+.select:focus {
+    border-color: none; 
+    border: none;
+    outline: none; 
+}
+  
+.select::after {
+    content: ''; 
+    position: absolute;
+    right: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 0; 
+    height: 0;
+    border-left: 6px solid transparent;
+    border-right: 6px solid transparent;
+    border-top: 6px solid #000; 
+}
+  

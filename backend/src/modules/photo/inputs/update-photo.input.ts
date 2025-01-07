@@ -5,13 +5,5 @@ import { IsString, MaxLength } from "class-validator";
 export class UpdatePhotoInput {
   @Field(() => String, { nullable: true })
   @IsString()
-  public name?: string;
-
-  @Field(() => String, { nullable: true })
-  @IsString()
-  public resolution?: string;
-
-  @Field(() => String, { nullable: true })
-  @IsString()
   public link?: string;
 }

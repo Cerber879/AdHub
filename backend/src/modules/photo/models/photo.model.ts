@@ -7,12 +7,6 @@ export class PhotoModel implements Photo {
   id: string
 
   @Field(() => String)
-  name: string
-
-  @Field(() => String)
-  resolution: string
-
-  @Field(() => String)
   link: string
 
   @Field(() => String)
