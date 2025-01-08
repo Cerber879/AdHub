@@ -29,7 +29,7 @@ export class AnnouncementCharacteristicService {
     async getByAnnouncementId(id: string) {
         return this.prismaService.announcementCharacteristic.findMany({
             where: {
-                id
+                productId: id
             }
         })
 

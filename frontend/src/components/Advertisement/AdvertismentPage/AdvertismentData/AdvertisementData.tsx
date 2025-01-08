@@ -2,7 +2,7 @@ import { useEffect, useRef, useState, useMemo } from 'react';
 import styles from './advertisementdata.module.css'
 import { Link, useParams } from 'react-router-dom';
 import { ROUTES } from '../../../../utils/routes';
-import { useFindParentCategoriesQuery, useFindUserQuery, useGetAnnouncementQuery, useGetPhotosByAnnouncementIdQuery } from '../../../../graphql/generated/output';
+import { useFindCharacteristicsQuery, useFindParentCategoriesQuery, useFindUserQuery, useGetAnnouncementCharacteristicsQuery, useGetAnnouncementQuery, useGetPhotosByAnnouncementIdQuery } from '../../../../graphql/generated/output';
 import { parseAnnouncementCondition, parseAnnouncementStatus } from '../../../../utils/parse-types-ad';
 
 const AdvertisementData = () => {
@@ -14,13 +14,26 @@ const AdvertisementData = () => {
   const { data: imagesData } = useGetPhotosByAnnouncementIdQuery({ variables: { id: adId || ''} }); 
   const images = useMemo(() => imagesData?.getPhotosByAnnouncementId || [], [imagesData]);
 
+
+
+  const {data : announcementCharacteristicsData } = useGetAnnouncementCharacteristicsQuery({ variables: { id: adId || '' } });
+  const announcementCharacteristics = useMemo(() => announcementCharacteristicsData?.getAnnouncementCharacteristics || [], [announcementCharacteristicsData]);
+
   const { data: advertismentData } = useGetAnnouncementQuery({ variables: { id: adId || '' } });
   const advertisment = advertismentData?.getAnnouncementById;
 
   const { data: categoriesData } = useFindParentCategoriesQuery({ variables: { id: advertisment?.categoryId || '' } });
   const categories = categoriesData?.findParentCategories;
-  
-  const { data: userData } = useFindUserQuery({ variables: { id: adId || '' } });
+  console.log(categories, "123")
+  var categoryIdd:string = "";
+  if (categories && categories.length > 0) {
+    categoryIdd = categories[1]
+  }
+  const { data : characteristicsData } = useFindCharacteristicsQuery({ variables: { id: categoryIdd || '' } });
+  const characteristics = useMemo(() => characteristicsData?.findCharacteristics || [], [characteristicsData]);
+  console.log(announcementCharacteristics)
+  console.log(characteristics)
+  const { data: userData } = useFindUserQuery({ variables: { id: advertisment?.userId || '' } });
   const user = userData?.findUser;
 
   const handlePrevImage = () => {
@@ -36,14 +49,15 @@ const AdvertisementData = () => {
       imageDivRef.current.style.setProperty('--background-image', `url('${images[currentImage]}')`);
     }
   }, [currentImage, images]);
-
+  console.log(user)
   return (
     <div className={styles.container}>
       <div>
         <ul className={styles.complex_list}>
-          { categories?.map((category) => (
+          <Link to={ROUTES.HOME} className={styles.link}>Главная</Link>
+          { categories?.slice(0, categories.length - 1).map((category) => (
             <li key={category} className={styles.complex_list_item}>
-              <Link className={styles.link} to={`/${category}`}>{category}</Link>
+              <Link className={styles.link} to={`/${category}/${categoryIdd}`}>{category}</Link>
             </li>
           ))}
         </ul>
@@ -82,9 +96,16 @@ const AdvertisementData = () => {
             ))}
           </div>
 
+          <div>
+            <h2>Описание</h2>
+            <p className={styles.description}>{advertisment?.description}</p>
+          </div>
+
           <div className={styles.characteristics}>
             <h2>Характеристики</h2>
+            
             <dl className={styles.characteristics_list}>
+              
               <div className={styles.characteristic_item}>
                 <dt>Состояние:</dt>
                 <dd>{parseAnnouncementCondition(advertisment?.condition)}</dd>
@@ -101,19 +122,28 @@ const AdvertisementData = () => {
                 <dt>Цена:</dt>
                 <dd>{advertisment?.price} ₽</dd>
               </div>
+              {announcementCharacteristics?.map((item, index) => {
+    
+                const characteristic = characteristics.find(c => c.id === item.characteristicId);
+
+                
+                return (
+                  <div className={styles.characteristic_item} key={index}>
+                    <dt>{characteristic ? characteristic.name : 'Unknown'}:</dt> {/* Если не найдено, выводим 'Unknown' */}
+                    <dd>{item.value}</dd>
+                  </div>
+                );
+              })}
             </dl>
           </div>
 
-          <div>
-            <h2>Описание</h2>
-            <p className={styles.description}>{advertisment?.description}</p>
-          </div>
+          
         </div>
 
         <div className={styles.info_block}>
           <div className={styles.header}>
             <p className={styles.price}>{advertisment?.price} ₽</p>
-            <img className={styles.heart_icon} src="/images?/Advertisment/heart.svg" alt="heart" /> 
+            <img className={styles.heart_icon} src="/images/Advertisment/heart.svg" alt="heart" /> 
           </div>
           <Link className={styles.user_info}
             to={ROUTES.USER + '/' + advertisment?.userId}

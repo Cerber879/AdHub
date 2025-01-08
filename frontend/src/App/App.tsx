@@ -38,6 +38,7 @@ const App: React.FC = () => {
               <Route path={ROUTES.ADDITEM} element={<CreateAdvertisementPage />} />
               <Route path={ROUTES.ABOUT} element={<AboutUs />} />
               <Route path={ROUTES.PROFILE + '/:userId'} element={<Profile />} /> 
+              <Route path={ROUTES.USER + '/:userId'} element={<Profile />} /> 
               <Route path={ROUTES.ITEMS + '/:adName/:adId'} element={<AdvertismentPage />} />
               <Route path={ROUTES.ITEMS + ROUTES.EDIT + '/:adId'} element={<></>} />
               
