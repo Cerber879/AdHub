@@ -5,6 +5,8 @@ import { UpdateAnnouncementInput } from './inputs/update-announcement.input';
 import { User} from '@/prisma/generated';
 import { parseAnnouncementCondition, parseAnnouncementStatus } from '@/src/shared/utils/parse-types-ad';
 import { AnnouncementFiltersInput } from './inputs/search-announcement.input';
+import { FavouritesModel } from '../favourites/models/favourite.model';
+import { AnnouncementModel } from './models/announcement.model';
 
 @Injectable()
 export class AnnouncementService {
@@ -94,6 +96,42 @@ export class AnnouncementService {
     const announcement = await this.prismaService.announcement.findUnique({ 
         where: { 
           id
+        }
+    });
+
+    if (!announcement) {
+      throw new NotFoundException('Объявление не найдено');
+    }
+
+    return announcement;
+  }
+
+
+  async findByIds(data: string[]) {
+    // Массив промисов для всех запросов
+    const adsPromises = data.map(async (id) => {
+      const announcement = await this.prismaService.announcement.findUnique({
+        where: {
+          id
+        }
+      });
+      return announcement; 
+    });
+  
+    const ads = await Promise.all(adsPromises);
+  
+    if (ads.length === 0) {
+      throw new NotFoundException('Объявлений не найдено');
+    }
+  
+    return ads;
+  }
+  
+
+  async findByProfile(user: User) {
+    const announcement = await this.prismaService.announcement.findMany({ 
+        where: { 
+          userId: user.id
         }
     });
 

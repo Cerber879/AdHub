@@ -11,17 +11,16 @@ import { FindAllAnnouncementsQuery } from '../../../../../graphql/generated/outp
 
 interface PreviewBigAdvertismentProps {
   input: FindAllAnnouncementsQuery['findAllAnnouncements'][number] 
-  useStylesProfile: boolean
 }
 
-const PreviewBigAdvertisment: React.FC<PreviewBigAdvertismentProps> = ({ input, useStylesProfile }) => { 
+const PreviewBigAdvertisment: React.FC<PreviewBigAdvertismentProps> = ({ input }) => { 
   
   return (
     <Link 
         to={ROUTES.ITEMS + "/" + input.name + "/" + input.id} 
         className={styles.container}
     >
-        <PhotosBlock useStylesProfile={useStylesProfile} input={input}/>
+        <PhotosBlock useStylesProfile={false} input={input}/>
         <DataAdvertisment input={input} /> 
         <UserAdvertisment input={input} />
     </Link>

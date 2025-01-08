@@ -1,5 +1,5 @@
 import { Field, Float, ID, ObjectType } from '@nestjs/graphql';
-import { Announcement } from '@/prisma/generated';
+import { $Enums, Announcement } from '@/prisma/generated';
 import { AnnouncementStatus, ProductCondition } from '@/src/shared/types/announcement-types';
 
 @ObjectType()
@@ -20,10 +20,10 @@ export class AnnouncementModel implements Announcement {
   public placementDate: Date;
 
   @Field(() => AnnouncementStatus)
-  public status: AnnouncementStatus;
+  public status: $Enums.AnnouncementStatus;
 
   @Field(() => ProductCondition)
-  public condition: ProductCondition;
+  public condition: $Enums.ProductCondition;
 
   @Field(() => String)
   public userId: string;
@@ -42,10 +42,4 @@ export class AnnouncementModel implements Announcement {
 
   @Field(() => [String], { nullable: true })
   public announcementCharacteristic?: string[];
-
-  @Field(() => Date)
-  public createdAt: Date;
-
-  @Field(() => Date)
-  public updatedAt: Date;
 }

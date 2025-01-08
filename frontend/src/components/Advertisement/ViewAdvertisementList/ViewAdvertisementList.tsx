@@ -78,7 +78,7 @@ const AdvertisementList: React.FC = () => {
     return allAdvertisements.map((announcement: any, index: React.Key | null | undefined) => (
       filters.displayType === 'small'
         ? <PreviewSmallAdvertisment key={index} input={announcement} />
-        : <PreviewBigAdvertisment key={index} input={announcement} useStylesProfile={false} />
+        : <PreviewBigAdvertisment key={index} input={announcement} />
     ));
   };
 

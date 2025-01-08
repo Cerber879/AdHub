@@ -3,7 +3,7 @@ import { ROUTES } from '../../../../../utils/routes'
 
 import styles from './preview.module.css'
 import PhotosBlock from '../../componentsPreview/PhotosBlock/PhotosBlock'
-import DataAdvertisment from '../../componentsPreview/SmallAdvertisment/DataAdvertisment/DataAdvertisment'
+import DataAdvertisment from '../../componentsPreview/ProfileAdvertisment/DataAdvertisment/DataAdvertisment'
 
 import { AnnouncementModel } from '../../../../../graphql/generated/output'
 
@@ -11,18 +11,17 @@ interface PreviewSmallAdvertismentProps {
   input: AnnouncementModel
 }
 
-const PreviewSmallAdvertisment: React.FC<PreviewSmallAdvertismentProps> = ({ input }) => { 
+const PreviewProfileAdvertisment: React.FC<PreviewSmallAdvertismentProps> = ({ input }) => { 
 
   return (
     <Link         
       to={ROUTES.ITEMS + '/' + input.name + '/' + input.id} 
       className={styles.container}
     >
-      <PhotosBlock useStylesProfile={false} input={input}  />
+      <PhotosBlock useStylesProfile={true} input={input}  />
       <DataAdvertisment input={input} />
-      <div className={styles.gradient}></div>
     </Link>
   )
 }
 
-export default PreviewSmallAdvertisment
+export default PreviewProfileAdvertisment

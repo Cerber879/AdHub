@@ -1,5 +1,5 @@
-query FindAllAnnouncements {
-  findAllAnnouncements {
+query GetAnnouncementByProfile {
+  getAnnouncementByProfile {
     id
     userId
     categoryId

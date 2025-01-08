@@ -1,10 +1,16 @@
-import React, { useState } from 'react'
+import React, { useMemo, useState } from 'react'
 
 import styles from './ads.module.css'
 
-import PreviewSmallAdvertisment from '../../Advertisement/PreviewAdvertisment/PreviewBlocks/PreviewSmallAdvertisment/PreviewSmallAdvertisment';
+import { useGetAnnouncementByProfileQuery } from '../../../graphql/generated/output';
+import { statusMap } from '../../../types';
+
+import PreviewProfileAdvertisment from '../../Advertisement/PreviewAdvertisment/PreviewBlocks/PreviewProfileAdvertisment/PreviewProfileAdvertisment';
 
 const ProfileListAdvertisments = () => {
+
+  const {data} = useGetAnnouncementByProfileQuery()
+  const ads = useMemo(() => data?.getAnnouncementByProfile || [], [data]);
 
   const [releaseButton, setReleaseButton] = useState(true);
   const [archiveButton, setArchiveButton] = useState(false);
@@ -34,7 +40,15 @@ const ProfileListAdvertisments = () => {
                 <span>Архив</span>
             </button>
         </div>
+
         <div className={styles.ads}>
+          {ads?.map((ad) => {
+            const status = statusMap[ad.status]
+            if (status === "Активное") {
+              return <PreviewProfileAdvertisment input={ad} />;
+            }
+            return null; 
+          })}
         </div>
     </div>
   )

@@ -51,7 +51,25 @@ export class FavouritesService {
             where: {
                 userID: userId
             },
+            select: {
+                announcementID: true
+            }
         })
+    }
+
+    async checkAnnouncementInFavourites(userId: string, adId: string) {
+        const check = await this.prismaService.favourites.findFirst({
+            where: {
+                userID: userId,
+                announcementID: adId
+            },
+        })
+
+        if (check) {
+            return true
+        }
+
+        return false
     }
     
 }

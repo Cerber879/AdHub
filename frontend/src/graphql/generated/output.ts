@@ -59,7 +59,6 @@ export type AnnouncementModel = {
   announcementCharacteristic?: Maybe<Array<Scalars['String']['output']>>;
   categoryId: Scalars['String']['output'];
   condition: ProductCondition;
-  createdAt: Scalars['DateTime']['output'];
   description: Scalars['String']['output'];
   favourites?: Maybe<Array<Scalars['String']['output']>>;
   id: Scalars['ID']['output'];
@@ -69,7 +68,6 @@ export type AnnouncementModel = {
   price: Scalars['Float']['output'];
   review?: Maybe<Array<Scalars['String']['output']>>;
   status: AnnouncementStatus;
-  updatedAt: Scalars['DateTime']['output'];
   userId: Scalars['String']['output'];
 };
 
@@ -152,13 +150,6 @@ export type DeviceModel = {
   browser: Scalars['String']['output'];
   os: Scalars['String']['output'];
   type: Scalars['String']['output'];
-};
-
-export type FavouritesModel = {
-  __typename?: 'FavouritesModel';
-  announcementID?: Maybe<Scalars['String']['output']>;
-  id: Scalars['ID']['output'];
-  userID: Scalars['String']['output'];
 };
 
 export type LocationModel = {
@@ -341,6 +332,7 @@ export enum ProductCondition {
 
 export type Query = {
   __typename?: 'Query';
+  checkAnnouncementInFavourites: Scalars['Boolean']['output'];
   findAllAnnouncements: Array<AnnouncementModel>;
   findAnnouncementsByFilters: Array<AnnouncementModel>;
   findCharacteristics: Array<CharacteristicModel>;
@@ -351,14 +343,21 @@ export type Query = {
   findSessionsByUser: Array<SessionModel>;
   findUser: UserModel;
   getAnnouncementById: AnnouncementModel;
+  getAnnouncementByIds: Array<AnnouncementModel>;
   getAnnouncementByName: AnnouncementModel;
+  getAnnouncementByProfile: Array<AnnouncementModel>;
   getAnnouncementCharacteristics: Array<AnnouncementCharacteristicModel>;
   getAnnouncementsByCategory: Array<AnnouncementModel>;
   getCategoryById: CategoryModel;
-  getFavouritesByUserId: Array<FavouritesModel>;
+  getFavouritesByUserId: Array<AnnouncementModel>;
   getMainCategories: Array<CategoryModel>;
   getPhotosByAnnouncementId: Array<Scalars['String']['output']>;
   getSubcategories: Array<CategoryModel>;
+};
+
+
+export type QueryCheckAnnouncementInFavouritesArgs = {
+  adId: Scalars['String']['input'];
 };
 
 
@@ -392,6 +391,11 @@ export type QueryGetAnnouncementByIdArgs = {
 };
 
 
+export type QueryGetAnnouncementByIdsArgs = {
+  ids: Array<Scalars['String']['input']>;
+};
+
+
 export type QueryGetAnnouncementByNameArgs = {
   name: Scalars['String']['input'];
 };
@@ -409,11 +413,6 @@ export type QueryGetAnnouncementsByCategoryArgs = {
 
 export type QueryGetCategoryByIdArgs = {
   id: Scalars['String']['input'];
-};
-
-
-export type QueryGetFavouritesByUserIdArgs = {
-  userId: Scalars['String']['input'];
 };
 
 
@@ -704,7 +703,7 @@ export type FindAnnouncementsByFiltersQuery = { __typename?: 'Query', findAnnoun
 export type FindAllAnnouncementsQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type FindAllAnnouncementsQuery = { __typename?: 'Query', findAllAnnouncements: Array<{ __typename?: 'AnnouncementModel', id: string, userId: string, categoryId: string, name: string, price: number, placementDate: any, description: string, status: AnnouncementStatus, condition: ProductCondition, createdAt: any, updatedAt: any }> };
+export type FindAllAnnouncementsQuery = { __typename?: 'Query', findAllAnnouncements: Array<{ __typename?: 'AnnouncementModel', id: string, userId: string, categoryId: string, name: string, price: number, placementDate: any, description: string, status: AnnouncementStatus, condition: ProductCondition }> };
 
 export type GetAnnouncementQueryVariables = Exact<{
   id: Scalars['String']['input'];
@@ -712,6 +711,11 @@ export type GetAnnouncementQueryVariables = Exact<{
 
 
 export type GetAnnouncementQuery = { __typename?: 'Query', getAnnouncementById: { __typename?: 'AnnouncementModel', id: string, userId: string, categoryId: string, name: string, price: number, placementDate: any, description: string, status: AnnouncementStatus, condition: ProductCondition } };
+
+export type GetAnnouncementByProfileQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type GetAnnouncementByProfileQuery = { __typename?: 'Query', getAnnouncementByProfile: Array<{ __typename?: 'AnnouncementModel', id: string, userId: string, categoryId: string, name: string, price: number, placementDate: any, description: string, status: AnnouncementStatus, condition: ProductCondition }> };
 
 export type GetAnnouncementsByCategoryQueryVariables = Exact<{
   id: Scalars['String']['input'];
@@ -767,12 +771,17 @@ export type FindCharacteristicsQueryVariables = Exact<{
 
 export type FindCharacteristicsQuery = { __typename?: 'Query', findCharacteristics: Array<{ __typename?: 'CharacteristicModel', id: string, name: string, type: string, categoryId: string }> };
 
-export type GetFavouritesByUserIdQueryVariables = Exact<{
-  userId: Scalars['String']['input'];
+export type CheckAnnouncementInFavouritesQueryVariables = Exact<{
+  adId: Scalars['String']['input'];
 }>;
 
 
-export type GetFavouritesByUserIdQuery = { __typename?: 'Query', getFavouritesByUserId: Array<{ __typename?: 'FavouritesModel', id: string, userID: string, announcementID?: string | null }> };
+export type CheckAnnouncementInFavouritesQuery = { __typename?: 'Query', checkAnnouncementInFavourites: boolean };
+
+export type GetFavouritesByUserIdQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type GetFavouritesByUserIdQuery = { __typename?: 'Query', getFavouritesByUserId: Array<{ __typename?: 'AnnouncementModel', id: string, userId: string, name: string, price: number, description: string, placementDate: any, status: AnnouncementStatus, condition: ProductCondition, categoryId: string }> };
 
 export type GetPhotosByAnnouncementIdQueryVariables = Exact<{
   id: Scalars['String']['input'];
@@ -1703,8 +1712,6 @@ export const FindAllAnnouncementsDocument = gql`
     description
     status
     condition
-    createdAt
-    updatedAt
   }
 }
     `;
@@ -1788,6 +1795,53 @@ export type GetAnnouncementQueryHookResult = ReturnType<typeof useGetAnnouncemen
 export type GetAnnouncementLazyQueryHookResult = ReturnType<typeof useGetAnnouncementLazyQuery>;
 export type GetAnnouncementSuspenseQueryHookResult = ReturnType<typeof useGetAnnouncementSuspenseQuery>;
 export type GetAnnouncementQueryResult = Apollo.QueryResult<GetAnnouncementQuery, GetAnnouncementQueryVariables>;
+export const GetAnnouncementByProfileDocument = gql`
+    query GetAnnouncementByProfile {
+  getAnnouncementByProfile {
+    id
+    userId
+    categoryId
+    name
+    price
+    placementDate
+    description
+    status
+    condition
+  }
+}
+    `;
+
+/**
+ * __useGetAnnouncementByProfileQuery__
+ *
+ * To run a query within a React component, call `useGetAnnouncementByProfileQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGetAnnouncementByProfileQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useGetAnnouncementByProfileQuery({
+ *   variables: {
+ *   },
+ * });
+ */
+export function useGetAnnouncementByProfileQuery(baseOptions?: Apollo.QueryHookOptions<GetAnnouncementByProfileQuery, GetAnnouncementByProfileQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<GetAnnouncementByProfileQuery, GetAnnouncementByProfileQueryVariables>(GetAnnouncementByProfileDocument, options);
+      }
+export function useGetAnnouncementByProfileLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<GetAnnouncementByProfileQuery, GetAnnouncementByProfileQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<GetAnnouncementByProfileQuery, GetAnnouncementByProfileQueryVariables>(GetAnnouncementByProfileDocument, options);
+        }
+export function useGetAnnouncementByProfileSuspenseQuery(baseOptions?: Apollo.SkipToken | Apollo.SuspenseQueryHookOptions<GetAnnouncementByProfileQuery, GetAnnouncementByProfileQueryVariables>) {
+          const options = baseOptions === Apollo.skipToken ? baseOptions : {...defaultOptions, ...baseOptions}
+          return Apollo.useSuspenseQuery<GetAnnouncementByProfileQuery, GetAnnouncementByProfileQueryVariables>(GetAnnouncementByProfileDocument, options);
+        }
+export type GetAnnouncementByProfileQueryHookResult = ReturnType<typeof useGetAnnouncementByProfileQuery>;
+export type GetAnnouncementByProfileLazyQueryHookResult = ReturnType<typeof useGetAnnouncementByProfileLazyQuery>;
+export type GetAnnouncementByProfileSuspenseQueryHookResult = ReturnType<typeof useGetAnnouncementByProfileSuspenseQuery>;
+export type GetAnnouncementByProfileQueryResult = Apollo.QueryResult<GetAnnouncementByProfileQuery, GetAnnouncementByProfileQueryVariables>;
 export const GetAnnouncementsByCategoryDocument = gql`
     query GetAnnouncementsByCategory($id: String!) {
   getAnnouncementsByCategory(id: $id) {
@@ -2128,12 +2182,56 @@ export type FindCharacteristicsQueryHookResult = ReturnType<typeof useFindCharac
 export type FindCharacteristicsLazyQueryHookResult = ReturnType<typeof useFindCharacteristicsLazyQuery>;
 export type FindCharacteristicsSuspenseQueryHookResult = ReturnType<typeof useFindCharacteristicsSuspenseQuery>;
 export type FindCharacteristicsQueryResult = Apollo.QueryResult<FindCharacteristicsQuery, FindCharacteristicsQueryVariables>;
+export const CheckAnnouncementInFavouritesDocument = gql`
+    query CheckAnnouncementInFavourites($adId: String!) {
+  checkAnnouncementInFavourites(adId: $adId)
+}
+    `;
+
+/**
+ * __useCheckAnnouncementInFavouritesQuery__
+ *
+ * To run a query within a React component, call `useCheckAnnouncementInFavouritesQuery` and pass it any options that fit your needs.
+ * When your component renders, `useCheckAnnouncementInFavouritesQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useCheckAnnouncementInFavouritesQuery({
+ *   variables: {
+ *      adId: // value for 'adId'
+ *   },
+ * });
+ */
+export function useCheckAnnouncementInFavouritesQuery(baseOptions: Apollo.QueryHookOptions<CheckAnnouncementInFavouritesQuery, CheckAnnouncementInFavouritesQueryVariables> & ({ variables: CheckAnnouncementInFavouritesQueryVariables; skip?: boolean; } | { skip: boolean; }) ) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<CheckAnnouncementInFavouritesQuery, CheckAnnouncementInFavouritesQueryVariables>(CheckAnnouncementInFavouritesDocument, options);
+      }
+export function useCheckAnnouncementInFavouritesLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<CheckAnnouncementInFavouritesQuery, CheckAnnouncementInFavouritesQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<CheckAnnouncementInFavouritesQuery, CheckAnnouncementInFavouritesQueryVariables>(CheckAnnouncementInFavouritesDocument, options);
+        }
+export function useCheckAnnouncementInFavouritesSuspenseQuery(baseOptions?: Apollo.SkipToken | Apollo.SuspenseQueryHookOptions<CheckAnnouncementInFavouritesQuery, CheckAnnouncementInFavouritesQueryVariables>) {
+          const options = baseOptions === Apollo.skipToken ? baseOptions : {...defaultOptions, ...baseOptions}
+          return Apollo.useSuspenseQuery<CheckAnnouncementInFavouritesQuery, CheckAnnouncementInFavouritesQueryVariables>(CheckAnnouncementInFavouritesDocument, options);
+        }
+export type CheckAnnouncementInFavouritesQueryHookResult = ReturnType<typeof useCheckAnnouncementInFavouritesQuery>;
+export type CheckAnnouncementInFavouritesLazyQueryHookResult = ReturnType<typeof useCheckAnnouncementInFavouritesLazyQuery>;
+export type CheckAnnouncementInFavouritesSuspenseQueryHookResult = ReturnType<typeof useCheckAnnouncementInFavouritesSuspenseQuery>;
+export type CheckAnnouncementInFavouritesQueryResult = Apollo.QueryResult<CheckAnnouncementInFavouritesQuery, CheckAnnouncementInFavouritesQueryVariables>;
 export const GetFavouritesByUserIdDocument = gql`
-    query GetFavouritesByUserId($userId: String!) {
-  getFavouritesByUserId(userId: $userId) {
+    query GetFavouritesByUserId {
+  getFavouritesByUserId {
     id
-    userID
-    announcementID
+    userId
+    name
+    price
+    description
+    placementDate
+    status
+    condition
+    categoryId
   }
 }
     `;
@@ -2150,11 +2248,10 @@ export const GetFavouritesByUserIdDocument = gql`
  * @example
  * const { data, loading, error } = useGetFavouritesByUserIdQuery({
  *   variables: {
- *      userId: // value for 'userId'
  *   },
  * });
  */
-export function useGetFavouritesByUserIdQuery(baseOptions: Apollo.QueryHookOptions<GetFavouritesByUserIdQuery, GetFavouritesByUserIdQueryVariables> & ({ variables: GetFavouritesByUserIdQueryVariables; skip?: boolean; } | { skip: boolean; }) ) {
+export function useGetFavouritesByUserIdQuery(baseOptions?: Apollo.QueryHookOptions<GetFavouritesByUserIdQuery, GetFavouritesByUserIdQueryVariables>) {
         const options = {...defaultOptions, ...baseOptions}
         return Apollo.useQuery<GetFavouritesByUserIdQuery, GetFavouritesByUserIdQueryVariables>(GetFavouritesByUserIdDocument, options);
       }

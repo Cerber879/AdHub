@@ -1,11 +1,11 @@
 import { useEffect, useRef, useState, useMemo } from 'react';
 import styles from './advertisementdata.module.css'
 import { Link, useParams } from 'react-router-dom';
-import { ROUTES } from '../../../../utils/routes';
-import { useFindCharacteristicsQuery, useFindParentCategoriesQuery, useFindUserQuery, useGetAnnouncementCharacteristicsQuery, useGetAnnouncementQuery, useGetPhotosByAnnouncementIdQuery } from '../../../../graphql/generated/output';
-import { parseAnnouncementCondition, parseAnnouncementStatus } from '../../../../utils/parse-types-ad';
+import { ROUTES } from '../../../utils/routes';
+import { useAddFavouriteMutation, useCheckAnnouncementInFavouritesQuery, useFindCharacteristicsQuery, useFindParentCategoriesQuery, useFindUserQuery, useGetAnnouncementCharacteristicsQuery, useGetAnnouncementQuery, useGetPhotosByAnnouncementIdQuery, useRemoveFavouriteMutation } from '../../../graphql/generated/output';
+import { parseAnnouncementCondition, parseAnnouncementStatus } from '../../../utils/parse-types-ad';
 
-const AdvertisementData = () => {
+const Advertisement = () => {
   const [currentImage, setCurrentImage] = useState(0);
   const imageDivRef = useRef<HTMLDivElement>(null);
 
@@ -20,21 +20,44 @@ const AdvertisementData = () => {
   const announcementCharacteristics = useMemo(() => announcementCharacteristicsData?.getAnnouncementCharacteristics || [], [announcementCharacteristicsData]);
 
   const { data: advertismentData } = useGetAnnouncementQuery({ variables: { id: adId || '' } });
-  const advertisment = advertismentData?.getAnnouncementById;
+  const advertisment = useMemo(() => advertismentData?.getAnnouncementById, [advertismentData])
 
   const { data: categoriesData } = useFindParentCategoriesQuery({ variables: { id: advertisment?.categoryId || '' } });
   const categories = categoriesData?.findParentCategories;
-  console.log(categories, "123")
+
   var categoryIdd:string = "";
   if (categories && categories.length > 0) {
     categoryIdd = categories[1]
   }
+
   const { data : characteristicsData } = useFindCharacteristicsQuery({ variables: { id: categoryIdd || '' } });
   const characteristics = useMemo(() => characteristicsData?.findCharacteristics || [], [characteristicsData]);
-  console.log(announcementCharacteristics)
-  console.log(characteristics)
+
   const { data: userData } = useFindUserQuery({ variables: { id: advertisment?.userId || '' } });
   const user = userData?.findUser;
+
+
+  const { data: checkData } = useCheckAnnouncementInFavouritesQuery({ variables: { adId: advertisment?.id || '' }})
+  const check = useMemo(() => checkData?.checkAnnouncementInFavourites, [checkData])
+
+  const [addFavourites] = useAddFavouriteMutation()
+  const [removeFavourites] = useRemoveFavouriteMutation()
+
+  const handleAddFavourites = (id: string) => {
+    addFavourites({ variables: { data: { announcementID: id }}})
+  }
+
+  const handleremoveFavourites = (id: string) => {
+    removeFavourites({ variables: { id: id }})
+  }
+
+  const handleFavourites = (id: string) => {
+    if (check) {
+      handleremoveFavourites(id)
+    } else {
+      handleAddFavourites(id)
+    }
+  }
 
   const handlePrevImage = () => {
     setCurrentImage((prevImage) => (prevImage - 1 + images?.length) % images?.length);
@@ -143,7 +166,7 @@ const AdvertisementData = () => {
         <div className={styles.info_block}>
           <div className={styles.header}>
             <p className={styles.price}>{advertisment?.price} ₽</p>
-            <img className={styles.heart_icon} src="/images/Advertisment/heart.svg" alt="heart" /> 
+            <img onClick={() => handleFavourites} className={styles.heart_icon} src={`${!check ? '/images/Advertisment/heart.svg' : '/images/Advertisment/heart_z.svg'}`} alt="heart" /> 
           </div>
           <Link className={styles.user_info}
             to={ROUTES.USER + '/' + advertisment?.userId}
@@ -169,4 +192,4 @@ const AdvertisementData = () => {
   )
 }
 
-export default AdvertisementData
+export default Advertisement

@@ -1,7 +1,13 @@
-query GetFavouritesByUserId($userId: String!) {
-  getFavouritesByUserId(userId: $userId) {
+query GetFavouritesByUserId {
+  getFavouritesByUserId {
     id
-    userID
-    announcementID
+    userId
+    name
+    price
+    description
+    placementDate
+    status
+    condition
+    categoryId
     }
   }

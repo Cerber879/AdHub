@@ -67,7 +67,6 @@ li:first-child {
     justify-content: space-between; 
     align-items: center; 
     transform: translateY(-50%); 
-    z-index: 10;
     padding: 0px 20px ;
 }
 
@@ -81,8 +80,7 @@ li:first-child {
     font-size: 2rem;
     padding: 10px;
     cursor: pointer;
-    z-index: 10;
-  }
+}
   
   .prev_button {
     left: 10px; 

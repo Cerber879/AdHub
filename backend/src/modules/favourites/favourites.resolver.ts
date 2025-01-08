@@ -8,11 +8,17 @@ import { Authorized } from '@/src/shared/decorators/authorized.decorator';
 import { User } from '@/prisma/generated';
 import { AddFavouriteInput } from './inputs/add-favourite.input';
 import { FavouritesModel } from './models/favourite.model';
+import { AnnouncementService } from '../announcement/announcement.service';
+import { AnnouncementModel } from '../announcement/models/announcement.model';
 
 
 @Resolver()
 export class FavouritesResolver {
-  constructor(private readonly favouritesService: FavouritesService) {}
+  constructor(
+    private readonly favouritesService: FavouritesService, 
+    private readonly annoncementService: AnnouncementService
+  ) {}
+
   @Authorization()
   @Mutation(() => Boolean, { name: 'addFavourite' })
     async addFavourite(
@@ -29,8 +35,21 @@ export class FavouritesResolver {
   ) {
     return this.favouritesService.delete(id, user);
   }
-  @Query(() => [FavouritesModel], { name: 'getFavouritesByUserId' })
-  async getFavouritesByUserId(@Args('userId') userId: string) {
-    return this.favouritesService.getFavouritesByUserId(userId);
+
+  @Authorization()
+  @Query(() => [AnnouncementModel], { name: 'getFavouritesByUserId' })
+  async getFavouritesByUserId(@Authorized() user: User) {
+    const favourites = await this.favouritesService.getFavouritesByUserId(user.id);
+    const announcementIds = favourites.map(fav => fav.announcementID);
+    return this.annoncementService.findByIds(announcementIds);
+  }
+
+  @Authorization()
+  @Query(() => Boolean, { name: 'checkAnnouncementInFavourites' })
+  async checkAnnouncementInFavourites(
+    @Authorized() user: User, 
+    @Args('adId') adId: string) 
+  {
+    return this.favouritesService.checkAnnouncementInFavourites(user.id, adId);
   }
 }

@@ -1,10 +1,10 @@
 import React from 'react';
-import SearchBar from '../../../SearchBar/SearchBar';
-import styles from './advertismenttop.module.css';
-import CatalogueModal from '../../../Catalogue/CatalogueModal';
+import SearchBar from '../SearchBar/SearchBar';
+import styles from './navigation.module.css';
+import CatalogueModal from '../Catalogue/CatalogueModal';
 
 import { useDispatch, useSelector } from 'react-redux';
-import { setShowCatalogueModal } from '../../../../store/slices/categorySlice';
+import { setShowCatalogueModal } from '../../store/slices/categorySlice';
 const AdvertisementTop: React.FC = () => {
   
   const dispatch = useDispatch();

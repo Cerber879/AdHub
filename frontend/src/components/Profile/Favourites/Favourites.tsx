@@ -1,23 +1,27 @@
-import React, { useState } from 'react'
+import React, { useMemo, useState } from 'react'
 
 import styles from './favourites.module.css'
 
 import PreviewBigAdvertisment from '../../Advertisement/PreviewAdvertisment/PreviewBlocks/PreviewBigAdvertisment/PreviewBigAdvertisment';
+import { useGetFavouritesByUserIdQuery } from '../../../graphql/generated/output';
 
 const Favourites = () => {
 
-    const [adsButton, setAdsButton] = useState(true);
-    const [profilesButton, setProfilesButton] = useState(false);
+  const [adsButton, setAdsButton] = useState(true);
+  const [profilesButton, setProfilesButton] = useState(false);
 
-    const handleAdsButton = () => {
-        setAdsButton(true)
-        setProfilesButton(false)
-      }
-    
-      const handleProfilesButton = () => {
-        setAdsButton(false)
-        setProfilesButton(true)
-      }
+  const handleAdsButton = () => {
+      setAdsButton(true)
+      setProfilesButton(false)
+    }
+  
+    const handleProfilesButton = () => {
+      setAdsButton(false)
+      setProfilesButton(true)
+    }
+
+  const { data: getFavouritesData } = useGetFavouritesByUserIdQuery({variables:{}})
+  const favourites = useMemo(() => getFavouritesData?.getFavouritesByUserId, [getFavouritesData])
 
   return (
     <div className={styles.container}>
@@ -35,6 +39,11 @@ const Favourites = () => {
             </button>
         </div>
         <div className={styles.ads}>
+          {favourites?.map((announcement) => {
+            return (
+              <PreviewBigAdvertisment input={announcement}/>
+            )
+          })}
         </div>
     </div>
   )

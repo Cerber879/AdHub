@@ -4,5 +4,6 @@ import { AnnouncementResolver } from './announcement.resolver';
 
 @Module({
   providers: [AnnouncementResolver, AnnouncementService],
+  exports: [AnnouncementService],
 })
 export class AnnouncementModule {}

@@ -7,6 +7,7 @@ import { Authorization } from '@/src/shared/decorators/auth.decorator';
 import { Authorized } from '@/src/shared/decorators/authorized.decorator';
 import { User } from '@/prisma/generated';
 import { AnnouncementFiltersInput } from './inputs/search-announcement.input';
+import { FavouritesModel } from '../favourites/models/favourite.model';
 
 @Resolver('Announcement')
 export class AnnouncementResolver {
@@ -37,6 +38,17 @@ export class AnnouncementResolver {
   @Query(() => AnnouncementModel, { name: 'getAnnouncementById' })
   async findById(@Args('id') id: string) {
     return this.announcementService.findById(id);
+  }
+
+  @Query(() => [AnnouncementModel], { name: 'getAnnouncementByIds' })
+  async findByIds(@Args('ids', { type: () => [String] }) data: string[]) {
+    return this.announcementService.findByIds(data);
+  }
+
+  @Authorization()
+  @Query(() => [AnnouncementModel], { name: 'getAnnouncementByProfile' })
+  async findByProfile(@Authorized() user: User) {
+    return this.announcementService.findByProfile(user);
   }
 
   @Query(() => AnnouncementModel, { name: 'getAnnouncementByName' })
