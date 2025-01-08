@@ -2,7 +2,7 @@ import React from 'react'
 import ProfileListBar from '../../../components/Profile/ListBar/ListBar'
 import Favourites from '../../../components/Profile/Favourites/Favourites'
 
-import styles from './favourites.module.css'
+import styles from '../profile.module.css'
 
 const FavouritesPage = () => {
   return (

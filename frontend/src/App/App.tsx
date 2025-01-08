@@ -8,13 +8,13 @@ import styles from './app.module.css';
 import Home from '../pages/Home/HomePage';
 import CreateAdvertisementPage from '../pages/CreateAdvertisement/CreateAdvertisementPage';
 import AboutUs from '../pages/AboutUs/AboutUs';
-import Profile from '../pages/Profile/ProfileMain/Profile';
-import Favourites from '../pages/Profile/FavouritesPage/Favourites';
+import Profile from '../pages/Profile/elements/Profile';
+import Favourites from '../pages/Profile/elements/Favourites';
 import AdvertismentPage from '../pages/AdvertismentPage/AdvertismentPage';
-import Chat from '../pages/Profile/ChatPage/Chat';
+import Chat from '../pages/Profile/elements/Chat';
 import NotFoundPage from '../pages/NotFoundPage/NotFoundPage';
 import Catalogue from '../pages/Catalogue/Catalogue';
-import Settings from '../pages/Profile/SettingsPage/Settings';
+import Settings from '../pages/Profile/elements/Settings';
 
 import { ROUTES } from '../utils/routes';
 import { Header } from '../components/Header/Header';

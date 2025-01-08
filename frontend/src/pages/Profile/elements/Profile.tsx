@@ -2,7 +2,7 @@ import React from 'react'
 import ProfileListBar from '../../../components/Profile/ListBar/ListBar'
 import ListAdvertisments from '../../../components/Profile/ListAdvertisments/ListAdvertisments'
 
-import styles from './profile.module.css'
+import styles from '../profile.module.css'
 
 const ProfileMain = () => {
   return (

@@ -8,6 +8,7 @@ import { Authorization } from '@/src/shared/decorators/auth.decorator';
 import { User } from '@/prisma/generated';
 import { ChangeEmailInput } from './inputs/change-email.input';
 import { ChangePasswordInput } from './inputs/change-password.input';
+import { ChangeDisplayNameInput } from './inputs/change-name.input';
 
 @Resolver('Account')
 export class AccountResolver {
@@ -27,6 +28,15 @@ export class AccountResolver {
   @Mutation(() => Boolean, { name: 'createUser' })
   public async createUser(@Args('data') input: CreateUserInput) {
     return this.accountService.create(input)
+  }
+
+  @Authorization()
+  @Mutation(() => Boolean, { name: 'changeDisplayName' })
+  public async changeDisplayName(
+	  @Authorized() user: User,
+	  @Args('data') input: ChangeDisplayNameInput
+  ) {
+	  return this.accountService.changeDisplayName(user, input)
   }
 
   @Authorization()

@@ -1,16 +1,17 @@
 import React from 'react'
+
 import ProfileListBar from '../../../components/Profile/ListBar/ListBar'
-import Settings from '../../../components/Profile/Settings/Settings'
+import ProfileMessenger from '../../../components/Profile/Messenger/Messenger'
 
-import styles from './settings.module.css'
+import styles from '../profile.module.css'
 
-const SettingsPage = () => {
+const Chat = () => {
   return (
     <div className={styles.container}>
         <ProfileListBar/>
-        <Settings />
+        <ProfileMessenger />
     </div>
   )
 }
 
-export default SettingsPage
+export default Chat

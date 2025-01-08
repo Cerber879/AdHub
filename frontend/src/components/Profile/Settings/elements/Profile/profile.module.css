@@ -1,0 +1,137 @@
+.container {
+    width: 1100px;
+    display: flex;
+    flex-direction: column;
+}
+
+.name {
+    font-size: 20px;
+    font-weight: 600;
+    padding-bottom: 8px;
+}
+
+.description {
+    color:#433f3f;
+    font-size: 15px;
+    padding-bottom: 15px;
+    font-weight: 400;
+    max-width: 80%;
+}
+
+.block {
+   padding: 13px;
+   margin-bottom: 20px;
+   width: 100%;
+   height: auto;
+   display: flex;
+   flex-direction: column; 
+   border: #d6d6d6 solid 1px;
+   background-color:#fbfafa;
+   border-radius: 10px;
+}
+
+.block_name {
+    font-size: 17px;
+    font-weight: 600;
+    padding-bottom: 12px;
+}
+
+.block_section_name {
+    font-size: 14px;
+    font-weight: 600;
+    padding-bottom: 5px;
+}
+
+.block_section_description {
+    color:#433f3f;
+    font-size: 14px;
+    font-weight: 400;
+}
+
+.avatar {
+    display: flex;
+    align-items: center;
+    padding: 5px;
+    gap: 20px;
+}
+
+.avatar_img {
+    width: 130px;
+    height: 130px;
+    border-radius: 50%;
+    object-fit: cover;
+    overflow: hidden;
+    margin-right: 10px;
+}
+
+.avatar_update {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.avatar_update_block {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+}
+
+.avatar_update_button {
+    padding: 10px 20px;
+    background-color: #e6e6e6;
+    border: none;
+    border-radius: 15px;
+    cursor: pointer;
+    font-weight: 500;
+}
+
+.avatar_update_button:hover {
+    background-color: #d6d6d6;
+}
+
+.avatar_update_button:active {
+    background-color: #bfbebe;
+}
+
+.icon {
+    width: 20px;
+    height: 20px;
+    cursor: pointer;
+    padding: 10px;
+    border-radius: 50%;
+}
+
+.icon:hover {
+    background-color: #e6e6e6;
+}
+
+.icon:active {
+    background-color: #bfbebe;
+}
+
+.block_section {
+    padding: 5px 0px 15px 5px;
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    border-bottom: solid 1px #d6d6d6;
+}
+
+.save_button {
+    align-self: flex-end;
+    padding: 10px 20px;
+    margin: 15px 0px 5px 0px;
+    width: 200px;
+    background-color: rgb(0, 123, 255 );
+    color: white;
+    border: none;
+    border-radius: 15px;
+    cursor: pointer;
+    font-weight: 500;
+}
+
+.bio {
+    min-width: 100%;
+    max-width: 100%;
+    min-height: 100px;
+}

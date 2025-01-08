@@ -68,6 +68,10 @@ type CategoryModel {
   parentId: String
 }
 
+input ChangeDisplayNameInput {
+  displayName: String!
+}
+
 input ChangeEmailInput {
   email: String!
 }
@@ -155,6 +159,7 @@ type Mutation {
   addAnnouncementCharacteristic(data: AddToAnnouncementMixedInput!): Boolean!
   addFavourite(data: AddFavouriteInput!): Boolean!
   addPhotoToAnnouncement(data: CreatePhotoInput!): Boolean!
+  changeDisplayName(data: ChangeDisplayNameInput!): Boolean!
   changeEmail(data: ChangeEmailInput!): Boolean!
   changePassword(data: ChangePasswordInput!): Boolean!
   changePhoneNumber(data: ChangePhoneNumberInput!): Boolean!

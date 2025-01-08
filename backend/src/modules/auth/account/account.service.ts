@@ -7,6 +7,7 @@ import { User } from '@/prisma/generated';
 import { ChangeEmailInput } from './inputs/change-email.input';
 import { ChangePasswordInput } from './inputs/change-password.input';
 import { ChangePhoneNumberInput } from './inputs/change-phone.input';
+import { ChangeDisplayNameInput } from './inputs/change-name.input';
 
 @Injectable()
 export class AccountService {
@@ -72,6 +73,21 @@ export class AccountService {
 				email: email,
 				phoneNumber: phoneNumber,
 				password: await hash(password),
+			}
+		})
+
+		return true
+	}
+
+	public async changeDisplayName(user: User, input: ChangeDisplayNameInput) {
+		const { displayName } = input
+
+		await this.prismaService.user.update({
+			where: {
+				id: user.id
+			},
+			data: {
+				displayName
 			}
 		})
 

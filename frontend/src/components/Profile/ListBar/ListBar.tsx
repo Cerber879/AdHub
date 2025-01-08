@@ -22,7 +22,6 @@ const ListBar = () => {
     dispatch(exit());
     logoutUser(); 
     refetch(); 
-    window.location.reload()
   };
 
   return (

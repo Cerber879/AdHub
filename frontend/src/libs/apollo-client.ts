@@ -1,13 +1,15 @@
-import { ApolloClient, InMemoryCache, createHttpLink } from '@apollo/client'
+import { ApolloClient, InMemoryCache } from '@apollo/client'
+import createUploadLink from 'apollo-upload-client/createUploadLink.mjs'
+
 
 import { SERVER_URL } from './constants/url.constants'
 
-const httpLink = createHttpLink({
-	uri: SERVER_URL,
-	credentials: 'include'
+const uploadLink = createUploadLink({
+  uri: SERVER_URL,
+  credentials: 'include'
 })
 
 export const client = new ApolloClient({
-	link: httpLink,
-	cache: new InMemoryCache()
+  link: uploadLink,  
+  cache: new InMemoryCache()
 })
