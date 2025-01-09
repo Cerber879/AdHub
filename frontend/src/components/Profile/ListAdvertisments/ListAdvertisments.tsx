@@ -9,7 +9,7 @@ import PreviewProfileAdvertisment from '../../Advertisement/PreviewAdvertisment/
 
 const ProfileListAdvertisments = () => {
 
-  const {data} = useGetAnnouncementByProfileQuery()
+  const { data } = useGetAnnouncementByProfileQuery()
   const ads = useMemo(() => data?.getAnnouncementByProfile || [], [data]);
 
   const [releaseButton, setReleaseButton] = useState(true);

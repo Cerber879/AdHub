@@ -43,7 +43,7 @@
   "scripts": {
     "lint": "eslint \"src/**/*.{ts,tsx}\" --fix",
     "format": "prettier --write \"src/**/*.{ts,tsx,css}\"",
-    "check": "npm run format && npm run lint",
+    "check": "npm run lint && npm run format",
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",

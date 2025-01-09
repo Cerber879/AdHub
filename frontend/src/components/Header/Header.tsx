@@ -14,8 +14,8 @@ export function Header() {
 
   const isAuthenticated = useSelector((state: any) => state.user.isAuthenticated)
     
-  const { data, refetch } = useFindProfileQuery();
-  const user = data?.findProfile;
+  const { data } = useFindProfileQuery();
+  const _user = data?.findProfile;
 
   const handleRegister = () => {
     setShowRegisterModal(true)
@@ -70,7 +70,7 @@ export function Header() {
                 
         <Link
           {...isAuthenticated 
-            ? {to: ROUTES.ADDITEM} 
+            ? { to: ROUTES.ADDITEM } 
             : { onClick: () => setShowLoginModal(true),
               to: ROUTES.HOME
             }}
@@ -82,7 +82,7 @@ export function Header() {
 
         <Link 
           {...isAuthenticated 
-            ? {to: ROUTES.MESSENGER} 
+            ? { to: ROUTES.MESSENGER } 
             : { onClick: () => setShowLoginModal(true),
               to: ROUTES.HOME
             }}
@@ -92,7 +92,7 @@ export function Header() {
 
         <Link 
           {...isAuthenticated 
-            ? {to: ROUTES.FAVOURITES} 
+            ? { to: ROUTES.FAVOURITES } 
             : { onClick: () => setShowLoginModal(true),
               to: ROUTES.HOME
             }}
@@ -102,7 +102,7 @@ export function Header() {
 
         <Link 
           {...isAuthenticated 
-            ? {to: ROUTES.PROFILE} 
+            ? { to: ROUTES.PROFILE } 
             : { onClick: () => setShowLoginModal(true),
               to: ROUTES.HOME
             }}

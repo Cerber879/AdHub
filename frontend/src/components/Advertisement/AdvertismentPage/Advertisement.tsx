@@ -11,12 +11,12 @@ const Advertisement = () => {
 
   const { adId } = useParams();
 
-  const { data: imagesData } = useGetPhotosByAnnouncementIdQuery({ variables: { id: adId || ''} }); 
+  const { data: imagesData } = useGetPhotosByAnnouncementIdQuery({ variables: { id: adId || '' } }); 
   const images = useMemo(() => imagesData?.getPhotosByAnnouncementId || [], [imagesData]);
 
 
 
-  const {data : announcementCharacteristicsData } = useGetAnnouncementCharacteristicsQuery({ variables: { id: adId || '' } });
+  const { data: announcementCharacteristicsData } = useGetAnnouncementCharacteristicsQuery({ variables: { id: adId || '' } });
   const announcementCharacteristics = useMemo(() => announcementCharacteristicsData?.getAnnouncementCharacteristics || [], [announcementCharacteristicsData]);
 
   const { data: advertismentData } = useGetAnnouncementQuery({ variables: { id: adId || '' } });
@@ -30,25 +30,25 @@ const Advertisement = () => {
     categoryIdd = categories[1]
   }
 
-  const { data : characteristicsData } = useFindCharacteristicsQuery({ variables: { id: categoryIdd || '' } });
+  const { data: characteristicsData } = useFindCharacteristicsQuery({ variables: { id: categoryIdd || '' } });
   const characteristics = useMemo(() => characteristicsData?.findCharacteristics || [], [characteristicsData]);
 
   const { data: userData } = useFindUserQuery({ variables: { id: advertisment?.userId || '' } });
   const user = userData?.findUser;
 
 
-  const { data: checkData } = useCheckAnnouncementInFavouritesQuery({ variables: { adId: advertisment?.id || '' }})
+  const { data: checkData } = useCheckAnnouncementInFavouritesQuery({ variables: { adId: advertisment?.id || '' } })
   const check = useMemo(() => checkData?.checkAnnouncementInFavourites, [checkData])
 
   const [addFavourites] = useAddFavouriteMutation()
   const [removeFavourites] = useRemoveFavouriteMutation()
 
   const handleAddFavourites = (id: string) => {
-    addFavourites({ variables: { data: { announcementID: id }}})
+    addFavourites({ variables: { data: { announcementID: id } } })
   }
 
   const handleremoveFavourites = (id: string) => {
-    removeFavourites({ variables: { id: id }})
+    removeFavourites({ variables: { id: id } })
   }
 
   const handleFavourites = (id: string) => {

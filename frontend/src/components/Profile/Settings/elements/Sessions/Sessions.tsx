@@ -15,7 +15,7 @@ const Sessions = () => {
   const [remove] = useRemoveSessionMutation()
 
   const RemoveSession = (id: string) => {
-    remove({ variables: { id: id }})
+    remove({ variables: { id: id } })
   }
 
   const getBrowserIconUrl = (browserName: string | undefined): string => {

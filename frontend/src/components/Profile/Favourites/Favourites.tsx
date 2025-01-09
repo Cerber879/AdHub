@@ -20,7 +20,7 @@ const Favourites = () => {
     setProfilesButton(true)
   }
 
-  const { data: getFavouritesData } = useGetFavouritesByUserIdQuery({variables:{}})
+  const { data: getFavouritesData } = useGetFavouritesByUserIdQuery({ variables: {} })
   const favourites = useMemo(() => getFavouritesData?.getFavouritesByUserId, [getFavouritesData])
 
   return (
