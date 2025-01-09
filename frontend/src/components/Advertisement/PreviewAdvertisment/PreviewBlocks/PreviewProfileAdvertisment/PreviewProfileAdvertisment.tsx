@@ -1,3 +1,5 @@
+import React from 'react'
+
 import { Link } from 'react-router-dom'
 import { ROUTES } from '../../../../../utils/routes'
 
@@ -18,7 +20,7 @@ const PreviewProfileAdvertisment: React.FC<PreviewSmallAdvertismentProps> = ({ i
       to={ROUTES.ITEMS + '/' + input.name + '/' + input.id} 
       className={styles.container}
     >
-      <PhotosBlock useStylesProfile={true} input={input}  />
+      <PhotosBlock useStylesProfile={true} input={input} />
       <DataAdvertisment input={input} />
     </Link>
   )

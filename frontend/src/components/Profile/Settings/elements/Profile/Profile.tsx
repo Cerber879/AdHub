@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 
 import styles from './profile.module.css'
 
@@ -7,11 +7,6 @@ import SocialLinks from './SocialLinks/SocialLinks';
 
 interface ProfileProps {
   input: FindProfileQuery['findProfile']
-}
-
-interface SocialLink {
-  name: string;
-  url: string;
 }
 
 const Profile = ({ input }: ProfileProps) => {
@@ -77,31 +72,6 @@ const Profile = ({ input }: ProfileProps) => {
     fileInput.click();
   };
 
-  const [socialName, setSocialName] = useState<string>('');
-  const [socialUrl, setSocialUrl] = useState<string>('');
-  const [socialLinks, setSocialLinks] = useState<SocialLink[]>([]); // указываем тип массива
-  
-  const handleAddSocial = () => {
-    const urlPattern = /^(https?:\/\/)?([a-zA-Z0-9-]+\.)+[a-zA-Z0-9]{2,}(\/[^\s]*)?$/;
-    if (!urlPattern.test(socialUrl)) {
-      alert('Введите правильный URL!');
-      return;
-    }
-  
-    if (!socialName || !socialUrl) {
-      alert('Заполните все поля!');
-      return;
-    }
-  
-    const newLink: SocialLink = { name: socialName, url: socialUrl }; // типизация объекта
-    setSocialLinks([...socialLinks, newLink]);
-  
-    // Очистка полей
-    setSocialName('');
-    setSocialUrl('');
-  };
-  
-
   return (
     <div className={styles.container}>
       <span className={styles.name}>Профиль</span>
@@ -114,10 +84,14 @@ const Profile = ({ input }: ProfileProps) => {
             <div className={styles.avatar_update_block}>
               <button onClick={triggerFileInput} className={styles.avatar_update_button}>Загрузить изображение</button>
               { input?.avatar !== avatarPreview &&
-                            <>
-                              <div className={styles.icon} onClick={handleSaveAvatar}><img src="/images/Profile/check.svg" alt="check" /></div>
-                              <div className={styles.icon} onClick={handleDeleteAvatar}><img src="/images/Profile/trash.svg" alt="trash" /></div>
-                            </>
+                <>
+                  <div className={styles.icon} onClick={handleSaveAvatar}>
+                    <img src="/images/Profile/check.svg" alt="check" />
+                  </div>
+                  <div className={styles.icon} onClick={handleDeleteAvatar}>
+                    <img src="/images/Profile/trash.svg" alt="trash" />
+                  </div>
+                </>
               }  
             </div>
             <span className={styles.block_section_description}>Поддерживаемые форматы: jpg, png, jpeg, webp и gif. Макс. размер: 10 Мб</span>

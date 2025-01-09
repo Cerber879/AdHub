@@ -1,3 +1,5 @@
+import React from 'react'
+
 import { Link } from 'react-router-dom'
 import { ROUTES } from '../../../../../utils/routes'
 
@@ -18,7 +20,7 @@ const PreviewSmallAdvertisment: React.FC<PreviewSmallAdvertismentProps> = ({ inp
       to={ROUTES.ITEMS + '/' + input.name + '/' + input.id} 
       className={styles.container}
     >
-      <PhotosBlock useStylesProfile={false} input={input}  />
+      <PhotosBlock useStylesProfile={false} input={input} />
       <DataAdvertisment input={input} />
       <div className={styles.gradient}></div>
     </Link>

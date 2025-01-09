@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from 'react';
+import { useState } from 'react';
 import { useDrag, useDrop } from 'react-dnd';
 import { DndProvider } from 'react-dnd';
 import { HTML5Backend } from 'react-dnd-html5-backend';
@@ -128,13 +128,6 @@ const LinkItem = ({ link, index, moveLink, updateLink, deleteLink }: LinkItemPro
     }),
   });
 
-  useEffect(() => {
-    if (isDragging) {
-      const emptyPreview = document.createElement('div');
-      preview(emptyPreview);
-    }
-  }, [isDragging, preview]);
-
   const [, drop] = useDrop({
     accept: 'link',
     hover: (item: { id: string; index: number }) => {
@@ -197,7 +190,7 @@ const LinkItem = ({ link, index, moveLink, updateLink, deleteLink }: LinkItemPro
           )}
         </div>
       </div>
-      <div className={styles.edit} style={isEditing ? {justifyContent: "space-between"} : {justifyContent: "end"}}>
+      <div className={styles.edit} style={isEditing ? { justifyContent: "space-between" } : { justifyContent: "end" }}>
         {isEditing && (
           <div className={styles.editButtons}>
             <button onClick={handleCancel} className={styles.cancelButton}>

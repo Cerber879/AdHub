@@ -10,18 +10,18 @@ interface PreviewSmallAdvertismentProps {
 
 const DataAdvertisment = ({ input }: PreviewSmallAdvertismentProps) => {
 
-  const { data } = useCheckAnnouncementInFavouritesQuery({ variables: { adId: input.id }})
+  const { data } = useCheckAnnouncementInFavouritesQuery({ variables: { adId: input.id } })
   const check = useMemo(() => data?.checkAnnouncementInFavourites, [data])
 
   const [addFavourites] = useAddFavouriteMutation()
   const [removeFavourites] = useRemoveFavouriteMutation()
 
   const handleAddFavourites = (id: string) => {
-    addFavourites({ variables: { data: { announcementID: id }}})
+    addFavourites({ variables: { data: { announcementID: id } } })
   }
 
   const handleremoveFavourites = (id: string) => {
-    removeFavourites({ variables: { id: id }})
+    removeFavourites({ variables: { id: id } })
   }
 
   const handleFavourites = (id: string) => {

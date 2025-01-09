@@ -1,4 +1,4 @@
-import React, {  } from 'react';
+import React, { } from 'react';
 
 import styles from './catalogue.module.css'; 
 import ListCategories from './CatalogueListCategories/ListCategories';

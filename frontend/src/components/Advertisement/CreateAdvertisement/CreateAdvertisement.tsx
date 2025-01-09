@@ -53,23 +53,23 @@ const CreateAdvertisement: React.FC = () => {
         />
       </div>
       <div className={styles.input__file_row}>
-		      <label className={styles.input__file}>
-		   	    <input 
+        <label className={styles.input__file}>
+          <input 
             type="file" 
             name="file[]" 
             multiple accept="image/*"
             onChange={handleFileChange}
             ref={inputRef}
           />		
-		   	    <span>Выберите файл</span>
- 		      </label>
-		      <div className={styles.input__file_list}>
+          <span>Выберите файл</span>
+        </label>
+        <div className={styles.input__file_list}>
           {files.map(file => (
             <div key={file.name} className={styles.input__file_list_item}>
               <img className={styles.input__file_list_item_img} src={URL.createObjectURL(file)} alt={file.name} />
               <a href="###" onClick={() => removeFilesItem(file.name)} className={styles.input__file_list_remove}>x</a>
-            </div> ))} 
-	        </div>
+            </div>))} 
+        </div>
       </div>
       <div>
         <label className="text-field__label" htmlFor="item__description">Описание</label>
