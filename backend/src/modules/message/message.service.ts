@@ -32,19 +32,19 @@ export class MessageService {
   }
 
   async findOne(id: string) {
-    const message = await this.prismaService.message.findUnique({ where : {id}});
+    const messagef = await this.prismaService.message.findUnique({ where : {id}});
 
-    if (!message) {
+    if (!messagef) {
       throw new NotFoundException('Сообщение не найдено');
     }
 
-    return message;
+    return messagef;
   }
 
   async remove(id: string) {
-    const message = await this.prismaService.message.delete({ where : {id}});
+    const messagef = await this.prismaService.message.delete({ where : {id}});
 
-    if (!message) {
+    if (!messagef) {
       throw new NotFoundException('Сообщение не найдено');
     }
 

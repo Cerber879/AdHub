@@ -16,6 +16,7 @@ import { PhotoModule } from '../modules/photo/photo.module';
 import { CategoryModule } from '../modules/category/category/category.module';
 import { ChatModule } from '../modules/chat/chat.module';
 import { MessageModule } from '../modules/message/message.module';
+import { ChatMembersModule } from '../modules/chat-members/chat-members.module';
 
 @Module({
   imports: [
@@ -38,7 +39,8 @@ import { MessageModule } from '../modules/message/message.module';
 		CategoryModule,
 		PhotoModule,
 		ChatModule,
-		MessageModule
+		MessageModule,
+		ChatMembersModule
   ],
 })
 export class CoreModule {}

@@ -6,13 +6,13 @@ import { User } from '@/prisma/generated';
 import { Authorization } from '@/src/shared/decorators/auth.decorator';
 import { Authorized } from '@/src/shared/decorators/authorized.decorator';
 
-@Resolver(() => MessageModel)
+@Resolver()
 export class MessageResolver {
   constructor(private readonly messageService: MessageService) {}
 
   @Authorization()
   @Mutation(() => Boolean, {name: 'CreatMessage'})
-  async createMessage(
+  public async createMessage(
     @Authorized() user : User,
     @Args('data') createMessageInput: CreateMessageInput
   ) {
@@ -20,14 +20,12 @@ export class MessageResolver {
   }
 
   @Query(() => MessageModel, { name: 'FindUniqMessage' })
-  async findOne(
-    @Args('id') id: string
-  ) {
+  public async findOne(@Args('id') id: string) {
     return this.messageService.findOne(id);
   }
 
   @Mutation(() => Boolean, {name: 'DeleteMessage'})
-  removeMessage(@Args('id') id: string) {
+  public async removeMessage(@Args('id') id: string) {
     return this.messageService.remove(id);
   }
 }

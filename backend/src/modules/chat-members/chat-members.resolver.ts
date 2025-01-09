@@ -2,7 +2,6 @@ import { Resolver, Query, Mutation, Args, Int } from '@nestjs/graphql';
 import { ChatMembersService } from './chat-members.service';
 import { ChatMemberModel } from './entities/chat-member.entity';
 import { CreateChatMemberInput } from './dto/create-chat-member.input';
-import { UpdateChatMemberInput } from './dto/update-chat-member.input';
 // 8. **ChatMembers**
 //    ++ **Add Member** - Добавить участников в чат.
 //    ++ **Get Chats By User ID** - Получить список чатов юзера.
@@ -12,17 +11,17 @@ export class ChatMembersResolver {
   constructor(private readonly chatMembersService: ChatMembersService) {}
 
   @Mutation(() => Boolean)
-  AddMember(@Args('createChatMemberInput') createChatMemberInput: CreateChatMemberInput) {
+  AddMember(@Args('data') createChatMemberInput: CreateChatMemberInput) {
     return this.chatMembersService.create(createChatMemberInput);
   }
 
-  @Query(() => [ChatMemberModel], { name: 'chatMembers' })
-  GetChatsByUserID() {
-    return this.chatMembersService.findAll();
+  @Query(() => [ChatMemberModel], { name: 'getChatsByUserId' })
+  GetChatsByUserID(@Args('userID', { type: () => String }) userID: string) {
+    return this.chatMembersService.findAllByUserId(userID);
   }
 
-  @Query(() => [ChatMemberModel], { name: 'chatMember' })
-  GetMembersByChatID(@Args('id', { type: () => Int }) id: number) {
-    return this.chatMembersService.findOne(id);
+  @Query(() => [ChatMemberModel], { name: 'getMembersByChatId' })
+  asyncGetMembersByChatID(@Args('chatID', { type: () => String }) chatID: string) {
+    return this.chatMembersService.findAllByChatId(chatID);
   }
 }

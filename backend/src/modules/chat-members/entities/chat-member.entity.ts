@@ -1,7 +1,8 @@
+import { ChatMembers } from '@/prisma/generated';
 import { ObjectType, Field, Int } from '@nestjs/graphql';
 
 @ObjectType()
-export class ChatMemberModel {
+export class ChatMemberModel implements ChatMembers {
   @Field(() => String)
   public id: string;
   @Field(() => String)

@@ -60,9 +60,10 @@ input ChangePhoneNumberInput {
   phoneNumber: String!
 }
 
-type Chat {
-  """Example field (placeholder)"""
-  exampleField: Int!
+type ChatMemberModel {
+  chatID: String!
+  id: String!
+  userID: String!
 }
 
 input CreateAnnouncementInput {
@@ -80,8 +81,9 @@ input CreateCategoryInput {
   parentId: String
 }
 
-input CreateChatInput {
-  messages: [String!]!
+input CreateChatMemberInput {
+  chatID: String!
+  userID: String!
 }
 
 input CreateMessageInput {
@@ -140,6 +142,7 @@ type MessageModel {
 }
 
 type Mutation {
+  AddMember(data: CreateChatMemberInput!): Boolean!
   CreatMessage(data: CreateMessageInput!): Boolean!
   DeleteMessage(id: String!): Boolean!
   addPhotoToAnnouncement(data: CreatePhotoInput!): Boolean!
@@ -150,19 +153,18 @@ type Mutation {
   clearSessionCookie: Boolean!
   createAnnouncement(data: CreateAnnouncementInput!): Boolean!
   createCategory(data: CreateCategoryInput!): Boolean!
-  createChat(createChatInput: CreateChatInput!): Chat!
+  createChat: Boolean!
   createUser(data: CreateUserInput!): Boolean!
   deleteAnnouncement(id: String!): Boolean!
   deleteCategory(id: String!): Boolean!
   deletePhoto(id: String!): Boolean!
   loginUser(data: LoginInput!): UserModel!
   logoutUser: Boolean!
-  removeChat(id: Int!): Chat!
+  removeChat(id: String!): Boolean!
   removeProfileAvatar: Boolean!
   removeSession(id: String!): Boolean!
   updateAnnouncement(data: UpdateAnnouncementMixedInput!): Boolean!
   updateCategory(data: UpdateCategoryMixedInput!): Boolean!
-  updateChat(updateChatInput: UpdateChatInput!): Chat!
   updatePhotos(deletePhotoIds: [String!]!, newPhotos: [CreatePhotoInput!]!): Boolean!
 }
 
@@ -183,7 +185,6 @@ enum ProductCondition {
 
 type Query {
   FindUniqMessage(id: String!): MessageModel!
-  chat(id: Int!): Chat!
   findAllAnnouncements: [AnnouncementModel!]!
   findAnnouncementsByFilters(data: AnnouncementFiltersInput!): [AnnouncementModel!]!
   findCurrentSession: SessionModel!
@@ -196,7 +197,9 @@ type Query {
   getAnnouncementByName(name: String!): AnnouncementModel!
   getAnnouncementsByCategory(id: String!): [AnnouncementModel!]!
   getCategoryById(id: String!): CategoryModel!
+  getChatsByUserId(userID: String!): [ChatMemberModel!]!
   getMainCategories: [CategoryModel!]!
+  getMembersByChatId(chatID: String!): [ChatMemberModel!]!
   getPhotosByAnnouncementID(id: String!): [PhotoModel!]!
   getSubcategories(id: String!): [CategoryModel!]!
 }
@@ -242,11 +245,6 @@ input UpdateCategoryInput {
 input UpdateCategoryMixedInput {
   id: String!
   input: UpdateCategoryInput!
-}
-
-input UpdateChatInput {
-  id: Int!
-  messages: [String!]
 }
 
 """The `Upload` scalar type represents a file upload."""

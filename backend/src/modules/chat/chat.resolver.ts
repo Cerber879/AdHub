@@ -1,18 +1,18 @@
 import { Resolver, Query, Mutation, Args, Int } from '@nestjs/graphql';
 import { ChatService } from './chat.service';
-import { CreateChatInput } from './dto/create-chat.input';
+//import { CreateChatInput } from './dto/create-chat.input';
 
 @Resolver()
 export class ChatResolver {
   constructor(private readonly chatService: ChatService) {}
 
   @Mutation(() => Boolean)
-  createChat(@Args('createChatInput') createChatInput: CreateChatInput) {
-    return this.chatService.create(createChatInput);
+  async createChat() : Promise<boolean> {
+    return this.chatService.create();
   }
 
   @Mutation(() => Boolean)
-  removeChat(@Args('id', { type: () => Int }) id: number) {
+  async removeChat(@Args('id', { type: () => String }) id: string) : Promise<boolean> {
     return this.chatService.remove(id);
   }
 }

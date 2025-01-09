@@ -1,26 +1,45 @@
 import { Injectable } from '@nestjs/common';
 import { CreateChatMemberInput } from './dto/create-chat-member.input';
-import { UpdateChatMemberInput } from './dto/update-chat-member.input';
+import { PrismaService } from '@/src/core/prisma/prisma.service';
+import { ChatMemberModel } from './entities/chat-member.entity';
 
 @Injectable()
 export class ChatMembersService {
-  create(createChatMemberInput: CreateChatMemberInput) {
-    return 'This action adds a new chatMember';
+  constructor(private readonly prismaService: PrismaService) {}
+  
+  async create(createChatMemberInput: CreateChatMemberInput): Promise<boolean> {
+    const { chatID, userID } = createChatMemberInput;
+    await this.prismaService.chatMembers.create({
+      data: {
+        chat: {
+          connect: {
+            id: chatID,
+          },
+        },
+        user: {
+          connect: {
+            id: userID,
+          },
+        },
+      },
+    });
+    return true;
   }
 
-  findAll() {
-    return `This action returns all chatMembers`;
+  async findAllByUserId(userID: string): Promise<ChatMemberModel[]> {
+    return this.prismaService.chatMembers.findMany({
+      where: {
+        userID,
+      },
+    });
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} chatMember`;
+  async findAllByChatId(chatID: string): Promise<ChatMemberModel[]> {
+    return this.prismaService.chatMembers.findMany({
+      where: {
+        chatID,
+      },
+    });
   }
 
-  update(id: number, updateChatMemberInput: UpdateChatMemberInput) {
-    return `This action updates a #${id} chatMember`;
-  }
-
-  remove(id: number) {
-    return `This action removes a #${id} chatMember`;
-  }
 }
