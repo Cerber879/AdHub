@@ -1,66 +1,67 @@
 .image_block {
-    width: 200px;
-    height: 170px;
-    display: flex;
-    justify-content: center;
+  width: 200px;
+  height: 170px;
+  display: flex;
+  justify-content: center;
 }
-  
+
 .image_block img {
-    max-width: 100%;
-    border-radius: 8px;
-    width: 200px;
-    height: 170px;
-    object-fit: cover; 
-    object-position: center; 
-    transition: transform 0.3s ease-in-out; 
+  max-width: 100%;
+  border-radius: 8px;
+  width: 200px;
+  height: 170px;
+  object-fit: cover;
+  object-position: center;
+  transition: transform 0.3s ease-in-out;
 }
 
 .thumbnails {
-    width: 190px;
-    height: 176px;
-    padding-right: 20px;
-    position: absolute;
-    justify-content: center;
-    align-items: flex-end;
-    display: flex;
-    gap: 0px;
-}
-  
-.thumbnail {
-    border-radius: 4px;
-    width: 5px;
-    height: 3px;
-    background-color: #777;
-    transition: opacity 0.3s, transform 0.3s ease-in-out; 
-}
-  
-.thumbnail.active {
-    background-color: rgb(0, 123, 255);
-    transform: scale(1.4); 
-    width: 8px;
-    transition: all 0.2s ease;
+  width: 190px;
+  height: 176px;
+  padding-right: 20px;
+  position: absolute;
+  justify-content: center;
+  align-items: flex-end;
+  display: flex;
+  gap: 0px;
 }
 
+.thumbnail {
+  border-radius: 4px;
+  width: 5px;
+  height: 3px;
+  background-color: #777;
+  transition:
+    opacity 0.3s,
+    transform 0.3s ease-in-out;
+}
+
+.thumbnail.active {
+  background-color: rgb(0, 123, 255);
+  transform: scale(1.4);
+  width: 8px;
+  transition: all 0.2s ease;
+}
 
 .overlay {
-    position: absolute;
-    width: 200px;
-    height: 170px;
-    background-color: #555;
-    opacity: 0.4;
-    border-radius: 8px;
+  position: absolute;
+  width: 200px;
+  height: 170px;
+  background-color: #555;
+  opacity: 0.4;
+  border-radius: 8px;
 }
 
 .last_photo_text {
-    position: absolute;
-    display: flex;
-    flex-direction: column;
-    width: 200px;
-    height: 170px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    color: white;
-    font-size: 20px;
-    font-weight: 500;
+  position: absolute;
+  display: flex;
+  flex-direction: column;
+  width: 200px;
+  height: 170px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: white;
+  font-size: 20px;
+  font-weight: 500;
 }

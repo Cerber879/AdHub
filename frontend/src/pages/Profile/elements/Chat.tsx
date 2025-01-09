@@ -8,8 +8,8 @@ import styles from '../profile.module.css'
 const Chat = () => {
   return (
     <div className={styles.container}>
-        <ProfileListBar/>
-        <ProfileMessenger />
+      <ProfileListBar/>
+      <ProfileMessenger />
     </div>
   )
 }

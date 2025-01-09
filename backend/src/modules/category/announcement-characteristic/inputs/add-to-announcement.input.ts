@@ -1,12 +1,18 @@
-import { Field, Float, InputType } from "@nestjs/graphql";
-import { IsNotEmpty, IsNumber, IsPositive, IsString, MaxLength } from "class-validator";
+import { Field, Float, InputType } from '@nestjs/graphql'
+import {
+  IsNotEmpty,
+  IsNumber,
+  IsPositive,
+  IsString,
+  MaxLength
+} from 'class-validator'
 
 @InputType()
 export class AddToAnnouncementInput {
   @Field(() => String)
   @IsNotEmpty()
   @MaxLength(100)
-  public value: string;
+  public value: string
 
   @Field(() => String)
   @IsString()
@@ -17,7 +23,7 @@ export class AddToAnnouncementInput {
 @InputType()
 export class AddToAnnouncementMixedInput {
   @Field(() => String)
-  public id: string;
+  public id: string
 
   @Field(() => AddToAnnouncementInput)
   public input: AddToAnnouncementInput

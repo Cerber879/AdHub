@@ -1,15 +1,15 @@
-import type { Favourites } from "@/prisma/generated";
-import { ObjectType, Field, ID } from "@nestjs/graphql";
+import { Field, ID, ObjectType } from '@nestjs/graphql'
+
+import type { Favourites } from '@/prisma/generated'
 
 @ObjectType()
 export class FavouritesModel implements Favourites {
   @Field(() => ID)
-  id: string;
+  id: string
 
   @Field(() => String)
-  userID: string;
+  userID: string
 
   @Field(() => String, { nullable: true })
-  announcementID: string;
-
+  announcementID: string
 }

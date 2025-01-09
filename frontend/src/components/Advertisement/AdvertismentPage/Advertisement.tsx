@@ -25,7 +25,7 @@ const Advertisement = () => {
   const { data: categoriesData } = useFindParentCategoriesQuery({ variables: { id: advertisment?.categoryId || '' } });
   const categories = categoriesData?.findParentCategories;
 
-  var categoryIdd:string = "";
+  let categoryIdd = "";
   if (categories && categories.length > 0) {
     categoryIdd = categories[1]
   }

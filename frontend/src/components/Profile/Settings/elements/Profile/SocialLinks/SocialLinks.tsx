@@ -57,49 +57,49 @@ const SocialLinks = () => {
 
   return (
     <DndProvider backend={HTML5Backend}>
-    <div className={styles.block}>
-      <span className={styles.block_name}>Изменить ссылки на соцсети</span>
+      <div className={styles.block}>
+        <span className={styles.block_name}>Изменить ссылки на соцсети</span>
 
-      <div className={styles.block_section}>
-        <span className={styles.block_section_name}>Название</span>
-        <input
-          onChange={(event) => setName(event.target.value)}
-          value={name}
-          type="text"
-          className={styles.avatar_update_input}
-        />
-        <span className={styles.block_section_description}>Текст ссылки</span>
-      </div>
-
-      <div className={styles.block_section}>
-        <span className={styles.block_section_name}>URL ссылки</span>
-        <input
-          onChange={(event) => setUrl(event.target.value)}
-          value={url}
-          type="text"
-          className={styles.avatar_update_input}
-        />
-        <span className={styles.block_section_description}>Куда ведет эта ссылка? Введите полный адрес, например: https://google.com</span>
-      </div>
-
-      <button onClick={handleAddLink} className={styles.save_button}>
-        Добавить ссылку
-      </button>
-
-      <div className={styles.linksContainer}>
-        {links.length === 0 && <span className={styles.no_links}>Ссылок нет</span>}
-        {links.map((link, index) => (
-          <LinkItem
-            key={link.id}
-            link={link}
-            index={index}
-            moveLink={moveLink}
-            updateLink={updateLink}
-            deleteLink={deleteLink}
+        <div className={styles.block_section}>
+          <span className={styles.block_section_name}>Название</span>
+          <input
+            onChange={(event) => setName(event.target.value)}
+            value={name}
+            type="text"
+            className={styles.avatar_update_input}
           />
-        ))}
+          <span className={styles.block_section_description}>Текст ссылки</span>
+        </div>
+
+        <div className={styles.block_section}>
+          <span className={styles.block_section_name}>URL ссылки</span>
+          <input
+            onChange={(event) => setUrl(event.target.value)}
+            value={url}
+            type="text"
+            className={styles.avatar_update_input}
+          />
+          <span className={styles.block_section_description}>Куда ведет эта ссылка? Введите полный адрес, например: https://google.com</span>
+        </div>
+
+        <button onClick={handleAddLink} className={styles.save_button}>
+        Добавить ссылку
+        </button>
+
+        <div className={styles.linksContainer}>
+          {links.length === 0 && <span className={styles.no_links}>Ссылок нет</span>}
+          {links.map((link, index) => (
+            <LinkItem
+              key={link.id}
+              link={link}
+              index={index}
+              moveLink={moveLink}
+              updateLink={updateLink}
+              deleteLink={deleteLink}
+            />
+          ))}
+        </div>
       </div>
-    </div>
     </DndProvider>
 
   );
@@ -167,52 +167,52 @@ const LinkItem = ({ link, index, moveLink, updateLink, deleteLink }: LinkItemPro
     >
       <div className={styles.link}>
         <div className={styles.target}>
-            <img className={styles.targetIcon} src="/images/Profile/drag.svg" alt="target" />
+          <img className={styles.targetIcon} src="/images/Profile/drag.svg" alt="target" />
         </div>
         <div className={styles.linkContent}>
-            {isEditing ? (
+          {isEditing ? (
             <div className={styles.editContainer}>
-                <input
-                    type="text"
-                    value={newName}
-                    onChange={(e) => setNewName(e.target.value)}
-                    className={styles.editInput}
-                    placeholder="Название"
-                />
-                <input
-                    type="url"
-                    value={newUrl}
-                    onChange={(e) => setNewUrl(e.target.value)}
-                    className={styles.editInput}
-                    placeholder="Ссылка"
-                />
+              <input
+                type="text"
+                value={newName}
+                onChange={(e) => setNewName(e.target.value)}
+                className={styles.editInput}
+                placeholder="Название"
+              />
+              <input
+                type="url"
+                value={newUrl}
+                onChange={(e) => setNewUrl(e.target.value)}
+                className={styles.editInput}
+                placeholder="Ссылка"
+              />
             </div>
-            ) : (
+          ) : (
             <div className={styles.linkInfo}>
-                <span className={styles.linkName}>{link.name}</span>
-                <a href={link.url} target="_blank" rel="noopener noreferrer" className={styles.linkUrl}>
+              <span className={styles.linkName}>{link.name}</span>
+              <a href={link.url} target="_blank" rel="noopener noreferrer" className={styles.linkUrl}>
                 {link.url}
-                </a>
+              </a>
             </div>
-            )}
+          )}
         </div>
       </div>
-        <div className={styles.edit} style={isEditing ? {justifyContent: "space-between"} : {justifyContent: "end"}}>
-            {isEditing && (
-            <div className={styles.editButtons}>
-                <button onClick={handleCancel} className={styles.cancelButton}>
+      <div className={styles.edit} style={isEditing ? {justifyContent: "space-between"} : {justifyContent: "end"}}>
+        {isEditing && (
+          <div className={styles.editButtons}>
+            <button onClick={handleCancel} className={styles.cancelButton}>
                 Отмена
-                </button>
-                <button onClick={handleSave} disabled={!hasChanges} className={`${styles.saveButton} ${!hasChanges ? styles.saveButtonDisabled : ''}`}>
+            </button>
+            <button onClick={handleSave} disabled={!hasChanges} className={`${styles.saveButton} ${!hasChanges ? styles.saveButtonDisabled : ''}`}>
                 Сохранить
-                </button>
-            </div>
-            )}
-            <div className={styles.linkActions}>
-                {!isEditing && <button onClick={() => setIsEditing(true)} className={styles.edit_button}><img src="/images/Profile/pencil.svg" alt="edit" /></button>}
-                <button onClick={handleDelete} className={styles.edit_button}><img src="/images/Profile/trash_2.svg" alt="trash_2" /></button>
-            </div>
+            </button>
+          </div>
+        )}
+        <div className={styles.linkActions}>
+          {!isEditing && <button onClick={() => setIsEditing(true)} className={styles.edit_button}><img src="/images/Profile/pencil.svg" alt="edit" /></button>}
+          <button onClick={handleDelete} className={styles.edit_button}><img src="/images/Profile/trash_2.svg" alt="trash_2" /></button>
         </div>
+      </div>
     </div>
   );
 };

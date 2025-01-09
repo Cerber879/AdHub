@@ -6,5 +6,5 @@ import type { PropsWithChildren } from 'react'
 import { client } from '../libs/apollo-client'
 
 export function ApolloClientProvider({ children }: PropsWithChildren<unknown>) {
-	return <ApolloProvider client={client}>{children}</ApolloProvider>
+  return <ApolloProvider client={client}>{children}</ApolloProvider>
 }

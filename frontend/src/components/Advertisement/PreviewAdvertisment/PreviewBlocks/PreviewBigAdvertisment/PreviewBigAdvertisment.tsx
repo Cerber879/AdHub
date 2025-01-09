@@ -17,12 +17,12 @@ const PreviewBigAdvertisment: React.FC<PreviewBigAdvertismentProps> = ({ input }
   
   return (
     <Link 
-        to={ROUTES.ITEMS + "/" + input.name + "/" + input.id} 
-        className={styles.container}
+      to={ROUTES.ITEMS + "/" + input.name + "/" + input.id} 
+      className={styles.container}
     >
-        <PhotosBlock useStylesProfile={false} input={input}/>
-        <DataAdvertisment input={input} /> 
-        <UserAdvertisment input={input} />
+      <PhotosBlock useStylesProfile={false} input={input}/>
+      <DataAdvertisment input={input} /> 
+      <UserAdvertisment input={input} />
     </Link>
   )
 }

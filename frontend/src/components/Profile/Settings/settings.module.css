@@ -4,16 +4,16 @@
 }
 
 .name {
-    font-size: 35px;
-    padding-bottom: 10px;
-    font-weight: 500;
+  font-size: 35px;
+  padding-bottom: 10px;
+  font-weight: 500;
 }
 
 .description {
-    color:#433f3f;
-    font-size: 15px;
-    padding-bottom: 7px;
-    font-weight: 500;
+  color: #433f3f;
+  font-size: 15px;
+  padding-bottom: 7px;
+  font-weight: 500;
 }
 
 .bar_block {
@@ -46,5 +46,5 @@
 }
 
 .passiveButton:hover {
-  background-color:#ddd 
+  background-color: #ddd;
 }

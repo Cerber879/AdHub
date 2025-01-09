@@ -34,11 +34,11 @@ const DataAdvertisment = ({ input }: PreviewSmallAdvertismentProps) => {
 
   return (
     <div className={styles.data_block}>
-        <div className={styles.name_block}>
-            <div className={styles.name_ad}>{input.name}</div>
-            <img className={styles.heart_icon} onClick={() => {handleFavourites(input.id)}} src={`${!check ? '/images/Advertisment/heart.svg' : '/images/Advertisment/heart_z.svg'}`} alt="heart" />
-        </div>
-        <p className={styles.price}>{input.price} ₽</p>
+      <div className={styles.name_block}>
+        <div className={styles.name_ad}>{input.name}</div>
+        <img className={styles.heart_icon} onClick={() => {handleFavourites(input.id)}} src={`${!check ? '/images/Advertisment/heart.svg' : '/images/Advertisment/heart_z.svg'}`} alt="heart" />
+      </div>
+      <p className={styles.price}>{input.price} ₽</p>
     </div>
   )
 }

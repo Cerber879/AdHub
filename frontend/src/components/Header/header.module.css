@@ -1,84 +1,84 @@
 .flex_block {
-    display: flex;
-    flex-direction: none;
-    justify-content: center;
-    align-items: center;
-    gap: 10px;
+  display: flex;
+  flex-direction: none;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
 }
 
 .setBar {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    width: 100%;
-    padding: 10px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  padding: 10px;
 
-    height: 60px;
-    top: 0;
-    flex-direction: row;
-    left: 0px;
-    right: 0px;
-    padding: 0;
-    overflow-x: auto;
-    white-space: nowrap;
-    background-color: white;
+  height: 60px;
+  top: 0;
+  flex-direction: row;
+  left: 0px;
+  right: 0px;
+  padding: 0;
+  overflow-x: auto;
+  white-space: nowrap;
+  background-color: white;
 }
 
 .button_link {
-    display: inline-block;
-    padding: 7px 15px;
-    font-size: 16px;
-    color: black;
-    border: none;
-    border-radius: 5px;
-    text-align: center;
-    text-decoration: none;
-    cursor: pointer;
-    transition: 0.3s ease;
+  display: inline-block;
+  padding: 7px 15px;
+  font-size: 16px;
+  color: black;
+  border: none;
+  border-radius: 5px;
+  text-align: center;
+  text-decoration: none;
+  cursor: pointer;
+  transition: 0.3s ease;
 }
 
 .auth {
-    padding: 10px 20px;
-    font-size: 16px;
+  padding: 10px 20px;
+  font-size: 16px;
 }
 
-.button_add_advertisment{
-    display: inline-block;
-    padding: 10px 20px;
-    font-size: 16px;
-    color: black;
-    border: none;
-    border-radius: 5px;
-    text-align: center;
-    text-decoration: none;
-    cursor: pointer;
-    transition: 0.3s ease;
+.button_add_advertisment {
+  display: inline-block;
+  padding: 10px 20px;
+  font-size: 16px;
+  color: black;
+  border: none;
+  border-radius: 5px;
+  text-align: center;
+  text-decoration: none;
+  cursor: pointer;
+  transition: 0.3s ease;
 }
 
-.logo{
-    margin-right: 70px;
+.logo {
+  margin-right: 70px;
 }
 
-.logo_icon{
-    object-fit: cover;
-    max-height: 35px;
+.logo_icon {
+  object-fit: cover;
+  max-height: 35px;
 }
 
 .logo_name {
-    position: absolute;
-    font-weight: bold; 
-    letter-spacing: 2px; 
-    font-size: 23px; 
-    color: #333; 
-    margin: 8px 0px 0px -22px;
+  position: absolute;
+  font-weight: bold;
+  letter-spacing: 2px;
+  font-size: 23px;
+  color: #333;
+  margin: 8px 0px 0px -22px;
 }
 
-.button_add_advertisment{
-    background-color: rgb(0, 123, 255);
-    color: white;
-    text-decoration: none;
+.button_add_advertisment {
+  background-color: rgb(0, 123, 255);
+  color: white;
+  text-decoration: none;
 }
 
-.button_add_advertisment:hover{
-    background-color: rgb(0, 100, 255);
+.button_add_advertisment:hover {
+  background-color: rgb(0, 100, 255);
 }

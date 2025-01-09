@@ -1,8 +1,9 @@
-import { Module } from '@nestjs/common';
-import { CharacteristicService } from './characteristic.service';
-import { CharacteristicResolver } from './characteristic.resolver';
+import { Module } from '@nestjs/common'
+
+import { CharacteristicResolver } from './characteristic.resolver'
+import { CharacteristicService } from './characteristic.service'
 
 @Module({
-  providers: [CharacteristicResolver, CharacteristicService],
+  providers: [CharacteristicResolver, CharacteristicService]
 })
 export class CharacteristicModule {}

@@ -1,108 +1,108 @@
 .container {
-    width: 1100px;
-    display: flex;
-    flex-direction: column;
+  width: 1100px;
+  display: flex;
+  flex-direction: column;
 }
 
 .name {
-    font-size: 20px;
-    font-weight: 600;
-    padding-bottom: 8px;
+  font-size: 20px;
+  font-weight: 600;
+  padding-bottom: 8px;
 }
 
 .description {
-    color:#433f3f;
-    font-size: 15px;
-    padding-bottom: 15px;
-    font-weight: 400;
-    max-width: 80%;
+  color: #433f3f;
+  font-size: 15px;
+  padding-bottom: 15px;
+  font-weight: 400;
+  max-width: 80%;
 }
 
 .block {
-    padding: 13px;
-    margin-bottom: 20px;
-    width: 100%;
-    height: auto;
-    display: flex;
-    justify-content: space-between;
-    border: #d6d6d6 solid 1px;
-    background-color:#fbfafa;
-    border-radius: 10px;
+  padding: 13px;
+  margin-bottom: 20px;
+  width: 100%;
+  height: auto;
+  display: flex;
+  justify-content: space-between;
+  border: #d6d6d6 solid 1px;
+  background-color: #fbfafa;
+  border-radius: 10px;
 }
 
 .block_section_name {
-    font-size: 16px;
-    font-weight: 600;
-    width: 100%;
+  font-size: 16px;
+  font-weight: 600;
+  width: 100%;
 }
 
 .block_section_description {
-    font-size: 14px;
-    font-weight: 400;
-    width: 100%;
+  font-size: 14px;
+  font-weight: 400;
+  width: 100%;
 }
 
 .session_data {
-    display: flex;
-    align-items: center;
-    gap: 10px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
 }
 
 .browser_icon {
-    width: 30px;
-    height: 30px;
-    border-radius: 50%;
-    object-fit: cover;
-    overflow: hidden;
-    margin-right: 10px;
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  object-fit: cover;
+  overflow: hidden;
+  margin-right: 10px;
 }
 
 .data {
-    display: flex;
-    width: 100%;
-    flex-direction: column;
+  display: flex;
+  width: 100%;
+  flex-direction: column;
 }
 
 .delete_button {
-    width: 150px;
-    height: 40px;
-    padding: 10px 20px;
-    background-color: #e8e8e8;
-    border: none;
-    border-radius: 15px;
-    cursor: pointer;
-    font-weight: 500;
+  width: 150px;
+  height: 40px;
+  padding: 10px 20px;
+  background-color: #e8e8e8;
+  border: none;
+  border-radius: 15px;
+  cursor: pointer;
+  font-weight: 500;
 }
 
 .delete_button:hover {
-    background-color: #d7d7d7;
+  background-color: #d7d7d7;
 }
 
 .delete_button:active {
-    background-color: #cfd2d4;
+  background-color: #cfd2d4;
 }
 
 .info_button {
-    width: 150px;
-    height: 40px;
-    padding: 10px 20px;
-    background-color: rgb(0, 123, 255 );
-    color: white;
-    border: none;
-    border-radius: 15px;
-    cursor: pointer;
-    font-weight: 500;
+  width: 150px;
+  height: 40px;
+  padding: 10px 20px;
+  background-color: rgb(0, 123, 255);
+  color: white;
+  border: none;
+  border-radius: 15px;
+  cursor: pointer;
+  font-weight: 500;
 }
 
 .not_sessions {
-    color:#433f3f;
-    font-size: 15px;
-    padding-top: 15px;
-    font-weight: 400;
-    max-width: 80%;
+  color: #433f3f;
+  font-size: 15px;
+  padding-top: 15px;
+  font-weight: 400;
+  max-width: 80%;
 }
 
 .block_info {
-    display: flex;
-    gap: 20px;
+  display: flex;
+  gap: 20px;
 }

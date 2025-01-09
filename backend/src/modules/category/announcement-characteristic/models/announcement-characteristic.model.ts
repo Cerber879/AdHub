@@ -1,16 +1,18 @@
-import type { AnnouncementCharacteristic } from "@/prisma/generated";
-import { ObjectType, Field, ID } from "@nestjs/graphql";
+import { Field, ID, ObjectType } from '@nestjs/graphql'
+
+import type { AnnouncementCharacteristic } from '@/prisma/generated'
 
 @ObjectType()
-export class AnnouncementCharacteristicModel implements AnnouncementCharacteristic {
+export class AnnouncementCharacteristicModel
+  implements AnnouncementCharacteristic
+{
   @Field(() => ID)
-  id: string;
+  id: string
 
   @Field(() => String)
-  value: string;
+  value: string
   @Field(() => String)
-  productId:        string       
+  productId: string
   @Field(() => String)
-  characteristicId: string    
-
+  characteristicId: string
 }
