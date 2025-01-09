@@ -1,5 +1,11 @@
-import { Field, Float, InputType } from "@nestjs/graphql";
-import { IsNotEmpty, IsNumber, IsPositive, IsString, MaxLength } from "class-validator";
+import { Field, Float, InputType } from '@nestjs/graphql'
+import {
+  IsNotEmpty,
+  IsNumber,
+  IsPositive,
+  IsString,
+  MaxLength
+} from 'class-validator'
 
 @InputType()
 export class AddFavouriteInput {

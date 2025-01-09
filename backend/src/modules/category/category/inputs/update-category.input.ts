@@ -1,5 +1,5 @@
-import { Field, InputType } from "@nestjs/graphql";
-import { IsOptional, IsString, MaxLength } from "class-validator";
+import { Field, InputType } from '@nestjs/graphql'
+import { IsOptional, IsString, MaxLength } from 'class-validator'
 
 @InputType()
 export class UpdateCategoryInput {
@@ -7,18 +7,18 @@ export class UpdateCategoryInput {
   @IsOptional()
   @IsString()
   @MaxLength(100)
-  public name?: string;
+  public name?: string
 
   @Field(() => String, { nullable: true })
   @IsOptional()
-  public parentId?: string;
+  public parentId?: string
 }
 
 @InputType()
 export class UpdateCategoryMixedInput {
   @Field(() => String)
-  public id: string;
+  public id: string
 
   @Field(() => UpdateCategoryInput)
-  public input: UpdateCategoryInput;
+  public input: UpdateCategoryInput
 }

@@ -22,8 +22,8 @@ const AdvertisementTop: React.FC = () => {
   return (
     <div className={styles.container}>
       <button
-       onClick={handleClick}
-       className={styles.button_catalogue}>
+        onClick={handleClick}
+        className={styles.button_catalogue}>
         { showCatalogueModal && 
           <img className={styles.icon} src="/images/catalogue/cross.svg" alt="cross" />
         }

@@ -4,11 +4,13 @@ import ListAdvertisments from '../../../components/Profile/ListAdvertisments/Lis
 
 import styles from '../profile.module.css'
 
-const ProfileMain = () => {
+const ProfileMain = () => { 
+  
+  
   return (
     <div className={styles.container}>
-        <ProfileListBar/>
-        <ListAdvertisments />
+      <ProfileListBar/>
+      <ListAdvertisments />
     </div>
   )
 }

@@ -1,128 +1,128 @@
 .container {
-    width: 1100px;
-    display: flex;
-    flex-direction: column;
+  width: 1100px;
+  display: flex;
+  flex-direction: column;
 }
 
 .name {
-    font-size: 20px;
-    font-weight: 600;
-    padding-bottom: 8px;
+  font-size: 20px;
+  font-weight: 600;
+  padding-bottom: 8px;
 }
 
 .description {
-    color:#433f3f;
-    font-size: 15px;
-    padding-bottom: 15px;
-    font-weight: 400;
-    max-width: 80%;
+  color: #433f3f;
+  font-size: 15px;
+  padding-bottom: 15px;
+  font-weight: 400;
+  max-width: 80%;
 }
 
 .block {
-   padding: 13px;
-   margin-bottom: 20px;
-   width: 100%;
-   height: auto;
-   display: flex;
-   flex-direction: column; 
-   border: #d6d6d6 solid 1px;
-   background-color:#fbfafa;
-   border-radius: 10px;
+  padding: 13px;
+  margin-bottom: 20px;
+  width: 100%;
+  height: auto;
+  display: flex;
+  flex-direction: column;
+  border: #d6d6d6 solid 1px;
+  background-color: #fbfafa;
+  border-radius: 10px;
 }
 
 .block_name {
-    font-size: 17px;
-    font-weight: 600;
-    padding-bottom: 12px;
+  font-size: 17px;
+  font-weight: 600;
+  padding-bottom: 12px;
 }
 
 .block_section_name {
-    font-size: 14px;
-    font-weight: 600;
-    padding-bottom: 5px;
+  font-size: 14px;
+  font-weight: 600;
+  padding-bottom: 5px;
 }
 
 .block_section_description {
-    color:#433f3f;
-    font-size: 14px;
-    font-weight: 400;
+  color: #433f3f;
+  font-size: 14px;
+  font-weight: 400;
 }
 
 .avatar {
-    display: flex;
-    align-items: center;
-    padding: 5px;
-    gap: 20px;
+  display: flex;
+  align-items: center;
+  padding: 5px;
+  gap: 20px;
 }
 
 .avatar_img {
-    width: 130px;
-    height: 130px;
-    border-radius: 50%;
-    object-fit: cover;
-    overflow: hidden;
-    margin-right: 10px;
+  width: 130px;
+  height: 130px;
+  border-radius: 50%;
+  object-fit: cover;
+  overflow: hidden;
+  margin-right: 10px;
 }
 
 .icon {
-    width: 20px;
-    height: 20px;
-    cursor: pointer;
-    padding: 10px;
-    border-radius: 50%;
+  width: 20px;
+  height: 20px;
+  cursor: pointer;
+  padding: 10px;
+  border-radius: 50%;
 }
 
 .icon:hover {
-    background-color: #e6e6e6;
+  background-color: #e6e6e6;
 }
 
 .icon:active {
-    background-color: #bfbebe;
+  background-color: #bfbebe;
 }
 
 .block_section {
-    padding: 5px 0px 15px 5px;
-    display: flex;
-    flex-direction: column;
-    gap: 5px;
-    border-bottom: solid 1px #d6d6d6;
+  padding: 5px 0px 15px 5px;
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  border-bottom: solid 1px #d6d6d6;
 }
 
 .save_button {
-    align-self: flex-end;
-    padding: 10px 20px;
-    margin: 15px 0px 5px 0px;
-    width: 200px;
-    background-color: rgb(0, 123, 255 );
-    color: white;
-    border: none;
-    border-radius: 15px;
-    cursor: pointer;
-    font-weight: 500;
+  align-self: flex-end;
+  padding: 10px 20px;
+  margin: 15px 0px 5px 0px;
+  width: 200px;
+  background-color: rgb(0, 123, 255);
+  color: white;
+  border: none;
+  border-radius: 15px;
+  cursor: pointer;
+  font-weight: 500;
 }
 
 .bio {
-    min-width: 100%;
-    max-width: 100%;
-    min-height: 100px;
+  min-width: 100%;
+  max-width: 100%;
+  min-height: 100px;
 }
 
 .deactive_block {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    padding: 13px;
-    padding-bottom: 20px;
-    margin-bottom: 20px;
-    width: 100%;
-    height: auto;
-    display: flex;
-    border: #d6d6d6 solid 1px;
-    background-color:#fbfafa;
-    border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 13px;
+  padding-bottom: 20px;
+  margin-bottom: 20px;
+  width: 100%;
+  height: auto;
+  display: flex;
+  border: #d6d6d6 solid 1px;
+  background-color: #fbfafa;
+  border-radius: 10px;
 }
 
 .deactive_descripton {
-    display: flex;
-    flex-direction: column;
+  display: flex;
+  flex-direction: column;
 }

@@ -46,28 +46,28 @@ const Filters: React.FC = () => {
 
       <div className={styles.sort_block} ref={dropdownRef}>
         <img className={styles.sort_icon} src="/images/Advertisment/sort.svg" alt="sort" />
-          <div className={styles.select} onClick={() => setIsOpen(!isOpen)}>
-            {selectedLabel === sortOptions[0].label ? 'Сортировка' : selectedLabel}
-          </div>
-          {isOpen && (
-            <ul className={styles.dropdown}>
-              {sortOptions.map((option) => (
-                <li
-                  key={option.value}
-                  className={`${option.value === filters.sort ? styles.option_active : styles.option}`}
-                  onClick={() => handleSortChange(option.value, option.label)}
-                >
-                  {option.label}
-                  {option.value === filters.sort && 
+        <div className={styles.select} onClick={() => setIsOpen(!isOpen)}>
+          {selectedLabel === sortOptions[0].label ? 'Сортировка' : selectedLabel}
+        </div>
+        {isOpen && (
+          <ul className={styles.dropdown}>
+            {sortOptions.map((option) => (
+              <li
+                key={option.value}
+                className={`${option.value === filters.sort ? styles.option_active : styles.option}`}
+                onClick={() => handleSortChange(option.value, option.label)}
+              >
+                {option.label}
+                {option.value === filters.sort && 
                     <img
                       src="/images/Advertisment/tick.svg" alt="tick" 
                       className={styles.tick_icon}
                     />
-                  }
-                </li>
-              ))}
-            </ul>
-          )}
+                }
+              </li>
+            ))}
+          </ul>
+        )}
       </div>
     </div>
   );

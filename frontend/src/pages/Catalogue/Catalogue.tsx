@@ -14,8 +14,8 @@ const Catalogue: React.FC = () => {
       <div className={styles.content}>
         <Characteristics />
         <div className={styles.list}>
-            <Filters/>
-            <AdvertisementList/>
+          <Filters/>
+          <AdvertisementList/>
         </div>
       </div>
     </div>

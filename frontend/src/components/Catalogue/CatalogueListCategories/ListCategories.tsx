@@ -43,7 +43,7 @@ const ListCategories = () => {
           }
           onClick={() => handleMouseClick(category.id, category.name)}
           onMouseEnter={() => handleMouseEnter(category.id, category.name)}
-          >
+        >
           <div>
             {category.name}
           </div>

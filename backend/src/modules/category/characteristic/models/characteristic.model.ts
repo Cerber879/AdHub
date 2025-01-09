@@ -1,17 +1,17 @@
-import type { Characteristic } from "@/prisma/generated";
-import { ObjectType, Field, ID } from "@nestjs/graphql";
+import { Field, ID, ObjectType } from '@nestjs/graphql'
+
+import type { Characteristic } from '@/prisma/generated'
 
 @ObjectType()
 export class CharacteristicModel implements Characteristic {
   @Field(() => ID)
-  id: string;
+  id: string
 
   @Field(() => String)
-  name: string;
+  name: string
 
   @Field(() => String)
-  type: string;
+  type: string
   @Field(() => String)
-  categoryId: string;
-
+  categoryId: string
 }

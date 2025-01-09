@@ -6,12 +6,12 @@ import { FindProfileQuery, useChangeProfileAvatarMutation, useChangeDisplayNameM
 import SocialLinks from './SocialLinks/SocialLinks';
 
 interface ProfileProps {
-    input: FindProfileQuery['findProfile']
+  input: FindProfileQuery['findProfile']
 }
 
 interface SocialLink {
-    name: string;
-    url: string;
+  name: string;
+  url: string;
 }
 
 const Profile = ({ input }: ProfileProps) => {
@@ -20,9 +20,9 @@ const Profile = ({ input }: ProfileProps) => {
 
   const [changeProfileAvatar] =
   useChangeProfileAvatarMutation({
-      onError() {
-        console.log()
-      }
+    onError() {
+      console.log()
+    }
   })
 
   const [name, setName] = useState(input.displayName);
@@ -82,69 +82,68 @@ const Profile = ({ input }: ProfileProps) => {
   const [socialLinks, setSocialLinks] = useState<SocialLink[]>([]); // указываем тип массива
   
   const handleAddSocial = () => {
-      // Валидация URL
-      const urlPattern = /^(https?:\/\/)?([a-zA-Z0-9-]+\.)+[a-zA-Z0-9]{2,}(\/[^\s]*)?$/;
-      if (!urlPattern.test(socialUrl)) {
-          alert('Введите правильный URL!');
-          return;
-      }
+    const urlPattern = /^(https?:\/\/)?([a-zA-Z0-9-]+\.)+[a-zA-Z0-9]{2,}(\/[^\s]*)?$/;
+    if (!urlPattern.test(socialUrl)) {
+      alert('Введите правильный URL!');
+      return;
+    }
   
-      if (!socialName || !socialUrl) {
-          alert('Заполните все поля!');
-          return;
-      }
+    if (!socialName || !socialUrl) {
+      alert('Заполните все поля!');
+      return;
+    }
   
-      const newLink: SocialLink = { name: socialName, url: socialUrl }; // типизация объекта
-      setSocialLinks([...socialLinks, newLink]);
+    const newLink: SocialLink = { name: socialName, url: socialUrl }; // типизация объекта
+    setSocialLinks([...socialLinks, newLink]);
   
-      // Очистка полей
-      setSocialName('');
-      setSocialUrl('');
+    // Очистка полей
+    setSocialName('');
+    setSocialUrl('');
   };
   
 
   return (
     <div className={styles.container}>
-        <span className={styles.name}>Профиль</span>
-        <span className={styles.description}>Настройте ваш профиль, обновите аватар, измените информаицию о себе, чтобы сделать вашу страницу более информированной для других пользователей</span>
-        <div className={styles.block}>
-            <span className={styles.block_name}>Изображение профиля</span>
-            <div className={styles.avatar}>
-                <img src={avatarPreview || ''} alt="Аватар" className={styles.avatar_img} />
-                <div className={styles.avatar_update}>
-                    <div className={styles.avatar_update_block}>
-                        <button onClick={triggerFileInput} className={styles.avatar_update_button}>Загрузить изображение</button>
-                        { input?.avatar !== avatarPreview &&
+      <span className={styles.name}>Профиль</span>
+      <span className={styles.description}>Настройте ваш профиль, обновите аватар, измените информаицию о себе, чтобы сделать вашу страницу более информированной для других пользователей</span>
+      <div className={styles.block}>
+        <span className={styles.block_name}>Изображение профиля</span>
+        <div className={styles.avatar}>
+          <img src={avatarPreview || ''} alt="Аватар" className={styles.avatar_img} />
+          <div className={styles.avatar_update}>
+            <div className={styles.avatar_update_block}>
+              <button onClick={triggerFileInput} className={styles.avatar_update_button}>Загрузить изображение</button>
+              { input?.avatar !== avatarPreview &&
                             <>
-                                <div className={styles.icon} onClick={handleSaveAvatar}><img src="/images/Profile/check.svg" alt="check" /></div>
-                                <div className={styles.icon} onClick={handleDeleteAvatar}><img src="/images/Profile/trash.svg" alt="trash" /></div>
+                              <div className={styles.icon} onClick={handleSaveAvatar}><img src="/images/Profile/check.svg" alt="check" /></div>
+                              <div className={styles.icon} onClick={handleDeleteAvatar}><img src="/images/Profile/trash.svg" alt="trash" /></div>
                             </>
-                        }  
-                    </div>
-                    <span className={styles.block_section_description}>Поддерживаемые форматы: jpg, png, jpeg, webp и gif. Макс. размер: 10 Мб</span>
-                </div>
+              }  
             </div>
+            <span className={styles.block_section_description}>Поддерживаемые форматы: jpg, png, jpeg, webp и gif. Макс. размер: 10 Мб</span>
+          </div>
+        </div>
+      </div>
+
+      <div className={styles.block}>
+        <span className={styles.block_name}>Настройки профиля</span>
+
+        <div className={styles.block_section}>
+          <span className={styles.block_section_name}>Имя пользователя</span>
+          <input onChange={(event) => {setName(event.target.value)}} value={name} type="text" className={styles.avatar_update_input}/>
+          <span className={styles.block_section_description}>Под этим именем вас будут видеть другие пользователи</span>
         </div>
 
-        <div className={styles.block}>
-            <span className={styles.block_name}>Настройки профиля</span>
-
-            <div className={styles.block_section}>
-                <span className={styles.block_section_name}>Имя пользователя</span>
-                <input onChange={(event) => {setName(event.target.value)}} value={name} type="text" className={styles.avatar_update_input}/>
-                <span className={styles.block_section_description}>Под этим именем вас будут видеть другие пользователи</span>
-            </div>
-
-            <div className={styles.block_section}>
-                <span className={styles.block_section_name}>О себе</span>
-                <textarea onChange={(event) => {setBio(event.target.value)}} className={styles.bio}/>
-                <span className={styles.block_section_description}>Информация о себе должна содержать не более 300 символов</span>
-            </div>
-
-            <button onClick={handleNameChange} className={styles.save_button}>Сохранить изменения</button>
+        <div className={styles.block_section}>
+          <span className={styles.block_section_name}>О себе</span>
+          <textarea onChange={(event) => {setBio(event.target.value)}} className={styles.bio}/>
+          <span className={styles.block_section_description}>Информация о себе должна содержать не более 300 символов</span>
         </div>
 
-        <SocialLinks />
+        <button onClick={handleNameChange} className={styles.save_button}>Сохранить изменения</button>
+      </div>
+
+      <SocialLinks />
     </div>
   )
 }

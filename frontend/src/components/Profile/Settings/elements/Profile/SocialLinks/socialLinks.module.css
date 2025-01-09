@@ -1,196 +1,194 @@
 .block {
-    padding: 13px;
-    margin-bottom: 20px;
-    width: 100%;
-    height: auto;
-    display: flex;
-    flex-direction: column;
-    border: #d6d6d6 solid 1px;
-    background-color: #fbfafa;
-    border-radius: 10px;
-  }
-  
-  .block_name {
-    font-size: 17px;
-    font-weight: 600;
-    padding-bottom: 12px;
-  }
-  
-  .block_section {
-    padding: 5px 0px 15px 5px;
-    display: flex;
-    flex-direction: column;
-    gap: 5px;
-    border-bottom: solid 1px #d6d6d6;
-  }
-  
-  .avatar_update_input {
-    padding: 10px;
-    border-radius: 5px;
-    border: 1px solid #ccc;
-  }
-  
-  .save_button {
-    align-self: flex-end;
-    padding: 10px 20px;
-    margin: 15px 0px 5px 0px;
-    width: 200px;
-    background-color: rgb(0, 123, 255);
-    color: white;
-    border: none;
-    border-radius: 15px;
-    cursor: pointer;
-    font-weight: 500;
-  }
-  
-  .save_button:hover {
-    background-color: rgb(0, 100, 204);
-  }
-  
-  .linksContainer {
-    padding-top: 15px;
-    margin-top: 10px;
-    display: flex;
-    border-top: solid 1px #d6d6d6;
-    flex-direction: column;
-  }
+  padding: 13px;
+  margin-bottom: 20px;
+  width: 100%;
+  height: auto;
+  display: flex;
+  flex-direction: column;
+  border: #d6d6d6 solid 1px;
+  background-color: #fbfafa;
+  border-radius: 10px;
+}
 
-  .link {
-    display: flex;
-    flex-direction: row;
-    gap: 10px;
-    height: auto;
-  }
-  
-  .linkItem {
-    pointer-events: none;
-    padding: 10px;
-    margin: 5px 0;
-    background-color: #e6e6e6;
-    border-radius: 10px;
-    display: flex;
-    align-items: center;
-    transition: background-color 0.2s;
-  }
-  
-  .linkItem.dragging {
-    background-color: #d6d6d6;
-  }
-  
-  .linkItem.hidden {
-    visibility: hidden;
-  }
+.block_name {
+  font-size: 17px;
+  font-weight: 600;
+  padding-bottom: 12px;
+}
+
+.block_section {
+  padding: 5px 0px 15px 5px;
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  border-bottom: solid 1px #d6d6d6;
+}
+
+.avatar_update_input {
+  padding: 10px;
+  border-radius: 5px;
+  border: 1px solid #ccc;
+}
+
+.save_button {
+  align-self: flex-end;
+  padding: 10px 20px;
+  margin: 15px 0px 5px 0px;
+  width: 200px;
+  background-color: rgb(0, 123, 255);
+  color: white;
+  border: none;
+  border-radius: 15px;
+  cursor: pointer;
+  font-weight: 500;
+}
+
+.save_button:hover {
+  background-color: rgb(0, 100, 204);
+}
+
+.linksContainer {
+  padding-top: 15px;
+  margin-top: 10px;
+  display: flex;
+  border-top: solid 1px #d6d6d6;
+  flex-direction: column;
+}
+
+.link {
+  display: flex;
+  flex-direction: row;
+  gap: 10px;
+  height: auto;
+}
+
+.linkItem {
+  pointer-events: none;
+  padding: 10px;
+  margin: 5px 0;
+  background-color: #e6e6e6;
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  transition: background-color 0.2s;
+}
+
+.linkItem.dragging {
+  background-color: #d6d6d6;
+}
+
+.linkItem.hidden {
+  visibility: hidden;
+}
 
 .target {
-    pointer-events: auto;
-    cursor: move;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    width: 30px;
-    padding-right: 10px;
-    border-right: solid 1px #d6d6d6;
+  pointer-events: auto;
+  cursor: move;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 30px;
+  padding-right: 10px;
+  border-right: solid 1px #d6d6d6;
 }
 
 .targetIcon {
-    height: 25px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
+  height: 25px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .linkInfo {
-    display: flex;
-    padding: 10px;
-    flex-direction: column;
+  display: flex;
+  padding: 10px;
+  flex-direction: column;
 }
 
-  .linkName {
-    font-weight: 600;
-    font-size: 20px;
-  }
-  
-  .linkUrl {
-    color: #007bff;
-    text-decoration: none;
-  }
-  
-  .linkUrl:hover {
-    text-decoration: underline;
-  }
-  
+.linkName {
+  font-weight: 600;
+  font-size: 20px;
+}
 
-  .block_section_description {
-    color:#433f3f;
-    font-size: 14px;
-    font-weight: 400;
+.linkUrl {
+  color: #007bff;
+  text-decoration: none;
+}
+
+.linkUrl:hover {
+  text-decoration: underline;
+}
+
+.block_section_description {
+  color: #433f3f;
+  font-size: 14px;
+  font-weight: 400;
 }
 
 .no_links {
-    width: 100%;
-
+  width: 100%;
 }
 
 .edit_button {
-    width: 35px;
-    height: 35px;
-    padding: 10px;
-    border-radius: 50%;
-    background-color: #e6e6e6;
+  width: 35px;
+  height: 35px;
+  padding: 10px;
+  border-radius: 50%;
+  background-color: #e6e6e6;
 }
 
 .edit_button:hover {
-    background-color: #d6d6d6;
+  background-color: #d6d6d6;
 }
 
 .edit {
-    pointer-events: fill;
-    width: 100%;
-    display: flex;
+  pointer-events: fill;
+  width: 100%;
+  display: flex;
 }
 
 .linkActions {
-    pointer-events: auto;
-    display: flex;
-    justify-self: self-end;
-    gap: 20px;
-    padding: 0px 20px;
+  pointer-events: auto;
+  display: flex;
+  justify-self: self-end;
+  gap: 20px;
+  padding: 0px 20px;
 }
 
 .editButtons {
-    position: relative;
-    display: flex;
-    gap: 20px;
-    padding: 0px 20px;
+  position: relative;
+  display: flex;
+  gap: 20px;
+  padding: 0px 20px;
 }
 
 .cancelButton {
-    width: 110px;
-    border-radius: 15px;
-    padding: 10px 20px;
-    background-color: #f3f2f2 ;
+  width: 110px;
+  border-radius: 15px;
+  padding: 10px 20px;
+  background-color: #f3f2f2;
 }
 
 .saveButton {
-    width: 110px;
-    border-radius: 15px;
-    padding: 10px 20px;
-    color: white;
-    background-color: rgb(0, 123, 255);
+  width: 110px;
+  border-radius: 15px;
+  padding: 10px 20px;
+  color: white;
+  background-color: rgb(0, 123, 255);
 }
 
 .saveButtonDisabled {
-    opacity: 0.5;
-    pointer-events: none;
+  opacity: 0.5;
+  pointer-events: none;
 }
 
 .editContainer {
-    display: flex;
-    flex-direction: column;
-    pointer-events: fill;
+  display: flex;
+  flex-direction: column;
+  pointer-events: fill;
 }
 
 .editInput {
-    height: 7px;
-    width: 300px;
+  height: 7px;
+  width: 300px;
 }

@@ -27,29 +27,29 @@ const ProfileListAdvertisments = () => {
 
   return (
     <div className={styles.container}>
-        <span className={styles.name}>Мои объявления</span>
-        <div className={styles.bar_block}>
-            <button 
-                onClick={handleReleaseButton}
-                className={`${releaseButton ? styles.activeButton : styles.passiveButton} ${styles.bar_button}`}>
-                <span>Активные</span>
-            </button>
-            <button 
-                onClick={handleArchiveButton}
-                className={`${archiveButton ? styles.activeButton : styles.passiveButton} ${styles.bar_button}`}>
-                <span>Архив</span>
-            </button>
-        </div>
+      <span className={styles.name}>Мои объявления</span>
+      <div className={styles.bar_block}>
+        <button 
+          onClick={handleReleaseButton}
+          className={`${releaseButton ? styles.activeButton : styles.passiveButton} ${styles.bar_button}`}>
+          <span>Активные</span>
+        </button>
+        <button 
+          onClick={handleArchiveButton}
+          className={`${archiveButton ? styles.activeButton : styles.passiveButton} ${styles.bar_button}`}>
+          <span>Архив</span>
+        </button>
+      </div>
 
-        <div className={styles.ads}>
-          {ads?.map((ad) => {
-            const status = statusMap[ad.status]
-            if (status === "Активное") {
-              return <PreviewProfileAdvertisment input={ad} />;
-            }
-            return null; 
-          })}
-        </div>
+      <div className={styles.ads}>
+        {ads?.map((ad) => {
+          const status = statusMap[ad.status]
+          if (status === "Активное") {
+            return <PreviewProfileAdvertisment input={ad} />;
+          }
+          return null; 
+        })}
+      </div>
     </div>
   )
 }

@@ -1,91 +1,91 @@
 .container {
-    padding: 30px;
-    display: flex;
-    gap: 40px;
+  padding: 30px;
+  display: flex;
+  gap: 40px;
 }
 
 .bar_block {
-    display: flex;
-    flex-direction: column;
-    width: 250px;
-    height: 500px;
+  display: flex;
+  flex-direction: column;
+  width: 250px;
+  height: 500px;
 }
 
 .user_block {
-    padding-left: 20px;  
-    display: flex;
-    flex-direction: column;
+  padding-left: 20px;
+  display: flex;
+  flex-direction: column;
 }
 
 .user_logo {
-    width: 100px;
-    height: 100px;
-    background-color: antiquewhite;
-    border-radius: 50%;
-    object-fit: cover;
-    overflow: hidden;
+  width: 100px;
+  height: 100px;
+  background-color: antiquewhite;
+  border-radius: 50%;
+  object-fit: cover;
+  overflow: hidden;
 }
 
 .user_name {
-    margin-top: 20px;
-    font-size: 26px;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    white-space: nowrap;
+  margin-top: 20px;
+  font-size: 26px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 
 .user_rating_block {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    margin-top: 5px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-top: 5px;
 }
-  
+
 .user_rating_number {
-    font-size: 18px;
-    font-weight: bold;
-    color: #ff9800;
+  font-size: 18px;
+  font-weight: bold;
+  color: #ff9800;
 }
-  
+
 .user_count_feedback {
-    font-size: 16px;
-    color: #777;
+  font-size: 16px;
+  color: #777;
 }
 
 .links {
-    margin-top: 30px;
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
+  margin-top: 30px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
 }
 
 .link {
-    display: inline-block;
-    padding: 10px 20px;
-    text-decoration: none;
-    color: black;
-    font-size: 20px;
-    border-radius: 15px;
+  display: inline-block;
+  padding: 10px 20px;
+  text-decoration: none;
+  color: black;
+  font-size: 20px;
+  border-radius: 15px;
 }
 
 .link:hover {
-    background-color: #e7e7e7;
+  background-color: #e7e7e7;
 }
 
 .active {
-    background-color: #007bff;
-    color: white;
+  background-color: #007bff;
+  color: white;
 }
 
 .active:hover {
-    background-color: #007bff;
+  background-color: #007bff;
 }
 
 .exit {
-    color: tomato;
+  color: tomato;
 }
 
 .exit:hover {
-    background-color: #fae7e7;
-    border: 1px solid tomato;
+  background-color: #fae7e7;
+  border: 1px solid tomato;
 }

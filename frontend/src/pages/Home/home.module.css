@@ -1,15 +1,15 @@
 .container {
-    align-items: center;
-    justify-content: center;
-    box-sizing: border-box;
+  align-items: center;
+  justify-content: center;
+  box-sizing: border-box;
 }
 
 .title {
-    margin-left: 130px;
-    font-size: 32px;
-    font-weight: 600;
+  margin-left: 130px;
+  font-size: 32px;
+  font-weight: 600;
 }
 
 .list {
-    margin-left: 130px;
+  margin-left: 130px;
 }
