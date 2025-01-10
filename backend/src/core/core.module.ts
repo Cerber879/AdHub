@@ -15,6 +15,10 @@ import { IS_DEV_ENV } from '../shared/utils/is-dev.util'
 
 import { AccountModule } from './../modules/auth/account/account.module'
 import { getGraphQLConfig } from './config/graphql.config'
+
+import { ChatModule } from '../modules/chat/chat.module';
+import { MessageModule } from '../modules/message/message.module';
+
 import { PrismaModule } from './prisma/prisma.module'
 import { RedisModule } from './redis/redis.module'
 
@@ -40,7 +44,9 @@ import { RedisModule } from './redis/redis.module'
     PhotoModule,
     FavouritesModule,
     CharacteristicModule,
-    AnnouncementCharacteristicModule
+    AnnouncementCharacteristicModule,
+    ChatModule,
+		MessageModule
   ]
 })
 export class CoreModule {}

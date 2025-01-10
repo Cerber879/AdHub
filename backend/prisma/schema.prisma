@@ -9,169 +9,174 @@ datasource db {
 }
 
 model User {
-  id           String   @id @default(uuid())
+  id String @id @default(uuid())
 
-  email        String?  @unique
-  phoneNumber  String?  @unique @map("phone_number")
-  password     String
+  email       String? @unique
+  phoneNumber String? @unique @map("phone_number")
+  password    String
 
-  displayName  String   @map("display_name")
-  typeProfile  String   @map("type_profile")
-  
-  rating       Float?
+  displayName String @map("display_name")
+  typeProfile String @map("type_profile")
 
-  avatar       String?
-  bio          String?
+  rating Float?
 
-  createdAt    DateTime @default(now()) @map("created_at")
-  updatedAt    DateTime @updatedAt @map("updated_at")
+  avatar String?
+  bio    String?
+
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
 
   announcement Announcement[]
   message      Message[]
-  chatMembers  ChatMembers[]
   Review       Review[]
   Favourites   Favourites[]
+
+  Chat_1 Chat[] @relation("user_1")
+  Chat_2 Chat[] @relation("user_2")
 
   @@map("users")
 }
 
 model Category {
-  id             String     @id @default(uuid())
+  id String @id @default(uuid())
 
-  name           String     @unique  
-  parentId       String?     
+  name     String  @unique
+  parentId String?
 
-  children       Category[] @relation("parent") 
+  children       Category[]       @relation("parent")
   announcement   Announcement[]
   characteristic Characteristic[]
 
-  parent         Category?  @relation("parent", fields: [parentId], references: [id])
+  parent Category? @relation("parent", fields: [parentId], references: [id], onDelete: Cascade)
 
-  @@map("categories") 
+  @@map("categories")
 }
 
 model Announcement {
-  id              String     @id @default(uuid())
+  id String @id @default(uuid())
 
-  name            String    
-  price           Float     
-  description     String   
-  placementDate   DateTime 
+  name          String
+  price         Float
+  description   String
+  placementDate DateTime @default(now())
 
-  status          AnnouncementStatus    
-  condition       ProductCondition  
+  status    AnnouncementStatus
+  condition ProductCondition
 
-  userId          String     
-  categoryId      String
+  userId     String
+  categoryId String
 
+  Chat                       Chat[]
   photo                      Photo[]
   review                     Review[]
   favourites                 Favourites[]
   announcementCharacteristic AnnouncementCharacteristic[]
 
-  user            User      @relation(fields: [userId], references: [id]) 
-  category        Category  @relation(fields: [categoryId], references: [id]) 
+  user     User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  category Category @relation(fields: [categoryId], references: [id], onDelete: Cascade)
 
-  @@map("announcements") 
+  @@map("announcements")
 }
 
 model Characteristic {
-  id            String    @id @default(uuid())
+  id String @id @default(uuid())
 
-  name          String    
-  type          String   
+  name String
+  type String
 
-  categoryId    String  
+  categoryId String
 
-  category      Category  @relation(fields: [categoryId], references: [id])
+  category Category @relation(fields: [categoryId], references: [id], onDelete: Cascade)
 
   announcementCharacteristic AnnouncementCharacteristic[]
 
-  @@map("characteristics") 
+  @@map("characteristics")
 }
 
 model AnnouncementCharacteristic {
-  id               String         @id @default(uuid())
- 
-  value            String      
+  id String @id @default(uuid())
 
-  productId        String       
-  characteristicId String         
+  value String
 
-  announcement     Announcement   @relation(fields: [productId], references: [id]) 
-  characteristic   Characteristic @relation(fields: [characteristicId], references: [id]) 
+  productId        String
+  characteristicId String
+
+  announcement   Announcement   @relation(fields: [productId], references: [id], onDelete: Cascade)
+  characteristic Characteristic @relation(fields: [characteristicId], references: [id], onDelete: Cascade)
 }
 
 model Chat {
-  id     String  @id @default(uuid())
-  
-  messages     Message[]
-  chatMembers  ChatMembers[]
+  id String @id @default(uuid())
+
+  user_1_id String?
+  user_2_id String?
+  productId String
+
+  messages Message[]
+
+  user_1       User?        @relation("user_1", fields: [user_1_id], references: [id], onDelete: SetNull)
+  user_2       User?        @relation("user_2", fields: [user_2_id], references: [id], onDelete: SetNull)
+  announcement Announcement @relation(fields: [productId], references: [id], onDelete: Cascade)
+
+  createdAt DateTime @default(now()) @map("created_at")
+
+  @@map("chats")
 }
 
 model Message {
-  id        String   @id @default(uuid())
+  id String @id @default(uuid())
 
-  Content   String   @db.VarChar(1000)
-  Status    Int      @default(0) // 0 - непрочитанное, 1 - прочитанное
-  Date      DateTime @default(now())
+  content String   @db.VarChar(1000)
+  status  Int      @default(0)
+  sentAt  DateTime @default(now())
 
-  userID String
-  chatID String
+  isEdited Boolean
 
-  user User @relation(fields: [userID], references: [id])
-  chat Chat @relation(fields: [chatID], references: [id])
-}
+  senderId String
+  chatId   String
 
-model ChatMembers {
-  id     String @id @default(uuid())
-
-  chatID String
-  userID String
-
-  user User @relation(fields: [userID], references: [id])
-  chat Chat @relation(fields: [chatID], references: [id])
+  user User @relation(fields: [senderId], references: [id], onDelete: Cascade)
+  chat Chat @relation(fields: [chatId], references: [id], onDelete: Cascade)
 }
 
 model Review {
-  id              String  @id @default(uuid())
+  id String @id @default(uuid())
 
-  grade           Float
-  description     String @db.Text
+  grade       Float
+  description String @db.Text
 
-  userID          String
-  announcementID  String
+  userID         String
+  announcementID String
 
-  user            User            @relation(fields: [userID], references: [id])
-  announcement    Announcement    @relation(fields: [announcementID], references: [id])
+  user         User         @relation(fields: [userID], references: [id], onDelete: Cascade)
+  announcement Announcement @relation(fields: [announcementID], references: [id], onDelete: Cascade)
 }
 
 model Favourites {
-  id               String  @id @default(uuid())
+  id String @id @default(uuid())
 
-  userID           String
-  announcementID   String
+  userID         String
+  announcementID String
 
-  user             User          @relation(fields: [userID], references: [id])
-  announcement     Announcement  @relation(fields: [announcementID], references: [id])
+  user         User         @relation(fields: [userID], references: [id], onDelete: Cascade)
+  announcement Announcement @relation(fields: [announcementID], references: [id], onDelete: Cascade)
 }
 
 model Photo {
-  id               String  @id @default(uuid())
+  id String @id @default(uuid())
 
   link             String  @db.VarChar(200)
 
-  announcementID   String
+  announcementID String
 
-  announcement     Announcement @relation(fields: [announcementID], references: [id])
+  announcement Announcement @relation(fields: [announcementID], references: [id], onDelete: Cascade)
 }
-
 
 enum AnnouncementStatus {
   ACTIVE
-  SOLD      
-  INACTIVE  
-  EXPIRED   
+  SOLD
+  INACTIVE
+  EXPIRED
 }
 
 enum ProductCondition {

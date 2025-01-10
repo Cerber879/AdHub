@@ -136,22 +136,21 @@ exports.Prisma.AnnouncementCharacteristicScalarFieldEnum = {
 };
 
 exports.Prisma.ChatScalarFieldEnum = {
-  id: 'id'
+  id: 'id',
+  user_1_id: 'user_1_id',
+  user_2_id: 'user_2_id',
+  productId: 'productId',
+  createdAt: 'createdAt'
 };
 
 exports.Prisma.MessageScalarFieldEnum = {
   id: 'id',
-  Content: 'Content',
-  Status: 'Status',
-  Date: 'Date',
-  userID: 'userID',
-  chatID: 'chatID'
-};
-
-exports.Prisma.ChatMembersScalarFieldEnum = {
-  id: 'id',
-  chatID: 'chatID',
-  userID: 'userID'
+  content: 'content',
+  status: 'status',
+  sentAt: 'sentAt',
+  isEdited: 'isEdited',
+  senderId: 'senderId',
+  chatId: 'chatId'
 };
 
 exports.Prisma.ReviewScalarFieldEnum = {
@@ -209,7 +208,6 @@ exports.Prisma.ModelName = {
   AnnouncementCharacteristic: 'AnnouncementCharacteristic',
   Chat: 'Chat',
   Message: 'Message',
-  ChatMembers: 'ChatMembers',
   Review: 'Review',
   Favourites: 'Favourites',
   Photo: 'Photo'

@@ -1,0 +1,3 @@
+mutation UpdateMessage($id: String!, $content: String!) {
+  updateMessage(id: $id, content: $content)
+}

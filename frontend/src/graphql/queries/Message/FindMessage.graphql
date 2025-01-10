@@ -1,0 +1,8 @@
+query FindMessage($data: String!, $id: String!) {
+  findMessage(content:$data, id: $id) {
+    status
+    senderId
+    content
+    id
+  }
+}
