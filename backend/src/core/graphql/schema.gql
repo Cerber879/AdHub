@@ -60,10 +60,12 @@ input ChangePhoneNumberInput {
   phoneNumber: String!
 }
 
-type ChatMemberModel {
-  chatID: String!
-  id: String!
-  userID: String!
+type ChatInfoOutput {
+  announcement: AnnouncementModel
+  createdAt: DateTime!
+  lastMessage: String
+  user_1: UserModel!
+  user_2: UserModel!
 }
 
 input CreateAnnouncementInput {
@@ -71,7 +73,6 @@ input CreateAnnouncementInput {
   condition: String!
   description: String!
   name: String!
-  placementDate: DateTime!
   price: Float!
   status: String!
 }
@@ -81,17 +82,16 @@ input CreateCategoryInput {
   parentId: String
 }
 
-input CreateChatMemberInput {
-  chatID: String!
-  userID: String!
-}
-
 input CreateMessageInput {
   Content: String!
-  Date: DateTime!
   chatID: String!
   status: Int!
   userID: String!
+}
+
+input CreateMessageInputChat {
+  chatId: String!
+  content: String!
 }
 
 input CreatePhotoInput {
@@ -133,18 +133,17 @@ input LoginInput {
 }
 
 type MessageModel {
-  Content: String!
-  Date: DateTime!
-  Status: Int!
-  chatID: String!
+  chatId: String!
+  content: String!
   id: ID!
-  userID: String!
+  isEdited: String!
+  senderId: String!
+  sentAt: DateTime!
+  status: Int!
 }
 
 type Mutation {
-  AddMember(data: CreateChatMemberInput!): Boolean!
   CreatMessage(data: CreateMessageInput!): Boolean!
-  DeleteMessage(id: String!): Boolean!
   addPhotoToAnnouncement(data: CreatePhotoInput!): Boolean!
   changeEmail(data: ChangeEmailInput!): Boolean!
   changePassword(data: ChangePasswordInput!): Boolean!
@@ -153,7 +152,7 @@ type Mutation {
   clearSessionCookie: Boolean!
   createAnnouncement(data: CreateAnnouncementInput!): Boolean!
   createCategory(data: CreateCategoryInput!): Boolean!
-  createChat: Boolean!
+  createChat(friendId: String!, productId: String!): Boolean!
   createUser(data: CreateUserInput!): Boolean!
   deleteAnnouncement(id: String!): Boolean!
   deleteCategory(id: String!): Boolean!
@@ -161,10 +160,13 @@ type Mutation {
   loginUser(data: LoginInput!): UserModel!
   logoutUser: Boolean!
   removeChat(id: String!): Boolean!
+  removeMessage(id: String!): Boolean!
   removeProfileAvatar: Boolean!
   removeSession(id: String!): Boolean!
+  sendMessage(input: CreateMessageInputChat!): Boolean!
   updateAnnouncement(data: UpdateAnnouncementMixedInput!): Boolean!
   updateCategory(data: UpdateCategoryMixedInput!): Boolean!
+  updateMessage(content: String!, id: String!): Boolean!
   updatePhotos(deletePhotoIds: [String!]!, newPhotos: [CreatePhotoInput!]!): Boolean!
 }
 
@@ -184,10 +186,10 @@ enum ProductCondition {
 }
 
 type Query {
-  FindUniqMessage(id: String!): MessageModel!
   findAllAnnouncements: [AnnouncementModel!]!
   findAnnouncementsByFilters(data: AnnouncementFiltersInput!): [AnnouncementModel!]!
   findCurrentSession: SessionModel!
+  findMessage(content: String!, id: String!): [MessageModel!]!
   findParentCategories(id: String!): [String!]!
   findPrewiewSubcategories(id: String!): [SubCutegoryModel!]!
   findProfile: UserModel!
@@ -197,9 +199,9 @@ type Query {
   getAnnouncementByName(name: String!): AnnouncementModel!
   getAnnouncementsByCategory(id: String!): [AnnouncementModel!]!
   getCategoryById(id: String!): CategoryModel!
-  getChatsByUserId(userID: String!): [ChatMemberModel!]!
+  getChats: [ChatInfoOutput!]!
   getMainCategories: [CategoryModel!]!
-  getMembersByChatId(chatID: String!): [ChatMemberModel!]!
+  getMessages(chatId: String!): [MessageModel!]!
   getPhotosByAnnouncementID(id: String!): [PhotoModel!]!
   getSubcategories(id: String!): [CategoryModel!]!
 }

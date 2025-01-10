@@ -19,13 +19,28 @@ export class MessageResolver {
     return this.messageService.create(createMessageInput);
   }
 
-  @Query(() => MessageModel, { name: 'FindUniqMessage' })
-  public async findOne(@Args('id') id: string) {
-    return this.messageService.findOne(id);
+  @Authorization()
+  @Query(() => [MessageModel], { name: 'findMessage' })
+  public async findMessage(
+    @Args('content') search: string,
+    @Args('id') chatId: string
+  ) {
+    return this.messageService.findMessage(search, chatId);
+  }
+  
+  @Authorization()
+  @Mutation(() => Boolean, {name: 'updateMessage'})
+  public async updateMessage(
+    @Args('id') id: string,
+    @Args('content') content: string,
+  ) {
+    return this.messageService.update(id, content)
   }
 
-  @Mutation(() => Boolean, {name: 'DeleteMessage'})
+  @Authorization()
+  @Mutation(() => Boolean, {name: 'removeMessage'})
   public async removeMessage(@Args('id') id: string) {
     return this.messageService.remove(id);
   }
+  
 }

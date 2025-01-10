@@ -1,4 +1,4 @@
-import { Injectable, NotFoundException } from '@nestjs/common';
+import { ConflictException, Injectable, NotFoundException } from '@nestjs/common';
 import { CreateMessageInput } from './dto/create-message.input';
 import { PrismaService } from '@/src/core/prisma/prisma.service';
 
@@ -8,13 +8,14 @@ export class MessageService {
   constructor(private readonly prismaService: PrismaService) {}
   
   async create(createMessageInput: CreateMessageInput) {
-    const { Content, status, Date, userID, chatID } = createMessageInput;
+    const { Content, status, userID, chatID } = createMessageInput;
+
     await this.prismaService.message.create({
       data: 
       {
-        Content: Content,
-        Status: status,
-        Date: Date,
+        content: Content,
+        status: status,
+        isEdited: false,
         chat: {
           connect:{
             id: chatID
@@ -31,20 +32,69 @@ export class MessageService {
     return true
   }
 
-  async findOne(id: string) {
-    const messagef = await this.prismaService.message.findUnique({ where : {id}});
+  public async editMessage(messageId: string, newContent: string) {
+    return this.prismaService.message.update({
+      where: {
+        id: messageId,
+      },
+      data: {
+        content: newContent,
+        isEdited: true,
+        sentAt: new Date(),
+      },
+    });
+  }
 
-    if (!messagef) {
+
+  async findMessage(search: string, chatId: string) {
+    const message = await this.prismaService.message.findMany({ 
+      where : {
+        AND: [
+          chatId ? { chatId: chatId } : {},
+          search !== null && search !== '' ? 
+          {
+            content: {
+              contains: search,
+              mode: 'insensitive'
+            }
+          } : {},
+        ]
+    }});
+
+    if (!message) {
       throw new NotFoundException('Сообщение не найдено');
     }
 
-    return messagef;
+    return message;
+  }
+
+  async update(id: string, content: string) {
+
+    if (!content || content === '') {
+      throw new ConflictException('Сообщение не может быть пустым')
+    }
+
+    await this.prismaService.message.update({ 
+      where: {
+        id
+      },
+      data: {
+        isEdited: true,
+        content: content
+      }
+    });
+
+    return true;
   }
 
   async remove(id: string) {
-    const messagef = await this.prismaService.message.delete({ where : {id}});
+    const message = await this.prismaService.message.delete({ 
+      where: {
+        id
+      }
+    });
 
-    if (!messagef) {
+    if (!message) {
       throw new NotFoundException('Сообщение не найдено');
     }
 

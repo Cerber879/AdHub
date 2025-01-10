@@ -20,9 +20,6 @@ export class CreateAnnouncementInput {
   @MaxLength(500)
   public description: string;
 
-  @Field(() => Date)
-  public placementDate: Date;
-
   @Field(() => String)
   @IsString()
   @IsNotEmpty()

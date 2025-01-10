@@ -4,7 +4,6 @@ export function parseAnnouncementStatus(status: string): AnnouncementStatus | nu
     try {
         if(status) {
             const upperStatus = status.toUpperCase();
-            console.log(upperStatus)
             if (upperStatus == AnnouncementStatus.ACTIVE) {
                 return AnnouncementStatus.ACTIVE
             } else if (upperStatus == AnnouncementStatus.SOLD) {

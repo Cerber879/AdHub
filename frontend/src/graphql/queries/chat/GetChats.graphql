@@ -1,0 +1,17 @@
+query GetChats {
+  getChats {
+    createdAt
+		lastMessage
+    user_1 {
+      displayName
+    }
+    user_2 {
+      displayName
+    }
+    announcement {
+  		name
+      price
+      description
+		}
+  }
+}

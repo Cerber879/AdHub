@@ -2,7 +2,7 @@ import { InputType, Int, Field } from '@nestjs/graphql';
 import { IsNotEmpty, IsString } from "class-validator";
 
 @InputType()
-export class CreateMessageInput 
+export class CreateMessageInput
 {
   @Field(() => String)
   @IsString()
@@ -11,9 +11,6 @@ export class CreateMessageInput
 
   @Field(() => Int)
   public status: number;
-
-  @Field(() => Date)
-  public Date: Date;
 
   @Field(() => String)
   public userID: string;

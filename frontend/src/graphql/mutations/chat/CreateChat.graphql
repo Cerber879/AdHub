@@ -1,0 +1,3 @@
+mutation CreateChat($data: String!, $productId: String!) {
+  createChat(friendId: $data, productId: $productId)
+}

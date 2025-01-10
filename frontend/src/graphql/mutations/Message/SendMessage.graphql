@@ -1,0 +1,3 @@
+mutation sendMessage($data: CreateMessageInputChat!) {
+  sendMessage(input: $data)
+}

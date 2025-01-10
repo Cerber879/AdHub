@@ -4,26 +4,24 @@ import { IsInt, IsNotEmpty, IsString } from 'class-validator';
 
 @ObjectType()
 export class MessageModel implements Message {
-
   @Field(() => ID)
   public id: string;
 
-  @IsString()
-  @IsNotEmpty()
   @Field(() => String)
-  public Content: string;
+  public content: string;
 
-  @IsInt()
   @Field(() => Int)
-  public Status: number;
+  public status: number;
 
   @Field(() => Date)
-  public Date: Date;
+  public sentAt: Date;
 
   @Field(() => String)
-  public userID: string;
+  public isEdited: boolean;
+
+  @Field(() => String)
+  public senderId: string;
   
   @Field(() => String)
-  public chatID: string;
-
+  public chatId: string;
 }
