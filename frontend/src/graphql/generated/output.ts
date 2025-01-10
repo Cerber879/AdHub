@@ -103,6 +103,14 @@ export type ChangePhoneNumberInput = {
   phoneNumber: Scalars['String']['input'];
 };
 
+export type CharacteristicModel = {
+  __typename?: 'CharacteristicModel';
+  categoryId: Scalars['String']['output'];
+  id: Scalars['ID']['output'];
+  name: Scalars['String']['output'];
+  type: Scalars['String']['output'];
+};
+
 export type ChatInfoOutput = {
   __typename?: 'ChatInfoOutput';
   announcement?: Maybe<AnnouncementModel>;
@@ -110,13 +118,6 @@ export type ChatInfoOutput = {
   lastMessage?: Maybe<Scalars['String']['output']>;
   user_1: UserModel;
   user_2: UserModel;
-  
-export type CharacteristicModel = {
-  __typename?: 'CharacteristicModel';
-  categoryId: Scalars['String']['output'];
-  id: Scalars['ID']['output'];
-  name: Scalars['String']['output'];
-  type: Scalars['String']['output'];
 };
 
 export type CreateAnnouncementInput = {
@@ -133,6 +134,12 @@ export type CreateCategoryInput = {
   parentId?: InputMaybe<Scalars['String']['input']>;
 };
 
+export type CreateCharacteristicInput = {
+  categoryId: Scalars['String']['input'];
+  name: Scalars['String']['input'];
+  type: Scalars['String']['input'];
+};
+
 export type CreateMessageInput = {
   Content: Scalars['String']['input'];
   chatID: Scalars['String']['input'];
@@ -143,11 +150,6 @@ export type CreateMessageInput = {
 export type CreateMessageInputChat = {
   chatId: Scalars['String']['input'];
   content: Scalars['String']['input'];
-  
-export type CreateCharacteristicInput = {
-  categoryId: Scalars['String']['input'];
-  name: Scalars['String']['input'];
-  type: Scalars['String']['input'];
 };
 
 export type CreatePhotoInput = {
@@ -208,8 +210,9 @@ export type Mutation = {
   clearSessionCookie: Scalars['Boolean']['output'];
   createAnnouncement: Scalars['Boolean']['output'];
   createCategory: Scalars['Boolean']['output'];
-  createChat: Scalars['Boolean']['output'];
   createCharacteristic: Scalars['Boolean']['output'];
+  createChat: Scalars['Boolean']['output'];
+  createSocialLink: Scalars['Boolean']['output'];
   createUser: Scalars['Boolean']['output'];
   deleteAnnouncement: Scalars['Boolean']['output'];
   deleteAnnouncementCharacteristic: Scalars['Boolean']['output'];
@@ -219,22 +222,28 @@ export type Mutation = {
   loginUser: UserModel;
   logoutUser: Scalars['Boolean']['output'];
   removeChat: Scalars['Boolean']['output'];
-  removeMessage: Scalars['Boolean']['output'];
   removeFavourite: Scalars['Boolean']['output'];
+  removeMessage: Scalars['Boolean']['output'];
   removeProfileAvatar: Scalars['Boolean']['output'];
   removeSession: Scalars['Boolean']['output'];
+  removeSocialLink: Scalars['Boolean']['output'];
+  reorderSocialLinks: Scalars['Boolean']['output'];
   sendMessage: Scalars['Boolean']['output'];
   updateAnnouncement: Scalars['Boolean']['output'];
   updateAnnouncementCharacteristic: Scalars['Boolean']['output'];
   updateCategory: Scalars['Boolean']['output'];
-  updateMessage: Scalars['Boolean']['output'];
   updateCharacteristic: Scalars['Boolean']['output'];
+  updateMessage: Scalars['Boolean']['output'];
   updatePhotos: Scalars['Boolean']['output'];
+  updateSocialLink: Scalars['Boolean']['output'];
 };
 
 
 export type MutationCreatMessageArgs = {
   data: CreateMessageInput;
+};
+
+
 export type MutationAddAnnouncementCharacteristicArgs = {
   data: AddToAnnouncementMixedInput;
 };
@@ -285,11 +294,19 @@ export type MutationCreateCategoryArgs = {
 };
 
 
+export type MutationCreateCharacteristicArgs = {
+  data: CreateCharacteristicInput;
+};
+
+
 export type MutationCreateChatArgs = {
   friendId: Scalars['String']['input'];
   productId: Scalars['String']['input'];
-export type MutationCreateCharacteristicArgs = {
-  data: CreateCharacteristicInput;
+};
+
+
+export type MutationCreateSocialLinkArgs = {
+  data: SocialLinkInput;
 };
 
 
@@ -333,14 +350,28 @@ export type MutationRemoveChatArgs = {
 };
 
 
-export type MutationRemoveMessageArgs = {
 export type MutationRemoveFavouriteArgs = {
+  id: Scalars['String']['input'];
+};
+
+
+export type MutationRemoveMessageArgs = {
   id: Scalars['String']['input'];
 };
 
 
 export type MutationRemoveSessionArgs = {
   id: Scalars['String']['input'];
+};
+
+
+export type MutationRemoveSocialLinkArgs = {
+  id: Scalars['String']['input'];
+};
+
+
+export type MutationReorderSocialLinksArgs = {
+  list: Array<SocialLinkOrderInput>;
 };
 
 
@@ -364,17 +395,26 @@ export type MutationUpdateCategoryArgs = {
 };
 
 
+export type MutationUpdateCharacteristicArgs = {
+  data: UpdateCharacteristicMixedInput;
+};
+
+
 export type MutationUpdateMessageArgs = {
   content: Scalars['String']['input'];
   id: Scalars['String']['input'];
-export type MutationUpdateCharacteristicArgs = {
-  data: UpdateCharacteristicMixedInput;
 };
 
 
 export type MutationUpdatePhotosArgs = {
   deletePhotoIds: Array<Scalars['String']['input']>;
   newPhotos: Array<CreatePhotoInput>;
+};
+
+
+export type MutationUpdateSocialLinkArgs = {
+  data: SocialLinkInput;
+  id: Scalars['String']['input'];
 };
 
 /** Состояние товара */
@@ -396,6 +436,7 @@ export type Query = {
   findPrewiewSubcategories: Array<SubCutegoryModel>;
   findProfile: UserModel;
   findSessionsByUser: Array<SessionModel>;
+  findSocialLinks: Array<SocialLinkModel>;
   findUser: UserModel;
   getAnnouncementById: AnnouncementModel;
   getAnnouncementByIds: Array<AnnouncementModel>;
@@ -405,11 +446,9 @@ export type Query = {
   getAnnouncementsByCategory: Array<AnnouncementModel>;
   getCategoryById: CategoryModel;
   getChats: Array<ChatInfoOutput>;
-  getMainCategories: Array<CategoryModel>;
-  getMessages: Array<MessageModel>;
-  getPhotosByAnnouncementID: Array<PhotoModel>;
   getFavouritesByUserId: Array<AnnouncementModel>;
   getMainCategories: Array<CategoryModel>;
+  getMessages: Array<MessageModel>;
   getPhotosByAnnouncementId: Array<Scalars['String']['output']>;
   getSubcategories: Array<CategoryModel>;
 };
@@ -425,9 +464,13 @@ export type QueryFindAnnouncementsByFiltersArgs = {
 };
 
 
+export type QueryFindCharacteristicsArgs = {
+  id: Scalars['String']['input'];
+};
+
+
 export type QueryFindMessageArgs = {
   content: Scalars['String']['input'];
-export type QueryFindCharacteristicsArgs = {
   id: Scalars['String']['input'];
 };
 
@@ -504,6 +547,27 @@ export type SessionModel = {
   id: Scalars['ID']['output'];
   metadata: SessionMetadataModel;
   userId: Scalars['String']['output'];
+};
+
+export type SocialLinkInput = {
+  title: Scalars['String']['input'];
+  url: Scalars['String']['input'];
+};
+
+export type SocialLinkModel = {
+  __typename?: 'SocialLinkModel';
+  createdAt: Scalars['DateTime']['output'];
+  id: Scalars['ID']['output'];
+  position: Scalars['Float']['output'];
+  title: Scalars['String']['output'];
+  updatedAt: Scalars['DateTime']['output'];
+  url: Scalars['String']['output'];
+  userId: Scalars['String']['output'];
+};
+
+export type SocialLinkOrderInput = {
+  id: Scalars['String']['input'];
+  position: Scalars['Float']['input'];
 };
 
 export type SubCutegoryModel = {
@@ -677,20 +741,6 @@ export type UpdateCategoryMutationVariables = Exact<{
 
 export type UpdateCategoryMutation = { __typename?: 'Mutation', updateCategory: boolean };
 
-export type CreateChatMutationVariables = Exact<{
-  data: Scalars['String']['input'];
-  productId: Scalars['String']['input'];
-}>;
-
-
-export type CreateChatMutation = { __typename?: 'Mutation', createChat: boolean };
-
-export type DeleteChatMutationVariables = Exact<{
-  data: Scalars['String']['input'];
-}>;
-
-
-export type DeleteChatMutation = { __typename?: 'Mutation', removeChat: boolean };
 export type CreateCharacteristicMutationVariables = Exact<{
   data: CreateCharacteristicInput;
 }>;
@@ -711,6 +761,21 @@ export type UpdateCharacteristicMutationVariables = Exact<{
 
 
 export type UpdateCharacteristicMutation = { __typename?: 'Mutation', updateCharacteristic: boolean };
+
+export type CreateChatMutationVariables = Exact<{
+  data: Scalars['String']['input'];
+  productId: Scalars['String']['input'];
+}>;
+
+
+export type CreateChatMutation = { __typename?: 'Mutation', createChat: boolean };
+
+export type DeleteChatMutationVariables = Exact<{
+  data: Scalars['String']['input'];
+}>;
+
+
+export type DeleteChatMutation = { __typename?: 'Mutation', removeChat: boolean };
 
 export type AddFavouriteMutationVariables = Exact<{
   data: AddFavouriteInput;
@@ -788,12 +853,41 @@ export type ClearSessionCokkieMutationVariables = Exact<{ [key: string]: never; 
 
 export type ClearSessionCokkieMutation = { __typename?: 'Mutation', clearSessionCookie: boolean };
 
+export type CreateSocialLinkMutationVariables = Exact<{
+  data: SocialLinkInput;
+}>;
+
+
+export type CreateSocialLinkMutation = { __typename?: 'Mutation', createSocialLink: boolean };
+
 export type RemoveSessionMutationVariables = Exact<{
   id: Scalars['String']['input'];
 }>;
 
 
 export type RemoveSessionMutation = { __typename?: 'Mutation', removeSession: boolean };
+
+export type RemoveSocialLinkMutationVariables = Exact<{
+  id: Scalars['String']['input'];
+}>;
+
+
+export type RemoveSocialLinkMutation = { __typename?: 'Mutation', removeSocialLink: boolean };
+
+export type ReorderSocialLinksMutationVariables = Exact<{
+  list: Array<SocialLinkOrderInput> | SocialLinkOrderInput;
+}>;
+
+
+export type ReorderSocialLinksMutation = { __typename?: 'Mutation', reorderSocialLinks: boolean };
+
+export type UpdateSocialLinkMutationVariables = Exact<{
+  id: Scalars['String']['input'];
+  data: SocialLinkInput;
+}>;
+
+
+export type UpdateSocialLinkMutation = { __typename?: 'Mutation', updateSocialLink: boolean };
 
 export type FindMessageQueryVariables = Exact<{
   data: Scalars['String']['input'];
@@ -881,16 +975,17 @@ export type GetSubcategoriesQueryVariables = Exact<{
 
 export type GetSubcategoriesQuery = { __typename?: 'Query', getSubcategories: Array<{ __typename?: 'CategoryModel', id: string, name: string }> };
 
-export type GetChatsQueryVariables = Exact<{ [key: string]: never; }>;
-
-
-export type GetChatsQuery = { __typename?: 'Query', getChats: Array<{ __typename?: 'ChatInfoOutput', createdAt: any, lastMessage?: string | null, user_1: { __typename?: 'UserModel', displayName: string }, user_2: { __typename?: 'UserModel', displayName: string }, announcement?: { __typename?: 'AnnouncementModel', name: string, price: number, description: string } | null }> };
 export type FindCharacteristicsQueryVariables = Exact<{
   id: Scalars['String']['input'];
 }>;
 
 
 export type FindCharacteristicsQuery = { __typename?: 'Query', findCharacteristics: Array<{ __typename?: 'CharacteristicModel', id: string, name: string, type: string, categoryId: string }> };
+
+export type GetChatsQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type GetChatsQuery = { __typename?: 'Query', getChats: Array<{ __typename?: 'ChatInfoOutput', createdAt: any, lastMessage?: string | null, user_1: { __typename?: 'UserModel', displayName: string }, user_2: { __typename?: 'UserModel', displayName: string }, announcement?: { __typename?: 'AnnouncementModel', name: string, price: number, description: string } | null }> };
 
 export type CheckAnnouncementInFavouritesQueryVariables = Exact<{
   adId: Scalars['String']['input'];
@@ -920,6 +1015,11 @@ export type FindSessionByUserQueryVariables = Exact<{ [key: string]: never; }>;
 
 
 export type FindSessionByUserQuery = { __typename?: 'Query', findSessionsByUser: Array<{ __typename?: 'SessionModel', id: string, createdAt: string, metadata: { __typename?: 'SessionMetadataModel', ip: string, location: { __typename?: 'LocationModel', city: string, country: string, latidute: number, longitude: number }, device: { __typename?: 'DeviceModel', os: string, browser: string, type: string } } }> };
+
+export type FindSocialLinksQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type FindSocialLinksQuery = { __typename?: 'Query', findSocialLinks: Array<{ __typename?: 'SocialLinkModel', id: string, title: string, url: string, position: number }> };
 
 export type FindUserQueryVariables = Exact<{
   id: Scalars['String']['input'];
@@ -1402,18 +1502,6 @@ export function useUpdateCategoryMutation(baseOptions?: Apollo.MutationHookOptio
 export type UpdateCategoryMutationHookResult = ReturnType<typeof useUpdateCategoryMutation>;
 export type UpdateCategoryMutationResult = Apollo.MutationResult<UpdateCategoryMutation>;
 export type UpdateCategoryMutationOptions = Apollo.BaseMutationOptions<UpdateCategoryMutation, UpdateCategoryMutationVariables>;
-export const CreateChatDocument = gql`
-    mutation CreateChat($data: String!, $productId: String!) {
-  createChat(friendId: $data, productId: $productId)
-}
-    `;
-export type CreateChatMutationFn = Apollo.MutationFunction<CreateChatMutation, CreateChatMutationVariables>;
-
-/**
- * __useCreateChatMutation__
- *
- * To run a mutation, you first call `useCreateChatMutation` within a React component and pass it any options that fit your needs.
- * When your component renders, `useCreateChatMutation` returns a tuple that includes:
 export const CreateCharacteristicDocument = gql`
     mutation CreateCharacteristic($data: CreateCharacteristicInput!) {
   createCharacteristic(data: $data)
@@ -1432,32 +1520,6 @@ export type CreateCharacteristicMutationFn = Apollo.MutationFunction<CreateChara
  * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
  *
  * @example
- * const [createChatMutation, { data, loading, error }] = useCreateChatMutation({
- *   variables: {
- *      data: // value for 'data'
- *      productId: // value for 'productId'
- *   },
- * });
- */
-export function useCreateChatMutation(baseOptions?: Apollo.MutationHookOptions<CreateChatMutation, CreateChatMutationVariables>) {
-        const options = {...defaultOptions, ...baseOptions}
-        return Apollo.useMutation<CreateChatMutation, CreateChatMutationVariables>(CreateChatDocument, options);
-      }
-export type CreateChatMutationHookResult = ReturnType<typeof useCreateChatMutation>;
-export type CreateChatMutationResult = Apollo.MutationResult<CreateChatMutation>;
-export type CreateChatMutationOptions = Apollo.BaseMutationOptions<CreateChatMutation, CreateChatMutationVariables>;
-export const DeleteChatDocument = gql`
-    mutation DeleteChat($data: String!) {
-  removeChat(id: $data)
-}
-    `;
-export type DeleteChatMutationFn = Apollo.MutationFunction<DeleteChatMutation, DeleteChatMutationVariables>;
-
-/**
- * __useDeleteChatMutation__
- *
- * To run a mutation, you first call `useDeleteChatMutation` within a React component and pass it any options that fit your needs.
- * When your component renders, `useDeleteChatMutation` returns a tuple that includes:
  * const [createCharacteristicMutation, { data, loading, error }] = useCreateCharacteristicMutation({
  *   variables: {
  *      data: // value for 'data'
@@ -1489,7 +1551,6 @@ export type DeleteCharacteristicMutationFn = Apollo.MutationFunction<DeleteChara
  * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
  *
  * @example
- * const [deleteChatMutation, { data, loading, error }] = useDeleteChatMutation({
  * const [deleteCharacteristicMutation, { data, loading, error }] = useDeleteCharacteristicMutation({
  *   variables: {
  *      id: // value for 'id'
@@ -1534,6 +1595,69 @@ export function useUpdateCharacteristicMutation(baseOptions?: Apollo.MutationHoo
 export type UpdateCharacteristicMutationHookResult = ReturnType<typeof useUpdateCharacteristicMutation>;
 export type UpdateCharacteristicMutationResult = Apollo.MutationResult<UpdateCharacteristicMutation>;
 export type UpdateCharacteristicMutationOptions = Apollo.BaseMutationOptions<UpdateCharacteristicMutation, UpdateCharacteristicMutationVariables>;
+export const CreateChatDocument = gql`
+    mutation CreateChat($data: String!, $productId: String!) {
+  createChat(friendId: $data, productId: $productId)
+}
+    `;
+export type CreateChatMutationFn = Apollo.MutationFunction<CreateChatMutation, CreateChatMutationVariables>;
+
+/**
+ * __useCreateChatMutation__
+ *
+ * To run a mutation, you first call `useCreateChatMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useCreateChatMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [createChatMutation, { data, loading, error }] = useCreateChatMutation({
+ *   variables: {
+ *      data: // value for 'data'
+ *      productId: // value for 'productId'
+ *   },
+ * });
+ */
+export function useCreateChatMutation(baseOptions?: Apollo.MutationHookOptions<CreateChatMutation, CreateChatMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<CreateChatMutation, CreateChatMutationVariables>(CreateChatDocument, options);
+      }
+export type CreateChatMutationHookResult = ReturnType<typeof useCreateChatMutation>;
+export type CreateChatMutationResult = Apollo.MutationResult<CreateChatMutation>;
+export type CreateChatMutationOptions = Apollo.BaseMutationOptions<CreateChatMutation, CreateChatMutationVariables>;
+export const DeleteChatDocument = gql`
+    mutation DeleteChat($data: String!) {
+  removeChat(id: $data)
+}
+    `;
+export type DeleteChatMutationFn = Apollo.MutationFunction<DeleteChatMutation, DeleteChatMutationVariables>;
+
+/**
+ * __useDeleteChatMutation__
+ *
+ * To run a mutation, you first call `useDeleteChatMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useDeleteChatMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [deleteChatMutation, { data, loading, error }] = useDeleteChatMutation({
+ *   variables: {
+ *      data: // value for 'data'
+ *   },
+ * });
+ */
+export function useDeleteChatMutation(baseOptions?: Apollo.MutationHookOptions<DeleteChatMutation, DeleteChatMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<DeleteChatMutation, DeleteChatMutationVariables>(DeleteChatDocument, options);
+      }
+export type DeleteChatMutationHookResult = ReturnType<typeof useDeleteChatMutation>;
+export type DeleteChatMutationResult = Apollo.MutationResult<DeleteChatMutation>;
+export type DeleteChatMutationOptions = Apollo.BaseMutationOptions<DeleteChatMutation, DeleteChatMutationVariables>;
 export const AddFavouriteDocument = gql`
     mutation AddFavourite($data: AddFavouriteInput!) {
   addFavourite(data: $data)
@@ -1558,13 +1682,6 @@ export type AddFavouriteMutationFn = Apollo.MutationFunction<AddFavouriteMutatio
  *   },
  * });
  */
-export function useDeleteChatMutation(baseOptions?: Apollo.MutationHookOptions<DeleteChatMutation, DeleteChatMutationVariables>) {
-        const options = {...defaultOptions, ...baseOptions}
-        return Apollo.useMutation<DeleteChatMutation, DeleteChatMutationVariables>(DeleteChatDocument, options);
-      }
-export type DeleteChatMutationHookResult = ReturnType<typeof useDeleteChatMutation>;
-export type DeleteChatMutationResult = Apollo.MutationResult<DeleteChatMutation>;
-export type DeleteChatMutationOptions = Apollo.BaseMutationOptions<DeleteChatMutation, DeleteChatMutationVariables>;
 export function useAddFavouriteMutation(baseOptions?: Apollo.MutationHookOptions<AddFavouriteMutation, AddFavouriteMutationVariables>) {
         const options = {...defaultOptions, ...baseOptions}
         return Apollo.useMutation<AddFavouriteMutation, AddFavouriteMutationVariables>(AddFavouriteDocument, options);
@@ -1882,6 +1999,37 @@ export function useClearSessionCokkieMutation(baseOptions?: Apollo.MutationHookO
 export type ClearSessionCokkieMutationHookResult = ReturnType<typeof useClearSessionCokkieMutation>;
 export type ClearSessionCokkieMutationResult = Apollo.MutationResult<ClearSessionCokkieMutation>;
 export type ClearSessionCokkieMutationOptions = Apollo.BaseMutationOptions<ClearSessionCokkieMutation, ClearSessionCokkieMutationVariables>;
+export const CreateSocialLinkDocument = gql`
+    mutation CreateSocialLink($data: SocialLinkInput!) {
+  createSocialLink(data: $data)
+}
+    `;
+export type CreateSocialLinkMutationFn = Apollo.MutationFunction<CreateSocialLinkMutation, CreateSocialLinkMutationVariables>;
+
+/**
+ * __useCreateSocialLinkMutation__
+ *
+ * To run a mutation, you first call `useCreateSocialLinkMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useCreateSocialLinkMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [createSocialLinkMutation, { data, loading, error }] = useCreateSocialLinkMutation({
+ *   variables: {
+ *      data: // value for 'data'
+ *   },
+ * });
+ */
+export function useCreateSocialLinkMutation(baseOptions?: Apollo.MutationHookOptions<CreateSocialLinkMutation, CreateSocialLinkMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<CreateSocialLinkMutation, CreateSocialLinkMutationVariables>(CreateSocialLinkDocument, options);
+      }
+export type CreateSocialLinkMutationHookResult = ReturnType<typeof useCreateSocialLinkMutation>;
+export type CreateSocialLinkMutationResult = Apollo.MutationResult<CreateSocialLinkMutation>;
+export type CreateSocialLinkMutationOptions = Apollo.BaseMutationOptions<CreateSocialLinkMutation, CreateSocialLinkMutationVariables>;
 export const RemoveSessionDocument = gql`
     mutation RemoveSession($id: String!) {
   removeSession(id: $id)
@@ -1913,6 +2061,100 @@ export function useRemoveSessionMutation(baseOptions?: Apollo.MutationHookOption
 export type RemoveSessionMutationHookResult = ReturnType<typeof useRemoveSessionMutation>;
 export type RemoveSessionMutationResult = Apollo.MutationResult<RemoveSessionMutation>;
 export type RemoveSessionMutationOptions = Apollo.BaseMutationOptions<RemoveSessionMutation, RemoveSessionMutationVariables>;
+export const RemoveSocialLinkDocument = gql`
+    mutation RemoveSocialLink($id: String!) {
+  removeSocialLink(id: $id)
+}
+    `;
+export type RemoveSocialLinkMutationFn = Apollo.MutationFunction<RemoveSocialLinkMutation, RemoveSocialLinkMutationVariables>;
+
+/**
+ * __useRemoveSocialLinkMutation__
+ *
+ * To run a mutation, you first call `useRemoveSocialLinkMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useRemoveSocialLinkMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [removeSocialLinkMutation, { data, loading, error }] = useRemoveSocialLinkMutation({
+ *   variables: {
+ *      id: // value for 'id'
+ *   },
+ * });
+ */
+export function useRemoveSocialLinkMutation(baseOptions?: Apollo.MutationHookOptions<RemoveSocialLinkMutation, RemoveSocialLinkMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<RemoveSocialLinkMutation, RemoveSocialLinkMutationVariables>(RemoveSocialLinkDocument, options);
+      }
+export type RemoveSocialLinkMutationHookResult = ReturnType<typeof useRemoveSocialLinkMutation>;
+export type RemoveSocialLinkMutationResult = Apollo.MutationResult<RemoveSocialLinkMutation>;
+export type RemoveSocialLinkMutationOptions = Apollo.BaseMutationOptions<RemoveSocialLinkMutation, RemoveSocialLinkMutationVariables>;
+export const ReorderSocialLinksDocument = gql`
+    mutation ReorderSocialLinks($list: [SocialLinkOrderInput!]!) {
+  reorderSocialLinks(list: $list)
+}
+    `;
+export type ReorderSocialLinksMutationFn = Apollo.MutationFunction<ReorderSocialLinksMutation, ReorderSocialLinksMutationVariables>;
+
+/**
+ * __useReorderSocialLinksMutation__
+ *
+ * To run a mutation, you first call `useReorderSocialLinksMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useReorderSocialLinksMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [reorderSocialLinksMutation, { data, loading, error }] = useReorderSocialLinksMutation({
+ *   variables: {
+ *      list: // value for 'list'
+ *   },
+ * });
+ */
+export function useReorderSocialLinksMutation(baseOptions?: Apollo.MutationHookOptions<ReorderSocialLinksMutation, ReorderSocialLinksMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<ReorderSocialLinksMutation, ReorderSocialLinksMutationVariables>(ReorderSocialLinksDocument, options);
+      }
+export type ReorderSocialLinksMutationHookResult = ReturnType<typeof useReorderSocialLinksMutation>;
+export type ReorderSocialLinksMutationResult = Apollo.MutationResult<ReorderSocialLinksMutation>;
+export type ReorderSocialLinksMutationOptions = Apollo.BaseMutationOptions<ReorderSocialLinksMutation, ReorderSocialLinksMutationVariables>;
+export const UpdateSocialLinkDocument = gql`
+    mutation UpdateSocialLink($id: String!, $data: SocialLinkInput!) {
+  updateSocialLink(id: $id, data: $data)
+}
+    `;
+export type UpdateSocialLinkMutationFn = Apollo.MutationFunction<UpdateSocialLinkMutation, UpdateSocialLinkMutationVariables>;
+
+/**
+ * __useUpdateSocialLinkMutation__
+ *
+ * To run a mutation, you first call `useUpdateSocialLinkMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useUpdateSocialLinkMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [updateSocialLinkMutation, { data, loading, error }] = useUpdateSocialLinkMutation({
+ *   variables: {
+ *      id: // value for 'id'
+ *      data: // value for 'data'
+ *   },
+ * });
+ */
+export function useUpdateSocialLinkMutation(baseOptions?: Apollo.MutationHookOptions<UpdateSocialLinkMutation, UpdateSocialLinkMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<UpdateSocialLinkMutation, UpdateSocialLinkMutationVariables>(UpdateSocialLinkDocument, options);
+      }
+export type UpdateSocialLinkMutationHookResult = ReturnType<typeof useUpdateSocialLinkMutation>;
+export type UpdateSocialLinkMutationResult = Apollo.MutationResult<UpdateSocialLinkMutation>;
+export type UpdateSocialLinkMutationOptions = Apollo.BaseMutationOptions<UpdateSocialLinkMutation, UpdateSocialLinkMutationVariables>;
 export const FindMessageDocument = gql`
     query FindMessage($data: String!, $id: String!) {
   findMessage(content: $data, id: $id) {
@@ -2489,6 +2731,49 @@ export type GetSubcategoriesQueryHookResult = ReturnType<typeof useGetSubcategor
 export type GetSubcategoriesLazyQueryHookResult = ReturnType<typeof useGetSubcategoriesLazyQuery>;
 export type GetSubcategoriesSuspenseQueryHookResult = ReturnType<typeof useGetSubcategoriesSuspenseQuery>;
 export type GetSubcategoriesQueryResult = Apollo.QueryResult<GetSubcategoriesQuery, GetSubcategoriesQueryVariables>;
+export const FindCharacteristicsDocument = gql`
+    query FindCharacteristics($id: String!) {
+  findCharacteristics(id: $id) {
+    id
+    name
+    type
+    categoryId
+  }
+}
+    `;
+
+/**
+ * __useFindCharacteristicsQuery__
+ *
+ * To run a query within a React component, call `useFindCharacteristicsQuery` and pass it any options that fit your needs.
+ * When your component renders, `useFindCharacteristicsQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useFindCharacteristicsQuery({
+ *   variables: {
+ *      id: // value for 'id'
+ *   },
+ * });
+ */
+export function useFindCharacteristicsQuery(baseOptions: Apollo.QueryHookOptions<FindCharacteristicsQuery, FindCharacteristicsQueryVariables> & ({ variables: FindCharacteristicsQueryVariables; skip?: boolean; } | { skip: boolean; }) ) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<FindCharacteristicsQuery, FindCharacteristicsQueryVariables>(FindCharacteristicsDocument, options);
+      }
+export function useFindCharacteristicsLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<FindCharacteristicsQuery, FindCharacteristicsQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<FindCharacteristicsQuery, FindCharacteristicsQueryVariables>(FindCharacteristicsDocument, options);
+        }
+export function useFindCharacteristicsSuspenseQuery(baseOptions?: Apollo.SkipToken | Apollo.SuspenseQueryHookOptions<FindCharacteristicsQuery, FindCharacteristicsQueryVariables>) {
+          const options = baseOptions === Apollo.skipToken ? baseOptions : {...defaultOptions, ...baseOptions}
+          return Apollo.useSuspenseQuery<FindCharacteristicsQuery, FindCharacteristicsQueryVariables>(FindCharacteristicsDocument, options);
+        }
+export type FindCharacteristicsQueryHookResult = ReturnType<typeof useFindCharacteristicsQuery>;
+export type FindCharacteristicsLazyQueryHookResult = ReturnType<typeof useFindCharacteristicsLazyQuery>;
+export type FindCharacteristicsSuspenseQueryHookResult = ReturnType<typeof useFindCharacteristicsSuspenseQuery>;
+export type FindCharacteristicsQueryResult = Apollo.QueryResult<FindCharacteristicsQuery, FindCharacteristicsQueryVariables>;
 export const GetChatsDocument = gql`
     query GetChats {
   getChats {
@@ -2514,22 +2799,6 @@ export const GetChatsDocument = gql`
  *
  * To run a query within a React component, call `useGetChatsQuery` and pass it any options that fit your needs.
  * When your component renders, `useGetChatsQuery` returns an object from Apollo Client that contains loading, error, and data properties
-export const FindCharacteristicsDocument = gql`
-    query FindCharacteristics($id: String!) {
-  findCharacteristics(id: $id) {
-    id
-    name
-    type
-    categoryId
-  }
-}
-    `;
-
-/**
- * __useFindCharacteristicsQuery__
- *
- * To run a query within a React component, call `useFindCharacteristicsQuery` and pass it any options that fit your needs.
- * When your component renders, `useFindCharacteristicsQuery` returns an object from Apollo Client that contains loading, error, and data properties
  * you can use to render your UI.
  *
  * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
@@ -2556,31 +2825,6 @@ export type GetChatsQueryHookResult = ReturnType<typeof useGetChatsQuery>;
 export type GetChatsLazyQueryHookResult = ReturnType<typeof useGetChatsLazyQuery>;
 export type GetChatsSuspenseQueryHookResult = ReturnType<typeof useGetChatsSuspenseQuery>;
 export type GetChatsQueryResult = Apollo.QueryResult<GetChatsQuery, GetChatsQueryVariables>;
-export const GetPhotosByAnnouncementIdDocument = gql`
-    query GetPhotosByAnnouncementID($id: String!) {
-  getPhotosByAnnouncementID(id: $id) {
- * const { data, loading, error } = useFindCharacteristicsQuery({
- *   variables: {
- *      id: // value for 'id'
- *   },
- * });
- */
-export function useFindCharacteristicsQuery(baseOptions: Apollo.QueryHookOptions<FindCharacteristicsQuery, FindCharacteristicsQueryVariables> & ({ variables: FindCharacteristicsQueryVariables; skip?: boolean; } | { skip: boolean; }) ) {
-        const options = {...defaultOptions, ...baseOptions}
-        return Apollo.useQuery<FindCharacteristicsQuery, FindCharacteristicsQueryVariables>(FindCharacteristicsDocument, options);
-      }
-export function useFindCharacteristicsLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<FindCharacteristicsQuery, FindCharacteristicsQueryVariables>) {
-          const options = {...defaultOptions, ...baseOptions}
-          return Apollo.useLazyQuery<FindCharacteristicsQuery, FindCharacteristicsQueryVariables>(FindCharacteristicsDocument, options);
-        }
-export function useFindCharacteristicsSuspenseQuery(baseOptions?: Apollo.SkipToken | Apollo.SuspenseQueryHookOptions<FindCharacteristicsQuery, FindCharacteristicsQueryVariables>) {
-          const options = baseOptions === Apollo.skipToken ? baseOptions : {...defaultOptions, ...baseOptions}
-          return Apollo.useSuspenseQuery<FindCharacteristicsQuery, FindCharacteristicsQueryVariables>(FindCharacteristicsDocument, options);
-        }
-export type FindCharacteristicsQueryHookResult = ReturnType<typeof useFindCharacteristicsQuery>;
-export type FindCharacteristicsLazyQueryHookResult = ReturnType<typeof useFindCharacteristicsLazyQuery>;
-export type FindCharacteristicsSuspenseQueryHookResult = ReturnType<typeof useFindCharacteristicsSuspenseQuery>;
-export type FindCharacteristicsQueryResult = Apollo.QueryResult<FindCharacteristicsQuery, FindCharacteristicsQueryVariables>;
 export const CheckAnnouncementInFavouritesDocument = gql`
     query CheckAnnouncementInFavourites($adId: String!) {
   checkAnnouncementInFavourites(adId: $adId)
@@ -2805,6 +3049,48 @@ export type FindSessionByUserQueryHookResult = ReturnType<typeof useFindSessionB
 export type FindSessionByUserLazyQueryHookResult = ReturnType<typeof useFindSessionByUserLazyQuery>;
 export type FindSessionByUserSuspenseQueryHookResult = ReturnType<typeof useFindSessionByUserSuspenseQuery>;
 export type FindSessionByUserQueryResult = Apollo.QueryResult<FindSessionByUserQuery, FindSessionByUserQueryVariables>;
+export const FindSocialLinksDocument = gql`
+    query FindSocialLinks {
+  findSocialLinks {
+    id
+    title
+    url
+    position
+  }
+}
+    `;
+
+/**
+ * __useFindSocialLinksQuery__
+ *
+ * To run a query within a React component, call `useFindSocialLinksQuery` and pass it any options that fit your needs.
+ * When your component renders, `useFindSocialLinksQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useFindSocialLinksQuery({
+ *   variables: {
+ *   },
+ * });
+ */
+export function useFindSocialLinksQuery(baseOptions?: Apollo.QueryHookOptions<FindSocialLinksQuery, FindSocialLinksQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<FindSocialLinksQuery, FindSocialLinksQueryVariables>(FindSocialLinksDocument, options);
+      }
+export function useFindSocialLinksLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<FindSocialLinksQuery, FindSocialLinksQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<FindSocialLinksQuery, FindSocialLinksQueryVariables>(FindSocialLinksDocument, options);
+        }
+export function useFindSocialLinksSuspenseQuery(baseOptions?: Apollo.SkipToken | Apollo.SuspenseQueryHookOptions<FindSocialLinksQuery, FindSocialLinksQueryVariables>) {
+          const options = baseOptions === Apollo.skipToken ? baseOptions : {...defaultOptions, ...baseOptions}
+          return Apollo.useSuspenseQuery<FindSocialLinksQuery, FindSocialLinksQueryVariables>(FindSocialLinksDocument, options);
+        }
+export type FindSocialLinksQueryHookResult = ReturnType<typeof useFindSocialLinksQuery>;
+export type FindSocialLinksLazyQueryHookResult = ReturnType<typeof useFindSocialLinksLazyQuery>;
+export type FindSocialLinksSuspenseQueryHookResult = ReturnType<typeof useFindSocialLinksSuspenseQuery>;
+export type FindSocialLinksQueryResult = Apollo.QueryResult<FindSocialLinksQuery, FindSocialLinksQueryVariables>;
 export const FindUserDocument = gql`
     query FindUser($id: String!) {
   findUser(id: $id) {

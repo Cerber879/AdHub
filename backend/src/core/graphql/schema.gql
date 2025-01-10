@@ -83,18 +83,19 @@ input ChangePhoneNumberInput {
   phoneNumber: String!
 }
 
+type CharacteristicModel {
+  categoryId: String!
+  id: ID!
+  name: String!
+  type: String!
+}
+
 type ChatInfoOutput {
   announcement: AnnouncementModel
   createdAt: DateTime!
   lastMessage: String
   user_1: UserModel!
   user_2: UserModel!
-  
-type CharacteristicModel {
-  categoryId: String!
-  id: ID!
-  name: String!
-  type: String!
 }
 
 input CreateAnnouncementInput {
@@ -111,6 +112,12 @@ input CreateCategoryInput {
   parentId: String
 }
 
+input CreateCharacteristicInput {
+  categoryId: String!
+  name: String!
+  type: String!
+}
+
 input CreateMessageInput {
   Content: String!
   chatID: String!
@@ -121,11 +128,6 @@ input CreateMessageInput {
 input CreateMessageInputChat {
   chatId: String!
   content: String!
-  
-input CreateCharacteristicInput {
-  categoryId: String!
-  name: String!
-  type: String!
 }
 
 input CreatePhotoInput {
@@ -187,8 +189,9 @@ type Mutation {
   clearSessionCookie: Boolean!
   createAnnouncement(data: CreateAnnouncementInput!): Boolean!
   createCategory(data: CreateCategoryInput!): Boolean!
-  createChat(friendId: String!, productId: String!): Boolean!
   createCharacteristic(data: CreateCharacteristicInput!): Boolean!
+  createChat(friendId: String!, productId: String!): Boolean!
+  createSocialLink(data: SocialLinkInput!): Boolean!
   createUser(data: CreateUserInput!): Boolean!
   deleteAnnouncement(id: String!): Boolean!
   deleteAnnouncementCharacteristic(id: String!): Boolean!
@@ -198,17 +201,20 @@ type Mutation {
   loginUser(data: LoginInput!): UserModel!
   logoutUser: Boolean!
   removeChat(id: String!): Boolean!
-  removeMessage(id: String!): Boolean!
   removeFavourite(id: String!): Boolean!
+  removeMessage(id: String!): Boolean!
   removeProfileAvatar: Boolean!
   removeSession(id: String!): Boolean!
+  removeSocialLink(id: String!): Boolean!
+  reorderSocialLinks(list: [SocialLinkOrderInput!]!): Boolean!
   sendMessage(input: CreateMessageInputChat!): Boolean!
   updateAnnouncement(data: UpdateAnnouncementMixedInput!): Boolean!
   updateAnnouncementCharacteristic(data: UpdateAnnouncementCharacteristicMixedInput!): Boolean!
   updateCategory(data: UpdateCategoryMixedInput!): Boolean!
-  updateMessage(content: String!, id: String!): Boolean!
   updateCharacteristic(data: UpdateCharacteristicMixedInput!): Boolean!
+  updateMessage(content: String!, id: String!): Boolean!
   updatePhotos(deletePhotoIds: [String!]!, newPhotos: [CreatePhotoInput!]!): Boolean!
+  updateSocialLink(data: SocialLinkInput!, id: String!): Boolean!
 }
 
 """Состояние товара"""
@@ -229,6 +235,7 @@ type Query {
   findPrewiewSubcategories(id: String!): [SubCutegoryModel!]!
   findProfile: UserModel!
   findSessionsByUser: [SessionModel!]!
+  findSocialLinks: [SocialLinkModel!]!
   findUser(id: String!): UserModel!
   getAnnouncementById(id: String!): AnnouncementModel!
   getAnnouncementByIds(ids: [String!]!): [AnnouncementModel!]!
@@ -238,11 +245,9 @@ type Query {
   getAnnouncementsByCategory(id: String!): [AnnouncementModel!]!
   getCategoryById(id: String!): CategoryModel!
   getChats: [ChatInfoOutput!]!
-  getMainCategories: [CategoryModel!]!
-  getMessages(chatId: String!): [MessageModel!]!
-  getPhotosByAnnouncementID(id: String!): [PhotoModel!]!
   getFavouritesByUserId: [AnnouncementModel!]!
   getMainCategories: [CategoryModel!]!
+  getMessages(chatId: String!): [MessageModel!]!
   getPhotosByAnnouncementId(id: String!): [String!]!
   getSubcategories(id: String!): [CategoryModel!]!
 }
@@ -258,6 +263,26 @@ type SessionModel {
   id: ID!
   metadata: SessionMetadataModel!
   userId: String!
+}
+
+input SocialLinkInput {
+  title: String!
+  url: String!
+}
+
+type SocialLinkModel {
+  createdAt: DateTime!
+  id: ID!
+  position: Float!
+  title: String!
+  updatedAt: DateTime!
+  url: String!
+  userId: String!
+}
+
+input SocialLinkOrderInput {
+  id: String!
+  position: Float!
 }
 
 type SubCutegoryModel {
