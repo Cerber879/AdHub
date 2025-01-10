@@ -1,0 +1,129 @@
+.container {
+  position: relative;
+  max-width: 300px;
+  height: 25px;
+  padding: 0px 0px 10px 5px;
+  display: flex;
+  margin: 0;
+  flex-wrap: wrap;
+}
+
+.view {
+  position: relative;
+  width: 30px;
+  height: 30px;
+  cursor: pointer;
+  background-color: white;
+  transition:
+    border-color 0.3s ease,
+    background-color 0.3s ease;
+}
+
+.view:hover {
+  background-color: #e0e0e0;
+}
+
+.view_icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.sort_block {
+  margin-left: 5px;
+  position: relative;
+  height: 30px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.sort_icon {
+  pointer-events: none;
+  left: 5px;
+  position: absolute;
+  width: 15px;
+  height: 15px;
+}
+
+.select {
+  display: block;
+  padding: 5px 7px 5px 25px;
+  border-radius: 7px;
+  width: 100%;
+  margin: 0;
+  font-size: 15px;
+  cursor: pointer;
+  outline: none;
+  border-color: aliceblue;
+  border: none;
+  appearance: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  color: black;
+  transition:
+    border-color 0.3s ease,
+    background-color 0.3s ease;
+}
+
+.select:hover {
+  background-color: #e0e0e0;
+}
+
+.select:focus {
+  border-color: none;
+  border: none;
+  outline: none;
+}
+
+.dropdown {
+  position: absolute;
+  top: 20px;
+  left: 0;
+  padding: 0;
+  padding-top: 10px;
+  padding-bottom: 20px;
+  width: 200px;
+  background-color: #ffffff;
+  border: 1px solid #e0e0e0;
+  border-radius: 15px;
+  box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
+  z-index: 10;
+}
+
+.dropdown .option:first-child {
+  margin-left: 0;
+}
+
+.dropdown .option_active:first-child {
+  margin-left: 0;
+}
+
+.option {
+  list-style: none;
+  padding: 8px 12px;
+  cursor: pointer;
+  font-size: 14px;
+}
+
+.option:hover {
+  background-color: #ebeef3;
+}
+
+.option:active {
+  background-color: #d8dee3;
+}
+
+.option_active {
+  display: flex;
+  justify-content: space-between;
+  list-style: none;
+  padding: 8px 12px;
+  cursor: pointer;
+  font-size: 14px;
+  background-color: #b5cde1;
+}
+
+.tick_icon {
+  width: 15px;
+}

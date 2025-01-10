@@ -1,6 +1,6 @@
 import React from 'react';
-import AdvertisementTop from '../../components/Advertisement/AdvertismentPage/AdvertismentTop/AdvertismentTop';
-import AdvertisementData from '../../components/Advertisement/AdvertismentPage/AdvertismentData/AdvertisementData';
+import AdvertisementTop from '../../components/SearchNavigation/SearchNavigation';
+import AdvertisementData from '../../components/Advertisement/AdvertismentPage/Advertisement';
 
 const AdvertismentPage: React.FC = () => {
   return (

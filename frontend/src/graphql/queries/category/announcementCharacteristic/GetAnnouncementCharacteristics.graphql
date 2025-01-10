@@ -1,0 +1,8 @@
+query GetAnnouncementCharacteristics($id: String!) {
+  getAnnouncementCharacteristics(id: $id) {
+    id
+    value
+    productId
+    characteristicId
+  }
+}

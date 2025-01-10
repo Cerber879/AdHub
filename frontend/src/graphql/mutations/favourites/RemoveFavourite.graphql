@@ -1,0 +1,3 @@
+mutation RemoveFavourite($id: String!) {
+  removeFavourite(id: $id)
+}

@@ -1,15 +1,17 @@
-import type { Category } from "@/prisma/generated";
-import { ObjectType, Field, ID } from "@nestjs/graphql";
-import { CategoryModel } from "./category.model";
+import { Field, ID, ObjectType } from '@nestjs/graphql'
+
+import type { Category } from '@/prisma/generated'
+
+import { CategoryModel } from './category.model'
 
 @ObjectType()
 export class SubCutegoryModel {
   @Field(() => ID)
-  id: string;
+  id: string
 
   @Field(() => String)
-  name: string;
+  name: string
 
   @Field(() => [CategoryModel], { nullable: true })
-  subcategories?: CategoryModel[];
+  subcategories?: CategoryModel[]
 }

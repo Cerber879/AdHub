@@ -1,0 +1,13 @@
+query GetFavouritesByUserId {
+  getFavouritesByUserId {
+    id
+    userId
+    name
+    price
+    description
+    placementDate
+    status
+    condition
+    categoryId
+    }
+  }

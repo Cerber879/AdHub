@@ -165,9 +165,7 @@ model Favourites {
 model Photo {
   id String @id @default(uuid())
 
-  name       String @db.VarChar(50)
-  resolution String @db.VarChar(15)
-  link       String @db.VarChar(200)
+  link String @db.VarChar(200)
 
   announcementID String
 

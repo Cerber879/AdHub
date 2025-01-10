@@ -1,12 +1,19 @@
-import { Resolver, Query, Mutation, Args } from '@nestjs/graphql';
-import { AnnouncementService } from './announcement.service';
-import { CreateAnnouncementInput } from './inputs/create-announcement.input';
-import { UpdateAnnouncementInput, UpdateAnnouncementMixedInput } from './inputs/update-announcement.input';
-import { AnnouncementModel } from './models/announcement.model';
-import { Authorization } from '@/src/shared/decorators/auth.decorator';
-import { Authorized } from '@/src/shared/decorators/authorized.decorator';
-import { User } from '@/prisma/generated';
-import { AnnouncementFiltersInput } from './inputs/search-announcement.input';
+import { Args, Mutation, Query, Resolver } from '@nestjs/graphql'
+
+import { User } from '@/prisma/generated'
+import { Authorization } from '@/src/shared/decorators/auth.decorator'
+import { Authorized } from '@/src/shared/decorators/authorized.decorator'
+
+import { FavouritesModel } from '../favourites/models/favourite.model'
+
+import { AnnouncementService } from './announcement.service'
+import { CreateAnnouncementInput } from './inputs/create-announcement.input'
+import { AnnouncementFiltersInput } from './inputs/search-announcement.input'
+import {
+  UpdateAnnouncementInput,
+  UpdateAnnouncementMixedInput
+} from './inputs/update-announcement.input'
+import { AnnouncementModel } from './models/announcement.model'
 
 @Resolver('Announcement')
 export class AnnouncementResolver {
@@ -18,48 +25,57 @@ export class AnnouncementResolver {
     @Authorized() user: User,
     @Args('data') input: CreateAnnouncementInput
   ) {
-    return this.announcementService.create(input, user);
+    return this.announcementService.create(input, user)
   }
 
   @Query(() => [AnnouncementModel], { name: 'findAllAnnouncements' })
   async findAllAnnouncements() {
-    return this.announcementService.findAllAnnouncements();
+    return this.announcementService.findAllAnnouncements()
   }
 
   @Query(() => [AnnouncementModel], { name: 'findAnnouncementsByFilters' })
   async findAnnouncements(
     @Args('data', { type: () => AnnouncementFiltersInput })
-    filters: AnnouncementFiltersInput,
+    filters: AnnouncementFiltersInput
   ) {
-    return this.announcementService.findManyWithFilters(filters);
+    return this.announcementService.findManyWithFilters(filters)
   }
 
   @Query(() => AnnouncementModel, { name: 'getAnnouncementById' })
   async findById(@Args('id') id: string) {
-    return this.announcementService.findById(id);
+    return this.announcementService.findById(id)
+  }
+
+  @Query(() => [AnnouncementModel], { name: 'getAnnouncementByIds' })
+  async findByIds(@Args('ids', { type: () => [String] }) data: string[]) {
+    return this.announcementService.findByIds(data)
+  }
+
+  @Authorization()
+  @Query(() => [AnnouncementModel], { name: 'getAnnouncementByProfile' })
+  async findByProfile(@Authorized() user: User) {
+    return this.announcementService.findByProfile(user)
   }
 
   @Query(() => AnnouncementModel, { name: 'getAnnouncementByName' })
   async findByName(@Args('name') name: string) {
-    return this.announcementService.findByName(name);
+    return this.announcementService.findByName(name)
   }
 
   @Query(() => [AnnouncementModel], { name: 'getAnnouncementsByCategory' })
   async findByCategory(@Args('id') categoryId: string) {
-    return this.announcementService.findByCategory(categoryId);
+    return this.announcementService.findByCategory(categoryId)
   }
 
   @Authorization()
   @Mutation(() => Boolean, { name: 'updateAnnouncement' })
-  async update(
-    @Args('data') data: UpdateAnnouncementMixedInput
-  ) {
-    return this.announcementService.update(data.id, data.input);
+  async update(@Args('data') data: UpdateAnnouncementMixedInput) {
+    return this.announcementService.update(data.id, data.input)
   }
 
   @Authorization()
   @Mutation(() => Boolean, { name: 'deleteAnnouncement' })
   async delete(@Args('id') id: string) {
-    return this.announcementService.delete(id);
+    return this.announcementService.delete(id)
   }
 }

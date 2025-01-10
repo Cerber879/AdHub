@@ -1,9 +1,13 @@
-import { Resolver, Mutation, Query, Args } from '@nestjs/graphql';
-import { CategoryService } from './category.service';
-import { CreateCategoryInput } from './inputs/create-category.input';
-import { UpdateCategoryInput, UpdateCategoryMixedInput } from './inputs/update-category.input';
-import { CategoryModel } from './models/category.model';
-import { SubCutegoryModel } from './models/SubCateroty.model';
+import { Args, Mutation, Query, Resolver } from '@nestjs/graphql'
+
+import { CategoryService } from './category.service'
+import { CreateCategoryInput } from './inputs/create-category.input'
+import {
+  UpdateCategoryInput,
+  UpdateCategoryMixedInput
+} from './inputs/update-category.input'
+import { CategoryModel } from './models/category.model'
+import { SubCutegoryModel } from './models/SubCateroty.model'
 
 @Resolver('Category')
 export class CategoryResolver {
@@ -11,47 +15,45 @@ export class CategoryResolver {
 
   @Mutation(() => Boolean, { name: 'createCategory' })
   async createCategory(@Args('data') input: CreateCategoryInput) {
-    return this.categoryService.create(input);
+    return this.categoryService.create(input)
   }
 
   @Query(() => [CategoryModel], { name: 'getMainCategories' })
   async getMainCategories() {
-    return this.categoryService.getMainCategories();
+    return this.categoryService.getMainCategories()
   }
 
   @Query(() => CategoryModel, { name: 'getCategoryById' })
   async findById(@Args('id') id: string) {
-    return this.categoryService.findById(id);
+    return this.categoryService.findById(id)
   }
 
   @Query(() => [CategoryModel], { name: 'getSubcategories' })
   async findSubcategories(@Args('id') parentId: string) {
-    return this.categoryService.findSubcategories(parentId);
+    return this.categoryService.findSubcategories(parentId)
   }
 
   @Query(() => [SubCutegoryModel], { name: 'findPrewiewSubcategories' })
   async findPrewiewSubcategories(@Args('id') parentId: string) {
-    const categories = await this.categoryService.findSubcategories(parentId);
+    const categories = await this.categoryService.findSubcategories(parentId)
     return categories.map(async category => ({
       ...category,
       subcategories: await this.categoryService.findSubcategories(category.id)
-    }));
+    }))
   }
 
   @Query(() => [String], { name: 'findParentCategories' })
   async findParentCategories(@Args('id') id: string) {
-    return this.categoryService.findParentCategories(id);
+    return this.categoryService.findParentCategories(id)
   }
 
   @Mutation(() => Boolean, { name: 'updateCategory' })
-  async updateCategory(
-    @Args('data') data: UpdateCategoryMixedInput
-  ) {
-    return this.categoryService.update(data.id, data.input);
+  async updateCategory(@Args('data') data: UpdateCategoryMixedInput) {
+    return this.categoryService.update(data.id, data.input)
   }
 
   @Mutation(() => Boolean, { name: 'deleteCategory' })
   async deleteCategory(@Args('id') id: string) {
-    return this.categoryService.delete(id);
+    return this.categoryService.delete(id)
   }
 }

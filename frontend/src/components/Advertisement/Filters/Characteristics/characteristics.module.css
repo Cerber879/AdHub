@@ -1,0 +1,64 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  flex-wrap: wrap;
+  padding: 0px 0px 0px 30px;
+}
+
+.block_filters {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.title_block {
+  font-size: 20px;
+  font-weight: bold;
+}
+
+.price_input {
+  width: 70px;
+  -moz-appearance: textfield;
+  -webkit-appearance: none;
+  appearance: none;
+}
+
+.price_input[type='number']::-webkit-outer-spin-button,
+.price_input[type='number']::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+.price_input:focus {
+  outline: none;
+}
+
+.condition_block {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 20px;
+  flex-wrap: wrap;
+}
+
+.conditionButton {
+  padding: 8px 12px;
+  font-size: 14px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  cursor: pointer;
+  background-color: white;
+  color: black;
+  transition:
+    background-color 0.3s ease,
+    color 0.3s ease;
+}
+
+.conditionButton:hover {
+  background-color: #f0f0f0;
+}
+
+.conditionButton.active {
+  background-color: #007bff;
+  color: white;
+}

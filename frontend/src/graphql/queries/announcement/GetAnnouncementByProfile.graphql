@@ -1,0 +1,13 @@
+query GetAnnouncementByProfile {
+  getAnnouncementByProfile {
+    id
+    userId
+    categoryId
+    name
+    price
+    placementDate
+    description
+    status
+    condition
+  }
+}

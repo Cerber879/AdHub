@@ -1,3 +1,5 @@
+import React from 'react'
+
 import { Link } from 'react-router-dom'
 import { ROUTES } from '../../../../../utils/routes'
 
@@ -5,11 +7,10 @@ import styles from './preview.module.css'
 import PhotosBlock from '../../componentsPreview/PhotosBlock/PhotosBlock'
 import DataAdvertisment from '../../componentsPreview/SmallAdvertisment/DataAdvertisment/DataAdvertisment'
 
-import { FindAllAnnouncementsQuery } from '../../../../../graphql/generated/output'
+import { AnnouncementModel } from '../../../../../graphql/generated/output'
 
 interface PreviewSmallAdvertismentProps {
-  input: FindAllAnnouncementsQuery['findAllAnnouncements'][number] 
-
+  input: AnnouncementModel
 }
 
 const PreviewSmallAdvertisment: React.FC<PreviewSmallAdvertismentProps> = ({ input }) => { 
@@ -19,7 +20,7 @@ const PreviewSmallAdvertisment: React.FC<PreviewSmallAdvertismentProps> = ({ inp
       to={ROUTES.ITEMS + '/' + input.name + '/' + input.id} 
       className={styles.container}
     >
-      <PhotosBlock useStylesProfile={false}  />
+      <PhotosBlock useStylesProfile={false} input={input} />
       <DataAdvertisment input={input} />
       <div className={styles.gradient}></div>
     </Link>

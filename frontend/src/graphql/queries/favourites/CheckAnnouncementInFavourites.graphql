@@ -1,0 +1,3 @@
+query CheckAnnouncementInFavourites($adId: String!) {
+  checkAnnouncementInFavourites(adId: $adId)
+}

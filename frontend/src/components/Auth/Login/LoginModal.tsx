@@ -93,8 +93,8 @@ const LoginModal: React.FC<{ onClose: () => void, onOpenRegister: () => void }> 
           <img className={styles.close_button_icon} src="/images/modal/cross.svg" alt="Icon" width={10}/>
         </button>
         <div className={styles.header_name}>
-         <img src="/favicons.png" alt="Icon" width={50}/>
-         <h2>Войти в AdHub</h2>
+          <img src="/favicons.png" alt="Icon" width={50}/>
+          <h2>Войти в AdHub</h2>
         </div>
         {error && <span className={styles.error_message}>{error}</span>}
         <div className={styles.block_input}>

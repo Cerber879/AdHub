@@ -1,0 +1,3 @@
+mutation ChangeDisplayName($data: ChangeDisplayNameInput!) {
+  changeDisplayName(data: $data)
+}

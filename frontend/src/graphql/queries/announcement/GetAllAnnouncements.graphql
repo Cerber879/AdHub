@@ -9,7 +9,5 @@ query FindAllAnnouncements {
     description
     status
     condition
-    createdAt
-    updatedAt
   }
 }

@@ -1,10 +1,10 @@
-import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+import { createSlice, PayloadAction } from '@reduxjs/toolkit'
 
 export interface CategoryState {
-  currentIdCategory: string | null;
-  currentNameCategory: string | null;
-  selectIdCategories: string[];
-  showCatalogueModal: boolean;
+  currentIdCategory: string | null
+  currentNameCategory: string | null
+  selectIdCategories: string[]
+  showCatalogueModal: boolean
 }
 
 const initialState: CategoryState = {
@@ -12,28 +12,36 @@ const initialState: CategoryState = {
   currentNameCategory: null,
   selectIdCategories: [],
   showCatalogueModal: false,
-};
+}
 
 const categorySlice = createSlice({
   name: 'category',
   initialState,
   reducers: {
-    setCurrentCategory: (state, action: PayloadAction<{ id: string; name: string }>) => {
-      state.currentIdCategory = action.payload.id;
-      state.currentNameCategory = action.payload.name;
+    setCurrentCategory: (
+      state,
+      action: PayloadAction<{ id: string; name: string }>
+    ) => {
+      state.currentIdCategory = action.payload.id
+      state.currentNameCategory = action.payload.name
     },
     setShowCatalogueModal: (state, action: PayloadAction<boolean>) => {
-      state.showCatalogueModal = action.payload;
+      state.showCatalogueModal = action.payload
     },
     addSelectIdCategory: (state, action: PayloadAction<string>) => {
-      state.selectIdCategories.push(action.payload);
+      state.selectIdCategories.push(action.payload)
     },
-    clearCategories: (state) => {
-      state.currentIdCategory = null;
-      state.selectIdCategories = [];
+    clearCategories: state => {
+      state.currentIdCategory = null
+      state.selectIdCategories = []
     },
   },
-});
+})
 
-export const { setCurrentCategory, setShowCatalogueModal, addSelectIdCategory, clearCategories } = categorySlice.actions;
-export default categorySlice.reducer;
+export const {
+  setCurrentCategory,
+  setShowCatalogueModal,
+  addSelectIdCategory,
+  clearCategories,
+} = categorySlice.actions
+export default categorySlice.reducer

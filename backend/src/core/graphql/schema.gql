@@ -2,6 +2,27 @@
 # THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
 # ------------------------------------------------------
 
+input AddFavouriteInput {
+  announcementID: String!
+}
+
+input AddToAnnouncementInput {
+  characteristicId: String!
+  value: String!
+}
+
+input AddToAnnouncementMixedInput {
+  id: String!
+  input: AddToAnnouncementInput!
+}
+
+type AnnouncementCharacteristicModel {
+  characteristicId: String!
+  id: ID!
+  productId: String!
+  value: String!
+}
+
 input AnnouncementFiltersInput {
   categoryId: String
   condition: String
@@ -19,7 +40,6 @@ type AnnouncementModel {
   announcementCharacteristic: [String!]
   categoryId: String!
   condition: ProductCondition!
-  createdAt: DateTime!
   description: String!
   favourites: [String!]
   id: ID!
@@ -29,7 +49,6 @@ type AnnouncementModel {
   price: Float!
   review: [String!]
   status: AnnouncementStatus!
-  updatedAt: DateTime!
   userId: String!
 }
 
@@ -45,6 +64,10 @@ type CategoryModel {
   id: ID!
   name: String!
   parentId: String
+}
+
+input ChangeDisplayNameInput {
+  displayName: String!
 }
 
 input ChangeEmailInput {
@@ -66,6 +89,12 @@ type ChatInfoOutput {
   lastMessage: String
   user_1: UserModel!
   user_2: UserModel!
+  
+type CharacteristicModel {
+  categoryId: String!
+  id: ID!
+  name: String!
+  type: String!
 }
 
 input CreateAnnouncementInput {
@@ -92,13 +121,16 @@ input CreateMessageInput {
 input CreateMessageInputChat {
   chatId: String!
   content: String!
+  
+input CreateCharacteristicInput {
+  categoryId: String!
+  name: String!
+  type: String!
 }
 
 input CreatePhotoInput {
   announcementID: String!
   link: String!
-  name: String!
-  resolution: String!
 }
 
 input CreateUserInput {
@@ -144,7 +176,10 @@ type MessageModel {
 
 type Mutation {
   CreatMessage(data: CreateMessageInput!): Boolean!
+  addAnnouncementCharacteristic(data: AddToAnnouncementMixedInput!): Boolean!
+  addFavourite(data: AddFavouriteInput!): Boolean!
   addPhotoToAnnouncement(data: CreatePhotoInput!): Boolean!
+  changeDisplayName(data: ChangeDisplayNameInput!): Boolean!
   changeEmail(data: ChangeEmailInput!): Boolean!
   changePassword(data: ChangePasswordInput!): Boolean!
   changePhoneNumber(data: ChangePhoneNumberInput!): Boolean!
@@ -153,29 +188,27 @@ type Mutation {
   createAnnouncement(data: CreateAnnouncementInput!): Boolean!
   createCategory(data: CreateCategoryInput!): Boolean!
   createChat(friendId: String!, productId: String!): Boolean!
+  createCharacteristic(data: CreateCharacteristicInput!): Boolean!
   createUser(data: CreateUserInput!): Boolean!
   deleteAnnouncement(id: String!): Boolean!
+  deleteAnnouncementCharacteristic(id: String!): Boolean!
   deleteCategory(id: String!): Boolean!
+  deleteCharacteristic(id: String!): Boolean!
   deletePhoto(id: String!): Boolean!
   loginUser(data: LoginInput!): UserModel!
   logoutUser: Boolean!
   removeChat(id: String!): Boolean!
   removeMessage(id: String!): Boolean!
+  removeFavourite(id: String!): Boolean!
   removeProfileAvatar: Boolean!
   removeSession(id: String!): Boolean!
   sendMessage(input: CreateMessageInputChat!): Boolean!
   updateAnnouncement(data: UpdateAnnouncementMixedInput!): Boolean!
+  updateAnnouncementCharacteristic(data: UpdateAnnouncementCharacteristicMixedInput!): Boolean!
   updateCategory(data: UpdateCategoryMixedInput!): Boolean!
   updateMessage(content: String!, id: String!): Boolean!
+  updateCharacteristic(data: UpdateCharacteristicMixedInput!): Boolean!
   updatePhotos(deletePhotoIds: [String!]!, newPhotos: [CreatePhotoInput!]!): Boolean!
-}
-
-type PhotoModel {
-  announcementID: String!
-  id: ID!
-  link: String!
-  name: String!
-  resolution: String!
 }
 
 """Состояние товара"""
@@ -186,8 +219,10 @@ enum ProductCondition {
 }
 
 type Query {
+  checkAnnouncementInFavourites(adId: String!): Boolean!
   findAllAnnouncements: [AnnouncementModel!]!
   findAnnouncementsByFilters(data: AnnouncementFiltersInput!): [AnnouncementModel!]!
+  findCharacteristics(id: String!): [CharacteristicModel!]!
   findCurrentSession: SessionModel!
   findMessage(content: String!, id: String!): [MessageModel!]!
   findParentCategories(id: String!): [String!]!
@@ -196,13 +231,19 @@ type Query {
   findSessionsByUser: [SessionModel!]!
   findUser(id: String!): UserModel!
   getAnnouncementById(id: String!): AnnouncementModel!
+  getAnnouncementByIds(ids: [String!]!): [AnnouncementModel!]!
   getAnnouncementByName(name: String!): AnnouncementModel!
+  getAnnouncementByProfile: [AnnouncementModel!]!
+  getAnnouncementCharacteristics(id: String!): [AnnouncementCharacteristicModel!]!
   getAnnouncementsByCategory(id: String!): [AnnouncementModel!]!
   getCategoryById(id: String!): CategoryModel!
   getChats: [ChatInfoOutput!]!
   getMainCategories: [CategoryModel!]!
   getMessages(chatId: String!): [MessageModel!]!
   getPhotosByAnnouncementID(id: String!): [PhotoModel!]!
+  getFavouritesByUserId: [AnnouncementModel!]!
+  getMainCategories: [CategoryModel!]!
+  getPhotosByAnnouncementId(id: String!): [String!]!
   getSubcategories(id: String!): [CategoryModel!]!
 }
 
@@ -223,6 +264,16 @@ type SubCutegoryModel {
   id: ID!
   name: String!
   subcategories: [CategoryModel!]
+}
+
+input UpdateAnnouncementCharacteristicInput {
+  characteristicId: String
+  value: String
+}
+
+input UpdateAnnouncementCharacteristicMixedInput {
+  id: String!
+  input: UpdateAnnouncementCharacteristicInput!
 }
 
 input UpdateAnnouncementInput {
@@ -247,6 +298,17 @@ input UpdateCategoryInput {
 input UpdateCategoryMixedInput {
   id: String!
   input: UpdateCategoryInput!
+}
+
+input UpdateCharacteristicInput {
+  categoryId: String
+  name: String
+  type: String
+}
+
+input UpdateCharacteristicMixedInput {
+  id: String!
+  input: UpdateCharacteristicInput!
 }
 
 """The `Upload` scalar type represents a file upload."""

@@ -8,16 +8,17 @@ import styles from './app.module.css';
 import Home from '../pages/Home/HomePage';
 import CreateAdvertisementPage from '../pages/CreateAdvertisement/CreateAdvertisementPage';
 import AboutUs from '../pages/AboutUs/AboutUs';
-import Profile from '../pages/Profile/ProfileMain/Profile';
-import Favourites from '../pages/Profile/FavouritesPage/Favourites';
+import Profile from '../pages/Profile/elements/Profile';
+import Favourites from '../pages/Profile/elements/Favourites';
 import AdvertismentPage from '../pages/AdvertismentPage/AdvertismentPage';
-import Chat from '../pages/Profile/ChatPage/Chat';
-import AdvertisementList from '../components/Advertisement/ViewAdvertisementList/ViewAdvertisementList';
+import Chat from '../pages/Profile/elements/Chat';
 import NotFoundPage from '../pages/NotFoundPage/NotFoundPage';
+import Catalogue from '../pages/Catalogue/Catalogue';
+import Settings from '../pages/Profile/elements/Settings';
 
+import { ROUTES } from '../utils/routes';
 import { Header } from '../components/Header/Header';
 import { Footer } from '../components/Footer/Footer';
-import { ROUTES } from '../utils/routes';
 
 const App: React.FC = () => {
 
@@ -32,10 +33,12 @@ const App: React.FC = () => {
               <Route path={ROUTES.PROFILE} element={<Profile />} />
               <Route path={ROUTES.FAVOURITES} element={<Favourites />} />
               <Route path={ROUTES.MESSENGER} element={<Chat />} />a
-              <Route path={'/:category/:categoryId'} element={<AdvertisementList />} />
+              <Route path={ROUTES.SETTINGS} element={<Settings />} />
+              <Route path={'/:category/:categoryId'} element={<Catalogue />} />
               <Route path={ROUTES.ADDITEM} element={<CreateAdvertisementPage />} />
               <Route path={ROUTES.ABOUT} element={<AboutUs />} />
               <Route path={ROUTES.PROFILE + '/:userId'} element={<Profile />} /> 
+              <Route path={ROUTES.USER + '/:userId'} element={<Profile />} /> 
               <Route path={ROUTES.ITEMS + '/:adName/:adId'} element={<AdvertismentPage />} />
               <Route path={ROUTES.ITEMS + ROUTES.EDIT + '/:adId'} element={<></>} />
               

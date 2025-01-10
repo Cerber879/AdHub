@@ -2,7 +2,7 @@ import React from 'react';
 import styles from './about.module.css'
 
 const CreateChtoTo: React.FC = () => {
-    return (
+  return (
     <div className={styles.container}>
       <div className={styles.container__item}>
         <h2 className={styles.title}>Добро пожаловать на AdHub</h2>
@@ -33,8 +33,8 @@ const CreateChtoTo: React.FC = () => {
         </div>
 
         <div className={styles.ul_block}>
-        <h2 className={styles.title__text}>Наши преимущества</h2>
-        <ul className={styles.info_text__contetnt}>
+          <h2 className={styles.title__text}>Наши преимущества</h2>
+          <ul className={styles.info_text__contetnt}>
             <li>
             Широкий ассортимент: На нашем сайте вы найдете огромное количество товаров и услуг в различных категориях.
             </li>

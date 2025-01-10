@@ -1,6 +1,6 @@
 import React from 'react';
 import AdvertisementList from '../../components/Advertisement/ViewAdvertisementList/ViewAdvertisementList';
-import AdvertisementTop from '../../components/Advertisement/AdvertismentPage/AdvertismentTop/AdvertismentTop';
+import AdvertisementTop from '../../components/SearchNavigation/SearchNavigation';
 
 import styles from './home.module.css'
 

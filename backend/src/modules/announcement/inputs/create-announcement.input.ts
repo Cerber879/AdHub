@@ -1,5 +1,11 @@
-import { Field, Float, InputType } from "@nestjs/graphql";
-import { IsNotEmpty, IsNumber, IsPositive, IsString, MaxLength } from "class-validator";
+import { Field, Float, InputType } from '@nestjs/graphql'
+import {
+  IsNotEmpty,
+  IsNumber,
+  IsPositive,
+  IsString,
+  MaxLength
+} from 'class-validator'
 
 @InputType()
 export class CreateAnnouncementInput {
@@ -7,28 +13,28 @@ export class CreateAnnouncementInput {
   @IsString()
   @IsNotEmpty()
   @MaxLength(100)
-  public name: string;
+  public name: string
 
   @Field(() => Float)
   @IsNumber()
   @IsPositive()
-  public price: number;
+  public price: number
 
   @Field(() => String)
   @IsString()
   @IsNotEmpty()
   @MaxLength(500)
-  public description: string;
+  public description: string
 
   @Field(() => String)
   @IsString()
   @IsNotEmpty()
-  public status: string;
+  public status: string
 
   @Field(() => String)
   @IsString()
   @IsNotEmpty()
-  public condition: string;
+  public condition: string
 
   @Field(() => String)
   @IsString()

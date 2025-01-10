@@ -1,23 +1,23 @@
 .container {
-    position: relative;
-    display: flex;
-    flex-direction: column;
-    border-radius: 8px;
-    width: 230px;
-    height: 300px;
-    gap: 5px;
-    text-decoration: none;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  border-radius: 8px;
+  width: 230px;
+  height: 300px;
+  gap: 5px;
+  text-decoration: none;
 }
 
 .gradient {
-    border-radius: 8px;
-    position: absolute; 
-    width: 230px;
-    height: 300px;
-    transition: background-color 0.3s ease; 
-    pointer-events: none
+  border-radius: 8px;
+  position: absolute;
+  width: 230px;
+  height: 300px;
+  transition: background-color 0.3s ease;
+  pointer-events: none;
 }
 
-.container:hover .gradient { 
-    background-color: rgba(78, 87, 218, 0.1); 
+.container:hover .gradient {
+  background-color: rgba(78, 87, 218, 0.1);
 }

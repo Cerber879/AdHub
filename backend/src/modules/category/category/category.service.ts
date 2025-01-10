@@ -1,7 +1,9 @@
-import { ConflictException, Injectable } from '@nestjs/common';
-import { PrismaService } from '@/src/core/prisma/prisma.service';
-import { CreateCategoryInput } from './inputs/create-category.input';
-import { UpdateCategoryInput } from './inputs/update-category.input';
+import { ConflictException, Injectable } from '@nestjs/common'
+
+import { PrismaService } from '@/src/core/prisma/prisma.service'
+
+import { CreateCategoryInput } from './inputs/create-category.input'
+import { UpdateCategoryInput } from './inputs/update-category.input'
 
 @Injectable()
 export class CategoryService {
@@ -12,20 +14,20 @@ export class CategoryService {
 
     const existingCategory = await this.prismaService.category.findFirst({
       where: {
-        name,
-      },
+        name
+      }
     })
 
     if (existingCategory) {
-      throw new ConflictException('Такая категория уже существует');
+      throw new ConflictException('Такая категория уже существует')
     }
 
     await this.prismaService.category.create({
       data: {
         name,
-        parentId: parentId || null,
-      },
-    });
+        parentId: parentId || null
+      }
+    })
 
     return true
   }
@@ -33,54 +35,54 @@ export class CategoryService {
   async getMainCategories() {
     return this.prismaService.category.findMany({
       where: {
-        parentId: null,
-      },
-    });
+        parentId: null
+      }
+    })
   }
 
   async findById(id: string) {
     return this.prismaService.category.findUnique({
       where: {
-        id 
-      },
-    });
+        id
+      }
+    })
   }
 
   async findSubcategories(parentId: string) {
     return this.prismaService.category.findMany({
       where: {
         parentId: parentId
-    },
-    });
+      }
+    })
   }
 
   async findParentCategories(id: string): Promise<string[]> {
-    const parentNames: string[] = [];
-  
+    const parentNames: string[] = []
+
     let currentCategory = await this.prismaService.category.findUnique({
       where: { id },
-      include: { parent: true }, 
-    });
-  
+      include: { parent: true }
+    })
+    parentNames.push(currentCategory.id, currentCategory.name)
     while (currentCategory?.parent) {
-      parentNames.push(currentCategory.parent.name);
-  
+      parentNames.push(currentCategory.parent.name)
+
       currentCategory = await this.prismaService.category.findUnique({
         where: { id: currentCategory.parent.id },
-        include: { parent: true },
-      });
+        include: { parent: true }
+      })
     }
-  
-    return parentNames.reverse(); 
+
+    return parentNames.reverse()
   }
 
   async update(id: string, input: UpdateCategoryInput) {
     await this.prismaService.category.update({
-      where: { 
-        id 
+      where: {
+        id
       },
-      data: input,
-    });
+      data: input
+    })
 
     return true
   }
@@ -88,10 +90,10 @@ export class CategoryService {
   async delete(id: string) {
     await this.prismaService.category.delete({
       where: {
-        id 
-      },
-    });
+        id
+      }
+    })
 
-    return true;
+    return true
   }
 }
