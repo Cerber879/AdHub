@@ -159,14 +159,17 @@ model Message {
 model Review {
   id String @id @default(uuid())
 
-  grade       Float
-  description String @db.Text
+  rating  Float
+  content String @db.Text
 
-  userID         String
-  announcementID String
+  userId         String
+  announcementId String
 
-  user         User         @relation(fields: [userID], references: [id], onDelete: Cascade)
-  announcement Announcement @relation(fields: [announcementID], references: [id], onDelete: Cascade)
+  user         User         @relation(fields: [userId], references: [id], onDelete: Cascade)
+  announcement Announcement @relation(fields: [announcementId], references: [id], onDelete: Cascade)
+
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
 }
 
 model Favourites {

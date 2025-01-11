@@ -21,6 +21,7 @@ import { MessageModule } from '../modules/message/message.module';
 
 import { PrismaModule } from './prisma/prisma.module'
 import { RedisModule } from './redis/redis.module'
+import { ReviewModule } from '../modules/review/review.module'
 
 @Module({
   imports: [
@@ -39,6 +40,7 @@ import { RedisModule } from './redis/redis.module'
     AccountModule,
     SessionModule,
     ProfileModule,
+    ReviewModule,
     AnnouncementModule,
     CategoryModule,
     PhotoModule,

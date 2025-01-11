@@ -193,10 +193,12 @@ exports.Prisma.MessageScalarFieldEnum = {
 
 exports.Prisma.ReviewScalarFieldEnum = {
   id: 'id',
-  grade: 'grade',
-  description: 'description',
-  userID: 'userID',
-  announcementID: 'announcementID'
+  rating: 'rating',
+  content: 'content',
+  userId: 'userId',
+  announcementId: 'announcementId',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
 };
 
 exports.Prisma.FavouritesScalarFieldEnum = {

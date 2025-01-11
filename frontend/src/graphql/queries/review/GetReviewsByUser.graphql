@@ -1,0 +1,13 @@
+query GetReviewsByUser($userId: String!) {
+  getReviewsByUser(userId: $userId) {
+    id
+    rating
+    content
+    announcement {
+      name
+      price
+    }
+    createdAt,
+    updatedAt
+  }
+}

@@ -1,0 +1,13 @@
+query GetMyReviews {
+  getMyReviews {
+    id
+    rating
+    content
+    announcement {
+      name
+      price
+    }
+    createdAt,
+    updatedAt
+  }
+}

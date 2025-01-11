@@ -136,6 +136,13 @@ input CreatePhotoInput {
   link: String!
 }
 
+input CreateReviewInput {
+  announcementId: String!
+  content: String!
+  rating: Float!
+  userId: String!
+}
+
 input CreateUserInput {
   displayName: String!
   email: String
@@ -192,6 +199,7 @@ type Mutation {
   createCategory(data: CreateCategoryInput!): Boolean!
   createCharacteristic(data: CreateCharacteristicInput!): Boolean!
   createChat(friendId: String!, productId: String!): Boolean!
+  createReview(data: CreateReviewInput!): Boolean!
   createSocialLink(data: SocialLinkInput!): Boolean!
   createUser(data: CreateUserInput!): Boolean!
   deleteAnnouncement(id: String!): Boolean!
@@ -199,6 +207,7 @@ type Mutation {
   deleteCategory(id: String!): Boolean!
   deleteCharacteristic(id: String!): Boolean!
   deletePhoto(id: String!): Boolean!
+  deleteReview(id: String!): Boolean!
   deleteUser: Boolean!
   loginUser(data: LoginInput!): UserModel!
   logoutUser: Boolean!
@@ -216,6 +225,7 @@ type Mutation {
   updateCharacteristic(data: UpdateCharacteristicMixedInput!): Boolean!
   updateMessage(content: String!, id: String!): Boolean!
   updatePhotos(deletePhotoIds: [String!]!, newPhotos: [CreatePhotoInput!]!): Boolean!
+  updateReview(data: UpdateReviewInput!, id: String!): Boolean!
   updateSocialLink(data: SocialLinkInput!, id: String!): Boolean!
 }
 
@@ -250,8 +260,21 @@ type Query {
   getFavouritesByUserId: [AnnouncementModel!]!
   getMainCategories: [CategoryModel!]!
   getMessages(chatId: String!): [MessageModel!]!
+  getMyReviews: [ReviewModel!]!
   getPhotosByAnnouncementId(id: String!): [String!]!
+  getReviewsByUser(userId: String!): [ReviewModel!]!
   getSubcategories(id: String!): [CategoryModel!]!
+}
+
+type ReviewModel {
+  announcement: AnnouncementModel!
+  announcementId: String!
+  content: String!
+  createdAt: DateTime!
+  id: String!
+  rating: Float!
+  updatedAt: DateTime!
+  userId: String!
 }
 
 type SessionMetadataModel {
@@ -336,6 +359,11 @@ input UpdateCharacteristicInput {
 input UpdateCharacteristicMixedInput {
   id: String!
   input: UpdateCharacteristicInput!
+}
+
+input UpdateReviewInput {
+  content: String
+  rating: Float
 }
 
 """The `Upload` scalar type represents a file upload."""

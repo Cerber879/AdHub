@@ -10226,69 +10226,81 @@ export namespace Prisma {
   }
 
   export type ReviewAvgAggregateOutputType = {
-    grade: number | null
+    rating: number | null
   }
 
   export type ReviewSumAggregateOutputType = {
-    grade: number | null
+    rating: number | null
   }
 
   export type ReviewMinAggregateOutputType = {
     id: string | null
-    grade: number | null
-    description: string | null
-    userID: string | null
-    announcementID: string | null
+    rating: number | null
+    content: string | null
+    userId: string | null
+    announcementId: string | null
+    createdAt: Date | null
+    updatedAt: Date | null
   }
 
   export type ReviewMaxAggregateOutputType = {
     id: string | null
-    grade: number | null
-    description: string | null
-    userID: string | null
-    announcementID: string | null
+    rating: number | null
+    content: string | null
+    userId: string | null
+    announcementId: string | null
+    createdAt: Date | null
+    updatedAt: Date | null
   }
 
   export type ReviewCountAggregateOutputType = {
     id: number
-    grade: number
-    description: number
-    userID: number
-    announcementID: number
+    rating: number
+    content: number
+    userId: number
+    announcementId: number
+    createdAt: number
+    updatedAt: number
     _all: number
   }
 
 
   export type ReviewAvgAggregateInputType = {
-    grade?: true
+    rating?: true
   }
 
   export type ReviewSumAggregateInputType = {
-    grade?: true
+    rating?: true
   }
 
   export type ReviewMinAggregateInputType = {
     id?: true
-    grade?: true
-    description?: true
-    userID?: true
-    announcementID?: true
+    rating?: true
+    content?: true
+    userId?: true
+    announcementId?: true
+    createdAt?: true
+    updatedAt?: true
   }
 
   export type ReviewMaxAggregateInputType = {
     id?: true
-    grade?: true
-    description?: true
-    userID?: true
-    announcementID?: true
+    rating?: true
+    content?: true
+    userId?: true
+    announcementId?: true
+    createdAt?: true
+    updatedAt?: true
   }
 
   export type ReviewCountAggregateInputType = {
     id?: true
-    grade?: true
-    description?: true
-    userID?: true
-    announcementID?: true
+    rating?: true
+    content?: true
+    userId?: true
+    announcementId?: true
+    createdAt?: true
+    updatedAt?: true
     _all?: true
   }
 
@@ -10380,10 +10392,12 @@ export namespace Prisma {
 
   export type ReviewGroupByOutputType = {
     id: string
-    grade: number
-    description: string
-    userID: string
-    announcementID: string
+    rating: number
+    content: string
+    userId: string
+    announcementId: string
+    createdAt: Date
+    updatedAt: Date
     _count: ReviewCountAggregateOutputType | null
     _avg: ReviewAvgAggregateOutputType | null
     _sum: ReviewSumAggregateOutputType | null
@@ -10407,30 +10421,36 @@ export namespace Prisma {
 
   export type ReviewSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
-    grade?: boolean
-    description?: boolean
-    userID?: boolean
-    announcementID?: boolean
+    rating?: boolean
+    content?: boolean
+    userId?: boolean
+    announcementId?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
     user?: boolean | UserDefaultArgs<ExtArgs>
     announcement?: boolean | AnnouncementDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["review"]>
 
   export type ReviewSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
-    grade?: boolean
-    description?: boolean
-    userID?: boolean
-    announcementID?: boolean
+    rating?: boolean
+    content?: boolean
+    userId?: boolean
+    announcementId?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
     user?: boolean | UserDefaultArgs<ExtArgs>
     announcement?: boolean | AnnouncementDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["review"]>
 
   export type ReviewSelectScalar = {
     id?: boolean
-    grade?: boolean
-    description?: boolean
-    userID?: boolean
-    announcementID?: boolean
+    rating?: boolean
+    content?: boolean
+    userId?: boolean
+    announcementId?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
   }
 
   export type ReviewInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -10450,10 +10470,12 @@ export namespace Prisma {
     }
     scalars: $Extensions.GetPayloadResult<{
       id: string
-      grade: number
-      description: string
-      userID: string
-      announcementID: string
+      rating: number
+      content: string
+      userId: string
+      announcementId: string
+      createdAt: Date
+      updatedAt: Date
     }, ExtArgs["result"]["review"]>
     composites: {}
   }
@@ -10850,10 +10872,12 @@ export namespace Prisma {
    */ 
   interface ReviewFieldRefs {
     readonly id: FieldRef<"Review", 'String'>
-    readonly grade: FieldRef<"Review", 'Float'>
-    readonly description: FieldRef<"Review", 'String'>
-    readonly userID: FieldRef<"Review", 'String'>
-    readonly announcementID: FieldRef<"Review", 'String'>
+    readonly rating: FieldRef<"Review", 'Float'>
+    readonly content: FieldRef<"Review", 'String'>
+    readonly userId: FieldRef<"Review", 'String'>
+    readonly announcementId: FieldRef<"Review", 'String'>
+    readonly createdAt: FieldRef<"Review", 'DateTime'>
+    readonly updatedAt: FieldRef<"Review", 'DateTime'>
   }
     
 
@@ -13124,10 +13148,12 @@ export namespace Prisma {
 
   export const ReviewScalarFieldEnum: {
     id: 'id',
-    grade: 'grade',
-    description: 'description',
-    userID: 'userID',
-    announcementID: 'announcementID'
+    rating: 'rating',
+    content: 'content',
+    userId: 'userId',
+    announcementId: 'announcementId',
+    createdAt: 'createdAt',
+    updatedAt: 'updatedAt'
   };
 
   export type ReviewScalarFieldEnum = (typeof ReviewScalarFieldEnum)[keyof typeof ReviewScalarFieldEnum]
@@ -13840,20 +13866,24 @@ export namespace Prisma {
     OR?: ReviewWhereInput[]
     NOT?: ReviewWhereInput | ReviewWhereInput[]
     id?: StringFilter<"Review"> | string
-    grade?: FloatFilter<"Review"> | number
-    description?: StringFilter<"Review"> | string
-    userID?: StringFilter<"Review"> | string
-    announcementID?: StringFilter<"Review"> | string
+    rating?: FloatFilter<"Review"> | number
+    content?: StringFilter<"Review"> | string
+    userId?: StringFilter<"Review"> | string
+    announcementId?: StringFilter<"Review"> | string
+    createdAt?: DateTimeFilter<"Review"> | Date | string
+    updatedAt?: DateTimeFilter<"Review"> | Date | string
     user?: XOR<UserScalarRelationFilter, UserWhereInput>
     announcement?: XOR<AnnouncementScalarRelationFilter, AnnouncementWhereInput>
   }
 
   export type ReviewOrderByWithRelationInput = {
     id?: SortOrder
-    grade?: SortOrder
-    description?: SortOrder
-    userID?: SortOrder
-    announcementID?: SortOrder
+    rating?: SortOrder
+    content?: SortOrder
+    userId?: SortOrder
+    announcementId?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
     user?: UserOrderByWithRelationInput
     announcement?: AnnouncementOrderByWithRelationInput
   }
@@ -13863,20 +13893,24 @@ export namespace Prisma {
     AND?: ReviewWhereInput | ReviewWhereInput[]
     OR?: ReviewWhereInput[]
     NOT?: ReviewWhereInput | ReviewWhereInput[]
-    grade?: FloatFilter<"Review"> | number
-    description?: StringFilter<"Review"> | string
-    userID?: StringFilter<"Review"> | string
-    announcementID?: StringFilter<"Review"> | string
+    rating?: FloatFilter<"Review"> | number
+    content?: StringFilter<"Review"> | string
+    userId?: StringFilter<"Review"> | string
+    announcementId?: StringFilter<"Review"> | string
+    createdAt?: DateTimeFilter<"Review"> | Date | string
+    updatedAt?: DateTimeFilter<"Review"> | Date | string
     user?: XOR<UserScalarRelationFilter, UserWhereInput>
     announcement?: XOR<AnnouncementScalarRelationFilter, AnnouncementWhereInput>
   }, "id">
 
   export type ReviewOrderByWithAggregationInput = {
     id?: SortOrder
-    grade?: SortOrder
-    description?: SortOrder
-    userID?: SortOrder
-    announcementID?: SortOrder
+    rating?: SortOrder
+    content?: SortOrder
+    userId?: SortOrder
+    announcementId?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
     _count?: ReviewCountOrderByAggregateInput
     _avg?: ReviewAvgOrderByAggregateInput
     _max?: ReviewMaxOrderByAggregateInput
@@ -13889,10 +13923,12 @@ export namespace Prisma {
     OR?: ReviewScalarWhereWithAggregatesInput[]
     NOT?: ReviewScalarWhereWithAggregatesInput | ReviewScalarWhereWithAggregatesInput[]
     id?: StringWithAggregatesFilter<"Review"> | string
-    grade?: FloatWithAggregatesFilter<"Review"> | number
-    description?: StringWithAggregatesFilter<"Review"> | string
-    userID?: StringWithAggregatesFilter<"Review"> | string
-    announcementID?: StringWithAggregatesFilter<"Review"> | string
+    rating?: FloatWithAggregatesFilter<"Review"> | number
+    content?: StringWithAggregatesFilter<"Review"> | string
+    userId?: StringWithAggregatesFilter<"Review"> | string
+    announcementId?: StringWithAggregatesFilter<"Review"> | string
+    createdAt?: DateTimeWithAggregatesFilter<"Review"> | Date | string
+    updatedAt?: DateTimeWithAggregatesFilter<"Review"> | Date | string
   }
 
   export type FavouritesWhereInput = {
@@ -14564,56 +14600,70 @@ export namespace Prisma {
 
   export type ReviewCreateInput = {
     id?: string
-    grade: number
-    description: string
+    rating: number
+    content: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
     user: UserCreateNestedOneWithoutReviewInput
     announcement: AnnouncementCreateNestedOneWithoutReviewInput
   }
 
   export type ReviewUncheckedCreateInput = {
     id?: string
-    grade: number
-    description: string
-    userID: string
-    announcementID: string
+    rating: number
+    content: string
+    userId: string
+    announcementId: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
   }
 
   export type ReviewUpdateInput = {
     id?: StringFieldUpdateOperationsInput | string
-    grade?: FloatFieldUpdateOperationsInput | number
-    description?: StringFieldUpdateOperationsInput | string
+    rating?: FloatFieldUpdateOperationsInput | number
+    content?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     user?: UserUpdateOneRequiredWithoutReviewNestedInput
     announcement?: AnnouncementUpdateOneRequiredWithoutReviewNestedInput
   }
 
   export type ReviewUncheckedUpdateInput = {
     id?: StringFieldUpdateOperationsInput | string
-    grade?: FloatFieldUpdateOperationsInput | number
-    description?: StringFieldUpdateOperationsInput | string
-    userID?: StringFieldUpdateOperationsInput | string
-    announcementID?: StringFieldUpdateOperationsInput | string
+    rating?: FloatFieldUpdateOperationsInput | number
+    content?: StringFieldUpdateOperationsInput | string
+    userId?: StringFieldUpdateOperationsInput | string
+    announcementId?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
   export type ReviewCreateManyInput = {
     id?: string
-    grade: number
-    description: string
-    userID: string
-    announcementID: string
+    rating: number
+    content: string
+    userId: string
+    announcementId: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
   }
 
   export type ReviewUpdateManyMutationInput = {
     id?: StringFieldUpdateOperationsInput | string
-    grade?: FloatFieldUpdateOperationsInput | number
-    description?: StringFieldUpdateOperationsInput | string
+    rating?: FloatFieldUpdateOperationsInput | number
+    content?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
   export type ReviewUncheckedUpdateManyInput = {
     id?: StringFieldUpdateOperationsInput | string
-    grade?: FloatFieldUpdateOperationsInput | number
-    description?: StringFieldUpdateOperationsInput | string
-    userID?: StringFieldUpdateOperationsInput | string
-    announcementID?: StringFieldUpdateOperationsInput | string
+    rating?: FloatFieldUpdateOperationsInput | number
+    content?: StringFieldUpdateOperationsInput | string
+    userId?: StringFieldUpdateOperationsInput | string
+    announcementId?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
   export type FavouritesCreateInput = {
@@ -15312,34 +15362,40 @@ export namespace Prisma {
 
   export type ReviewCountOrderByAggregateInput = {
     id?: SortOrder
-    grade?: SortOrder
-    description?: SortOrder
-    userID?: SortOrder
-    announcementID?: SortOrder
+    rating?: SortOrder
+    content?: SortOrder
+    userId?: SortOrder
+    announcementId?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
   }
 
   export type ReviewAvgOrderByAggregateInput = {
-    grade?: SortOrder
+    rating?: SortOrder
   }
 
   export type ReviewMaxOrderByAggregateInput = {
     id?: SortOrder
-    grade?: SortOrder
-    description?: SortOrder
-    userID?: SortOrder
-    announcementID?: SortOrder
+    rating?: SortOrder
+    content?: SortOrder
+    userId?: SortOrder
+    announcementId?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
   }
 
   export type ReviewMinOrderByAggregateInput = {
     id?: SortOrder
-    grade?: SortOrder
-    description?: SortOrder
-    userID?: SortOrder
-    announcementID?: SortOrder
+    rating?: SortOrder
+    content?: SortOrder
+    userId?: SortOrder
+    announcementId?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
   }
 
   export type ReviewSumOrderByAggregateInput = {
-    grade?: SortOrder
+    rating?: SortOrder
   }
 
   export type FavouritesCountOrderByAggregateInput = {
@@ -16684,16 +16740,20 @@ export namespace Prisma {
 
   export type ReviewCreateWithoutUserInput = {
     id?: string
-    grade: number
-    description: string
+    rating: number
+    content: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
     announcement: AnnouncementCreateNestedOneWithoutReviewInput
   }
 
   export type ReviewUncheckedCreateWithoutUserInput = {
     id?: string
-    grade: number
-    description: string
-    announcementID: string
+    rating: number
+    content: string
+    announcementId: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
   }
 
   export type ReviewCreateOrConnectWithoutUserInput = {
@@ -16887,10 +16947,12 @@ export namespace Prisma {
     OR?: ReviewScalarWhereInput[]
     NOT?: ReviewScalarWhereInput | ReviewScalarWhereInput[]
     id?: StringFilter<"Review"> | string
-    grade?: FloatFilter<"Review"> | number
-    description?: StringFilter<"Review"> | string
-    userID?: StringFilter<"Review"> | string
-    announcementID?: StringFilter<"Review"> | string
+    rating?: FloatFilter<"Review"> | number
+    content?: StringFilter<"Review"> | string
+    userId?: StringFilter<"Review"> | string
+    announcementId?: StringFilter<"Review"> | string
+    createdAt?: DateTimeFilter<"Review"> | Date | string
+    updatedAt?: DateTimeFilter<"Review"> | Date | string
   }
 
   export type FavouritesUpsertWithWhereUniqueWithoutUserInput = {
@@ -17341,16 +17403,20 @@ export namespace Prisma {
 
   export type ReviewCreateWithoutAnnouncementInput = {
     id?: string
-    grade: number
-    description: string
+    rating: number
+    content: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
     user: UserCreateNestedOneWithoutReviewInput
   }
 
   export type ReviewUncheckedCreateWithoutAnnouncementInput = {
     id?: string
-    grade: number
-    description: string
-    userID: string
+    rating: number
+    content: string
+    userId: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
   }
 
   export type ReviewCreateOrConnectWithoutAnnouncementInput = {
@@ -18772,9 +18838,11 @@ export namespace Prisma {
 
   export type ReviewCreateManyUserInput = {
     id?: string
-    grade: number
-    description: string
-    announcementID: string
+    rating: number
+    content: string
+    announcementId: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
   }
 
   export type FavouritesCreateManyUserInput = {
@@ -18877,23 +18945,29 @@ export namespace Prisma {
 
   export type ReviewUpdateWithoutUserInput = {
     id?: StringFieldUpdateOperationsInput | string
-    grade?: FloatFieldUpdateOperationsInput | number
-    description?: StringFieldUpdateOperationsInput | string
+    rating?: FloatFieldUpdateOperationsInput | number
+    content?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     announcement?: AnnouncementUpdateOneRequiredWithoutReviewNestedInput
   }
 
   export type ReviewUncheckedUpdateWithoutUserInput = {
     id?: StringFieldUpdateOperationsInput | string
-    grade?: FloatFieldUpdateOperationsInput | number
-    description?: StringFieldUpdateOperationsInput | string
-    announcementID?: StringFieldUpdateOperationsInput | string
+    rating?: FloatFieldUpdateOperationsInput | number
+    content?: StringFieldUpdateOperationsInput | string
+    announcementId?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
   export type ReviewUncheckedUpdateManyWithoutUserInput = {
     id?: StringFieldUpdateOperationsInput | string
-    grade?: FloatFieldUpdateOperationsInput | number
-    description?: StringFieldUpdateOperationsInput | string
-    announcementID?: StringFieldUpdateOperationsInput | string
+    rating?: FloatFieldUpdateOperationsInput | number
+    content?: StringFieldUpdateOperationsInput | string
+    announcementId?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
   export type FavouritesUpdateWithoutUserInput = {
@@ -19104,9 +19178,11 @@ export namespace Prisma {
 
   export type ReviewCreateManyAnnouncementInput = {
     id?: string
-    grade: number
-    description: string
-    userID: string
+    rating: number
+    content: string
+    userId: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
   }
 
   export type FavouritesCreateManyAnnouncementInput = {
@@ -19160,23 +19236,29 @@ export namespace Prisma {
 
   export type ReviewUpdateWithoutAnnouncementInput = {
     id?: StringFieldUpdateOperationsInput | string
-    grade?: FloatFieldUpdateOperationsInput | number
-    description?: StringFieldUpdateOperationsInput | string
+    rating?: FloatFieldUpdateOperationsInput | number
+    content?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     user?: UserUpdateOneRequiredWithoutReviewNestedInput
   }
 
   export type ReviewUncheckedUpdateWithoutAnnouncementInput = {
     id?: StringFieldUpdateOperationsInput | string
-    grade?: FloatFieldUpdateOperationsInput | number
-    description?: StringFieldUpdateOperationsInput | string
-    userID?: StringFieldUpdateOperationsInput | string
+    rating?: FloatFieldUpdateOperationsInput | number
+    content?: StringFieldUpdateOperationsInput | string
+    userId?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
   export type ReviewUncheckedUpdateManyWithoutAnnouncementInput = {
     id?: StringFieldUpdateOperationsInput | string
-    grade?: FloatFieldUpdateOperationsInput | number
-    description?: StringFieldUpdateOperationsInput | string
-    userID?: StringFieldUpdateOperationsInput | string
+    rating?: FloatFieldUpdateOperationsInput | number
+    content?: StringFieldUpdateOperationsInput | string
+    userId?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
   export type FavouritesUpdateWithoutAnnouncementInput = {
