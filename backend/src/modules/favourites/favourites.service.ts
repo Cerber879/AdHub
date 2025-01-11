@@ -36,22 +36,29 @@ export class FavouritesService {
     return true
   }
   async delete(id: string, user: User) {
-    const existing = await this.prismaService.favourites.findUnique({
-      where: { id, userID: user.id }
+    const existing = await this.prismaService.favourites.findFirst({
+      where: { 
+        AND: [
+          { announcementID:id },
+          { userID: user.id }
+        ]
+      }
     })
 
     if (!existing) {
       throw new NotFoundException('Объявление не найдено')
     }
 
-    await this.prismaService.favourites.delete({
+    await this.prismaService.favourites.deleteMany({
       where: {
-        id
+        announcementID: id,
+        userID: user.id
       }
     })
 
     return true
   }
+
   async getFavouritesByUserId(userId: string) {
     return this.prismaService.favourites.findMany({
       where: {

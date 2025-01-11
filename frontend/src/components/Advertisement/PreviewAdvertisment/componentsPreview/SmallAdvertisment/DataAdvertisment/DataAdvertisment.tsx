@@ -1,4 +1,4 @@
-import React, { useMemo } from 'react'
+import React, { useEffect, useMemo, useState } from 'react'
 
 import styles from './data.module.css'
 
@@ -11,10 +11,24 @@ interface PreviewSmallAdvertismentProps {
 const DataAdvertisment = ({ input }: PreviewSmallAdvertismentProps) => {
 
   const { data } = useCheckAnnouncementInFavouritesQuery({ variables: { adId: input.id } })
-  const check = useMemo(() => data?.checkAnnouncementInFavourites, [data])
 
-  const [addFavourites] = useAddFavouriteMutation()
-  const [removeFavourites] = useRemoveFavouriteMutation()
+  const [check, setCheck] = useState(data?.checkAnnouncementInFavourites || false)
+
+  useEffect(() => {
+    setCheck(data?.checkAnnouncementInFavourites || false)
+  }, [data])
+
+  const [addFavourites] = useAddFavouriteMutation({
+    onCompleted() {
+      setCheck(true)
+    }
+  })
+
+  const [removeFavourites] = useRemoveFavouriteMutation({
+    onCompleted() {
+      setCheck(false)
+    }
+  })
 
   const handleAddFavourites = (id: string) => {
     addFavourites({ variables: { data: { announcementID: id } } })
@@ -36,7 +50,7 @@ const DataAdvertisment = ({ input }: PreviewSmallAdvertismentProps) => {
     <div className={styles.data_block}>
       <div className={styles.name_block}>
         <div className={styles.name_ad}>{input.name}</div>
-        <img className={styles.heart_icon} onClick={() => {handleFavourites(input.id)}} src={`${!check ? '/images/Advertisment/heart.svg' : '/images/Advertisment/heart_z.svg'}`} alt="heart" />
+        <img className={styles.heart_icon} onClick={() => {handleFavourites(input.id)}} src={`${!check ? '/images/Advertisment/heart.svg' : '/images/Advertisment/heart_blue_fill.svg'}`} alt="heart" />
       </div>
       <p className={styles.price}>{input.price} ₽</p>
     </div>

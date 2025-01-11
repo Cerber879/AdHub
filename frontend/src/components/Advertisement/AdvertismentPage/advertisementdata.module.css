@@ -72,10 +72,10 @@ li:first-child {
 .prev_button,
 .next_button {
   width: 40px;
-  height: 60px;
+  height: 40px;
+  border-radius: 50%;
   transform: translateY(-50%);
-  background-color: rgba(0, 0, 0, 0.5);
-  color: white;
+  background-color: rgba(255, 255, 255);
   border: none;
   font-size: 2rem;
   padding: 10px;
@@ -90,9 +90,12 @@ li:first-child {
   right: 10px;
 }
 
-.prev_button:hover,
-.next_button:hover {
-  background-color: rgba(0, 0, 0, 0.8);
+.arrow {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 20px;
+  height: 20px;
 }
 
 .header {
@@ -110,10 +113,16 @@ li:first-child {
   text-overflow: ellipsis;
 }
 .heart_icon {
-  width: 48px;
+  width: 40px;
   padding-right: 10px;
   height: 48px;
   cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.heart_icon:hover {
+  transform: scale(1.3); 
+  color: red; 
 }
 
 .title {

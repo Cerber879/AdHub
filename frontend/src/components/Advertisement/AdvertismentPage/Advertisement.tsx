@@ -14,8 +14,6 @@ const Advertisement = () => {
   const { data: imagesData } = useGetPhotosByAnnouncementIdQuery({ variables: { id: adId || '' } }); 
   const images = useMemo(() => imagesData?.getPhotosByAnnouncementId || [], [imagesData]);
 
-
-
   const { data: announcementCharacteristicsData } = useGetAnnouncementCharacteristicsQuery({ variables: { id: adId || '' } });
   const announcementCharacteristics = useMemo(() => announcementCharacteristicsData?.getAnnouncementCharacteristics || [], [announcementCharacteristicsData]);
 
@@ -36,9 +34,14 @@ const Advertisement = () => {
   const { data: userData } = useFindUserQuery({ variables: { id: advertisment?.userId || '' } });
   const user = userData?.findUser;
 
-
   const { data: checkData } = useCheckAnnouncementInFavouritesQuery({ variables: { adId: advertisment?.id || '' } })
-  const check = useMemo(() => checkData?.checkAnnouncementInFavourites, [checkData])
+  const [check, setCheck] = useState(checkData?.checkAnnouncementInFavourites || false)
+
+  useEffect(() => {
+    setCheck(checkData?.checkAnnouncementInFavourites || false);
+  }, [checkData]);
+
+  const [isHovered, setIsHovered] = useState(false);
 
   const [addFavourites] = useAddFavouriteMutation()
   const [removeFavourites] = useRemoveFavouriteMutation()
@@ -72,7 +75,7 @@ const Advertisement = () => {
       imageDivRef.current.style.setProperty('--background-image', `url('${images[currentImage]}')`);
     }
   }, [currentImage, images]);
-  console.log(user)
+
   return (
     <div className={styles.container}>
       <div>
@@ -91,20 +94,24 @@ const Advertisement = () => {
           <div className={styles.header}>
             <h2 className={styles.title}>{advertisment?.name}</h2>
           </div>
-          <div className={styles.image_div} ref={imageDivRef}>
+          <div className={styles.image_div} ref={imageDivRef} 
+            onMouseEnter={() => setIsHovered(true)} 
+            onMouseLeave={() => setIsHovered(false)}
+          >
             <img
               className={styles.image_block}
               src={images[currentImage]}
               alt="img"
             />
+            { isHovered && images.length > 1 &&
             <div className={styles.switch_buttons} >
               <button className={styles.prev_button} onClick={handlePrevImage}>
-                &lt; {/* Стрелка влево */}
+                <img className={styles.arrow} src="/images/Advertisment/arrow_left.svg" alt="left" />
               </button>
               <button className={styles.next_button} onClick={handleNextImage}>
-                &gt; {/* Стрелка вправо */}
+                <img className={styles.arrow} src="/images/Advertisment/arrow_right.svg" alt="right" />
               </button>
-            </div>
+            </div>}
           </div>
 
           <div className={styles.thumbnails}>
@@ -166,7 +173,7 @@ const Advertisement = () => {
         <div className={styles.info_block}>
           <div className={styles.header}>
             <p className={styles.price}>{advertisment?.price} ₽</p>
-            <img onClick={() => handleFavourites} className={styles.heart_icon} src={`${!check ? '/images/Advertisment/heart.svg' : '/images/Advertisment/heart_z.svg'}`} alt="heart" /> 
+            <img onClick={() => handleFavourites} className={styles.heart_icon} src={`${!check ? '/images/Advertisment/heart_black_out.svg' : '/images/Advertisment/heart_black_fill.svg'}`} alt="heart" /> 
           </div>
           <Link className={styles.user_info}
             to={ROUTES.USER + '/' + advertisment?.userId}
@@ -174,7 +181,7 @@ const Advertisement = () => {
             <span className={styles.user_name}>{user?.displayName}</span>
             <img
               className={styles.avatar}
-              src={user?.avatar != null ? user.avatar : ''}
+              src={user?.avatar != null ? user.avatar : '/images/Profile/user.svg'}
               alt="User Avatar"
             />
           </Link>

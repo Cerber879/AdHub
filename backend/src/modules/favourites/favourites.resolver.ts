@@ -28,7 +28,10 @@ export class FavouritesResolver {
   }
   @Authorization()
   @Mutation(() => Boolean, { name: 'removeFavourite' })
-  async removeFavourite(@Args('id') id: string, @Authorized() user: User) {
+  async removeFavourite(
+    @Args('id') id: string, 
+    @Authorized() user: User
+  ) {
     return this.favouritesService.delete(id, user)
   }
 
