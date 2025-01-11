@@ -9,10 +9,29 @@ const Sessions = () => {
   const { data: currentData } = useFindCurrentSessionQuery()
   const currenSession = currentData?.findCurrentSession
     
-  const { data: othersData } = useFindSessionByUserQuery()
+  const { data: othersData, fetchMore } = useFindSessionByUserQuery()
   const otherSessions = othersData?.findSessionsByUser
 
-  const [remove] = useRemoveSessionMutation()
+  const [remove] = useRemoveSessionMutation({
+    onCompleted: () => {
+      fetchMore({
+        variables: {
+          cursor: null
+        },
+        updateQuery: (prev, { fetchMoreResult }) => {
+          if (!fetchMoreResult) {
+            return prev
+          }
+          return {
+            ...prev,
+            findSessionsByUser: {
+              ...fetchMoreResult.findSessionsByUser
+            }
+          }
+        }
+      })
+    }
+  })
 
   const RemoveSession = (id: string) => {
     remove({ variables: { id: id } })
@@ -26,7 +45,6 @@ const Sessions = () => {
   };
     
   const browserIconUrl = getBrowserIconUrl(currenSession?.metadata.device.browser);
-
 
   const [showAboutModal, setShowAboutModal] = useState(false);
   const [sessionInfo, setSessionInfo] = useState<any>();
@@ -43,7 +61,6 @@ const Sessions = () => {
     setShowAboutModal(false)
   }
     
-
   return (
     <div className={styles.container}>
       <span className={styles.name}>Сессии</span>

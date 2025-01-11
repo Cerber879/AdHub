@@ -6,7 +6,7 @@ import { Authorized } from '@/src/shared/decorators/authorized.decorator'
 
 import { AccountService } from './account.service'
 import { ChangeEmailInput } from './inputs/change-email.input'
-import { ChangeDisplayNameInput } from './inputs/change-name.input'
+import { ChangeProfileInfoInput } from './inputs/change-name.input'
 import { ChangePasswordInput } from './inputs/change-password.input'
 import { ChangePhoneNumberInput } from './inputs/change-phone.input'
 import { CreateUserInput } from './inputs/create-user.input'
@@ -33,12 +33,12 @@ export class AccountResolver {
   }
 
   @Authorization()
-  @Mutation(() => Boolean, { name: 'changeDisplayName' })
-  public async changeDisplayName(
+  @Mutation(() => Boolean, { name: 'changeProfileInfo' })
+  public async changeProfileInfo(
     @Authorized() user: User,
-    @Args('data') input: ChangeDisplayNameInput
+    @Args('data') input: ChangeProfileInfoInput
   ) {
-    return this.accountService.changeDisplayName(user, input)
+    return this.accountService.changeProfileInfo(user, input)
   }
 
   @Authorization()
@@ -67,4 +67,5 @@ export class AccountResolver {
   ) {
     return this.accountService.changePassword(user, input)
   }
+
 }

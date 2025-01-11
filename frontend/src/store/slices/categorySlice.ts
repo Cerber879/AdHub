@@ -1,14 +1,14 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit'
 
 export interface CategoryState {
-  currentIdCategory: string | null
+  currentIdCategory: string
   currentNameCategory: string | null
   selectIdCategories: string[]
   showCatalogueModal: boolean
 }
 
 const initialState: CategoryState = {
-  currentIdCategory: null,
+  currentIdCategory: '',
   currentNameCategory: null,
   selectIdCategories: [],
   showCatalogueModal: false,
@@ -32,7 +32,7 @@ const categorySlice = createSlice({
       state.selectIdCategories.push(action.payload)
     },
     clearCategories: state => {
-      state.currentIdCategory = null
+      state.currentIdCategory = ''
       state.selectIdCategories = []
     },
   },

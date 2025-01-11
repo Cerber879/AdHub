@@ -5,8 +5,6 @@ import ListAdvertisments from '../../../components/Profile/ListAdvertisments/Lis
 import styles from '../profile.module.css'
 
 const ProfileMain = () => { 
-  
-  
   return (
     <div className={styles.container}>
       <ProfileListBar/>

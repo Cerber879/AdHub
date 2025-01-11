@@ -4,10 +4,11 @@ import styles from './data.module.css';
 import { Link } from 'react-router-dom';
 import { useFindPrewiewSubcategoriesQuery } from '../../../graphql/generated/output';
 import RenderSubcategories from './RenderSubcategories';
+import { RootState } from '../../../store/store';
 
 const DataCategory = () => {
-  const currentIdCategory = useSelector((state: any) => state.category.currentIdCategory);
-  const currentNameCategory = useSelector((state: any) => state.category.currentNameCategory);
+  const currentIdCategory = useSelector((state: RootState) => state.category.currentIdCategory);
+  const currentNameCategory = useSelector((state: RootState) => state.category.currentNameCategory);
 
   const { data } = useFindPrewiewSubcategoriesQuery({
     variables: { id: currentIdCategory },

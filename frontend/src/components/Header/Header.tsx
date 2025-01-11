@@ -4,19 +4,16 @@ import LoginModal from '../Auth/Login/LoginModal';
 import RegisterModal from '../Auth/Register/RegisterModal';
 import { Link } from 'react-router-dom';
 import { ROUTES } from '../../utils/routes';
-import { useSelector } from 'react-redux';
-import { useFindProfileQuery } from '../../graphql/generated/output';
+import { useCurrent } from '../../hooks/useCurrent';
 
 export function Header() {
 
   const [showLoginModal, setShowLoginModal] = useState(false);
   const [showRegisterModal, setShowRegisterModal] = useState(false);
 
-  const isAuthenticated = useSelector((state: any) => state.user.isAuthenticated)
+  const { user } = useCurrent()
+  console.log(user)
     
-  const { data } = useFindProfileQuery();
-  const _user = data?.findProfile;
-
   const handleRegister = () => {
     setShowRegisterModal(true)
     setShowLoginModal(false)
@@ -52,24 +49,24 @@ export function Header() {
       </div>
       <div className={styles.flex_block}>
 
-        {!isAuthenticated &&
-                    <button 
-                      className={`${styles.button_link} ${styles.auth}`}
-                      onClick={() => setShowLoginModal(true)}>
-                            Вход и Регистрация
-                    </button>
+        {!user &&
+          <button 
+            className={`${styles.button_link} ${styles.auth}`}
+            onClick={() => setShowLoginModal(true)}>
+                  Вход и Регистрация
+          </button>
         }
 
-        {isAuthenticated &&
-                    <Link 
-                      to={ROUTES.PROFILE}
-                      className={styles.button_link}>
-                      <span>Мои Объявления</span>
-                    </Link>
+        {user &&
+          <Link 
+            to={ROUTES.PROFILE}
+            className={styles.button_link}>
+            <span>Мои Объявления</span>
+          </Link>
         }
                 
         <Link
-          {...isAuthenticated 
+          {...user 
             ? { to: ROUTES.ADDITEM } 
             : { onClick: () => setShowLoginModal(true),
               to: ROUTES.HOME
@@ -81,7 +78,7 @@ export function Header() {
         </Link>
 
         <Link 
-          {...isAuthenticated 
+          {...user 
             ? { to: ROUTES.MESSENGER } 
             : { onClick: () => setShowLoginModal(true),
               to: ROUTES.HOME
@@ -91,7 +88,7 @@ export function Header() {
         </Link>
 
         <Link 
-          {...isAuthenticated 
+          {...user 
             ? { to: ROUTES.FAVOURITES } 
             : { onClick: () => setShowLoginModal(true),
               to: ROUTES.HOME
@@ -101,7 +98,7 @@ export function Header() {
         </Link>
 
         <Link 
-          {...isAuthenticated 
+          {...user 
             ? { to: ROUTES.PROFILE } 
             : { onClick: () => setShowLoginModal(true),
               to: ROUTES.HOME

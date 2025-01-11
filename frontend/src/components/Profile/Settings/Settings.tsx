@@ -5,12 +5,8 @@ import styles from './settings.module.css'
 import Account from './elements/Account/Account';
 import Profile from './elements/Profile/Profile';
 import Sessions from './elements/Sessions/Sessions';
-import { useFindProfileQuery } from '../../../graphql/generated/output';
 
 const ProfileListSettings = () => {
-
-  const { data } = useFindProfileQuery();
-  const user = data?.findProfile;
 
   const [activeTab, setActiveTab] = useState('profile');
   const handleTabChange = (tab: React.SetStateAction<string>) => {
@@ -39,7 +35,7 @@ const ProfileListSettings = () => {
         </button>
       </div>
         
-      {activeTab === 'profile' && user && <Profile input={user} />}
+      {activeTab === 'profile' && <Profile />}
       {activeTab === 'account' && <Account />}
       {activeTab === 'sessions' && <Sessions />}
     </div>

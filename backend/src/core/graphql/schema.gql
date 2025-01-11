@@ -66,10 +66,6 @@ type CategoryModel {
   parentId: String
 }
 
-input ChangeDisplayNameInput {
-  displayName: String!
-}
-
 input ChangeEmailInput {
   email: String!
 }
@@ -81,6 +77,11 @@ input ChangePasswordInput {
 
 input ChangePhoneNumberInput {
   phoneNumber: String!
+}
+
+input ChangeProfileInfoInput {
+  bio: String!
+  displayName: String!
 }
 
 type CharacteristicModel {
@@ -181,11 +182,11 @@ type Mutation {
   addAnnouncementCharacteristic(data: AddToAnnouncementMixedInput!): Boolean!
   addFavourite(data: AddFavouriteInput!): Boolean!
   addPhotoToAnnouncement(data: CreatePhotoInput!): Boolean!
-  changeDisplayName(data: ChangeDisplayNameInput!): Boolean!
   changeEmail(data: ChangeEmailInput!): Boolean!
   changePassword(data: ChangePasswordInput!): Boolean!
   changePhoneNumber(data: ChangePhoneNumberInput!): Boolean!
-  changeProfileAvatar(avatar: Upload!): Boolean!
+  changeProfileAvatar(file: Upload!): Boolean!
+  changeProfileInfo(data: ChangeProfileInfoInput!): Boolean!
   clearSessionCookie: Boolean!
   createAnnouncement(data: CreateAnnouncementInput!): Boolean!
   createCategory(data: CreateCategoryInput!): Boolean!
@@ -198,6 +199,7 @@ type Mutation {
   deleteCategory(id: String!): Boolean!
   deleteCharacteristic(id: String!): Boolean!
   deletePhoto(id: String!): Boolean!
+  deleteUser: Boolean!
   loginUser(data: LoginInput!): UserModel!
   logoutUser: Boolean!
   removeChat(id: String!): Boolean!

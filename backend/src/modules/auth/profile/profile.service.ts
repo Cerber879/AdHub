@@ -1,5 +1,6 @@
 import { BadRequestException, Injectable } from '@nestjs/common'
-import * as Upload from 'graphql-upload/Upload.js'
+import { FileUpload, Upload } from 'graphql-upload-minimal'
+
 import sharp from 'sharp'
 
 import { User } from '@/prisma/generated'
@@ -12,66 +13,49 @@ import { SocialLinkInput, SocialLinkOrderInput } from './inputs/social-link.inpu
 export class ProfileService {
   public constructor(private readonly prismaService: PrismaService) {}
 
-  public async changeAvatar(user: User, file: Upload) {
+	public async changeAvatar(user: User, file: FileUpload) {
     if (user.avatar) {
-      await this.prismaService.user.update({
-        where: {
-          id: user.id
-        },
-        data: {
-          avatar: null
-        }
-      })
+        // Удаление старого изображения из БД
+        await this.prismaService.user.update({
+            where: { id: user.id },
+            data: { avatar: null }, // Очищаем старое изображение
+        });
     }
 
-    const chunks: Buffer[] = []
+    const chunks: Buffer[] = [];
 
     for await (const chunk of file.createReadStream()) {
-      chunks.push(chunk)
+        chunks.push(chunk);
     }
 
-    const buffer = Buffer.concat(chunks)
+    const buffer = Buffer.concat(chunks); // Получаем весь файл в виде буфера
 
-    const fileName = `/profiles/${user.id}.webp`
+    // Преобразование изображения в формат WebP
+    const processedBuffer = await sharp(buffer)
+        .resize(512, 512) // Преобразуем изображение в размер 512x512
+        .webp() // Преобразуем в формат WebP
+        .toBuffer(); // Конвертируем в буфер
 
-    let processedBuffer: Buffer
+    // Преобразуем изображение в строку Base64
+    const avatarBase64 = processedBuffer.toString('base64');
 
-    if (file.filename && file.filename.endsWith('.gif')) {
-      processedBuffer = await sharp(buffer, { animated: true })
-        .resize(512, 512)
-        .webp()
-        .toBuffer()
-    } else {
-      processedBuffer = await sharp(buffer).resize(512, 512).webp().toBuffer()
-    }
-
+    // Сохраняем изображение в базе данных (например, как строку Base64)
     await this.prismaService.user.update({
-      where: {
-        id: user.id
-      },
-      data: {
-        avatar: fileName
-      }
-    })
+        where: { id: user.id },
+        data: { avatar: avatarBase64 },
+    });
 
-    return true
-  }
+    return true;
+}
 
-  public async removeAvatar(user: User) {
-    if (!user.avatar) {
-      return
-    }
 
+  public async deleteAvatar(userId: string): Promise<boolean> {
     await this.prismaService.user.update({
-      where: {
-        id: user.id
-      },
-      data: {
-        avatar: null
-      }
-    })
+      where: { id: userId },
+      data: { avatar: null }, 
+    });
 
-    return true
+    return true;
   }
 
   public async changeInfo(user: User, input: ChangeProfileInfoInput) {
@@ -119,7 +103,7 @@ export class ProfileService {
 			}
 		})
 
-		const newPosition = lastSocialLink ? lastSocialLink.position + 1 : 1
+		const newPosition = lastSocialLink ? lastSocialLink.position + 1 : 0
 
 		await this.prismaService.socialLink.create({
 			data: {

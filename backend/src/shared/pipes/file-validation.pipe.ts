@@ -11,6 +11,7 @@ import { validateFileFormat, validateFileSize } from '../utils/file.util'
 @Injectable()
 export class FileValidationPipe implements PipeTransform {
   public async transform(value: any, metadata: ArgumentMetadata) {
+    console.log(value)
     if (!value.filename) {
       throw new BadRequestException('Файл не загружен')
     }

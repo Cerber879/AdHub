@@ -1,165 +1,189 @@
-import { useState } from 'react';
-import { useDrag, useDrop } from 'react-dnd';
-import { DndProvider } from 'react-dnd';
-import { HTML5Backend } from 'react-dnd-html5-backend';
+import { useEffect, useMemo, useState } from 'react';
+import { closestCorners, DndContext } from '@dnd-kit/core';
 import styles from './socialLinks.module.css';
+import { useCreateSocialLinkMutation, useFindSocialLinksQuery, useRemoveSocialLinkMutation, useReorderSocialLinksMutation, useUpdateSocialLinkMutation } from '../../../../../../graphql/generated/output';
+import { arrayMove, SortableContext, useSortable, verticalListSortingStrategy } from '@dnd-kit/sortable';
+import { CSS } from '@dnd-kit/utilities';
 
 type SocialLink = {
   id: string;
-  name: string;
+  title: string;
   url: string;
+  position: number;
 };
 
 const SocialLinks = () => {
-  const [links, setLinks] = useState<SocialLink[]>([]);
+
+  const { data: socialLinksData, refetch, loading: socialLinksLoading } = useFindSocialLinksQuery();
+
+	const [create] = useCreateSocialLinkMutation({
+		onCompleted() {
+			refetch()
+		}
+	})
+
+  const [reorder] = useReorderSocialLinksMutation({
+    onCompleted() {
+      refetch()
+    }
+  })
+
+  const [links, setLinks] = useState<SocialLink[]>(socialLinksData?.findSocialLinks || []);
   const [name, setName] = useState('');
   const [url, setUrl] = useState('');
 
-  const handleAddLink = () => {
+  useEffect(() => {
+    setLinks(socialLinksData?.findSocialLinks || []);
+  }, [socialLinksData]);
+
+  function handleCreateSocialLink() {
     if (!name || !url || !isValidUrl(url)) return;
-
-    const newLink = {
-      id: Date.now().toString(),
-      name,
-      url,
-    };
-
-    setLinks((prevLinks) => [...prevLinks, newLink]);
+		create({ variables: { data: { title: name, url: url } } })
     setName('');
     setUrl('');
-  };
+	}
 
   const isValidUrl = (url: string) => {
     const regex = /^(https?|chrome):\/\/[^\s$.?#].[^\s]*$/;
     return regex.test(url);
-  };
+  }
 
-  const updateLink = (id: string, updatedLink: SocialLink) => {
-    setLinks(links.map(link => (link.id === id ? updatedLink : link)));
-  };
+  const getLinksPos = (id: string) => {
+    return links.findIndex(link => link.id === id)
+  }
 
-  const deleteLink = (id: string) => {
-    setLinks(links.filter(link => link.id !== id));
-  };
+  const handleDragEnd = (event: { over: any; active: any; }) => {
+    const { over, active } = event;
 
-  const moveLink = (draggedId: string, targetId: string) => {
-    const draggedIndex = links.findIndex((link) => link.id === draggedId);
-    const targetIndex = links.findIndex((link) => link.id === targetId);
+    if (active.id === over.id) {
+      return
+    }
 
-    if (draggedIndex === -1 || targetIndex === -1) return;
-
-    const newLinks = [...links];
-    const [draggedLink] = newLinks.splice(draggedIndex, 1);
-    newLinks.splice(targetIndex, 0, draggedLink);
-
-    setLinks(newLinks);
-  };
+    setLinks((prevLinks: SocialLink[]) => {
+      const originalPos = getLinksPos(active.id);
+      const targetPos = getLinksPos(over.id);
+  
+      const updatedLinks = arrayMove(prevLinks, originalPos, targetPos);
+      
+      const data = updatedLinks.map((link: SocialLink, index: number) => ({
+        id: link.id,
+        position: index,
+      }));
+  
+      reorder({ variables: { list: data } });
+  
+      return updatedLinks;  
+    });
+  }
 
   return (
-    <DndProvider backend={HTML5Backend}>
-      <div className={styles.block}>
-        <span className={styles.block_name}>Изменить ссылки на соцсети</span>
+    <div className={styles.block}>
+      <span className={styles.block_name}>Изменить ссылки на соцсети</span>
 
-        <div className={styles.block_section}>
-          <span className={styles.block_section_name}>Название</span>
-          <input
-            onChange={(event) => setName(event.target.value)}
-            value={name}
-            type="text"
-            className={styles.avatar_update_input}
-          />
-          <span className={styles.block_section_description}>Текст ссылки</span>
-        </div>
+      <div className={styles.block_section}>
+        <span className={styles.block_section_name}>Название</span>
+        <input
+          onChange={(event) => setName(event.target.value)}
+          value={name}
+          type="text"
+          className={styles.avatar_update_input}
+        />
+        <span className={styles.block_section_description}>Текст ссылки</span>
+      </div>
 
-        <div className={styles.block_section}>
-          <span className={styles.block_section_name}>URL ссылки</span>
-          <input
-            onChange={(event) => setUrl(event.target.value)}
-            value={url}
-            type="text"
-            className={styles.avatar_update_input}
-          />
-          <span className={styles.block_section_description}>Куда ведет эта ссылка? Введите полный адрес, например: https://google.com</span>
-        </div>
+      <div className={styles.block_section}>
+        <span className={styles.block_section_name}>URL ссылки</span>
+        <input
+          onChange={(event) => setUrl(event.target.value)}
+          value={url}
+          type="text"
+          className={styles.avatar_update_input}
+        />
+        <span className={styles.block_section_description}>Куда ведет эта ссылка? Введите полный адрес, например: https://google.com</span>
+      </div>
 
-        <button onClick={handleAddLink} className={styles.save_button}>
+      <button onClick={handleCreateSocialLink} className={styles.save_button}>
         Добавить ссылку
-        </button>
+      </button>
 
+
+      <DndContext collisionDetection={closestCorners} onDragEnd={handleDragEnd}>
         <div className={styles.linksContainer}>
           {links.length === 0 && <span className={styles.no_links}>Ссылок нет</span>}
-          {links.map((link, index) => (
-            <LinkItem
-              key={link.id}
-              link={link}
-              index={index}
-              moveLink={moveLink}
-              updateLink={updateLink}
-              deleteLink={deleteLink}
-            />
-          ))}
+          <SortableContext items={links} strategy={verticalListSortingStrategy} >
+            {socialLinksLoading ? <div className={styles.spinner}></div> 
+            : links.map((link) => (
+              <LinkItem
+                key={link.id}
+                link={link}
+                refetch={refetch}
+              />
+            ))}
+          </SortableContext>
         </div>
-      </div>
-    </DndProvider>
+      </DndContext>
+    </div>
 
   );
 };
 
 type LinkItemProps = {
   link: SocialLink;
-  index: number;
-  moveLink: (draggedId: string, targetId: string) => void;
-  updateLink: (id: string, updatedLink: SocialLink) => void;
-  deleteLink: (id: string) => void;
+  refetch: () => void;
 };
 
-const LinkItem = ({ link, index, moveLink, updateLink, deleteLink }: LinkItemProps) => {
+const LinkItem = ({ link, refetch }: LinkItemProps) => {
+
+  const [update] = useUpdateSocialLinkMutation({
+		onCompleted() {
+			refetch()
+		}
+	})
+
+	const [remove] = useRemoveSocialLinkMutation({
+		onCompleted() {
+			refetch()
+		}
+	})
+
+  const { attributes, listeners, setNodeRef, transform, transition } = useSortable({
+    id: link.id
+  })
+
+  const style = {
+    transform: CSS.Transform.toString(transform),
+    transition
+  }
+
   const [isEditing, setIsEditing] = useState(false);
   const [newUrl, setNewUrl] = useState(link.url);
-  const [newName, setNewName] = useState(link.name);
+  const [newName, setNewName] = useState(link.title);
 
-  const hasChanges = newUrl !== link.url || newName !== link.name;
-
-  const [{ isDragging }, drag, preview] = useDrag({
-    type: 'link',
-    item: { id: link.id, index },
-    collect: (monitor) => ({
-      isDragging: monitor.isDragging(),
-    }),
-  });
-
-  const [, drop] = useDrop({
-    accept: 'link',
-    hover: (item: { id: string; index: number }) => {
-      if (item.index !== index) {
-        moveLink(item.id, link.id);
-        item.index = index;
-      }
-    },
-  });
+  const hasChanges = newUrl !== link.url || newName !== link.title;
 
   const handleSave = () => {
-    updateLink(link.id, { ...link, name: newName, url: newUrl });
+    update({ variables: { id: link.id, data: { title: newName, url: newUrl } } });
     setIsEditing(false);
   };
 
   const handleCancel = () => {
-    setNewName(link.name);
+    setNewName(link.title);
     setNewUrl(link.url);
     setIsEditing(false);
   };
 
   const handleDelete = () => {
-    deleteLink(link.id);
+    remove({ variables: { id: link.id } });
   };
 
   return (
     <div
-      ref={(node) => drag(drop(node))}
-      className={`${styles.linkItem} ${isDragging ? styles.dragging : ''}`}
+      ref={setNodeRef}
+      className={styles.linkItem}
+      style={style}
     >
       <div className={styles.link}>
-        <div className={styles.target}>
+        <div className={styles.target} {...attributes} {...listeners}>
           <img className={styles.targetIcon} src="/images/Profile/drag.svg" alt="target" />
         </div>
         <div className={styles.linkContent}>
@@ -182,7 +206,7 @@ const LinkItem = ({ link, index, moveLink, updateLink, deleteLink }: LinkItemPro
             </div>
           ) : (
             <div className={styles.linkInfo}>
-              <span className={styles.linkName}>{link.name}</span>
+              <span className={styles.linkName}>{link.title}</span>
               <a href={link.url} target="_blank" rel="noopener noreferrer" className={styles.linkUrl}>
                 {link.url}
               </a>
@@ -202,8 +226,14 @@ const LinkItem = ({ link, index, moveLink, updateLink, deleteLink }: LinkItemPro
           </div>
         )}
         <div className={styles.linkActions}>
-          {!isEditing && <button onClick={() => setIsEditing(true)} className={styles.edit_button}><img src="/images/Profile/pencil.svg" alt="edit" /></button>}
-          <button onClick={handleDelete} className={styles.edit_button}><img src="/images/Profile/trash_2.svg" alt="trash_2" /></button>
+          {!isEditing && 
+            <button onClick={() => setIsEditing(true)} className={styles.edit_button}>
+              <img src="/images/Profile/pencil.svg" alt="edit" />
+            </button>
+          }
+          <button onClick={handleDelete} className={styles.edit_button}>
+            <img src="/images/Profile/trash_2.svg" alt="trash_2" />
+          </button>
         </div>
       </div>
     </div>

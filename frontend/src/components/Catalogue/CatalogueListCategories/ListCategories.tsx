@@ -5,6 +5,7 @@ import styles from './categories.module.css';
 import { useGetMainCategoriesQuery } from '../../../graphql/generated/output';
 import { Link } from 'react-router-dom';
 import { useEffect, useMemo } from 'react';
+import { RootState } from '../../../store/store';
 
 const ListCategories = () => {
   const dispatch = useDispatch();
@@ -12,7 +13,7 @@ const ListCategories = () => {
   
   const categories = useMemo(() => data?.getMainCategories || [], [data]);
   
-  const currentIdCategory = useSelector((state: any) => state.category.currentIdCategory);
+  const currentIdCategory = useSelector((state: RootState) => state.category.currentIdCategory);
 
   useEffect(() => {
     if (categories.length > 0) {

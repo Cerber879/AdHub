@@ -8,6 +8,7 @@ import SmallSkeleton from '../Skeleton/SmallSkeleton/SmallSkeleton';
 import styles from './advertisment.module.css';
 import { useParams } from 'react-router-dom';
 import BigSkeleton from '../Skeleton/BigSkeleton/BigSkeleton';
+import { RootState } from '../../../store/store';
 
 const AdvertisementList: React.FC = () => {
   const { categoryId } = useParams();
@@ -19,7 +20,7 @@ const AdvertisementList: React.FC = () => {
 
   const [searchKey, setSearchKey] = useState(0); 
 
-  const globalFilters = useSelector((state: any) => state.filtersSearch);
+  const globalFilters = useSelector((state: RootState) => state.filtersSearch);
   const filters = useMemo(() => {
     return categoryId ? { ...globalFilters, categoryId } : globalFilters;
   }, [categoryId, globalFilters]);

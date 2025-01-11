@@ -14,6 +14,7 @@ import { getSessionMetadata } from '@/src/shared/utils/session-metadata.util'
 
 import { PrismaService } from './../../../core/prisma/prisma.service'
 import { LoginInput } from './inputs/login.input'
+import { User } from '@/prisma/generated'
 
 @Injectable()
 export class SessionService {
@@ -147,6 +148,16 @@ export class SessionService {
     await this.redisService.del(
       `${this.configService.getOrThrow<string>('SESSION_FOLDER')}${id}`
     )
+
+    return true
+  }
+  
+  public async delete(user: User) {
+    await this.prismaService.user.delete({
+      where: {
+        id: user.id
+      }
+    })
 
     return true
   }

@@ -2,11 +2,12 @@ import React, { useState, useRef, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { setFilters } from '../../../store/slices/filtersSearchSlice';
 import styles from './filters.module.css';
+import { RootState } from '../../../store/store';
 
 const Filters: React.FC = () => {
   const dispatch = useDispatch();
 
-  const filters = useSelector((state: any) => state.filtersSearch);
+  const filters = useSelector((state: RootState) => state.filtersSearch);
 
   const [isOpen, setIsOpen] = useState(false);
   const [selectedLabel, setSelectedLabel] = useState('Сортировка');

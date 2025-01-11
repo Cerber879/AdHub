@@ -16,7 +16,7 @@ interface PreviewSmallAdvertismentProps {
 const PreviewProfileAdvertisment: React.FC<PreviewSmallAdvertismentProps> = ({ input }) => { 
 
   return (
-    <Link         
+    <Link     
       to={ROUTES.ITEMS + '/' + input.name + '/' + input.id} 
       className={styles.container}
     >

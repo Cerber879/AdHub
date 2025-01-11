@@ -9,6 +9,8 @@ import { UserModel } from '../account/models/user.model'
 import { LoginInput } from './inputs/login.input'
 import { SessionModel } from './models/session.model'
 import { SessionService } from './session.service'
+import { User } from '@/prisma/generated'
+import { Authorized } from '@/src/shared/decorators/authorized.decorator'
 
 @Resolver('Session')
 export class SessionResolver {
@@ -50,5 +52,15 @@ export class SessionResolver {
   @Mutation(() => Boolean, { name: 'removeSession' })
   public async remove(@Context() { req }: GqlContext, @Args('id') id: string) {
     return this.sessionService.remove(req, id)
+  }
+
+  @Authorization()
+  @Mutation(() => Boolean, { name: 'deleteUser' })
+  public async delete(
+    @Context() { req }: GqlContext,
+    @Authorized() user: User
+  ) {
+    await this.sessionService.logout(req)
+    return this.sessionService.delete(user)
   }
 }

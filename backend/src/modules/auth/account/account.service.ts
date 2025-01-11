@@ -14,7 +14,7 @@ import {
   TypesProfileType
 } from './../../../shared/types/types-profile'
 import { ChangeEmailInput } from './inputs/change-email.input'
-import { ChangeDisplayNameInput } from './inputs/change-name.input'
+import { ChangeProfileInfoInput } from './inputs/change-name.input'
 import { ChangePasswordInput } from './inputs/change-password.input'
 import { ChangePhoneNumberInput } from './inputs/change-phone.input'
 import { CreateUserInput } from './inputs/create-user.input'
@@ -92,15 +92,16 @@ export class AccountService {
     return true
   }
 
-  public async changeDisplayName(user: User, input: ChangeDisplayNameInput) {
-    const { displayName } = input
+  public async changeProfileInfo(user: User, input: ChangeProfileInfoInput) {
+    const { displayName, bio } = input
 
     await this.prismaService.user.update({
       where: {
         id: user.id
       },
       data: {
-        displayName
+        displayName,
+        bio
       }
     })
 
@@ -157,4 +158,5 @@ export class AccountService {
 
     return true
   }
+
 }

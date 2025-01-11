@@ -35,7 +35,7 @@
   padding: 10px 20px;
   margin: 15px 0px 5px 0px;
   width: 200px;
-  background-color: rgb(0, 123, 255);
+  background-color: rgb(0, 123, 255); 
   color: white;
   border: none;
   border-radius: 15px;
@@ -44,7 +44,7 @@
 }
 
 .save_button:hover {
-  background-color: rgb(0, 100, 204);
+  background-color: rgb(0, 100, 255);
 }
 
 .linksContainer {
@@ -53,6 +53,8 @@
   display: flex;
   border-top: solid 1px #d6d6d6;
   flex-direction: column;
+  position: relative; 
+  overflow: hidden;
 }
 
 .link {
@@ -63,18 +65,15 @@
 }
 
 .linkItem {
-  pointer-events: none;
   padding: 10px;
   margin: 5px 0;
-  background-color: #e6e6e6;
+  background-color: #eeeded;
   border-radius: 10px;
   display: flex;
   align-items: center;
   transition: background-color 0.2s;
-}
-
-.linkItem.dragging {
-  background-color: #d6d6d6;
+  z-index: 1;
+  position: relative;
 }
 
 .linkItem.hidden {
@@ -82,7 +81,6 @@
 }
 
 .target {
-  pointer-events: auto;
   cursor: move;
   display: flex;
   justify-content: center;
@@ -130,6 +128,7 @@
 }
 
 .edit_button {
+  pointer-events: auto;
   width: 35px;
   height: 35px;
   padding: 10px;
@@ -142,13 +141,11 @@
 }
 
 .edit {
-  pointer-events: fill;
   width: 100%;
   display: flex;
 }
 
 .linkActions {
-  pointer-events: auto;
   display: flex;
   justify-self: self-end;
   gap: 20px;
@@ -163,13 +160,19 @@
 }
 
 .cancelButton {
+  pointer-events: auto;
   width: 110px;
   border-radius: 15px;
   padding: 10px 20px;
-  background-color: #f3f2f2;
+  background-color: #e5e5e5;
+}
+
+.cancelButton:hover {
+  background-color: #d6d6d6;
 }
 
 .saveButton {
+  pointer-events: auto;
   width: 110px;
   border-radius: 15px;
   padding: 10px 20px;
@@ -177,18 +180,43 @@
   background-color: rgb(0, 123, 255);
 }
 
+.saveButton:hover {
+  background-color: rgb(0, 100, 255);
+}
+
 .saveButtonDisabled {
   opacity: 0.5;
-  pointer-events: none;
 }
 
 .editContainer {
+  pointer-events: auto;
   display: flex;
   flex-direction: column;
-  pointer-events: fill;
 }
 
 .editInput {
+  pointer-events: auto;
   height: 7px;
   width: 300px;
+}
+
+
+
+.spinner {
+  width: 24px;
+  height: 24px;
+  border: 4px solid #ccc;
+  border-top: 4px solid #007bff; 
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+  display: inline-block;
+}
+
+@keyframes spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
 }

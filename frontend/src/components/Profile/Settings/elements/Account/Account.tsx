@@ -1,30 +1,101 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 
 import styles from './account.module.css'
+import { useCurrent } from '../../../../../hooks/useCurrent'
+import { useChangeEmailMutation, useChangePasswordMutation, useChangePhoneNumberMutation, useChangeProfileInfoMutation, useRemoveProfileMutation } from '../../../../../graphql/generated/output'
+import { exit } from '../../../../../store/slices/userSlise'
+import { ROUTES } from '../../../../../utils/routes'
+import { useDispatch } from 'react-redux'
+import { useNavigate } from 'react-router-dom'
 
 const Account = () => {
-  // Состояния для старого и нового пароля, старой почты
-  const [oldEmail, setOldEmail] = useState('');
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const { user, refetch, isLoadingProfile } = useCurrent()
+
+  const [changeEmail] = useChangeEmailMutation({
+    onCompleted() {
+      refetch()
+    }
+  })
+
+  const [changePhone] = useChangePhoneNumberMutation({
+    onCompleted() {
+      refetch()
+    }
+  })
+  
+  const [changePassword] = useChangePasswordMutation({
+    onCompleted() {
+      refetch()
+    }
+  })
+
+  const [remove] = useRemoveProfileMutation({
+    onCompleted() {
+      refetch()
+      dispatch(exit());
+      navigate(ROUTES.HOME);  
+    }
+  })
+
+  const [email, setEmail] = useState(user?.email || '');
   const [newPassword, setNewPassword] = useState('');
   const [oldPassword, setOldPassword] = useState('');
 
-  // Обработчики событий для сохранения изменений
-  const handleEmailChange = () => {
-    // Логика для обновления почты
-    console.log('Email saved:', oldEmail);
+  const [showPassword, setShowPassword] = useState(false);
+
+  const togglePasswordVisibility = () => {
+    setShowPassword(prev => !prev);
   };
 
-  const handlePasswordChange = () => {
-    // Логика для обновления пароля
-    console.log('Password saved:', oldPassword, newPassword);
+  const handleEmailChange = async () => {
+    try {
+      const response = await changeEmail({ 
+        variables: { 
+          data: { 
+            email: email
+          }
+        } 
+      });
+      console.log('Name updated:', response);
+    } catch (error) {
+      console.error('Error updating name:', error);
+    }
   };
 
-  const handleDeactivation = () => {
-    // Логика для деактивации аккаунта
-    console.log('Account deactivated');
+  const handlePasswordChange = async () => {
+    try {
+      const response = await changePassword({ 
+        variables: { 
+          data: { 
+            oldPassword: oldPassword,
+            newPassword: newPassword
+          }
+        } 
+      });
+      console.log('Name updated:', response);
+    } catch (error) {
+      console.error('Error updating name:', error);
+    }
   };
 
-  return (
+  const handleDeactivation = async () => {
+    try {
+      const response = await remove();
+      console.log('Name updated:', response);
+    } catch (error) {
+      console.error('Error updating name:', error);
+    }
+  };
+
+  useEffect(() => {
+    if (user) {
+      setEmail(user?.email || '');
+    }
+  }, [user]);
+
+  return isLoadingProfile ? <div className={styles.spinner}></div> : (
     <div className={styles.container}>
       <span className={styles.name}>Аккаунт</span>
       <span className={styles.description}>Управляйте настройками вашего аккаунта</span>
@@ -35,8 +106,8 @@ const Account = () => {
         <div className={styles.block_section}>
           <span className={styles.block_section_name}>Почта</span>
           <input 
-            onChange={(event) => setOldEmail(event.target.value)} 
-            value={oldEmail} 
+            onChange={(event) => setEmail(event.target.value)} 
+            value={email} 
             type="text" 
             className={styles.avatar_update_input}
           />
@@ -54,7 +125,7 @@ const Account = () => {
           <input 
             onChange={(event) => setOldPassword(event.target.value)} 
             value={oldPassword} 
-            type="text" 
+            type={showPassword ? 'text' : 'password'} 
             className={styles.avatar_update_input}
           />
           <span className={styles.block_section_description}>Введите свой старый пароль, чтобы подтвердить вашу личность перед изменением пароля. Это необходимо для обеспечения безопасноти вашей учетной записи</span>
@@ -65,13 +136,18 @@ const Account = () => {
           <input 
             onChange={(event) => setNewPassword(event.target.value)} 
             value={newPassword} 
-            type="text" 
+            type={showPassword ? 'text' : 'password'} 
             className={styles.avatar_update_input}
           />
           <span className={styles.block_section_description}>Ваш новый пароль должен содержать не менее 8 символов. Рекумендуется использовать также специальные символы для повышения безопасности</span>
         </div>
 
-        <button onClick={handlePasswordChange} className={styles.save_button}>Сохранить изменения</button>
+        <div className={styles.button_block}>
+          <button onClick={togglePasswordVisibility} className={styles.eye_button}>
+            {showPassword ? 'Скрыть' : 'Показать'} пароль
+          </button>
+          <button onClick={handlePasswordChange} className={styles.save_button}>Сохранить изменения</button>
+        </div>
       </div>
 
       <span className={styles.name}>Деактивация</span>

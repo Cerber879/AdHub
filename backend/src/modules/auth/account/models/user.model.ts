@@ -1,6 +1,7 @@
 import { Field, Float, ID, ObjectType } from '@nestjs/graphql'
 
 import type { User } from '@/prisma/generated'
+import { GraphQLUpload, Upload } from 'graphql-upload-minimal'
 
 @ObjectType()
 export class UserModel implements User {
@@ -25,7 +26,7 @@ export class UserModel implements User {
   @Field(() => Float, { nullable: true })
   public rating: number
 
-  @Field(() => String, { nullable: true })
+  @Field(() => String, { nullable: true }) 
   public avatar: string
 
   @Field(() => String, { nullable: true })

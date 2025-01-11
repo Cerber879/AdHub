@@ -45,7 +45,7 @@ const ProfileListAdvertisments = () => {
         {ads?.map((ad) => {
           const status = statusMap[ad.status]
           if (status === "Активное") {
-            return <PreviewProfileAdvertisment input={ad} />;
+            return <PreviewProfileAdvertisment input={ad} key={ad.id} />;
           }
           return null; 
         })}

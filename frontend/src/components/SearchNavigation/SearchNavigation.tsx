@@ -5,11 +5,12 @@ import CatalogueModal from '../Catalogue/CatalogueModal';
 
 import { useDispatch, useSelector } from 'react-redux';
 import { setShowCatalogueModal } from '../../store/slices/categorySlice';
+import { RootState } from '../../store/store';
 const AdvertisementTop: React.FC = () => {
   
   const dispatch = useDispatch();
   
-  const showCatalogueModal = useSelector((state: any) => state.category.showCatalogueModal);
+  const showCatalogueModal = useSelector((state: RootState) => state.category.showCatalogueModal);
 
   const handleClick = () => {
     if (showCatalogueModal){

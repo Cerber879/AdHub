@@ -2,11 +2,12 @@ import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import styles from './characteristics.module.css';
 import { setFilters } from '../../../../store/slices/filtersSearchSlice';
+import { RootState } from '../../../../store/store';
 
 const Characteristics: React.FC = () => {
   const dispatch = useDispatch();
 
-  const filters = useSelector((state: any) => state.filtersSearch);
+  const filters = useSelector((state: RootState) => state.filtersSearch);
 
   const [activeCondition, setActiveCondition] = useState(filters.condition || ''); 
 
