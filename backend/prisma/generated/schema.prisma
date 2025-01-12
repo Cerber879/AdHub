@@ -57,7 +57,7 @@ model SocialLink {
 model Category {
   id String @id @default(uuid())
 
-  name     String  @unique
+  name     String
   parentId String?
 
   children       Category[]       @relation("parent")
@@ -98,8 +98,10 @@ model Announcement {
 model Characteristic {
   id String @id @default(uuid())
 
-  name String
-  type String
+  name       String
+  type       String
+  group      String
+  unitSuffix String?
 
   categoryId String
 
@@ -185,7 +187,7 @@ model Favourites {
 model Photo {
   id String @id @default(uuid())
 
-  link String @db.VarChar(200)
+  link String
 
   announcementID String
 

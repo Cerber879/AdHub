@@ -16,10 +16,10 @@ input AddToAnnouncementMixedInput {
   input: AddToAnnouncementInput!
 }
 
-type AnnouncementCharacteristicModel {
-  characteristicId: String!
-  id: ID!
-  productId: String!
+type AnnouncementCharacteristicResponse {
+  characteristic: String!
+  type: String!
+  unitSuffix: String
   value: String!
 }
 
@@ -84,11 +84,13 @@ input ChangeProfileInfoInput {
   displayName: String!
 }
 
-type CharacteristicModel {
-  categoryId: String!
-  id: ID!
-  name: String!
-  type: String!
+type CharacteristicGroup {
+  data: [AnnouncementCharacteristicResponse!]!
+  group: String!
+}
+
+type CharacteristicsResponse {
+  characteristics: [CharacteristicGroup!]!
 }
 
 type ChatInfoOutput {
@@ -115,8 +117,10 @@ input CreateCategoryInput {
 
 input CreateCharacteristicInput {
   categoryId: String!
+  group: String!
   name: String!
   type: String!
+  unitSuffix: String
 }
 
 input CreateMessageInput {
@@ -240,7 +244,6 @@ type Query {
   checkAnnouncementInFavourites(adId: String!): Boolean!
   findAllAnnouncements: [AnnouncementModel!]!
   findAnnouncementsByFilters(data: AnnouncementFiltersInput!): [AnnouncementModel!]!
-  findCharacteristics(id: String!): [CharacteristicModel!]!
   findCurrentSession: SessionModel!
   findMessage(content: String!, id: String!): [MessageModel!]!
   findParentCategories(id: String!): [String!]!
@@ -253,7 +256,7 @@ type Query {
   getAnnouncementByIds(ids: [String!]!): [AnnouncementModel!]!
   getAnnouncementByName(name: String!): AnnouncementModel!
   getAnnouncementByProfile: [AnnouncementModel!]!
-  getAnnouncementCharacteristics(id: String!): [AnnouncementCharacteristicModel!]!
+  getAnnouncementCharacteristics(id: String!): CharacteristicsResponse!
   getAnnouncementsByCategory(id: String!): [AnnouncementModel!]!
   getCategoryById(id: String!): CategoryModel!
   getChats: [ChatInfoOutput!]!
@@ -352,8 +355,10 @@ input UpdateCategoryMixedInput {
 
 input UpdateCharacteristicInput {
   categoryId: String
+  group: String
   name: String
   type: String
+  unitSuffix: String
 }
 
 input UpdateCharacteristicMixedInput {

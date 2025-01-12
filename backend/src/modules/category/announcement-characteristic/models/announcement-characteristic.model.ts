@@ -11,8 +11,10 @@ export class AnnouncementCharacteristicModel
 
   @Field(() => String)
   value: string
+  
   @Field(() => String)
   productId: string
+
   @Field(() => String)
   characteristicId: string
 }

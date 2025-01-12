@@ -163,6 +163,8 @@ exports.Prisma.CharacteristicScalarFieldEnum = {
   id: 'id',
   name: 'name',
   type: 'type',
+  group: 'group',
+  unitSuffix: 'unitSuffix',
   categoryId: 'categoryId'
 };
 

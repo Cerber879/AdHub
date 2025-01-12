@@ -4,18 +4,22 @@ import { CharacteristicService } from './characteristic.service'
 import { CreateCharacteristicInput } from './inputs/create-characteristic.input'
 import { UpdateCharacteristicMixedInput } from './inputs/update-charateristic.input'
 import { CharacteristicModel } from './models/characteristic.model'
+import { CharacteristicsResponse } from './responses/characteristic.response'
 
 @Resolver()
 export class CharacteristicResolver {
   constructor(private readonly characteristicService: CharacteristicService) {}
+
   @Mutation(() => Boolean, { name: 'createCharacteristic' })
   async createCharacteristic(@Args('data') input: CreateCharacteristicInput) {
     return this.characteristicService.create(input)
   }
+
   @Mutation(() => Boolean, { name: 'deleteCharacteristic' })
   async deleteCharacteristic(@Args('id') id: string) {
     return this.characteristicService.delete(id)
   }
+  
   @Mutation(() => Boolean, { name: 'updateCharacteristic' })
   async updateCharacteristic(
     @Args('data') data: UpdateCharacteristicMixedInput
@@ -23,8 +27,4 @@ export class CharacteristicResolver {
     return this.characteristicService.updateCharacteristic(data.id, data.input)
   }
 
-  @Query(() => [CharacteristicModel], { name: 'findCharacteristics' })
-  async findCharacteristics(@Args('id') id: string) {
-    return this.characteristicService.getCharacteristicByCategory(id) // todo прочекать
-  }
 }

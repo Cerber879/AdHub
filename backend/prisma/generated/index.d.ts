@@ -6355,6 +6355,8 @@ export namespace Prisma {
     id: string | null
     name: string | null
     type: string | null
+    group: string | null
+    unitSuffix: string | null
     categoryId: string | null
   }
 
@@ -6362,6 +6364,8 @@ export namespace Prisma {
     id: string | null
     name: string | null
     type: string | null
+    group: string | null
+    unitSuffix: string | null
     categoryId: string | null
   }
 
@@ -6369,6 +6373,8 @@ export namespace Prisma {
     id: number
     name: number
     type: number
+    group: number
+    unitSuffix: number
     categoryId: number
     _all: number
   }
@@ -6378,6 +6384,8 @@ export namespace Prisma {
     id?: true
     name?: true
     type?: true
+    group?: true
+    unitSuffix?: true
     categoryId?: true
   }
 
@@ -6385,6 +6393,8 @@ export namespace Prisma {
     id?: true
     name?: true
     type?: true
+    group?: true
+    unitSuffix?: true
     categoryId?: true
   }
 
@@ -6392,6 +6402,8 @@ export namespace Prisma {
     id?: true
     name?: true
     type?: true
+    group?: true
+    unitSuffix?: true
     categoryId?: true
     _all?: true
   }
@@ -6472,6 +6484,8 @@ export namespace Prisma {
     id: string
     name: string
     type: string
+    group: string
+    unitSuffix: string | null
     categoryId: string
     _count: CharacteristicCountAggregateOutputType | null
     _min: CharacteristicMinAggregateOutputType | null
@@ -6496,6 +6510,8 @@ export namespace Prisma {
     id?: boolean
     name?: boolean
     type?: boolean
+    group?: boolean
+    unitSuffix?: boolean
     categoryId?: boolean
     category?: boolean | CategoryDefaultArgs<ExtArgs>
     announcementCharacteristic?: boolean | Characteristic$announcementCharacteristicArgs<ExtArgs>
@@ -6506,6 +6522,8 @@ export namespace Prisma {
     id?: boolean
     name?: boolean
     type?: boolean
+    group?: boolean
+    unitSuffix?: boolean
     categoryId?: boolean
     category?: boolean | CategoryDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["characteristic"]>
@@ -6514,6 +6532,8 @@ export namespace Prisma {
     id?: boolean
     name?: boolean
     type?: boolean
+    group?: boolean
+    unitSuffix?: boolean
     categoryId?: boolean
   }
 
@@ -6536,6 +6556,8 @@ export namespace Prisma {
       id: string
       name: string
       type: string
+      group: string
+      unitSuffix: string | null
       categoryId: string
     }, ExtArgs["result"]["characteristic"]>
     composites: {}
@@ -6935,6 +6957,8 @@ export namespace Prisma {
     readonly id: FieldRef<"Characteristic", 'String'>
     readonly name: FieldRef<"Characteristic", 'String'>
     readonly type: FieldRef<"Characteristic", 'String'>
+    readonly group: FieldRef<"Characteristic", 'String'>
+    readonly unitSuffix: FieldRef<"Characteristic", 'String'>
     readonly categoryId: FieldRef<"Characteristic", 'String'>
   }
     
@@ -13106,6 +13130,8 @@ export namespace Prisma {
     id: 'id',
     name: 'name',
     type: 'type',
+    group: 'group',
+    unitSuffix: 'unitSuffix',
     categoryId: 'categoryId'
   };
 
@@ -13497,16 +13523,16 @@ export namespace Prisma {
 
   export type CategoryWhereUniqueInput = Prisma.AtLeast<{
     id?: string
-    name?: string
     AND?: CategoryWhereInput | CategoryWhereInput[]
     OR?: CategoryWhereInput[]
     NOT?: CategoryWhereInput | CategoryWhereInput[]
+    name?: StringFilter<"Category"> | string
     parentId?: StringNullableFilter<"Category"> | string | null
     children?: CategoryListRelationFilter
     announcement?: AnnouncementListRelationFilter
     characteristic?: CharacteristicListRelationFilter
     parent?: XOR<CategoryNullableScalarRelationFilter, CategoryWhereInput> | null
-  }, "id" | "name">
+  }, "id">
 
   export type CategoryOrderByWithAggregationInput = {
     id?: SortOrder
@@ -13628,6 +13654,8 @@ export namespace Prisma {
     id?: StringFilter<"Characteristic"> | string
     name?: StringFilter<"Characteristic"> | string
     type?: StringFilter<"Characteristic"> | string
+    group?: StringFilter<"Characteristic"> | string
+    unitSuffix?: StringNullableFilter<"Characteristic"> | string | null
     categoryId?: StringFilter<"Characteristic"> | string
     category?: XOR<CategoryScalarRelationFilter, CategoryWhereInput>
     announcementCharacteristic?: AnnouncementCharacteristicListRelationFilter
@@ -13637,6 +13665,8 @@ export namespace Prisma {
     id?: SortOrder
     name?: SortOrder
     type?: SortOrder
+    group?: SortOrder
+    unitSuffix?: SortOrderInput | SortOrder
     categoryId?: SortOrder
     category?: CategoryOrderByWithRelationInput
     announcementCharacteristic?: AnnouncementCharacteristicOrderByRelationAggregateInput
@@ -13649,6 +13679,8 @@ export namespace Prisma {
     NOT?: CharacteristicWhereInput | CharacteristicWhereInput[]
     name?: StringFilter<"Characteristic"> | string
     type?: StringFilter<"Characteristic"> | string
+    group?: StringFilter<"Characteristic"> | string
+    unitSuffix?: StringNullableFilter<"Characteristic"> | string | null
     categoryId?: StringFilter<"Characteristic"> | string
     category?: XOR<CategoryScalarRelationFilter, CategoryWhereInput>
     announcementCharacteristic?: AnnouncementCharacteristicListRelationFilter
@@ -13658,6 +13690,8 @@ export namespace Prisma {
     id?: SortOrder
     name?: SortOrder
     type?: SortOrder
+    group?: SortOrder
+    unitSuffix?: SortOrderInput | SortOrder
     categoryId?: SortOrder
     _count?: CharacteristicCountOrderByAggregateInput
     _max?: CharacteristicMaxOrderByAggregateInput
@@ -13671,6 +13705,8 @@ export namespace Prisma {
     id?: StringWithAggregatesFilter<"Characteristic"> | string
     name?: StringWithAggregatesFilter<"Characteristic"> | string
     type?: StringWithAggregatesFilter<"Characteristic"> | string
+    group?: StringWithAggregatesFilter<"Characteristic"> | string
+    unitSuffix?: StringNullableWithAggregatesFilter<"Characteristic"> | string | null
     categoryId?: StringWithAggregatesFilter<"Characteristic"> | string
   }
 
@@ -14378,6 +14414,8 @@ export namespace Prisma {
     id?: string
     name: string
     type: string
+    group: string
+    unitSuffix?: string | null
     category: CategoryCreateNestedOneWithoutCharacteristicInput
     announcementCharacteristic?: AnnouncementCharacteristicCreateNestedManyWithoutCharacteristicInput
   }
@@ -14386,6 +14424,8 @@ export namespace Prisma {
     id?: string
     name: string
     type: string
+    group: string
+    unitSuffix?: string | null
     categoryId: string
     announcementCharacteristic?: AnnouncementCharacteristicUncheckedCreateNestedManyWithoutCharacteristicInput
   }
@@ -14394,6 +14434,8 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
     type?: StringFieldUpdateOperationsInput | string
+    group?: StringFieldUpdateOperationsInput | string
+    unitSuffix?: NullableStringFieldUpdateOperationsInput | string | null
     category?: CategoryUpdateOneRequiredWithoutCharacteristicNestedInput
     announcementCharacteristic?: AnnouncementCharacteristicUpdateManyWithoutCharacteristicNestedInput
   }
@@ -14402,6 +14444,8 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
     type?: StringFieldUpdateOperationsInput | string
+    group?: StringFieldUpdateOperationsInput | string
+    unitSuffix?: NullableStringFieldUpdateOperationsInput | string | null
     categoryId?: StringFieldUpdateOperationsInput | string
     announcementCharacteristic?: AnnouncementCharacteristicUncheckedUpdateManyWithoutCharacteristicNestedInput
   }
@@ -14410,6 +14454,8 @@ export namespace Prisma {
     id?: string
     name: string
     type: string
+    group: string
+    unitSuffix?: string | null
     categoryId: string
   }
 
@@ -14417,12 +14463,16 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
     type?: StringFieldUpdateOperationsInput | string
+    group?: StringFieldUpdateOperationsInput | string
+    unitSuffix?: NullableStringFieldUpdateOperationsInput | string | null
   }
 
   export type CharacteristicUncheckedUpdateManyInput = {
     id?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
     type?: StringFieldUpdateOperationsInput | string
+    group?: StringFieldUpdateOperationsInput | string
+    unitSuffix?: NullableStringFieldUpdateOperationsInput | string | null
     categoryId?: StringFieldUpdateOperationsInput | string
   }
 
@@ -15232,6 +15282,8 @@ export namespace Prisma {
     id?: SortOrder
     name?: SortOrder
     type?: SortOrder
+    group?: SortOrder
+    unitSuffix?: SortOrder
     categoryId?: SortOrder
   }
 
@@ -15239,6 +15291,8 @@ export namespace Prisma {
     id?: SortOrder
     name?: SortOrder
     type?: SortOrder
+    group?: SortOrder
+    unitSuffix?: SortOrder
     categoryId?: SortOrder
   }
 
@@ -15246,6 +15300,8 @@ export namespace Prisma {
     id?: SortOrder
     name?: SortOrder
     type?: SortOrder
+    group?: SortOrder
+    unitSuffix?: SortOrder
     categoryId?: SortOrder
   }
 
@@ -17220,6 +17276,8 @@ export namespace Prisma {
     id?: string
     name: string
     type: string
+    group: string
+    unitSuffix?: string | null
     announcementCharacteristic?: AnnouncementCharacteristicCreateNestedManyWithoutCharacteristicInput
   }
 
@@ -17227,6 +17285,8 @@ export namespace Prisma {
     id?: string
     name: string
     type: string
+    group: string
+    unitSuffix?: string | null
     announcementCharacteristic?: AnnouncementCharacteristicUncheckedCreateNestedManyWithoutCharacteristicInput
   }
 
@@ -17325,6 +17385,8 @@ export namespace Prisma {
     id?: StringFilter<"Characteristic"> | string
     name?: StringFilter<"Characteristic"> | string
     type?: StringFilter<"Characteristic"> | string
+    group?: StringFilter<"Characteristic"> | string
+    unitSuffix?: StringNullableFilter<"Characteristic"> | string | null
     categoryId?: StringFilter<"Characteristic"> | string
   }
 
@@ -17841,6 +17903,8 @@ export namespace Prisma {
     id?: string
     name: string
     type: string
+    group: string
+    unitSuffix?: string | null
     category: CategoryCreateNestedOneWithoutCharacteristicInput
   }
 
@@ -17848,6 +17912,8 @@ export namespace Prisma {
     id?: string
     name: string
     type: string
+    group: string
+    unitSuffix?: string | null
     categoryId: string
   }
 
@@ -17914,6 +17980,8 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
     type?: StringFieldUpdateOperationsInput | string
+    group?: StringFieldUpdateOperationsInput | string
+    unitSuffix?: NullableStringFieldUpdateOperationsInput | string | null
     category?: CategoryUpdateOneRequiredWithoutCharacteristicNestedInput
   }
 
@@ -17921,6 +17989,8 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
     type?: StringFieldUpdateOperationsInput | string
+    group?: StringFieldUpdateOperationsInput | string
+    unitSuffix?: NullableStringFieldUpdateOperationsInput | string | null
     categoryId?: StringFieldUpdateOperationsInput | string
   }
 
@@ -19078,6 +19148,8 @@ export namespace Prisma {
     id?: string
     name: string
     type: string
+    group: string
+    unitSuffix?: string | null
   }
 
   export type CategoryUpdateWithoutParentInput = {
@@ -19148,6 +19220,8 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
     type?: StringFieldUpdateOperationsInput | string
+    group?: StringFieldUpdateOperationsInput | string
+    unitSuffix?: NullableStringFieldUpdateOperationsInput | string | null
     announcementCharacteristic?: AnnouncementCharacteristicUpdateManyWithoutCharacteristicNestedInput
   }
 
@@ -19155,6 +19229,8 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
     type?: StringFieldUpdateOperationsInput | string
+    group?: StringFieldUpdateOperationsInput | string
+    unitSuffix?: NullableStringFieldUpdateOperationsInput | string | null
     announcementCharacteristic?: AnnouncementCharacteristicUncheckedUpdateManyWithoutCharacteristicNestedInput
   }
 
@@ -19162,6 +19238,8 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
     type?: StringFieldUpdateOperationsInput | string
+    group?: StringFieldUpdateOperationsInput | string
+    unitSuffix?: NullableStringFieldUpdateOperationsInput | string | null
   }
 
   export type ChatCreateManyAnnouncementInput = {

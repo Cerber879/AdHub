@@ -2,8 +2,9 @@ import { useEffect, useRef, useState, useMemo } from 'react';
 import styles from './advertisementdata.module.css'
 import { Link, useParams } from 'react-router-dom';
 import { ROUTES } from '../../../utils/routes';
-import { useAddFavouriteMutation, useCheckAnnouncementInFavouritesQuery, useFindCharacteristicsQuery, useFindParentCategoriesQuery, useFindUserQuery, useGetAnnouncementCharacteristicsQuery, useGetAnnouncementQuery, useGetPhotosByAnnouncementIdQuery, useRemoveFavouriteMutation } from '../../../graphql/generated/output';
+import { CharacteristicsResponse, useAddFavouriteMutation, useCheckAnnouncementInFavouritesQuery, useFindParentCategoriesQuery, useFindUserQuery, useGetAnnouncementCharacteristicsQuery, useGetAnnouncementQuery, useGetPhotosByAnnouncementIdQuery, useRemoveFavouriteMutation } from '../../../graphql/generated/output';
 import { parseAnnouncementCondition, parseAnnouncementStatus } from '../../../utils/parse-types-ad';
+import Loader from '../../../utils/Loader/Loader';
 
 const Advertisement = () => {
   const [currentImage, setCurrentImage] = useState(0);
@@ -14,7 +15,7 @@ const Advertisement = () => {
   const { data: imagesData } = useGetPhotosByAnnouncementIdQuery({ variables: { id: adId || '' } }); 
   const images = useMemo(() => imagesData?.getPhotosByAnnouncementId || [], [imagesData]);
 
-  const { data: announcementCharacteristicsData } = useGetAnnouncementCharacteristicsQuery({ variables: { id: adId || '' } });
+  const { data: announcementCharacteristicsData, loading: announcementCharacteristicsLoading } = useGetAnnouncementCharacteristicsQuery({ variables: { id: adId || '' } });
   const announcementCharacteristics = useMemo(() => announcementCharacteristicsData?.getAnnouncementCharacteristics || [], [announcementCharacteristicsData]);
 
   const { data: advertismentData } = useGetAnnouncementQuery({ variables: { id: adId || '' } });
@@ -27,9 +28,6 @@ const Advertisement = () => {
   if (categories && categories.length > 0) {
     categoryIdd = categories[1]
   }
-
-  const { data: characteristicsData } = useFindCharacteristicsQuery({ variables: { id: categoryIdd || '' } });
-  const characteristics = useMemo(() => characteristicsData?.findCharacteristics || [], [characteristicsData]);
 
   const { data: userData } = useFindUserQuery({ variables: { id: advertisment?.userId || '' } });
   const user = userData?.findUser;
@@ -152,18 +150,24 @@ const Advertisement = () => {
                 <dt>Цена:</dt>
                 <dd>{advertisment?.price} ₽</dd>
               </div>
-              {announcementCharacteristics?.map((item, index) => {
-    
-                const characteristic = characteristics.find(c => c.id === item.characteristicId);
-
-                
-                return (
-                  <div className={styles.characteristic_item} key={index}>
-                    <dt>{characteristic ? characteristic.name : 'Unknown'}:</dt> {/* Если не найдено, выводим 'Unknown' */}
-                    <dd>{item.value}</dd>
-                  </div>
-                );
-              })}
+              <div className={styles.characteristics_wrapper}>
+                {announcementCharacteristics && "characteristics" in announcementCharacteristics &&
+                  announcementCharacteristics.characteristics.map((characteristic, index) => (
+                    <div key={index} className={styles.characteristic_group}>
+                      <div className={styles.characteristics_group__item}>
+                        <h3 className={styles.characteristics_group_title}>{characteristic.group}</h3>
+                        {characteristic.data.map((item, subIndex) => (
+                          <div key={subIndex} className={styles.characteristic_item}>
+                            <dt>{item.characteristic}</dt>
+                            <dd>{item.value}</dd>
+                            {item.unitSuffix && <span>{item.unitSuffix}</span>}
+                          </div>
+                        ))}
+                      </div>
+                    </div>
+                  ))
+                }
+              </div>
             </dl>
           </div>
 

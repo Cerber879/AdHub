@@ -4,6 +4,7 @@ import { PrismaService } from '@/src/core/prisma/prisma.service'
 
 import { CreateCharacteristicInput } from './inputs/create-characteristic.input'
 import { UpdateCharacteristicInput } from './inputs/update-charateristic.input'
+import { CharacteristicModel } from './models/characteristic.model'
 
 @Injectable()
 export class CharacteristicService {
@@ -14,17 +15,12 @@ export class CharacteristicService {
       data: {
         name: input.name,
         type: input.type,
-        categoryId: input.categoryId
+        group: input.group,
+        categoryId: input.categoryId,
+        unitSuffix: input.unitSuffix
       }
     })
     return true
-  }
-  async getCharacteristicByCategory(categoryId: string) {
-    return this.prismaService.characteristic.findMany({
-      where: {
-        categoryId
-      }
-    })
   }
 
   async updateCharacteristic(id: string, input: UpdateCharacteristicInput) {
@@ -45,4 +41,5 @@ export class CharacteristicService {
     })
     return true
   }
+
 }

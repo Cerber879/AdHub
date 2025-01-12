@@ -33,11 +33,11 @@ export type AddToAnnouncementMixedInput = {
   input: AddToAnnouncementInput;
 };
 
-export type AnnouncementCharacteristicModel = {
-  __typename?: 'AnnouncementCharacteristicModel';
-  characteristicId: Scalars['String']['output'];
-  id: Scalars['ID']['output'];
-  productId: Scalars['String']['output'];
+export type AnnouncementCharacteristicResponse = {
+  __typename?: 'AnnouncementCharacteristicResponse';
+  characteristic: Scalars['String']['output'];
+  type: Scalars['String']['output'];
+  unitSuffix?: Maybe<Scalars['String']['output']>;
   value: Scalars['String']['output'];
 };
 
@@ -104,12 +104,15 @@ export type ChangeProfileInfoInput = {
   displayName: Scalars['String']['input'];
 };
 
-export type CharacteristicModel = {
-  __typename?: 'CharacteristicModel';
-  categoryId: Scalars['String']['output'];
-  id: Scalars['ID']['output'];
-  name: Scalars['String']['output'];
-  type: Scalars['String']['output'];
+export type CharacteristicGroup = {
+  __typename?: 'CharacteristicGroup';
+  data: Array<AnnouncementCharacteristicResponse>;
+  group: Scalars['String']['output'];
+};
+
+export type CharacteristicsResponse = {
+  __typename?: 'CharacteristicsResponse';
+  characteristics: Array<CharacteristicGroup>;
 };
 
 export type ChatInfoOutput = {
@@ -137,8 +140,10 @@ export type CreateCategoryInput = {
 
 export type CreateCharacteristicInput = {
   categoryId: Scalars['String']['input'];
+  group: Scalars['String']['input'];
   name: Scalars['String']['input'];
   type: Scalars['String']['input'];
+  unitSuffix?: InputMaybe<Scalars['String']['input']>;
 };
 
 export type CreateMessageInput = {
@@ -457,7 +462,6 @@ export type Query = {
   checkAnnouncementInFavourites: Scalars['Boolean']['output'];
   findAllAnnouncements: Array<AnnouncementModel>;
   findAnnouncementsByFilters: Array<AnnouncementModel>;
-  findCharacteristics: Array<CharacteristicModel>;
   findCurrentSession: SessionModel;
   findMessage: Array<MessageModel>;
   findParentCategories: Array<Scalars['String']['output']>;
@@ -470,7 +474,7 @@ export type Query = {
   getAnnouncementByIds: Array<AnnouncementModel>;
   getAnnouncementByName: AnnouncementModel;
   getAnnouncementByProfile: Array<AnnouncementModel>;
-  getAnnouncementCharacteristics: Array<AnnouncementCharacteristicModel>;
+  getAnnouncementCharacteristics: CharacteristicsResponse;
   getAnnouncementsByCategory: Array<AnnouncementModel>;
   getCategoryById: CategoryModel;
   getChats: Array<ChatInfoOutput>;
@@ -491,11 +495,6 @@ export type QueryCheckAnnouncementInFavouritesArgs = {
 
 export type QueryFindAnnouncementsByFiltersArgs = {
   data: AnnouncementFiltersInput;
-};
-
-
-export type QueryFindCharacteristicsArgs = {
-  id: Scalars['String']['input'];
 };
 
 
@@ -660,8 +659,10 @@ export type UpdateCategoryMixedInput = {
 
 export type UpdateCharacteristicInput = {
   categoryId?: InputMaybe<Scalars['String']['input']>;
+  group?: InputMaybe<Scalars['String']['input']>;
   name?: InputMaybe<Scalars['String']['input']>;
   type?: InputMaybe<Scalars['String']['input']>;
+  unitSuffix?: InputMaybe<Scalars['String']['input']>;
 };
 
 export type UpdateCharacteristicMixedInput = {
@@ -1024,7 +1025,7 @@ export type GetAnnouncementCharacteristicsQueryVariables = Exact<{
 }>;
 
 
-export type GetAnnouncementCharacteristicsQuery = { __typename?: 'Query', getAnnouncementCharacteristics: Array<{ __typename?: 'AnnouncementCharacteristicModel', id: string, value: string, productId: string, characteristicId: string }> };
+export type GetAnnouncementCharacteristicsQuery = { __typename?: 'Query', getAnnouncementCharacteristics: { __typename?: 'CharacteristicsResponse', characteristics: Array<{ __typename?: 'CharacteristicGroup', group: string, data: Array<{ __typename?: 'AnnouncementCharacteristicResponse', value: string, characteristic: string, unitSuffix?: string | null, type: string }> }> } };
 
 export type FindParentCategoriesQueryVariables = Exact<{
   id: Scalars['String']['input'];
@@ -1058,13 +1059,6 @@ export type GetSubcategoriesQueryVariables = Exact<{
 
 
 export type GetSubcategoriesQuery = { __typename?: 'Query', getSubcategories: Array<{ __typename?: 'CategoryModel', id: string, name: string }> };
-
-export type FindCharacteristicsQueryVariables = Exact<{
-  id: Scalars['String']['input'];
-}>;
-
-
-export type FindCharacteristicsQuery = { __typename?: 'Query', findCharacteristics: Array<{ __typename?: 'CharacteristicModel', id: string, name: string, type: string, categoryId: string }> };
 
 export type GetChatsQueryVariables = Exact<{ [key: string]: never; }>;
 
@@ -2734,10 +2728,15 @@ export type GetAnnouncementsByCategoryQueryResult = Apollo.QueryResult<GetAnnoun
 export const GetAnnouncementCharacteristicsDocument = gql`
     query GetAnnouncementCharacteristics($id: String!) {
   getAnnouncementCharacteristics(id: $id) {
-    id
-    value
-    productId
-    characteristicId
+    characteristics {
+      group
+      data {
+        value
+        characteristic
+        unitSuffix
+        type
+      }
+    }
   }
 }
     `;
@@ -2981,49 +2980,6 @@ export type GetSubcategoriesQueryHookResult = ReturnType<typeof useGetSubcategor
 export type GetSubcategoriesLazyQueryHookResult = ReturnType<typeof useGetSubcategoriesLazyQuery>;
 export type GetSubcategoriesSuspenseQueryHookResult = ReturnType<typeof useGetSubcategoriesSuspenseQuery>;
 export type GetSubcategoriesQueryResult = Apollo.QueryResult<GetSubcategoriesQuery, GetSubcategoriesQueryVariables>;
-export const FindCharacteristicsDocument = gql`
-    query FindCharacteristics($id: String!) {
-  findCharacteristics(id: $id) {
-    id
-    name
-    type
-    categoryId
-  }
-}
-    `;
-
-/**
- * __useFindCharacteristicsQuery__
- *
- * To run a query within a React component, call `useFindCharacteristicsQuery` and pass it any options that fit your needs.
- * When your component renders, `useFindCharacteristicsQuery` returns an object from Apollo Client that contains loading, error, and data properties
- * you can use to render your UI.
- *
- * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
- *
- * @example
- * const { data, loading, error } = useFindCharacteristicsQuery({
- *   variables: {
- *      id: // value for 'id'
- *   },
- * });
- */
-export function useFindCharacteristicsQuery(baseOptions: Apollo.QueryHookOptions<FindCharacteristicsQuery, FindCharacteristicsQueryVariables> & ({ variables: FindCharacteristicsQueryVariables; skip?: boolean; } | { skip: boolean; }) ) {
-        const options = {...defaultOptions, ...baseOptions}
-        return Apollo.useQuery<FindCharacteristicsQuery, FindCharacteristicsQueryVariables>(FindCharacteristicsDocument, options);
-      }
-export function useFindCharacteristicsLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<FindCharacteristicsQuery, FindCharacteristicsQueryVariables>) {
-          const options = {...defaultOptions, ...baseOptions}
-          return Apollo.useLazyQuery<FindCharacteristicsQuery, FindCharacteristicsQueryVariables>(FindCharacteristicsDocument, options);
-        }
-export function useFindCharacteristicsSuspenseQuery(baseOptions?: Apollo.SkipToken | Apollo.SuspenseQueryHookOptions<FindCharacteristicsQuery, FindCharacteristicsQueryVariables>) {
-          const options = baseOptions === Apollo.skipToken ? baseOptions : {...defaultOptions, ...baseOptions}
-          return Apollo.useSuspenseQuery<FindCharacteristicsQuery, FindCharacteristicsQueryVariables>(FindCharacteristicsDocument, options);
-        }
-export type FindCharacteristicsQueryHookResult = ReturnType<typeof useFindCharacteristicsQuery>;
-export type FindCharacteristicsLazyQueryHookResult = ReturnType<typeof useFindCharacteristicsLazyQuery>;
-export type FindCharacteristicsSuspenseQueryHookResult = ReturnType<typeof useFindCharacteristicsSuspenseQuery>;
-export type FindCharacteristicsQueryResult = Apollo.QueryResult<FindCharacteristicsQuery, FindCharacteristicsQueryVariables>;
 export const GetChatsDocument = gql`
     query GetChats {
   getChats {

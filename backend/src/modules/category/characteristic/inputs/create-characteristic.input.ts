@@ -11,6 +11,15 @@ export class CreateCharacteristicInput {
   @Field(() => String)
   @IsNotEmpty()
   public type: string
+  
+  @Field(() => String)
+  @IsNotEmpty()
+  public group: string
+
+  @Field(() => String, { nullable: true })
+  @IsOptional()
+  @IsNotEmpty()
+  public unitSuffix?: string
 
   @Field(() => String)
   @IsString()

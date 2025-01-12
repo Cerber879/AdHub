@@ -3,20 +3,23 @@ import React, { useEffect, useMemo, useState } from 'react'
 import styles from './data.module.css'
 
 import { FindAllAnnouncementsQuery, useAddFavouriteMutation, useCheckAnnouncementInFavouritesQuery, useRemoveFavouriteMutation } from '../../../../../../graphql/generated/output'
+import { useCurrent } from '../../../../../../hooks/useCurrent'
 
 interface PreviewSmallAdvertismentProps {
   input: FindAllAnnouncementsQuery['findAllAnnouncements'][number] 
 }
 
 const DataAdvertisment = ({ input }: PreviewSmallAdvertismentProps) => {
-
-  const { data } = useCheckAnnouncementInFavouritesQuery({ variables: { adId: input.id } })
-
-  const [check, setCheck] = useState(data?.checkAnnouncementInFavourites || false)
+  
+  const { user } = useCurrent()
+  const [check, setCheck] = useState(false)
 
   useEffect(() => {
-    setCheck(data?.checkAnnouncementInFavourites || false)
-  }, [data])
+    if (user) {
+      const { data } = useCheckAnnouncementInFavouritesQuery({ variables: { adId: input.id } })
+      setCheck(data?.checkAnnouncementInFavourites || false)
+    }
+  }, [])
 
   const [addFavourites] = useAddFavouriteMutation({
     onCompleted() {
@@ -39,10 +42,14 @@ const DataAdvertisment = ({ input }: PreviewSmallAdvertismentProps) => {
   }
 
   const handleFavourites = (id: string) => {
-    if (check) {
-      handleremoveFavourites(id)
+    if(user) {
+      if (check) {
+        handleremoveFavourites(id)
+      } else {
+        handleAddFavourites(id)
+      }
     } else {
-      handleAddFavourites(id)
+      alert('Вы не авторизованы')
     }
   }
 

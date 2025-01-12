@@ -1,5 +1,5 @@
 import { Field, InputType } from '@nestjs/graphql'
-import { IsOptional, IsString, MaxLength } from 'class-validator'
+import { IsNotEmpty, IsOptional, IsString, MaxLength } from 'class-validator'
 
 @InputType()
 export class UpdateCharacteristicInput {
@@ -11,11 +11,24 @@ export class UpdateCharacteristicInput {
 
   @Field(() => String, { nullable: true })
   @IsOptional()
+  @IsString()
+  @IsNotEmpty()
   public type?: string
 
   @Field(() => String, { nullable: true })
   @IsOptional()
+  @IsNotEmpty()
+  public group?: string
+
+  @Field(() => String, { nullable: true })
+  @IsOptional()
+  @IsNotEmpty()
+  public unitSuffix?: string
+
+  @Field(() => String, { nullable: true })
+  @IsOptional()
   @IsString()
+  @IsNotEmpty()
   public categoryId?: string
 }
 

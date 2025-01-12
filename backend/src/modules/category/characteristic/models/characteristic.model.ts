@@ -12,6 +12,13 @@ export class CharacteristicModel implements Characteristic {
 
   @Field(() => String)
   type: string
+
+  @Field(() => String)
+  group: string
+
+  @Field(() => String, { nullable: true })
+  unitSuffix: string
+
   @Field(() => String)
   categoryId: string
 }
