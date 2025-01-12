@@ -17,10 +17,9 @@ export class CreateReviewInput {
   content: string;
 
   @Field()
-  @IsUUID('4', { message: 'ID пользователя должен быть валидным UUID' })
   userId: string;
 
   @Field()
-  @IsUUID('4', { message: 'ID объявления должен быть валидным UUID' })
+
   announcementId: string;
 }

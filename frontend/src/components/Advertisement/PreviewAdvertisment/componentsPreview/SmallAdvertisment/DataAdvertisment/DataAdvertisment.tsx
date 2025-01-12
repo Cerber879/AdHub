@@ -11,27 +11,34 @@ interface PreviewSmallAdvertismentProps {
 
 const DataAdvertisment = ({ input }: PreviewSmallAdvertismentProps) => {
   
-  const { user } = useCurrent()
-  const [check, setCheck] = useState(false)
+  const { user } = useCurrent();
 
-  useEffect(() => {
-    if (user) {
-      const { data } = useCheckAnnouncementInFavouritesQuery({ variables: { adId: input.id } })
-      setCheck(data?.checkAnnouncementInFavourites || false)
+  // Использование хука useCheckAnnouncementInFavouritesQuery в теле компонента
+  const { data } = useCheckAnnouncementInFavouritesQuery({
+    variables: { adId: input.id },
+    skip: !user, // Пропускаем запрос, если пользователь не авторизован
+  });
+
+  const [check, setCheck] = useState(data?.checkAnnouncementInFavourites || false);
+
+  // Обновляем состояние при изменении данных из запроса
+  React.useEffect(() => {
+    if (data) {
+      setCheck(data.checkAnnouncementInFavourites);
     }
-  }, [])
+  }, [data]);
 
   const [addFavourites] = useAddFavouriteMutation({
     onCompleted() {
-      setCheck(true)
-    }
-  })
+      setCheck(true);
+    },
+  });
 
   const [removeFavourites] = useRemoveFavouriteMutation({
     onCompleted() {
-      setCheck(false)
-    }
-  })
+      setCheck(false);
+    },
+  });
 
   const handleAddFavourites = (id: string) => {
     addFavourites({ variables: { data: { announcementID: id } } })

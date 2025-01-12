@@ -59,8 +59,8 @@ const ListBar = () => {
         <Link to={ROUTES.SETTINGS} className={`${styles.link} ${isActive(ROUTES.SETTINGS)}`}>
           <span>Настройки</span>
         </Link>
-        <div className={`${styles.link} ${styles.exit}`}>
-          <span onClick={handleExit}>Выйти</span>
+        <div onClick={handleExit} className={`${styles.link} ${styles.exit}`}>
+          <span >Выйти</span>
         </div>
       </div>
     </div>

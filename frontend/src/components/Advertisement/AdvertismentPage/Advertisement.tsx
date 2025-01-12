@@ -1,8 +1,8 @@
-import { useEffect, useRef, useState, useMemo } from 'react';
+import React, { useEffect, useRef, useState, useMemo } from 'react';
 import styles from './advertisementdata.module.css'
 import { Link, useParams } from 'react-router-dom';
 import { ROUTES } from '../../../utils/routes';
-import { CharacteristicsResponse, useAddFavouriteMutation, useCheckAnnouncementInFavouritesQuery, useFindParentCategoriesQuery, useFindUserQuery, useGetAnnouncementCharacteristicsQuery, useGetAnnouncementQuery, useGetPhotosByAnnouncementIdQuery, useRemoveFavouriteMutation } from '../../../graphql/generated/output';
+import { CharacteristicsResponse, useAddFavouriteMutation, useCheckAnnouncementInFavouritesQuery, useCreateReviewMutation, useFindParentCategoriesQuery, useFindUserQuery, useGetAnnouncementCharacteristicsQuery, useGetAnnouncementQuery, useGetPhotosByAnnouncementIdQuery, useGetReviewsByUserQuery, useRemoveFavouriteMutation } from '../../../graphql/generated/output';
 import { parseAnnouncementCondition, parseAnnouncementStatus } from '../../../utils/parse-types-ad';
 import Loader from '../../../utils/Loader/Loader';
 
@@ -34,6 +34,8 @@ const Advertisement = () => {
 
   const { data: checkData } = useCheckAnnouncementInFavouritesQuery({ variables: { adId: advertisment?.id || '' } })
   const [check, setCheck] = useState(checkData?.checkAnnouncementInFavourites || false)
+
+  
 
   useEffect(() => {
     setCheck(checkData?.checkAnnouncementInFavourites || false);
@@ -73,6 +75,41 @@ const Advertisement = () => {
       imageDivRef.current.style.setProperty('--background-image', `url('${images[currentImage]}')`);
     }
   }, [currentImage, images]);
+
+  const ratingRef = useRef<HTMLInputElement>(null);
+  const contentRef = useRef<HTMLTextAreaElement>(null);
+  const [createReview] = useCreateReviewMutation();
+  const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault(); // Предотвращаем обновление страницы
+
+    if (ratingRef.current && contentRef.current && advertisment?.id && user?.id) {
+      const rating = ratingRef.current.value;
+      const content = contentRef.current.value;
+      console.log(advertisment.id, user.id)
+      try {
+        // Выполняем мутацию для создания отзыва
+        await createReview({
+          variables: {
+            data: {
+              rating: parseInt(rating),
+              content: content,
+              announcementId: advertisment.id, // Используем ID объявления
+              userId: user.id,
+            },
+          },
+        });
+  
+        // Дополнительно можно добавить уведомление об успешной отправке
+        console.log("Отзыв успешно создан");
+      } catch (error) {
+        console.error("Ошибка при создании отзыва", error);
+      }
+    } else {
+      console.error("Элементы формы не найдены.");
+    }
+  };
+
+  
 
   return (
     <div className={styles.container}>
@@ -198,6 +235,26 @@ const Advertisement = () => {
           </div>
         </div>
         {/*отзывы*/}
+        <form id="reviewForm" onSubmit={handleSubmit}>
+        <label htmlFor="rating">Рейтинг:</label>
+        <input
+          type="number"
+          id="rating"
+          name="rating"
+          min="1"
+          max="5"
+          required
+          ref={ratingRef} // Привязываем input к useRef
+        />
+        <label htmlFor="content">Отзыв:</label>
+        <textarea
+          id="content"
+          name="content"
+          required
+          ref={contentRef} // Привязываем textarea к useRef
+        />
+        <button type="submit">Оставить отзыв</button>
+      </form>
       </div>
     </div>
   )

@@ -63,6 +63,7 @@ const Profile = () => {
 
         const formData = new FormData();
         formData.append('file', file);
+        console.log(formData)
 
         update({ variables: { file: formData } })
         .then((data) => {
