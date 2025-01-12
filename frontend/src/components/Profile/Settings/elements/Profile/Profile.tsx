@@ -57,21 +57,28 @@ const Profile = () => {
 
   const handleImageChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files?.[0];
-
     if (file) {
-        console.log('Uploading file:', file);
-
-        const formData = new FormData();
-        formData.append('file', file);
-        console.log(formData)
-
-        update({ variables: { file: formData } })
+      const formData = new FormData();
+      formData.append('file', file);
+      console.log(formData)
+      fetch('http://localhost:3000/upload', {
+        method: 'POST',
+        body: formData,
+      })
+        .then((response) => {
+          console.log('Response status:', response.status);
+          if (!response.ok) {
+            throw new Error('Network response was not ok');
+          }
+          return response.json();
+        })
         .then((data) => {
-            console.log('File uploaded successfully', data);
+          console.log('File uploaded successfully:', data.fileUrl);
         })
         .catch((error) => {
-            console.error('Error uploading file:', error);
+          console.error('Error uploading file:', error);
         });
+      
     }
   };
 
@@ -113,7 +120,7 @@ const Profile = () => {
           </div>
         </div>
       </div>
-
+    
       <div className={styles.block}>
         <span className={styles.block_name}>Настройки профиля</span>
 
