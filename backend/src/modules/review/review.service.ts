@@ -39,6 +39,17 @@ export class ReviewService {
     });
   }
 
+  async getReviewsByAnnouncement(announcementId: string) {
+    return this.prismaService.review.findMany({
+      where: { 
+        announcementId 
+      },
+      include: {
+        announcement: true
+      },
+    });
+  }
+
   async update(user: User, id: string, input: UpdateReviewInput) {
     const existing = await this.prismaService.review.findUnique({
       where: {

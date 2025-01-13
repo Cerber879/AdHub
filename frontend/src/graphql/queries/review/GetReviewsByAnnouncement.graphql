@@ -1,0 +1,12 @@
+query GetReviewsByAnnouncement($announcementId: String!) {
+  getReviewsByAnnouncement(announcementId: $announcementId) {
+    id
+    announcementId
+    content
+    rating
+    createdAt
+    updatedAt
+    userId
+    
+  }
+}

@@ -4,6 +4,7 @@ import { CharacteristicService } from './characteristic.service'
 import { CreateCharacteristicInput } from './inputs/create-characteristic.input'
 import { UpdateCharacteristicMixedInput } from './inputs/update-charateristic.input'
 
+
 @Resolver()
 export class CharacteristicResolver {
   constructor(private readonly characteristicService: CharacteristicService) {}
