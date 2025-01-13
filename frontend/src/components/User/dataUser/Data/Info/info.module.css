@@ -1,0 +1,51 @@
+.infoBlock {
+  margin-top: 30px;
+}
+
+.infoTabs {
+  display: flex;
+  gap: 10px;
+  width: 400px;
+}
+
+.activeTab {
+  flex: 1;
+  padding: 10px;
+  text-align: center;
+  background-color: #007bff;
+  color: #fff;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.passiveTab {
+  flex: 1;
+  padding: 10px;
+  text-align: center;
+  background-color: #e0e0e0;
+  color: #000;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.infoContent {
+  font-size: 16px;
+  color: #333;
+}
+
+.socialsList {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.socialItem {
+  display: flex;
+  flex-direction: column;
+}
+
+.socialItem a {
+  color: #007bff;
+  text-decoration: none;
+  font-weight: bold;
+}

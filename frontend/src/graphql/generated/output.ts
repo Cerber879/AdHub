@@ -474,6 +474,7 @@ export type Query = {
   getAnnouncementByIds: Array<AnnouncementModel>;
   getAnnouncementByName: AnnouncementModel;
   getAnnouncementByProfile: Array<AnnouncementModel>;
+  getAnnouncementByUser: Array<AnnouncementModel>;
   getAnnouncementCharacteristics: CharacteristicsResponse;
   getAnnouncementsByCategory: Array<AnnouncementModel>;
   getCategoryById: CategoryModel;
@@ -531,6 +532,11 @@ export type QueryGetAnnouncementByIdsArgs = {
 
 export type QueryGetAnnouncementByNameArgs = {
   name: Scalars['String']['input'];
+};
+
+
+export type QueryGetAnnouncementByUserArgs = {
+  userId: Scalars['String']['input'];
 };
 
 
@@ -1012,6 +1018,13 @@ export type GetAnnouncementByProfileQueryVariables = Exact<{ [key: string]: neve
 
 
 export type GetAnnouncementByProfileQuery = { __typename?: 'Query', getAnnouncementByProfile: Array<{ __typename?: 'AnnouncementModel', id: string, userId: string, categoryId: string, name: string, price: number, placementDate: any, description: string, status: AnnouncementStatus, condition: ProductCondition }> };
+
+export type GetAnnouncementByUserQueryVariables = Exact<{
+  id: Scalars['String']['input'];
+}>;
+
+
+export type GetAnnouncementByUserQuery = { __typename?: 'Query', getAnnouncementByUser: Array<{ __typename?: 'AnnouncementModel', id: string, userId: string, categoryId: string, name: string, price: number, placementDate: any, description: string, status: AnnouncementStatus, condition: ProductCondition }> };
 
 export type GetAnnouncementsByCategoryQueryVariables = Exact<{
   id: Scalars['String']['input'];
@@ -2678,6 +2691,54 @@ export type GetAnnouncementByProfileQueryHookResult = ReturnType<typeof useGetAn
 export type GetAnnouncementByProfileLazyQueryHookResult = ReturnType<typeof useGetAnnouncementByProfileLazyQuery>;
 export type GetAnnouncementByProfileSuspenseQueryHookResult = ReturnType<typeof useGetAnnouncementByProfileSuspenseQuery>;
 export type GetAnnouncementByProfileQueryResult = Apollo.QueryResult<GetAnnouncementByProfileQuery, GetAnnouncementByProfileQueryVariables>;
+export const GetAnnouncementByUserDocument = gql`
+    query GetAnnouncementByUser($id: String!) {
+  getAnnouncementByUser(userId: $id) {
+    id
+    userId
+    categoryId
+    name
+    price
+    placementDate
+    description
+    status
+    condition
+  }
+}
+    `;
+
+/**
+ * __useGetAnnouncementByUserQuery__
+ *
+ * To run a query within a React component, call `useGetAnnouncementByUserQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGetAnnouncementByUserQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useGetAnnouncementByUserQuery({
+ *   variables: {
+ *      id: // value for 'id'
+ *   },
+ * });
+ */
+export function useGetAnnouncementByUserQuery(baseOptions: Apollo.QueryHookOptions<GetAnnouncementByUserQuery, GetAnnouncementByUserQueryVariables> & ({ variables: GetAnnouncementByUserQueryVariables; skip?: boolean; } | { skip: boolean; }) ) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<GetAnnouncementByUserQuery, GetAnnouncementByUserQueryVariables>(GetAnnouncementByUserDocument, options);
+      }
+export function useGetAnnouncementByUserLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<GetAnnouncementByUserQuery, GetAnnouncementByUserQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<GetAnnouncementByUserQuery, GetAnnouncementByUserQueryVariables>(GetAnnouncementByUserDocument, options);
+        }
+export function useGetAnnouncementByUserSuspenseQuery(baseOptions?: Apollo.SkipToken | Apollo.SuspenseQueryHookOptions<GetAnnouncementByUserQuery, GetAnnouncementByUserQueryVariables>) {
+          const options = baseOptions === Apollo.skipToken ? baseOptions : {...defaultOptions, ...baseOptions}
+          return Apollo.useSuspenseQuery<GetAnnouncementByUserQuery, GetAnnouncementByUserQueryVariables>(GetAnnouncementByUserDocument, options);
+        }
+export type GetAnnouncementByUserQueryHookResult = ReturnType<typeof useGetAnnouncementByUserQuery>;
+export type GetAnnouncementByUserLazyQueryHookResult = ReturnType<typeof useGetAnnouncementByUserLazyQuery>;
+export type GetAnnouncementByUserSuspenseQueryHookResult = ReturnType<typeof useGetAnnouncementByUserSuspenseQuery>;
+export type GetAnnouncementByUserQueryResult = Apollo.QueryResult<GetAnnouncementByUserQuery, GetAnnouncementByUserQueryVariables>;
 export const GetAnnouncementsByCategoryDocument = gql`
     query GetAnnouncementsByCategory($id: String!) {
   getAnnouncementsByCategory(id: $id) {

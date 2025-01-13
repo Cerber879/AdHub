@@ -13,18 +13,24 @@ interface PreviewSmallAdvertismentProps {
   input: AnnouncementModel
 }
 
-const PreviewSmallAdvertisment: React.FC<PreviewSmallAdvertismentProps> = ({ input }) => { 
+const PreviewSmallAdvertisment: React.FC<PreviewSmallAdvertismentProps> = ({ input }) => {
+  const handlePreventLinkClick = (event: React.MouseEvent) => {
+    event.stopPropagation();
+    event.preventDefault();
+  };
 
   return (
-    <Link         
-      to={ROUTES.ITEMS + '/' + input.name + '/' + input.id} 
+    <Link
+      to={ROUTES.ITEMS + '/' + input.name + '/' + input.id}
       className={styles.container}
     >
       <PhotosBlock useStylesProfile={false} input={input} />
-      <DataAdvertisment input={input} />
+      <div>
+        <DataAdvertisment input={input} stopPropagation={handlePreventLinkClick} />
+      </div>
       <div className={styles.gradient}></div>
     </Link>
-  )
-}
+  );
+};
 
-export default PreviewSmallAdvertisment
+export default PreviewSmallAdvertisment;

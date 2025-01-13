@@ -7,22 +7,20 @@ import { useCurrent } from '../../../../../../hooks/useCurrent'
 
 interface PreviewSmallAdvertismentProps {
   input: FindAllAnnouncementsQuery['findAllAnnouncements'][number] 
+  stopPropagation: (event: React.MouseEvent) => void
 }
 
-const DataAdvertisment = ({ input }: PreviewSmallAdvertismentProps) => {
-  
+const DataAdvertisment = ({ input, stopPropagation }: PreviewSmallAdvertismentProps) => {
   const { user } = useCurrent();
 
-  // Использование хука useCheckAnnouncementInFavouritesQuery в теле компонента
   const { data } = useCheckAnnouncementInFavouritesQuery({
     variables: { adId: input.id },
-    skip: !user, // Пропускаем запрос, если пользователь не авторизован
+    skip: !user,
   });
 
   const [check, setCheck] = useState(data?.checkAnnouncementInFavourites || false);
 
-  // Обновляем состояние при изменении данных из запроса
-  React.useEffect(() => {
+  useEffect(() => {
     if (data) {
       setCheck(data.checkAnnouncementInFavourites);
     }
@@ -30,45 +28,50 @@ const DataAdvertisment = ({ input }: PreviewSmallAdvertismentProps) => {
 
   const [addFavourites] = useAddFavouriteMutation({
     onCompleted() {
-      setCheck(true);
+      console.log("Added to favourites");
     },
   });
 
   const [removeFavourites] = useRemoveFavouriteMutation({
     onCompleted() {
-      setCheck(false);
+      console.log("Removed from favourites");
     },
   });
 
-  const handleAddFavourites = (id: string) => {
-    addFavourites({ variables: { data: { announcementID: id } } })
-  }
+  const handleFavourites = (id: string, event: React.MouseEvent) => {
+    stopPropagation(event);
 
-  const handleremoveFavourites = (id: string) => {
-    removeFavourites({ variables: { id: id } })
-  }
-
-  const handleFavourites = (id: string) => {
-    if(user) {
+    if (user) {
       if (check) {
-        handleremoveFavourites(id)
+        setCheck(false); 
+        removeFavourites({ variables: { id: id } });
       } else {
-        handleAddFavourites(id)
+        setCheck(true); 
+        addFavourites({ variables: { data: { announcementID: id } } });
       }
     } else {
-      alert('Вы не авторизованы')
+      alert('Вы не авторизованы');
     }
-  }
+  };
 
   return (
     <div className={styles.data_block}>
       <div className={styles.name_block}>
         <div className={styles.name_ad}>{input.name}</div>
-        <img className={styles.heart_icon} onClick={() => {handleFavourites(input.id)}} src={`${!check ? '/images/Advertisment/heart.svg' : '/images/Advertisment/heart_blue_fill.svg'}`} alt="heart" />
+        <img
+          className={styles.heart_icon}
+          onClick={(e) => handleFavourites(input.id, e)}
+          src={
+            check
+              ? '/images/Advertisment/heart_blue_fill.svg'
+              : '/images/Advertisment/heart.svg'
+          }
+          alt="heart"
+        />
       </div>
       <p className={styles.price}>{input.price} ₽</p>
     </div>
-  )
-}
+  );
+};
 
-export default DataAdvertisment
+export default DataAdvertisment;

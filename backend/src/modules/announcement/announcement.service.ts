@@ -142,7 +142,6 @@ export class AnnouncementService {
   }
 
   async findByIds(data: string[]) {
-    // Массив промисов для всех запросов
     const adsPromises = data.map(async id => {
       const announcement = await this.prismaService.announcement.findUnique({
         where: {
@@ -165,6 +164,20 @@ export class AnnouncementService {
     const announcement = await this.prismaService.announcement.findMany({
       where: {
         userId: user.id
+      }
+    })
+
+    if (!announcement) {
+      throw new NotFoundException('Объявление не найдено')
+    }
+
+    return announcement
+  }
+
+  async findByUser(userId: string) {
+    const announcement = await this.prismaService.announcement.findMany({
+      where: {
+        userId: userId
       }
     })
 

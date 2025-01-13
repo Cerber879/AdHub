@@ -256,6 +256,7 @@ type Query {
   getAnnouncementByIds(ids: [String!]!): [AnnouncementModel!]!
   getAnnouncementByName(name: String!): AnnouncementModel!
   getAnnouncementByProfile: [AnnouncementModel!]!
+  getAnnouncementByUser(userId: String!): [AnnouncementModel!]!
   getAnnouncementCharacteristics(id: String!): CharacteristicsResponse!
   getAnnouncementsByCategory(id: String!): [AnnouncementModel!]!
   getCategoryById(id: String!): CategoryModel!

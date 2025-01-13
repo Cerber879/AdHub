@@ -19,6 +19,7 @@ import Settings from '../pages/Profile/elements/Settings';
 import { ROUTES } from '../utils/routes';
 import { Header } from '../components/Header/Header';
 import { Footer } from '../components/Footer/Footer';
+import User from '../pages/User/User';
 
 const App: React.FC = () => {
 
@@ -38,7 +39,7 @@ const App: React.FC = () => {
               <Route path={ROUTES.ADDITEM} element={<CreateAdvertisementPage />} />
               <Route path={ROUTES.ABOUT} element={<AboutUs />} />
               <Route path={ROUTES.PROFILE + '/:userId'} element={<Profile />} /> 
-              <Route path={ROUTES.USER + '/:userId'} element={<Profile />} /> 
+              <Route path={ROUTES.USER + '/:userId'} element={<User />} /> 
               <Route path={ROUTES.ITEMS + '/:adName/:adId'} element={<AdvertismentPage />} />
               <Route path={ROUTES.ITEMS + ROUTES.EDIT + '/:adId'} element={<></>} />
               

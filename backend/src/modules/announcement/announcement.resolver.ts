@@ -57,6 +57,11 @@ export class AnnouncementResolver {
     return this.announcementService.findByProfile(user)
   }
 
+  @Query(() => [AnnouncementModel], { name: 'getAnnouncementByUser' })
+  async findByUser(@Args('userId') userId: string) {
+    return this.announcementService.findByUser(userId)
+  }
+
   @Query(() => AnnouncementModel, { name: 'getAnnouncementByName' })
   async findByName(@Args('name') name: string) {
     return this.announcementService.findByName(name)

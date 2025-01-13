@@ -3,8 +3,6 @@ import { Args, Mutation, Query, Resolver } from '@nestjs/graphql'
 import { CharacteristicService } from './characteristic.service'
 import { CreateCharacteristicInput } from './inputs/create-characteristic.input'
 import { UpdateCharacteristicMixedInput } from './inputs/update-charateristic.input'
-import { CharacteristicModel } from './models/characteristic.model'
-import { CharacteristicsResponse } from './responses/characteristic.response'
 
 @Resolver()
 export class CharacteristicResolver {
