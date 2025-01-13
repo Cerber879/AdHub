@@ -21,7 +21,9 @@ const AdvertisementTop: React.FC = () => {
   }
 
   return (
-    <div className={styles.container}>
+    <div>
+      <div className={styles.container}>
+
       <button
         onClick={handleClick}
         className={styles.button_catalogue}>
@@ -34,8 +36,11 @@ const AdvertisementTop: React.FC = () => {
         <span>Каталог</span>
       </button>
       <SearchBar/>
-
       {showCatalogueModal && <CatalogueModal />}
+      </div>
+      
+      
+      
     </div>
     
   );

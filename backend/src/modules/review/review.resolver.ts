@@ -29,6 +29,11 @@ export class ReviewResolver {
     return this.reviewService.getReviewsByUser(userId);
   }
 
+  @Query(() => [ReviewModel], { name: 'getReviewsByAnnouncement' })
+  async getReviewsByAnnoucement(@Args('announcementId') announcementId: string) {
+    return this.reviewService.getReviewsByAnnouncement(announcementId);
+  }
+
   @Authorization()
   @Mutation(() => Boolean, { name: 'updateReview' })
   async updateReview(
