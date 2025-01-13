@@ -92,7 +92,7 @@ export class ProfileService {
 	}
 
 	public async createSocialLink(user: User, input: SocialLinkInput) {
-		const { title, url } = input
+		const { title, url, description } = input
 
 		const lastSocialLink = await this.prismaService.socialLink.findFirst({
 			where: {
@@ -108,6 +108,7 @@ export class ProfileService {
 		await this.prismaService.socialLink.create({
 			data: {
 				title,
+				description,
 				url,
 				position: newPosition,
 				user: {
@@ -143,7 +144,7 @@ export class ProfileService {
 	}
 
 	public async updateSocialLink(id: string, input: SocialLinkInput) {
-		const { title, url } = input
+		const { title, url, description } = input
 
 		await this.prismaService.socialLink.update({
 			where: {
@@ -151,6 +152,7 @@ export class ProfileService {
 			},
 			data: {
 				title,
+				description,
 				url
 			}
 		})

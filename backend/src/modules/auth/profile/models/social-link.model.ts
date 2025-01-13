@@ -11,6 +11,9 @@ export class SocialLinkModel implements SocialLink {
 	public title: string
 
 	@Field(() => String)
+	public description: string
+
+	@Field(() => String)
 	public url: string
 
 	@Field(() => Number)

@@ -11,6 +11,11 @@ export class SocialLinkInput {
 	@Field(() => String)
 	@IsString()
 	@IsNotEmpty()
+	public description: string
+
+	@Field(() => String)
+	@IsString()
+	@IsNotEmpty()
 	public url: string
 }
 

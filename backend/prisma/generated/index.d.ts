@@ -3217,6 +3217,7 @@ export namespace Prisma {
   export type SocialLinkMinAggregateOutputType = {
     id: string | null
     title: string | null
+    description: string | null
     url: string | null
     position: number | null
     userId: string | null
@@ -3227,6 +3228,7 @@ export namespace Prisma {
   export type SocialLinkMaxAggregateOutputType = {
     id: string | null
     title: string | null
+    description: string | null
     url: string | null
     position: number | null
     userId: string | null
@@ -3237,6 +3239,7 @@ export namespace Prisma {
   export type SocialLinkCountAggregateOutputType = {
     id: number
     title: number
+    description: number
     url: number
     position: number
     userId: number
@@ -3257,6 +3260,7 @@ export namespace Prisma {
   export type SocialLinkMinAggregateInputType = {
     id?: true
     title?: true
+    description?: true
     url?: true
     position?: true
     userId?: true
@@ -3267,6 +3271,7 @@ export namespace Prisma {
   export type SocialLinkMaxAggregateInputType = {
     id?: true
     title?: true
+    description?: true
     url?: true
     position?: true
     userId?: true
@@ -3277,6 +3282,7 @@ export namespace Prisma {
   export type SocialLinkCountAggregateInputType = {
     id?: true
     title?: true
+    description?: true
     url?: true
     position?: true
     userId?: true
@@ -3374,6 +3380,7 @@ export namespace Prisma {
   export type SocialLinkGroupByOutputType = {
     id: string
     title: string
+    description: string
     url: string
     position: number
     userId: string | null
@@ -3403,6 +3410,7 @@ export namespace Prisma {
   export type SocialLinkSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
     title?: boolean
+    description?: boolean
     url?: boolean
     position?: boolean
     userId?: boolean
@@ -3414,6 +3422,7 @@ export namespace Prisma {
   export type SocialLinkSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
     title?: boolean
+    description?: boolean
     url?: boolean
     position?: boolean
     userId?: boolean
@@ -3425,6 +3434,7 @@ export namespace Prisma {
   export type SocialLinkSelectScalar = {
     id?: boolean
     title?: boolean
+    description?: boolean
     url?: boolean
     position?: boolean
     userId?: boolean
@@ -3447,6 +3457,7 @@ export namespace Prisma {
     scalars: $Extensions.GetPayloadResult<{
       id: string
       title: string
+      description: string
       url: string
       position: number
       userId: string | null
@@ -3848,6 +3859,7 @@ export namespace Prisma {
   interface SocialLinkFieldRefs {
     readonly id: FieldRef<"SocialLink", 'String'>
     readonly title: FieldRef<"SocialLink", 'String'>
+    readonly description: FieldRef<"SocialLink", 'String'>
     readonly url: FieldRef<"SocialLink", 'String'>
     readonly position: FieldRef<"SocialLink", 'Int'>
     readonly userId: FieldRef<"SocialLink", 'String'>
@@ -13092,6 +13104,7 @@ export namespace Prisma {
   export const SocialLinkScalarFieldEnum: {
     id: 'id',
     title: 'title',
+    description: 'description',
     url: 'url',
     position: 'position',
     userId: 'userId',
@@ -13437,6 +13450,7 @@ export namespace Prisma {
     NOT?: SocialLinkWhereInput | SocialLinkWhereInput[]
     id?: StringFilter<"SocialLink"> | string
     title?: StringFilter<"SocialLink"> | string
+    description?: StringFilter<"SocialLink"> | string
     url?: StringFilter<"SocialLink"> | string
     position?: IntFilter<"SocialLink"> | number
     userId?: StringNullableFilter<"SocialLink"> | string | null
@@ -13448,6 +13462,7 @@ export namespace Prisma {
   export type SocialLinkOrderByWithRelationInput = {
     id?: SortOrder
     title?: SortOrder
+    description?: SortOrder
     url?: SortOrder
     position?: SortOrder
     userId?: SortOrderInput | SortOrder
@@ -13462,6 +13477,7 @@ export namespace Prisma {
     OR?: SocialLinkWhereInput[]
     NOT?: SocialLinkWhereInput | SocialLinkWhereInput[]
     title?: StringFilter<"SocialLink"> | string
+    description?: StringFilter<"SocialLink"> | string
     url?: StringFilter<"SocialLink"> | string
     position?: IntFilter<"SocialLink"> | number
     userId?: StringNullableFilter<"SocialLink"> | string | null
@@ -13473,6 +13489,7 @@ export namespace Prisma {
   export type SocialLinkOrderByWithAggregationInput = {
     id?: SortOrder
     title?: SortOrder
+    description?: SortOrder
     url?: SortOrder
     position?: SortOrder
     userId?: SortOrderInput | SortOrder
@@ -13491,6 +13508,7 @@ export namespace Prisma {
     NOT?: SocialLinkScalarWhereWithAggregatesInput | SocialLinkScalarWhereWithAggregatesInput[]
     id?: StringWithAggregatesFilter<"SocialLink"> | string
     title?: StringWithAggregatesFilter<"SocialLink"> | string
+    description?: StringWithAggregatesFilter<"SocialLink"> | string
     url?: StringWithAggregatesFilter<"SocialLink"> | string
     position?: IntWithAggregatesFilter<"SocialLink"> | number
     userId?: StringNullableWithAggregatesFilter<"SocialLink"> | string | null
@@ -14189,6 +14207,7 @@ export namespace Prisma {
   export type SocialLinkCreateInput = {
     id?: string
     title: string
+    description: string
     url: string
     position: number
     createdAt?: Date | string
@@ -14199,6 +14218,7 @@ export namespace Prisma {
   export type SocialLinkUncheckedCreateInput = {
     id?: string
     title: string
+    description: string
     url: string
     position: number
     userId?: string | null
@@ -14209,6 +14229,7 @@ export namespace Prisma {
   export type SocialLinkUpdateInput = {
     id?: StringFieldUpdateOperationsInput | string
     title?: StringFieldUpdateOperationsInput | string
+    description?: StringFieldUpdateOperationsInput | string
     url?: StringFieldUpdateOperationsInput | string
     position?: IntFieldUpdateOperationsInput | number
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -14219,6 +14240,7 @@ export namespace Prisma {
   export type SocialLinkUncheckedUpdateInput = {
     id?: StringFieldUpdateOperationsInput | string
     title?: StringFieldUpdateOperationsInput | string
+    description?: StringFieldUpdateOperationsInput | string
     url?: StringFieldUpdateOperationsInput | string
     position?: IntFieldUpdateOperationsInput | number
     userId?: NullableStringFieldUpdateOperationsInput | string | null
@@ -14229,6 +14251,7 @@ export namespace Prisma {
   export type SocialLinkCreateManyInput = {
     id?: string
     title: string
+    description: string
     url: string
     position: number
     userId?: string | null
@@ -14239,6 +14262,7 @@ export namespace Prisma {
   export type SocialLinkUpdateManyMutationInput = {
     id?: StringFieldUpdateOperationsInput | string
     title?: StringFieldUpdateOperationsInput | string
+    description?: StringFieldUpdateOperationsInput | string
     url?: StringFieldUpdateOperationsInput | string
     position?: IntFieldUpdateOperationsInput | number
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -14248,6 +14272,7 @@ export namespace Prisma {
   export type SocialLinkUncheckedUpdateManyInput = {
     id?: StringFieldUpdateOperationsInput | string
     title?: StringFieldUpdateOperationsInput | string
+    description?: StringFieldUpdateOperationsInput | string
     url?: StringFieldUpdateOperationsInput | string
     position?: IntFieldUpdateOperationsInput | number
     userId?: NullableStringFieldUpdateOperationsInput | string | null
@@ -15049,6 +15074,7 @@ export namespace Prisma {
   export type SocialLinkCountOrderByAggregateInput = {
     id?: SortOrder
     title?: SortOrder
+    description?: SortOrder
     url?: SortOrder
     position?: SortOrder
     userId?: SortOrder
@@ -15063,6 +15089,7 @@ export namespace Prisma {
   export type SocialLinkMaxOrderByAggregateInput = {
     id?: SortOrder
     title?: SortOrder
+    description?: SortOrder
     url?: SortOrder
     position?: SortOrder
     userId?: SortOrder
@@ -15073,6 +15100,7 @@ export namespace Prisma {
   export type SocialLinkMinOrderByAggregateInput = {
     id?: SortOrder
     title?: SortOrder
+    description?: SortOrder
     url?: SortOrder
     position?: SortOrder
     userId?: SortOrder
@@ -16897,6 +16925,7 @@ export namespace Prisma {
   export type SocialLinkCreateWithoutUserInput = {
     id?: string
     title: string
+    description: string
     url: string
     position: number
     createdAt?: Date | string
@@ -16906,6 +16935,7 @@ export namespace Prisma {
   export type SocialLinkUncheckedCreateWithoutUserInput = {
     id?: string
     title: string
+    description: string
     url: string
     position: number
     createdAt?: Date | string
@@ -17101,6 +17131,7 @@ export namespace Prisma {
     NOT?: SocialLinkScalarWhereInput | SocialLinkScalarWhereInput[]
     id?: StringFilter<"SocialLink"> | string
     title?: StringFilter<"SocialLink"> | string
+    description?: StringFilter<"SocialLink"> | string
     url?: StringFilter<"SocialLink"> | string
     position?: IntFilter<"SocialLink"> | number
     userId?: StringNullableFilter<"SocialLink"> | string | null
@@ -18937,6 +18968,7 @@ export namespace Prisma {
   export type SocialLinkCreateManyUserInput = {
     id?: string
     title: string
+    description: string
     url: string
     position: number
     createdAt?: Date | string
@@ -19104,6 +19136,7 @@ export namespace Prisma {
   export type SocialLinkUpdateWithoutUserInput = {
     id?: StringFieldUpdateOperationsInput | string
     title?: StringFieldUpdateOperationsInput | string
+    description?: StringFieldUpdateOperationsInput | string
     url?: StringFieldUpdateOperationsInput | string
     position?: IntFieldUpdateOperationsInput | number
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -19113,6 +19146,7 @@ export namespace Prisma {
   export type SocialLinkUncheckedUpdateWithoutUserInput = {
     id?: StringFieldUpdateOperationsInput | string
     title?: StringFieldUpdateOperationsInput | string
+    description?: StringFieldUpdateOperationsInput | string
     url?: StringFieldUpdateOperationsInput | string
     position?: IntFieldUpdateOperationsInput | number
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -19122,6 +19156,7 @@ export namespace Prisma {
   export type SocialLinkUncheckedUpdateManyWithoutUserInput = {
     id?: StringFieldUpdateOperationsInput | string
     title?: StringFieldUpdateOperationsInput | string
+    description?: StringFieldUpdateOperationsInput | string
     url?: StringFieldUpdateOperationsInput | string
     position?: IntFieldUpdateOperationsInput | number
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string

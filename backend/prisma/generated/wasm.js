@@ -134,6 +134,7 @@ exports.Prisma.UserScalarFieldEnum = {
 exports.Prisma.SocialLinkScalarFieldEnum = {
   id: 'id',
   title: 'title',
+  description: 'description',
   url: 'url',
   position: 'position',
   userId: 'userId',

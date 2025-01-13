@@ -296,12 +296,14 @@ type SessionModel {
 }
 
 input SocialLinkInput {
+  description: String!
   title: String!
   url: String!
 }
 
 type SocialLinkModel {
   createdAt: DateTime!
+  description: String!
   id: ID!
   position: Float!
   title: String!

@@ -608,6 +608,7 @@ export type SessionModel = {
 };
 
 export type SocialLinkInput = {
+  description: Scalars['String']['input'];
   title: Scalars['String']['input'];
   url: Scalars['String']['input'];
 };
@@ -615,6 +616,7 @@ export type SocialLinkInput = {
 export type SocialLinkModel = {
   __typename?: 'SocialLinkModel';
   createdAt: Scalars['DateTime']['output'];
+  description: Scalars['String']['output'];
   id: Scalars['ID']['output'];
   position: Scalars['Float']['output'];
   title: Scalars['String']['output'];
@@ -1135,7 +1137,7 @@ export type FindSessionByUserQuery = { __typename?: 'Query', findSessionsByUser:
 export type FindSocialLinksQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type FindSocialLinksQuery = { __typename?: 'Query', findSocialLinks: Array<{ __typename?: 'SocialLinkModel', id: string, title: string, url: string, position: number }> };
+export type FindSocialLinksQuery = { __typename?: 'Query', findSocialLinks: Array<{ __typename?: 'SocialLinkModel', id: string, title: string, description: string, url: string, position: number }> };
 
 export type FindUserQueryVariables = Exact<{
   id: Scalars['String']['input'];
@@ -3475,6 +3477,7 @@ export const FindSocialLinksDocument = gql`
   findSocialLinks {
     id
     title
+    description
     url
     position
   }
