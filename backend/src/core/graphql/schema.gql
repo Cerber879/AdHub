@@ -265,6 +265,7 @@ type Query {
   getMessages(chatId: String!): [MessageModel!]!
   getMyReviews: [ReviewModel!]!
   getPhotosByAnnouncementId(id: String!): [String!]!
+  getReviewsByAnnouncement(announcementId: String!): [ReviewModel!]!
   getReviewsByUser(userId: String!): [ReviewModel!]!
   getSubcategories(id: String!): [CategoryModel!]!
 }

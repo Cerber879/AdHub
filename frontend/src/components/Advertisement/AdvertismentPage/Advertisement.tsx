@@ -2,7 +2,7 @@ import React, { useEffect, useRef, useState, useMemo } from 'react';
 import styles from './advertisementdata.module.css'
 import { Link, useParams } from 'react-router-dom';
 import { ROUTES } from '../../../utils/routes';
-import { CharacteristicsResponse, useAddFavouriteMutation, useCheckAnnouncementInFavouritesQuery, useCreateReviewMutation, useFindParentCategoriesQuery, useFindUserQuery, useGetAnnouncementCharacteristicsQuery, useGetAnnouncementQuery, useGetPhotosByAnnouncementIdQuery, useGetReviewsByUserQuery, useRemoveFavouriteMutation } from '../../../graphql/generated/output';
+import { CharacteristicsResponse, useAddFavouriteMutation, useCheckAnnouncementInFavouritesQuery, useCreateReviewMutation, useFindParentCategoriesQuery, useFindUserQuery, useGetAnnouncementCharacteristicsQuery, useGetAnnouncementQuery, useGetPhotosByAnnouncementIdQuery, useGetReviewsByAnnouncementQuery, useGetReviewsByUserQuery, useRemoveFavouriteMutation } from '../../../graphql/generated/output';
 import { parseAnnouncementCondition, parseAnnouncementStatus } from '../../../utils/parse-types-ad';
 import Loader from '../../../utils/Loader/Loader';
 
@@ -35,7 +35,8 @@ const Advertisement = () => {
   const { data: checkData } = useCheckAnnouncementInFavouritesQuery({ variables: { adId: advertisment?.id || '' } })
   const [check, setCheck] = useState(checkData?.checkAnnouncementInFavourites || false)
 
-  
+  const { data: reviewsData } = useGetReviewsByAnnouncementQuery({ variables: { announcementId: advertisment?.id || '' } })
+  const reviews = useMemo(() => reviewsData?.getReviewsByAnnouncement || [], [reviewsData])
 
   useEffect(() => {
     setCheck(checkData?.checkAnnouncementInFavourites || false);
@@ -109,7 +110,19 @@ const Advertisement = () => {
     }
   };
 
-  
+  const [showAllCharacteristics, setShowAllCharacteristics] = useState(false);
+
+  let charLength = 4;
+
+  if (announcementCharacteristics && "characteristics" in announcementCharacteristics){
+
+    charLength = showAllCharacteristics ? announcementCharacteristics.characteristics.length : 4;
+  }
+
+  const [showAllReviews, setShowAllReviews] = useState(false);
+
+  let visibleReviewsLength = 3;
+  visibleReviewsLength = showAllReviews ? reviews.length : 3;
 
   return (
     <div className={styles.container}>
@@ -159,6 +172,7 @@ const Advertisement = () => {
                 onClick={() => setCurrentImage(index)}
               />
             ))}
+            
           </div>
 
           <div>
@@ -189,7 +203,7 @@ const Advertisement = () => {
               </div>
               <div className={styles.characteristics_wrapper}>
                 {announcementCharacteristics && "characteristics" in announcementCharacteristics &&
-                  announcementCharacteristics.characteristics.map((characteristic, index) => (
+                  announcementCharacteristics.characteristics.slice(0, charLength).map((characteristic, index) => (
                     <div key={index} className={styles.characteristic_group}>
                       <div className={styles.characteristics_group__item}>
                         <h3 className={styles.characteristics_group_title}>{characteristic.group}</h3>
@@ -204,6 +218,14 @@ const Advertisement = () => {
                     </div>
                   ))
                 }
+                { announcementCharacteristics && "characteristics" in announcementCharacteristics && announcementCharacteristics.characteristics.length > 4 && (
+                  <button
+                    className={styles.showMoreButton}
+                    onClick={() => setShowAllCharacteristics(!showAllCharacteristics)}
+                  >
+                    {showAllCharacteristics ? "Скрыть" : "Показать ещё"}
+                  </button>
+                )}
               </div>
             </dl>
           </div>
@@ -212,6 +234,8 @@ const Advertisement = () => {
         </div>
 
         <div className={styles.info_block}>
+          <div className={styles.user_block}>
+
           <div className={styles.header}>
             <p className={styles.price}>{advertisment?.price} ₽</p>
             <img onClick={() => handleFavourites} className={styles.heart_icon} src={`${!check ? '/images/Advertisment/heart_black_out.svg' : '/images/Advertisment/heart_black_fill.svg'}`} alt="heart" /> 
@@ -233,28 +257,53 @@ const Advertisement = () => {
               <button className={styles.social}>Написать</button>
             </Link>
           </div>
+          </div>
+          <form id="reviewForm" className={styles.form} onSubmit={handleSubmit}>
+            <label htmlFor="rating" className={styles.form__label}>Рейтинг:</label>
+            <input
+              type="number"
+              id="rating"
+              name="rating"
+              min="1"
+              max="5"
+              required
+              ref={ratingRef}
+              className={styles.form__input}
+            />
+            <label htmlFor="content" className={styles.form__label}>Отзыв:</label>
+            <textarea
+              id="content"
+              name="content"
+              required
+              ref={contentRef}
+              className={styles.form__textarea}
+            />
+            <button type="submit" className={styles.form__button}>Оставить отзыв</button>
+          </form>
+          <div>
+
+            {reviews.slice(0, visibleReviewsLength).map((review, index) => (
+              <div key={index} className={styles.review}>
+                <div className={styles.review__header}>
+                  <span className={styles.review__username}>Оценка: {review.rating}</span>
+                  <span className={styles.review__date}>{new Date(review.createdAt).toLocaleDateString()}</span>
+                </div>
+                <p className={styles.review__content}>{review.content}</p>
+              </div>
+            ))}
+            {reviews.length > 3 && (
+              <button
+                className={styles.showMoreButton}
+                onClick={() => setShowAllReviews(!showAllReviews)}
+              >
+                {showAllReviews ? "Скрыть" : "Показать ещё"}
+              </button>
+            )}
+          </div>
         </div>
         {/*отзывы*/}
-        <form id="reviewForm" onSubmit={handleSubmit}>
-        <label htmlFor="rating">Рейтинг:</label>
-        <input
-          type="number"
-          id="rating"
-          name="rating"
-          min="1"
-          max="5"
-          required
-          ref={ratingRef} // Привязываем input к useRef
-        />
-        <label htmlFor="content">Отзыв:</label>
-        <textarea
-          id="content"
-          name="content"
-          required
-          ref={contentRef} // Привязываем textarea к useRef
-        />
-        <button type="submit">Оставить отзыв</button>
-      </form>
+        
+
       </div>
     </div>
   )

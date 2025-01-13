@@ -483,6 +483,7 @@ export type Query = {
   getMessages: Array<MessageModel>;
   getMyReviews: Array<ReviewModel>;
   getPhotosByAnnouncementId: Array<Scalars['String']['output']>;
+  getReviewsByAnnouncement: Array<ReviewModel>;
   getReviewsByUser: Array<ReviewModel>;
   getSubcategories: Array<CategoryModel>;
 };
@@ -556,6 +557,11 @@ export type QueryGetMessagesArgs = {
 
 export type QueryGetPhotosByAnnouncementIdArgs = {
   id: Scalars['String']['input'];
+};
+
+
+export type QueryGetReviewsByAnnouncementArgs = {
+  announcementId: Scalars['String']['input'];
 };
 
 
@@ -1088,6 +1094,13 @@ export type GetMyReviewsQueryVariables = Exact<{ [key: string]: never; }>;
 
 
 export type GetMyReviewsQuery = { __typename?: 'Query', getMyReviews: Array<{ __typename?: 'ReviewModel', id: string, rating: number, content: string, createdAt: any, updatedAt: any, announcement: { __typename?: 'AnnouncementModel', name: string, price: number } }> };
+
+export type GetReviewsByAnnouncementQueryVariables = Exact<{
+  announcementId: Scalars['String']['input'];
+}>;
+
+
+export type GetReviewsByAnnouncementQuery = { __typename?: 'Query', getReviewsByAnnouncement: Array<{ __typename?: 'ReviewModel', id: string, announcementId: string, content: string, rating: number, createdAt: any, updatedAt: any, userId: string }> };
 
 export type GetReviewsByUserQueryVariables = Exact<{
   userId: Scalars['String']['input'];
@@ -3201,6 +3214,52 @@ export type GetMyReviewsQueryHookResult = ReturnType<typeof useGetMyReviewsQuery
 export type GetMyReviewsLazyQueryHookResult = ReturnType<typeof useGetMyReviewsLazyQuery>;
 export type GetMyReviewsSuspenseQueryHookResult = ReturnType<typeof useGetMyReviewsSuspenseQuery>;
 export type GetMyReviewsQueryResult = Apollo.QueryResult<GetMyReviewsQuery, GetMyReviewsQueryVariables>;
+export const GetReviewsByAnnouncementDocument = gql`
+    query GetReviewsByAnnouncement($announcementId: String!) {
+  getReviewsByAnnouncement(announcementId: $announcementId) {
+    id
+    announcementId
+    content
+    rating
+    createdAt
+    updatedAt
+    userId
+  }
+}
+    `;
+
+/**
+ * __useGetReviewsByAnnouncementQuery__
+ *
+ * To run a query within a React component, call `useGetReviewsByAnnouncementQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGetReviewsByAnnouncementQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useGetReviewsByAnnouncementQuery({
+ *   variables: {
+ *      announcementId: // value for 'announcementId'
+ *   },
+ * });
+ */
+export function useGetReviewsByAnnouncementQuery(baseOptions: Apollo.QueryHookOptions<GetReviewsByAnnouncementQuery, GetReviewsByAnnouncementQueryVariables> & ({ variables: GetReviewsByAnnouncementQueryVariables; skip?: boolean; } | { skip: boolean; }) ) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<GetReviewsByAnnouncementQuery, GetReviewsByAnnouncementQueryVariables>(GetReviewsByAnnouncementDocument, options);
+      }
+export function useGetReviewsByAnnouncementLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<GetReviewsByAnnouncementQuery, GetReviewsByAnnouncementQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<GetReviewsByAnnouncementQuery, GetReviewsByAnnouncementQueryVariables>(GetReviewsByAnnouncementDocument, options);
+        }
+export function useGetReviewsByAnnouncementSuspenseQuery(baseOptions?: Apollo.SkipToken | Apollo.SuspenseQueryHookOptions<GetReviewsByAnnouncementQuery, GetReviewsByAnnouncementQueryVariables>) {
+          const options = baseOptions === Apollo.skipToken ? baseOptions : {...defaultOptions, ...baseOptions}
+          return Apollo.useSuspenseQuery<GetReviewsByAnnouncementQuery, GetReviewsByAnnouncementQueryVariables>(GetReviewsByAnnouncementDocument, options);
+        }
+export type GetReviewsByAnnouncementQueryHookResult = ReturnType<typeof useGetReviewsByAnnouncementQuery>;
+export type GetReviewsByAnnouncementLazyQueryHookResult = ReturnType<typeof useGetReviewsByAnnouncementLazyQuery>;
+export type GetReviewsByAnnouncementSuspenseQueryHookResult = ReturnType<typeof useGetReviewsByAnnouncementSuspenseQuery>;
+export type GetReviewsByAnnouncementQueryResult = Apollo.QueryResult<GetReviewsByAnnouncementQuery, GetReviewsByAnnouncementQueryVariables>;
 export const GetReviewsByUserDocument = gql`
     query GetReviewsByUser($userId: String!) {
   getReviewsByUser(userId: $userId) {
