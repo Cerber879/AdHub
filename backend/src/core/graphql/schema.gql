@@ -96,6 +96,7 @@ type CharacteristicsResponse {
 type ChatInfoOutput {
   announcement: AnnouncementModel
   createdAt: DateTime!
+  id: ID!
   lastMessage: String
   user_1: UserModel!
   user_2: UserModel!

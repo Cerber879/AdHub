@@ -4,6 +4,9 @@ import { AnnouncementModel } from '../../announcement/models/announcement.model'
 
 @ObjectType()
 export class ChatInfoOutput {
+  @Field(() => ID)
+  id: string
+  
   @Field(() => UserModel)
   public user_1: UserModel
 

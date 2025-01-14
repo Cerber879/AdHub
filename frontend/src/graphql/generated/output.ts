@@ -119,6 +119,7 @@ export type ChatInfoOutput = {
   __typename?: 'ChatInfoOutput';
   announcement?: Maybe<AnnouncementModel>;
   createdAt: Scalars['DateTime']['output'];
+  id: Scalars['ID']['output'];
   lastMessage?: Maybe<Scalars['String']['output']>;
   user_1: UserModel;
   user_2: UserModel;
@@ -1069,7 +1070,7 @@ export type GetSubcategoriesQuery = { __typename?: 'Query', getSubcategories: Ar
 export type GetChatsQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type GetChatsQuery = { __typename?: 'Query', getChats: Array<{ __typename?: 'ChatInfoOutput', createdAt: any, lastMessage?: string | null, user_1: { __typename?: 'UserModel', displayName: string }, user_2: { __typename?: 'UserModel', displayName: string }, announcement?: { __typename?: 'AnnouncementModel', name: string, price: number, description: string } | null }> };
+export type GetChatsQuery = { __typename?: 'Query', getChats: Array<{ __typename?: 'ChatInfoOutput', id: string, createdAt: any, lastMessage?: string | null, user_1: { __typename?: 'UserModel', displayName: string }, user_2: { __typename?: 'UserModel', displayName: string }, announcement?: { __typename?: 'AnnouncementModel', name: string, price: number, description: string } | null }> };
 
 export type CheckAnnouncementInFavouritesQueryVariables = Exact<{
   adId: Scalars['String']['input'];
@@ -2996,6 +2997,7 @@ export type GetSubcategoriesQueryResult = Apollo.QueryResult<GetSubcategoriesQue
 export const GetChatsDocument = gql`
     query GetChats {
   getChats {
+    id
     createdAt
     lastMessage
     user_1 {

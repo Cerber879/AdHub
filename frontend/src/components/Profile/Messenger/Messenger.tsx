@@ -1,10 +1,13 @@
 import React, { useState, useEffect, useRef } from 'react';
 import styles from './messenger.module.css'
+import { useQuery } from '@apollo/client';
 
-interface Message 
-{
+interface Message {
+  id: string;
   text: string;
-  sender: 'user' | 'other';
+  senderId: string;
+  content: string;
+  sentAt: string;
 }
 
 interface User {
@@ -19,49 +22,36 @@ const CreateMessageComponent: React.FC = () =>
   const chatBoxRef = useRef<HTMLDivElement>(null);
   const [selectedUser, setSelectedUser] = useState<User | null>(null);
 
-  const users: User[] = [
-    { id: 1, name: 'Evelone' },
-    { id: 2, name: 'Старый бог' },
-    { id: 3, name: 'rostislave999' },
-    { id: 4, name: 'Фирамир' },
-    { id: 5, name: 'Никита строитель' },
-    { id: 6, name: 'Илюха качалка' },
-    { id: 7, name: 'Valera True' },
-    { id: 8, name: 'Stray228' },
-    { id: 9, name: 'Vovapain' },
-    { id: 10, name: 'Chamber' },
-    { id: 11, name: 'Pudge easport' },
-    { id: 12, name: 'keker003' },
-    { id: 13, name: 'Gensuxa' },
-    { id: 14, name: 'Нехорошкова' },
-    { id: 15, name: 'Захаров Лев' },
-    { id: 16, name: 'Жопа пингвина' },
-    { id: 17, name: 'Нереальная соска' },
-    { id: 18, name: 'Да' },
-  ];
+  // Запрос для получения сообщений
+  const { loading, error, data, refetch } = useQuery(GET_MESSAGES, {
+    variables: { chatId: selectedUser?.id }, // Передаем chatId
+    skip: !selectedUser?.id, // Пропускаем запрос, если чат не выбран
+  });
 
-  const sendMessage = () => 
-  {
+  // Мутация для отправки сообщения
+  const [sendMessageMutation] = useMutation(SEND_MESSAGE);
+
+  const sendMessage = async () => {
     if (inputValue.trim() !== '' && selectedUser) {
-      const newMessage: Message = { text: inputValue.trim(), sender: 'user' };
-      setMessages({
-        ...messages,
-        [selectedUser.id]: [...(messages[selectedUser.id] || []), newMessage],
-      });
-      setInputValue('');
+      try {
+        // Отправляем сообщение через мутацию
+        await sendMessageMutation({
+          variables: {
+            chatId: selectedUser.id, // chatId выбранного пользователя
+            content: inputValue.trim(), // Текст сообщения
+            senderId: 'user', // ID отправителя
+          },
+        });
+
+        // После отправки перезапрашиваем сообщения
+        await refetch();
+        setInputValue(''); // Очищаем поле ввода
+      } catch (error) {
+        console.error("Ошибка при отправке сообщения", error);
+      }
     }
   };
 
-  const receiveMessage = (messageText: string) => 
-  {
-    if (selectedUser) {
-      const newMessage: Message = { text: messageText, sender: 'other' };
-      setMessages({
-        ...messages,
-        [selectedUser.id]: [...(messages[selectedUser.id] || []), newMessage],
-      });
-    }
-  };
 
   const handleKeyDown = (event: React.KeyboardEvent<HTMLInputElement>) => 
   {
@@ -74,10 +64,7 @@ const CreateMessageComponent: React.FC = () =>
   const handleUserClick = (user: User) => 
   {
     setSelectedUser(user);
-    if (!messages[user.id]) 
-    {
-      receiveMessage(`Привет! Это ${user.name}.`);
-    }
+    refetch();
   };
 
   useEffect(() => 
@@ -107,7 +94,7 @@ const CreateMessageComponent: React.FC = () =>
       <div className={styles.usersContainer}>
         <span className={styles.name_container}>Сообщения</span>
         <div className={styles.list_users}>
-          {users.map((user) => (
+          {data?.users.map((user: User) => (
             <div
               key={user.id}
               className={`${styles.userItem} ${selectedUser?.id === user.id ? styles.selectedUser : ''}`}
@@ -127,8 +114,8 @@ const CreateMessageComponent: React.FC = () =>
         )}
         <div className={styles.chat__box} id="chatBox" ref={chatBoxRef}>
           {selectedUser && messages[selectedUser.id]?.map((message, index) => (
-            <div key={index} className={`${styles.message} ${styles[message.sender]}`}>
-              {message.text}
+            <div key={index} className={`${styles.message} ${styles[message.senderId]}`}>
+              {message.content}
             </div>
           ))}
         </div>

@@ -1,8 +1,8 @@
 import React, { useEffect, useRef, useState, useMemo } from 'react';
 import styles from './advertisementdata.module.css'
-import { Link, useParams } from 'react-router-dom';
+import { Link, useNavigate, useParams } from 'react-router-dom';
 import { ROUTES } from '../../../utils/routes';
-import { CharacteristicsResponse, useAddFavouriteMutation, useCheckAnnouncementInFavouritesQuery, useCreateReviewMutation, useFindParentCategoriesQuery, useFindUserQuery, useGetAnnouncementCharacteristicsQuery, useGetAnnouncementQuery, useGetPhotosByAnnouncementIdQuery, useGetReviewsByAnnouncementQuery, useGetReviewsByUserQuery, useRemoveFavouriteMutation } from '../../../graphql/generated/output';
+import { CharacteristicsResponse, useAddFavouriteMutation, useCheckAnnouncementInFavouritesQuery, useCreateChatMutation, useCreateReviewMutation, useFindParentCategoriesQuery, useFindUserQuery, useGetAnnouncementCharacteristicsQuery, useGetAnnouncementQuery, useGetChatsQuery, useGetPhotosByAnnouncementIdQuery, useGetReviewsByAnnouncementQuery, useGetReviewsByUserQuery, useRemoveFavouriteMutation } from '../../../graphql/generated/output';
 import { parseAnnouncementCondition, parseAnnouncementStatus } from '../../../utils/parse-types-ad';
 import Loader from '../../../utils/Loader/Loader';
 
@@ -76,6 +76,63 @@ const Advertisement = () => {
       imageDivRef.current.style.setProperty('--background-image', `url('${images[currentImage]}')`);
     }
   }, [currentImage, images]);
+
+  const { data: chatsData, refetch: refetchChats } = useGetChatsQuery(); // Получаем чаты
+  const [createChat] = useCreateChatMutation(); // Мутация для создания чата
+  const navigate = useNavigate();
+  
+  const findOrCreateFriend = async (userId: string, advertismentId: string) => {
+    try {
+      if (!chatsData?.getChats) {
+        console.error("Не удалось получить чаты");
+        return;
+      }
+  
+      // Проверяем, существует ли чат с этим пользователем
+      const existingChat = chatsData.getChats.find(
+        (chat) => chat.user_1.displayName === userId || chat.user_2.displayName === userId
+      );
+  
+      // Если чат найден, перенаправляем в него
+      if (existingChat) {
+        console.log("Чат найден", existingChat);
+        navigate(`/messenger/${existingChat.id}`); // Перенаправление в чат
+      } else {
+        // Если чат не найден, создаем новый
+        const response = await createChat({
+          variables: {
+            data: userId,
+            productId: advertismentId, // ID объявления
+          },
+        });
+  
+        // Обработка ответа о создании чата
+        if (response.data && response.data.createChat === true) {
+          console.log("Чат создан");
+          
+          // Ждем обновления данных чатов после создания нового чата
+          await refetchChats();
+  
+          // После обновления чатов снова проверяем существование нового чата
+          const updatedChatsData = await refetchChats(); // Получаем актуальные данные чатов
+          const newChat = updatedChatsData?.data?.getChats?.find(
+            (chat) => chat.user_1.displayName === userId || chat.user_2.displayName === userId
+          );
+  
+          if (newChat) {
+            console.log("Новый чат найден", newChat);
+            navigate(`/messenger/${newChat.id}`); // Перенаправляем в новый чат
+          } else {
+            console.log("Не удалось найти созданный чат.");
+          }
+        } else {
+          console.log("Ошибка при создании чата");
+        }
+      }
+    } catch (error) {
+      console.error("Ошибка при поиске или создании чата", error);
+    }
+  };
 
   const ratingRef = useRef<HTMLInputElement>(null);
   const contentRef = useRef<HTMLTextAreaElement>(null);
@@ -254,7 +311,8 @@ const Advertisement = () => {
           <div className={styles.social_buttons}>
             <button className={styles.social}>Показать номер</button>
             <Link to={ROUTES.MESSENGER}>
-              <button className={styles.social}>Написать</button>
+              <button className={styles.social}
+              onClick={() => findOrCreateFriend(advertisment?.userId || '', advertisment?.id || '')}>Написать</button>
             </Link>
           </div>
           </div>
