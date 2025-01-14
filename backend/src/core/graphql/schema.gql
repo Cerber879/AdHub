@@ -252,6 +252,7 @@ type Query {
   findSessionsByUser: [SessionModel!]!
   findSocialLinks: [SocialLinkModel!]!
   findUser(id: String!): UserModel!
+  findUserInfo(userId: String!): UserInfoResponse!
   getAnnouncementById(id: String!): AnnouncementModel!
   getAnnouncementByIds(ids: [String!]!): [AnnouncementModel!]!
   getAnnouncementByName(name: String!): AnnouncementModel!
@@ -278,6 +279,8 @@ type ReviewModel {
   createdAt: DateTime!
   id: String!
   rating: Float!
+  reviewer: UserModel!
+  reviewerId: String!
   updatedAt: DateTime!
   userId: String!
 }
@@ -315,6 +318,12 @@ type SocialLinkModel {
 input SocialLinkOrderInput {
   id: String!
   position: Float!
+}
+
+type SocialLinksResponse {
+  description: String!
+  title: String!
+  url: String!
 }
 
 type SubCutegoryModel {
@@ -377,6 +386,11 @@ input UpdateReviewInput {
 
 """The `Upload` scalar type represents a file upload."""
 scalar Upload
+
+type UserInfoResponse {
+  bio: String
+  socialLinks: [SocialLinksResponse!]
+}
 
 type UserModel {
   avatar: String

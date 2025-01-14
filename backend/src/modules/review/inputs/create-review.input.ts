@@ -20,6 +20,5 @@ export class CreateReviewInput {
   userId: string;
 
   @Field()
-
   announcementId: string;
 }

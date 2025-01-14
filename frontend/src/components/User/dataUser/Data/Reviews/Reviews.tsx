@@ -1,21 +1,18 @@
 import React from 'react';
 import styles from './reviews.module.css';
+import { useGetReviewsByUserQuery } from '../../../../../graphql/generated/output';
+import Loader from '../../../../../utils/Loader/Loader';
 
-interface Review {
-  id: string;
-  rating: number;
-  bio: string;
-  user: {
-    avatar?: string;
-    name: string;
-  };
-}
+const UserReviews: React.FC<{ id: string }> = ({ id }) => {
 
-interface UserReviewsProps {
-  reviews?: Review[];
-}
+  const { data, loading } = useGetReviewsByUserQuery({
+    variables: {
+      userId: id || '',
+    },
+  })
 
-const UserReviews: React.FC<UserReviewsProps> = ({ reviews = [] }) => {
+  const reviews = data?.getReviewsByUser || [];
+
   const averageRating = reviews.length
     ? (reviews.reduce((acc, r) => acc + r.rating, 0) / reviews.length).toFixed(1)
     : '0';
@@ -26,7 +23,7 @@ const UserReviews: React.FC<UserReviewsProps> = ({ reviews = [] }) => {
     return { rating, count, percentage };
   });
 
-  return (
+  return loading ? <Loader /> : reviews.length === 0 ? <p>Нет отзывов</p> : (
     <div className={styles.reviewsBlock}>
       <div className={styles.overallRating}>
         <div className={styles.averageRating}>
@@ -68,12 +65,14 @@ const UserReviews: React.FC<UserReviewsProps> = ({ reviews = [] }) => {
         {reviews.map((review) => (
           <div key={review.id} className={styles.reviewItem}>
             <img
-              src={review.user.avatar || '/default-avatar.png'}
-              alt={review.user.name}
+              src={review.reviewer.avatar || '/images/Profile/user.svg'}
+              alt={review.reviewer.displayName}
               className={styles.avatar}
             />
             <div className={styles.reviewContent}>
-              <span className={styles.userName}>{review.user.name}</span>
+              <span className={styles.userName}>{review.reviewer.displayName}</span>
+              <span>{new Date(review.createdAt).toLocaleDateString()}</span>
+              <span>{review.announcement.name}</span>
               <div className={styles.stars}>
                 {[1, 2, 3, 4, 5].map((star) => (
                   <span
@@ -86,7 +85,7 @@ const UserReviews: React.FC<UserReviewsProps> = ({ reviews = [] }) => {
                   </span>
                 ))}
               </div>
-              <p className={styles.reviewText}>{review.bio}</p>
+              <p className={styles.reviewText}>{review.content}</p>
             </div>
           </div>
         ))}

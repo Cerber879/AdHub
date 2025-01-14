@@ -1736,7 +1736,8 @@ export namespace Prisma {
   export type UserCountOutputType = {
     announcement: number
     message: number
-    Review: number
+    user: number
+    reviewer: number
     Favourites: number
     Chat_1: number
     Chat_2: number
@@ -1746,7 +1747,8 @@ export namespace Prisma {
   export type UserCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     announcement?: boolean | UserCountOutputTypeCountAnnouncementArgs
     message?: boolean | UserCountOutputTypeCountMessageArgs
-    Review?: boolean | UserCountOutputTypeCountReviewArgs
+    user?: boolean | UserCountOutputTypeCountUserArgs
+    reviewer?: boolean | UserCountOutputTypeCountReviewerArgs
     Favourites?: boolean | UserCountOutputTypeCountFavouritesArgs
     Chat_1?: boolean | UserCountOutputTypeCountChat_1Args
     Chat_2?: boolean | UserCountOutputTypeCountChat_2Args
@@ -1781,7 +1783,14 @@ export namespace Prisma {
   /**
    * UserCountOutputType without action
    */
-  export type UserCountOutputTypeCountReviewArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type UserCountOutputTypeCountUserArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: ReviewWhereInput
+  }
+
+  /**
+   * UserCountOutputType without action
+   */
+  export type UserCountOutputTypeCountReviewerArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     where?: ReviewWhereInput
   }
 
@@ -2244,7 +2253,8 @@ export namespace Prisma {
     updatedAt?: boolean
     announcement?: boolean | User$announcementArgs<ExtArgs>
     message?: boolean | User$messageArgs<ExtArgs>
-    Review?: boolean | User$ReviewArgs<ExtArgs>
+    user?: boolean | User$userArgs<ExtArgs>
+    reviewer?: boolean | User$reviewerArgs<ExtArgs>
     Favourites?: boolean | User$FavouritesArgs<ExtArgs>
     Chat_1?: boolean | User$Chat_1Args<ExtArgs>
     Chat_2?: boolean | User$Chat_2Args<ExtArgs>
@@ -2283,7 +2293,8 @@ export namespace Prisma {
   export type UserInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     announcement?: boolean | User$announcementArgs<ExtArgs>
     message?: boolean | User$messageArgs<ExtArgs>
-    Review?: boolean | User$ReviewArgs<ExtArgs>
+    user?: boolean | User$userArgs<ExtArgs>
+    reviewer?: boolean | User$reviewerArgs<ExtArgs>
     Favourites?: boolean | User$FavouritesArgs<ExtArgs>
     Chat_1?: boolean | User$Chat_1Args<ExtArgs>
     Chat_2?: boolean | User$Chat_2Args<ExtArgs>
@@ -2297,7 +2308,8 @@ export namespace Prisma {
     objects: {
       announcement: Prisma.$AnnouncementPayload<ExtArgs>[]
       message: Prisma.$MessagePayload<ExtArgs>[]
-      Review: Prisma.$ReviewPayload<ExtArgs>[]
+      user: Prisma.$ReviewPayload<ExtArgs>[]
+      reviewer: Prisma.$ReviewPayload<ExtArgs>[]
       Favourites: Prisma.$FavouritesPayload<ExtArgs>[]
       Chat_1: Prisma.$ChatPayload<ExtArgs>[]
       Chat_2: Prisma.$ChatPayload<ExtArgs>[]
@@ -2681,7 +2693,8 @@ export namespace Prisma {
     readonly [Symbol.toStringTag]: "PrismaPromise"
     announcement<T extends User$announcementArgs<ExtArgs> = {}>(args?: Subset<T, User$announcementArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$AnnouncementPayload<ExtArgs>, T, "findMany"> | Null>
     message<T extends User$messageArgs<ExtArgs> = {}>(args?: Subset<T, User$messageArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$MessagePayload<ExtArgs>, T, "findMany"> | Null>
-    Review<T extends User$ReviewArgs<ExtArgs> = {}>(args?: Subset<T, User$ReviewArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ReviewPayload<ExtArgs>, T, "findMany"> | Null>
+    user<T extends User$userArgs<ExtArgs> = {}>(args?: Subset<T, User$userArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ReviewPayload<ExtArgs>, T, "findMany"> | Null>
+    reviewer<T extends User$reviewerArgs<ExtArgs> = {}>(args?: Subset<T, User$reviewerArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ReviewPayload<ExtArgs>, T, "findMany"> | Null>
     Favourites<T extends User$FavouritesArgs<ExtArgs> = {}>(args?: Subset<T, User$FavouritesArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$FavouritesPayload<ExtArgs>, T, "findMany"> | Null>
     Chat_1<T extends User$Chat_1Args<ExtArgs> = {}>(args?: Subset<T, User$Chat_1Args<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ChatPayload<ExtArgs>, T, "findMany"> | Null>
     Chat_2<T extends User$Chat_2Args<ExtArgs> = {}>(args?: Subset<T, User$Chat_2Args<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ChatPayload<ExtArgs>, T, "findMany"> | Null>
@@ -3080,9 +3093,29 @@ export namespace Prisma {
   }
 
   /**
-   * User.Review
+   * User.user
    */
-  export type User$ReviewArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type User$userArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Review
+     */
+    select?: ReviewSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ReviewInclude<ExtArgs> | null
+    where?: ReviewWhereInput
+    orderBy?: ReviewOrderByWithRelationInput | ReviewOrderByWithRelationInput[]
+    cursor?: ReviewWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: ReviewScalarFieldEnum | ReviewScalarFieldEnum[]
+  }
+
+  /**
+   * User.reviewer
+   */
+  export type User$reviewerArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
      * Select specific fields to fetch from the Review
      */
@@ -10274,6 +10307,7 @@ export namespace Prisma {
     rating: number | null
     content: string | null
     userId: string | null
+    reviewerId: string | null
     announcementId: string | null
     createdAt: Date | null
     updatedAt: Date | null
@@ -10284,6 +10318,7 @@ export namespace Prisma {
     rating: number | null
     content: string | null
     userId: string | null
+    reviewerId: string | null
     announcementId: string | null
     createdAt: Date | null
     updatedAt: Date | null
@@ -10294,6 +10329,7 @@ export namespace Prisma {
     rating: number
     content: number
     userId: number
+    reviewerId: number
     announcementId: number
     createdAt: number
     updatedAt: number
@@ -10314,6 +10350,7 @@ export namespace Prisma {
     rating?: true
     content?: true
     userId?: true
+    reviewerId?: true
     announcementId?: true
     createdAt?: true
     updatedAt?: true
@@ -10324,6 +10361,7 @@ export namespace Prisma {
     rating?: true
     content?: true
     userId?: true
+    reviewerId?: true
     announcementId?: true
     createdAt?: true
     updatedAt?: true
@@ -10334,6 +10372,7 @@ export namespace Prisma {
     rating?: true
     content?: true
     userId?: true
+    reviewerId?: true
     announcementId?: true
     createdAt?: true
     updatedAt?: true
@@ -10431,7 +10470,8 @@ export namespace Prisma {
     rating: number
     content: string
     userId: string
-    announcementId: string
+    reviewerId: string
+    announcementId: string | null
     createdAt: Date
     updatedAt: Date
     _count: ReviewCountAggregateOutputType | null
@@ -10460,11 +10500,13 @@ export namespace Prisma {
     rating?: boolean
     content?: boolean
     userId?: boolean
+    reviewerId?: boolean
     announcementId?: boolean
     createdAt?: boolean
     updatedAt?: boolean
     user?: boolean | UserDefaultArgs<ExtArgs>
-    announcement?: boolean | AnnouncementDefaultArgs<ExtArgs>
+    reviewer?: boolean | UserDefaultArgs<ExtArgs>
+    announcement?: boolean | Review$announcementArgs<ExtArgs>
   }, ExtArgs["result"]["review"]>
 
   export type ReviewSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
@@ -10472,11 +10514,13 @@ export namespace Prisma {
     rating?: boolean
     content?: boolean
     userId?: boolean
+    reviewerId?: boolean
     announcementId?: boolean
     createdAt?: boolean
     updatedAt?: boolean
     user?: boolean | UserDefaultArgs<ExtArgs>
-    announcement?: boolean | AnnouncementDefaultArgs<ExtArgs>
+    reviewer?: boolean | UserDefaultArgs<ExtArgs>
+    announcement?: boolean | Review$announcementArgs<ExtArgs>
   }, ExtArgs["result"]["review"]>
 
   export type ReviewSelectScalar = {
@@ -10484,6 +10528,7 @@ export namespace Prisma {
     rating?: boolean
     content?: boolean
     userId?: boolean
+    reviewerId?: boolean
     announcementId?: boolean
     createdAt?: boolean
     updatedAt?: boolean
@@ -10491,25 +10536,29 @@ export namespace Prisma {
 
   export type ReviewInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     user?: boolean | UserDefaultArgs<ExtArgs>
-    announcement?: boolean | AnnouncementDefaultArgs<ExtArgs>
+    reviewer?: boolean | UserDefaultArgs<ExtArgs>
+    announcement?: boolean | Review$announcementArgs<ExtArgs>
   }
   export type ReviewIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     user?: boolean | UserDefaultArgs<ExtArgs>
-    announcement?: boolean | AnnouncementDefaultArgs<ExtArgs>
+    reviewer?: boolean | UserDefaultArgs<ExtArgs>
+    announcement?: boolean | Review$announcementArgs<ExtArgs>
   }
 
   export type $ReviewPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     name: "Review"
     objects: {
       user: Prisma.$UserPayload<ExtArgs>
-      announcement: Prisma.$AnnouncementPayload<ExtArgs>
+      reviewer: Prisma.$UserPayload<ExtArgs>
+      announcement: Prisma.$AnnouncementPayload<ExtArgs> | null
     }
     scalars: $Extensions.GetPayloadResult<{
       id: string
       rating: number
       content: string
       userId: string
-      announcementId: string
+      reviewerId: string
+      announcementId: string | null
       createdAt: Date
       updatedAt: Date
     }, ExtArgs["result"]["review"]>
@@ -10877,7 +10926,8 @@ export namespace Prisma {
   export interface Prisma__ReviewClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> extends Prisma.PrismaPromise<T> {
     readonly [Symbol.toStringTag]: "PrismaPromise"
     user<T extends UserDefaultArgs<ExtArgs> = {}>(args?: Subset<T, UserDefaultArgs<ExtArgs>>): Prisma__UserClient<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow"> | Null, Null, ExtArgs>
-    announcement<T extends AnnouncementDefaultArgs<ExtArgs> = {}>(args?: Subset<T, AnnouncementDefaultArgs<ExtArgs>>): Prisma__AnnouncementClient<$Result.GetResult<Prisma.$AnnouncementPayload<ExtArgs>, T, "findUniqueOrThrow"> | Null, Null, ExtArgs>
+    reviewer<T extends UserDefaultArgs<ExtArgs> = {}>(args?: Subset<T, UserDefaultArgs<ExtArgs>>): Prisma__UserClient<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow"> | Null, Null, ExtArgs>
+    announcement<T extends Review$announcementArgs<ExtArgs> = {}>(args?: Subset<T, Review$announcementArgs<ExtArgs>>): Prisma__AnnouncementClient<$Result.GetResult<Prisma.$AnnouncementPayload<ExtArgs>, T, "findUniqueOrThrow"> | null, null, ExtArgs>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -10911,6 +10961,7 @@ export namespace Prisma {
     readonly rating: FieldRef<"Review", 'Float'>
     readonly content: FieldRef<"Review", 'String'>
     readonly userId: FieldRef<"Review", 'String'>
+    readonly reviewerId: FieldRef<"Review", 'String'>
     readonly announcementId: FieldRef<"Review", 'String'>
     readonly createdAt: FieldRef<"Review", 'DateTime'>
     readonly updatedAt: FieldRef<"Review", 'DateTime'>
@@ -11229,6 +11280,21 @@ export namespace Prisma {
      * Filter which Reviews to delete
      */
     where?: ReviewWhereInput
+  }
+
+  /**
+   * Review.announcement
+   */
+  export type Review$announcementArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Announcement
+     */
+    select?: AnnouncementSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: AnnouncementInclude<ExtArgs> | null
+    where?: AnnouncementWhereInput
   }
 
   /**
@@ -13190,6 +13256,7 @@ export namespace Prisma {
     rating: 'rating',
     content: 'content',
     userId: 'userId',
+    reviewerId: 'reviewerId',
     announcementId: 'announcementId',
     createdAt: 'createdAt',
     updatedAt: 'updatedAt'
@@ -13356,7 +13423,8 @@ export namespace Prisma {
     updatedAt?: DateTimeFilter<"User"> | Date | string
     announcement?: AnnouncementListRelationFilter
     message?: MessageListRelationFilter
-    Review?: ReviewListRelationFilter
+    user?: ReviewListRelationFilter
+    reviewer?: ReviewListRelationFilter
     Favourites?: FavouritesListRelationFilter
     Chat_1?: ChatListRelationFilter
     Chat_2?: ChatListRelationFilter
@@ -13377,7 +13445,8 @@ export namespace Prisma {
     updatedAt?: SortOrder
     announcement?: AnnouncementOrderByRelationAggregateInput
     message?: MessageOrderByRelationAggregateInput
-    Review?: ReviewOrderByRelationAggregateInput
+    user?: ReviewOrderByRelationAggregateInput
+    reviewer?: ReviewOrderByRelationAggregateInput
     Favourites?: FavouritesOrderByRelationAggregateInput
     Chat_1?: ChatOrderByRelationAggregateInput
     Chat_2?: ChatOrderByRelationAggregateInput
@@ -13401,7 +13470,8 @@ export namespace Prisma {
     updatedAt?: DateTimeFilter<"User"> | Date | string
     announcement?: AnnouncementListRelationFilter
     message?: MessageListRelationFilter
-    Review?: ReviewListRelationFilter
+    user?: ReviewListRelationFilter
+    reviewer?: ReviewListRelationFilter
     Favourites?: FavouritesListRelationFilter
     Chat_1?: ChatListRelationFilter
     Chat_2?: ChatListRelationFilter
@@ -13923,11 +13993,13 @@ export namespace Prisma {
     rating?: FloatFilter<"Review"> | number
     content?: StringFilter<"Review"> | string
     userId?: StringFilter<"Review"> | string
-    announcementId?: StringFilter<"Review"> | string
+    reviewerId?: StringFilter<"Review"> | string
+    announcementId?: StringNullableFilter<"Review"> | string | null
     createdAt?: DateTimeFilter<"Review"> | Date | string
     updatedAt?: DateTimeFilter<"Review"> | Date | string
     user?: XOR<UserScalarRelationFilter, UserWhereInput>
-    announcement?: XOR<AnnouncementScalarRelationFilter, AnnouncementWhereInput>
+    reviewer?: XOR<UserScalarRelationFilter, UserWhereInput>
+    announcement?: XOR<AnnouncementNullableScalarRelationFilter, AnnouncementWhereInput> | null
   }
 
   export type ReviewOrderByWithRelationInput = {
@@ -13935,10 +14007,12 @@ export namespace Prisma {
     rating?: SortOrder
     content?: SortOrder
     userId?: SortOrder
-    announcementId?: SortOrder
+    reviewerId?: SortOrder
+    announcementId?: SortOrderInput | SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
     user?: UserOrderByWithRelationInput
+    reviewer?: UserOrderByWithRelationInput
     announcement?: AnnouncementOrderByWithRelationInput
   }
 
@@ -13950,11 +14024,13 @@ export namespace Prisma {
     rating?: FloatFilter<"Review"> | number
     content?: StringFilter<"Review"> | string
     userId?: StringFilter<"Review"> | string
-    announcementId?: StringFilter<"Review"> | string
+    reviewerId?: StringFilter<"Review"> | string
+    announcementId?: StringNullableFilter<"Review"> | string | null
     createdAt?: DateTimeFilter<"Review"> | Date | string
     updatedAt?: DateTimeFilter<"Review"> | Date | string
     user?: XOR<UserScalarRelationFilter, UserWhereInput>
-    announcement?: XOR<AnnouncementScalarRelationFilter, AnnouncementWhereInput>
+    reviewer?: XOR<UserScalarRelationFilter, UserWhereInput>
+    announcement?: XOR<AnnouncementNullableScalarRelationFilter, AnnouncementWhereInput> | null
   }, "id">
 
   export type ReviewOrderByWithAggregationInput = {
@@ -13962,7 +14038,8 @@ export namespace Prisma {
     rating?: SortOrder
     content?: SortOrder
     userId?: SortOrder
-    announcementId?: SortOrder
+    reviewerId?: SortOrder
+    announcementId?: SortOrderInput | SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
     _count?: ReviewCountOrderByAggregateInput
@@ -13980,7 +14057,8 @@ export namespace Prisma {
     rating?: FloatWithAggregatesFilter<"Review"> | number
     content?: StringWithAggregatesFilter<"Review"> | string
     userId?: StringWithAggregatesFilter<"Review"> | string
-    announcementId?: StringWithAggregatesFilter<"Review"> | string
+    reviewerId?: StringWithAggregatesFilter<"Review"> | string
+    announcementId?: StringNullableWithAggregatesFilter<"Review"> | string | null
     createdAt?: DateTimeWithAggregatesFilter<"Review"> | Date | string
     updatedAt?: DateTimeWithAggregatesFilter<"Review"> | Date | string
   }
@@ -14092,7 +14170,8 @@ export namespace Prisma {
     updatedAt?: Date | string
     announcement?: AnnouncementCreateNestedManyWithoutUserInput
     message?: MessageCreateNestedManyWithoutUserInput
-    Review?: ReviewCreateNestedManyWithoutUserInput
+    user?: ReviewCreateNestedManyWithoutUserInput
+    reviewer?: ReviewCreateNestedManyWithoutReviewerInput
     Favourites?: FavouritesCreateNestedManyWithoutUserInput
     Chat_1?: ChatCreateNestedManyWithoutUser_1Input
     Chat_2?: ChatCreateNestedManyWithoutUser_2Input
@@ -14113,7 +14192,8 @@ export namespace Prisma {
     updatedAt?: Date | string
     announcement?: AnnouncementUncheckedCreateNestedManyWithoutUserInput
     message?: MessageUncheckedCreateNestedManyWithoutUserInput
-    Review?: ReviewUncheckedCreateNestedManyWithoutUserInput
+    user?: ReviewUncheckedCreateNestedManyWithoutUserInput
+    reviewer?: ReviewUncheckedCreateNestedManyWithoutReviewerInput
     Favourites?: FavouritesUncheckedCreateNestedManyWithoutUserInput
     Chat_1?: ChatUncheckedCreateNestedManyWithoutUser_1Input
     Chat_2?: ChatUncheckedCreateNestedManyWithoutUser_2Input
@@ -14134,7 +14214,8 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     announcement?: AnnouncementUpdateManyWithoutUserNestedInput
     message?: MessageUpdateManyWithoutUserNestedInput
-    Review?: ReviewUpdateManyWithoutUserNestedInput
+    user?: ReviewUpdateManyWithoutUserNestedInput
+    reviewer?: ReviewUpdateManyWithoutReviewerNestedInput
     Favourites?: FavouritesUpdateManyWithoutUserNestedInput
     Chat_1?: ChatUpdateManyWithoutUser_1NestedInput
     Chat_2?: ChatUpdateManyWithoutUser_2NestedInput
@@ -14155,7 +14236,8 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     announcement?: AnnouncementUncheckedUpdateManyWithoutUserNestedInput
     message?: MessageUncheckedUpdateManyWithoutUserNestedInput
-    Review?: ReviewUncheckedUpdateManyWithoutUserNestedInput
+    user?: ReviewUncheckedUpdateManyWithoutUserNestedInput
+    reviewer?: ReviewUncheckedUpdateManyWithoutReviewerNestedInput
     Favourites?: FavouritesUncheckedUpdateManyWithoutUserNestedInput
     Chat_1?: ChatUncheckedUpdateManyWithoutUser_1NestedInput
     Chat_2?: ChatUncheckedUpdateManyWithoutUser_2NestedInput
@@ -14679,8 +14761,9 @@ export namespace Prisma {
     content: string
     createdAt?: Date | string
     updatedAt?: Date | string
-    user: UserCreateNestedOneWithoutReviewInput
-    announcement: AnnouncementCreateNestedOneWithoutReviewInput
+    user: UserCreateNestedOneWithoutUserInput
+    reviewer: UserCreateNestedOneWithoutReviewerInput
+    announcement?: AnnouncementCreateNestedOneWithoutReviewInput
   }
 
   export type ReviewUncheckedCreateInput = {
@@ -14688,7 +14771,8 @@ export namespace Prisma {
     rating: number
     content: string
     userId: string
-    announcementId: string
+    reviewerId: string
+    announcementId?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
   }
@@ -14699,8 +14783,9 @@ export namespace Prisma {
     content?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    user?: UserUpdateOneRequiredWithoutReviewNestedInput
-    announcement?: AnnouncementUpdateOneRequiredWithoutReviewNestedInput
+    user?: UserUpdateOneRequiredWithoutUserNestedInput
+    reviewer?: UserUpdateOneRequiredWithoutReviewerNestedInput
+    announcement?: AnnouncementUpdateOneWithoutReviewNestedInput
   }
 
   export type ReviewUncheckedUpdateInput = {
@@ -14708,7 +14793,8 @@ export namespace Prisma {
     rating?: FloatFieldUpdateOperationsInput | number
     content?: StringFieldUpdateOperationsInput | string
     userId?: StringFieldUpdateOperationsInput | string
-    announcementId?: StringFieldUpdateOperationsInput | string
+    reviewerId?: StringFieldUpdateOperationsInput | string
+    announcementId?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -14718,7 +14804,8 @@ export namespace Prisma {
     rating: number
     content: string
     userId: string
-    announcementId: string
+    reviewerId: string
+    announcementId?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
   }
@@ -14736,7 +14823,8 @@ export namespace Prisma {
     rating?: FloatFieldUpdateOperationsInput | number
     content?: StringFieldUpdateOperationsInput | string
     userId?: StringFieldUpdateOperationsInput | string
-    announcementId?: StringFieldUpdateOperationsInput | string
+    reviewerId?: StringFieldUpdateOperationsInput | string
+    announcementId?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -15444,11 +15532,17 @@ export namespace Prisma {
     _max?: NestedBoolFilter<$PrismaModel>
   }
 
+  export type AnnouncementNullableScalarRelationFilter = {
+    is?: AnnouncementWhereInput | null
+    isNot?: AnnouncementWhereInput | null
+  }
+
   export type ReviewCountOrderByAggregateInput = {
     id?: SortOrder
     rating?: SortOrder
     content?: SortOrder
     userId?: SortOrder
+    reviewerId?: SortOrder
     announcementId?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
@@ -15463,6 +15557,7 @@ export namespace Prisma {
     rating?: SortOrder
     content?: SortOrder
     userId?: SortOrder
+    reviewerId?: SortOrder
     announcementId?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
@@ -15473,6 +15568,7 @@ export namespace Prisma {
     rating?: SortOrder
     content?: SortOrder
     userId?: SortOrder
+    reviewerId?: SortOrder
     announcementId?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
@@ -15539,6 +15635,13 @@ export namespace Prisma {
     connect?: ReviewWhereUniqueInput | ReviewWhereUniqueInput[]
   }
 
+  export type ReviewCreateNestedManyWithoutReviewerInput = {
+    create?: XOR<ReviewCreateWithoutReviewerInput, ReviewUncheckedCreateWithoutReviewerInput> | ReviewCreateWithoutReviewerInput[] | ReviewUncheckedCreateWithoutReviewerInput[]
+    connectOrCreate?: ReviewCreateOrConnectWithoutReviewerInput | ReviewCreateOrConnectWithoutReviewerInput[]
+    createMany?: ReviewCreateManyReviewerInputEnvelope
+    connect?: ReviewWhereUniqueInput | ReviewWhereUniqueInput[]
+  }
+
   export type FavouritesCreateNestedManyWithoutUserInput = {
     create?: XOR<FavouritesCreateWithoutUserInput, FavouritesUncheckedCreateWithoutUserInput> | FavouritesCreateWithoutUserInput[] | FavouritesUncheckedCreateWithoutUserInput[]
     connectOrCreate?: FavouritesCreateOrConnectWithoutUserInput | FavouritesCreateOrConnectWithoutUserInput[]
@@ -15585,6 +15688,13 @@ export namespace Prisma {
     create?: XOR<ReviewCreateWithoutUserInput, ReviewUncheckedCreateWithoutUserInput> | ReviewCreateWithoutUserInput[] | ReviewUncheckedCreateWithoutUserInput[]
     connectOrCreate?: ReviewCreateOrConnectWithoutUserInput | ReviewCreateOrConnectWithoutUserInput[]
     createMany?: ReviewCreateManyUserInputEnvelope
+    connect?: ReviewWhereUniqueInput | ReviewWhereUniqueInput[]
+  }
+
+  export type ReviewUncheckedCreateNestedManyWithoutReviewerInput = {
+    create?: XOR<ReviewCreateWithoutReviewerInput, ReviewUncheckedCreateWithoutReviewerInput> | ReviewCreateWithoutReviewerInput[] | ReviewUncheckedCreateWithoutReviewerInput[]
+    connectOrCreate?: ReviewCreateOrConnectWithoutReviewerInput | ReviewCreateOrConnectWithoutReviewerInput[]
+    createMany?: ReviewCreateManyReviewerInputEnvelope
     connect?: ReviewWhereUniqueInput | ReviewWhereUniqueInput[]
   }
 
@@ -15675,6 +15785,20 @@ export namespace Prisma {
     connect?: ReviewWhereUniqueInput | ReviewWhereUniqueInput[]
     update?: ReviewUpdateWithWhereUniqueWithoutUserInput | ReviewUpdateWithWhereUniqueWithoutUserInput[]
     updateMany?: ReviewUpdateManyWithWhereWithoutUserInput | ReviewUpdateManyWithWhereWithoutUserInput[]
+    deleteMany?: ReviewScalarWhereInput | ReviewScalarWhereInput[]
+  }
+
+  export type ReviewUpdateManyWithoutReviewerNestedInput = {
+    create?: XOR<ReviewCreateWithoutReviewerInput, ReviewUncheckedCreateWithoutReviewerInput> | ReviewCreateWithoutReviewerInput[] | ReviewUncheckedCreateWithoutReviewerInput[]
+    connectOrCreate?: ReviewCreateOrConnectWithoutReviewerInput | ReviewCreateOrConnectWithoutReviewerInput[]
+    upsert?: ReviewUpsertWithWhereUniqueWithoutReviewerInput | ReviewUpsertWithWhereUniqueWithoutReviewerInput[]
+    createMany?: ReviewCreateManyReviewerInputEnvelope
+    set?: ReviewWhereUniqueInput | ReviewWhereUniqueInput[]
+    disconnect?: ReviewWhereUniqueInput | ReviewWhereUniqueInput[]
+    delete?: ReviewWhereUniqueInput | ReviewWhereUniqueInput[]
+    connect?: ReviewWhereUniqueInput | ReviewWhereUniqueInput[]
+    update?: ReviewUpdateWithWhereUniqueWithoutReviewerInput | ReviewUpdateWithWhereUniqueWithoutReviewerInput[]
+    updateMany?: ReviewUpdateManyWithWhereWithoutReviewerInput | ReviewUpdateManyWithWhereWithoutReviewerInput[]
     deleteMany?: ReviewScalarWhereInput | ReviewScalarWhereInput[]
   }
 
@@ -15773,6 +15897,20 @@ export namespace Prisma {
     connect?: ReviewWhereUniqueInput | ReviewWhereUniqueInput[]
     update?: ReviewUpdateWithWhereUniqueWithoutUserInput | ReviewUpdateWithWhereUniqueWithoutUserInput[]
     updateMany?: ReviewUpdateManyWithWhereWithoutUserInput | ReviewUpdateManyWithWhereWithoutUserInput[]
+    deleteMany?: ReviewScalarWhereInput | ReviewScalarWhereInput[]
+  }
+
+  export type ReviewUncheckedUpdateManyWithoutReviewerNestedInput = {
+    create?: XOR<ReviewCreateWithoutReviewerInput, ReviewUncheckedCreateWithoutReviewerInput> | ReviewCreateWithoutReviewerInput[] | ReviewUncheckedCreateWithoutReviewerInput[]
+    connectOrCreate?: ReviewCreateOrConnectWithoutReviewerInput | ReviewCreateOrConnectWithoutReviewerInput[]
+    upsert?: ReviewUpsertWithWhereUniqueWithoutReviewerInput | ReviewUpsertWithWhereUniqueWithoutReviewerInput[]
+    createMany?: ReviewCreateManyReviewerInputEnvelope
+    set?: ReviewWhereUniqueInput | ReviewWhereUniqueInput[]
+    disconnect?: ReviewWhereUniqueInput | ReviewWhereUniqueInput[]
+    delete?: ReviewWhereUniqueInput | ReviewWhereUniqueInput[]
+    connect?: ReviewWhereUniqueInput | ReviewWhereUniqueInput[]
+    update?: ReviewUpdateWithWhereUniqueWithoutReviewerInput | ReviewUpdateWithWhereUniqueWithoutReviewerInput[]
+    updateMany?: ReviewUpdateManyWithWhereWithoutReviewerInput | ReviewUpdateManyWithWhereWithoutReviewerInput[]
     deleteMany?: ReviewScalarWhereInput | ReviewScalarWhereInput[]
   }
 
@@ -16456,9 +16594,15 @@ export namespace Prisma {
     update?: XOR<XOR<ChatUpdateToOneWithWhereWithoutMessagesInput, ChatUpdateWithoutMessagesInput>, ChatUncheckedUpdateWithoutMessagesInput>
   }
 
-  export type UserCreateNestedOneWithoutReviewInput = {
-    create?: XOR<UserCreateWithoutReviewInput, UserUncheckedCreateWithoutReviewInput>
-    connectOrCreate?: UserCreateOrConnectWithoutReviewInput
+  export type UserCreateNestedOneWithoutUserInput = {
+    create?: XOR<UserCreateWithoutUserInput, UserUncheckedCreateWithoutUserInput>
+    connectOrCreate?: UserCreateOrConnectWithoutUserInput
+    connect?: UserWhereUniqueInput
+  }
+
+  export type UserCreateNestedOneWithoutReviewerInput = {
+    create?: XOR<UserCreateWithoutReviewerInput, UserUncheckedCreateWithoutReviewerInput>
+    connectOrCreate?: UserCreateOrConnectWithoutReviewerInput
     connect?: UserWhereUniqueInput
   }
 
@@ -16468,18 +16612,28 @@ export namespace Prisma {
     connect?: AnnouncementWhereUniqueInput
   }
 
-  export type UserUpdateOneRequiredWithoutReviewNestedInput = {
-    create?: XOR<UserCreateWithoutReviewInput, UserUncheckedCreateWithoutReviewInput>
-    connectOrCreate?: UserCreateOrConnectWithoutReviewInput
-    upsert?: UserUpsertWithoutReviewInput
+  export type UserUpdateOneRequiredWithoutUserNestedInput = {
+    create?: XOR<UserCreateWithoutUserInput, UserUncheckedCreateWithoutUserInput>
+    connectOrCreate?: UserCreateOrConnectWithoutUserInput
+    upsert?: UserUpsertWithoutUserInput
     connect?: UserWhereUniqueInput
-    update?: XOR<XOR<UserUpdateToOneWithWhereWithoutReviewInput, UserUpdateWithoutReviewInput>, UserUncheckedUpdateWithoutReviewInput>
+    update?: XOR<XOR<UserUpdateToOneWithWhereWithoutUserInput, UserUpdateWithoutUserInput>, UserUncheckedUpdateWithoutUserInput>
   }
 
-  export type AnnouncementUpdateOneRequiredWithoutReviewNestedInput = {
+  export type UserUpdateOneRequiredWithoutReviewerNestedInput = {
+    create?: XOR<UserCreateWithoutReviewerInput, UserUncheckedCreateWithoutReviewerInput>
+    connectOrCreate?: UserCreateOrConnectWithoutReviewerInput
+    upsert?: UserUpsertWithoutReviewerInput
+    connect?: UserWhereUniqueInput
+    update?: XOR<XOR<UserUpdateToOneWithWhereWithoutReviewerInput, UserUpdateWithoutReviewerInput>, UserUncheckedUpdateWithoutReviewerInput>
+  }
+
+  export type AnnouncementUpdateOneWithoutReviewNestedInput = {
     create?: XOR<AnnouncementCreateWithoutReviewInput, AnnouncementUncheckedCreateWithoutReviewInput>
     connectOrCreate?: AnnouncementCreateOrConnectWithoutReviewInput
     upsert?: AnnouncementUpsertWithoutReviewInput
+    disconnect?: AnnouncementWhereInput | boolean
+    delete?: AnnouncementWhereInput | boolean
     connect?: AnnouncementWhereUniqueInput
     update?: XOR<XOR<AnnouncementUpdateToOneWithWhereWithoutReviewInput, AnnouncementUpdateWithoutReviewInput>, AnnouncementUncheckedUpdateWithoutReviewInput>
   }
@@ -16828,14 +16982,16 @@ export namespace Prisma {
     content: string
     createdAt?: Date | string
     updatedAt?: Date | string
-    announcement: AnnouncementCreateNestedOneWithoutReviewInput
+    reviewer: UserCreateNestedOneWithoutReviewerInput
+    announcement?: AnnouncementCreateNestedOneWithoutReviewInput
   }
 
   export type ReviewUncheckedCreateWithoutUserInput = {
     id?: string
     rating: number
     content: string
-    announcementId: string
+    reviewerId: string
+    announcementId?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
   }
@@ -16847,6 +17003,36 @@ export namespace Prisma {
 
   export type ReviewCreateManyUserInputEnvelope = {
     data: ReviewCreateManyUserInput | ReviewCreateManyUserInput[]
+    skipDuplicates?: boolean
+  }
+
+  export type ReviewCreateWithoutReviewerInput = {
+    id?: string
+    rating: number
+    content: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    user: UserCreateNestedOneWithoutUserInput
+    announcement?: AnnouncementCreateNestedOneWithoutReviewInput
+  }
+
+  export type ReviewUncheckedCreateWithoutReviewerInput = {
+    id?: string
+    rating: number
+    content: string
+    userId: string
+    announcementId?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type ReviewCreateOrConnectWithoutReviewerInput = {
+    where: ReviewWhereUniqueInput
+    create: XOR<ReviewCreateWithoutReviewerInput, ReviewUncheckedCreateWithoutReviewerInput>
+  }
+
+  export type ReviewCreateManyReviewerInputEnvelope = {
+    data: ReviewCreateManyReviewerInput | ReviewCreateManyReviewerInput[]
     skipDuplicates?: boolean
   }
 
@@ -17036,9 +17222,26 @@ export namespace Prisma {
     rating?: FloatFilter<"Review"> | number
     content?: StringFilter<"Review"> | string
     userId?: StringFilter<"Review"> | string
-    announcementId?: StringFilter<"Review"> | string
+    reviewerId?: StringFilter<"Review"> | string
+    announcementId?: StringNullableFilter<"Review"> | string | null
     createdAt?: DateTimeFilter<"Review"> | Date | string
     updatedAt?: DateTimeFilter<"Review"> | Date | string
+  }
+
+  export type ReviewUpsertWithWhereUniqueWithoutReviewerInput = {
+    where: ReviewWhereUniqueInput
+    update: XOR<ReviewUpdateWithoutReviewerInput, ReviewUncheckedUpdateWithoutReviewerInput>
+    create: XOR<ReviewCreateWithoutReviewerInput, ReviewUncheckedCreateWithoutReviewerInput>
+  }
+
+  export type ReviewUpdateWithWhereUniqueWithoutReviewerInput = {
+    where: ReviewWhereUniqueInput
+    data: XOR<ReviewUpdateWithoutReviewerInput, ReviewUncheckedUpdateWithoutReviewerInput>
+  }
+
+  export type ReviewUpdateManyWithWhereWithoutReviewerInput = {
+    where: ReviewScalarWhereInput
+    data: XOR<ReviewUpdateManyMutationInput, ReviewUncheckedUpdateManyWithoutReviewerInput>
   }
 
   export type FavouritesUpsertWithWhereUniqueWithoutUserInput = {
@@ -17153,7 +17356,8 @@ export namespace Prisma {
     updatedAt?: Date | string
     announcement?: AnnouncementCreateNestedManyWithoutUserInput
     message?: MessageCreateNestedManyWithoutUserInput
-    Review?: ReviewCreateNestedManyWithoutUserInput
+    user?: ReviewCreateNestedManyWithoutUserInput
+    reviewer?: ReviewCreateNestedManyWithoutReviewerInput
     Favourites?: FavouritesCreateNestedManyWithoutUserInput
     Chat_1?: ChatCreateNestedManyWithoutUser_1Input
     Chat_2?: ChatCreateNestedManyWithoutUser_2Input
@@ -17173,7 +17377,8 @@ export namespace Prisma {
     updatedAt?: Date | string
     announcement?: AnnouncementUncheckedCreateNestedManyWithoutUserInput
     message?: MessageUncheckedCreateNestedManyWithoutUserInput
-    Review?: ReviewUncheckedCreateNestedManyWithoutUserInput
+    user?: ReviewUncheckedCreateNestedManyWithoutUserInput
+    reviewer?: ReviewUncheckedCreateNestedManyWithoutReviewerInput
     Favourites?: FavouritesUncheckedCreateNestedManyWithoutUserInput
     Chat_1?: ChatUncheckedCreateNestedManyWithoutUser_1Input
     Chat_2?: ChatUncheckedCreateNestedManyWithoutUser_2Input
@@ -17209,7 +17414,8 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     announcement?: AnnouncementUpdateManyWithoutUserNestedInput
     message?: MessageUpdateManyWithoutUserNestedInput
-    Review?: ReviewUpdateManyWithoutUserNestedInput
+    user?: ReviewUpdateManyWithoutUserNestedInput
+    reviewer?: ReviewUpdateManyWithoutReviewerNestedInput
     Favourites?: FavouritesUpdateManyWithoutUserNestedInput
     Chat_1?: ChatUpdateManyWithoutUser_1NestedInput
     Chat_2?: ChatUpdateManyWithoutUser_2NestedInput
@@ -17229,7 +17435,8 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     announcement?: AnnouncementUncheckedUpdateManyWithoutUserNestedInput
     message?: MessageUncheckedUpdateManyWithoutUserNestedInput
-    Review?: ReviewUncheckedUpdateManyWithoutUserNestedInput
+    user?: ReviewUncheckedUpdateManyWithoutUserNestedInput
+    reviewer?: ReviewUncheckedUpdateManyWithoutReviewerNestedInput
     Favourites?: FavouritesUncheckedUpdateManyWithoutUserNestedInput
     Chat_1?: ChatUncheckedUpdateManyWithoutUser_1NestedInput
     Chat_2?: ChatUncheckedUpdateManyWithoutUser_2NestedInput
@@ -17500,7 +17707,8 @@ export namespace Prisma {
     content: string
     createdAt?: Date | string
     updatedAt?: Date | string
-    user: UserCreateNestedOneWithoutReviewInput
+    user: UserCreateNestedOneWithoutUserInput
+    reviewer: UserCreateNestedOneWithoutReviewerInput
   }
 
   export type ReviewUncheckedCreateWithoutAnnouncementInput = {
@@ -17508,6 +17716,7 @@ export namespace Prisma {
     rating: number
     content: string
     userId: string
+    reviewerId: string
     createdAt?: Date | string
     updatedAt?: Date | string
   }
@@ -17577,7 +17786,8 @@ export namespace Prisma {
     createdAt?: Date | string
     updatedAt?: Date | string
     message?: MessageCreateNestedManyWithoutUserInput
-    Review?: ReviewCreateNestedManyWithoutUserInput
+    user?: ReviewCreateNestedManyWithoutUserInput
+    reviewer?: ReviewCreateNestedManyWithoutReviewerInput
     Favourites?: FavouritesCreateNestedManyWithoutUserInput
     Chat_1?: ChatCreateNestedManyWithoutUser_1Input
     Chat_2?: ChatCreateNestedManyWithoutUser_2Input
@@ -17597,7 +17807,8 @@ export namespace Prisma {
     createdAt?: Date | string
     updatedAt?: Date | string
     message?: MessageUncheckedCreateNestedManyWithoutUserInput
-    Review?: ReviewUncheckedCreateNestedManyWithoutUserInput
+    user?: ReviewUncheckedCreateNestedManyWithoutUserInput
+    reviewer?: ReviewUncheckedCreateNestedManyWithoutReviewerInput
     Favourites?: FavouritesUncheckedCreateNestedManyWithoutUserInput
     Chat_1?: ChatUncheckedCreateNestedManyWithoutUser_1Input
     Chat_2?: ChatUncheckedCreateNestedManyWithoutUser_2Input
@@ -17753,7 +17964,8 @@ export namespace Prisma {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     message?: MessageUpdateManyWithoutUserNestedInput
-    Review?: ReviewUpdateManyWithoutUserNestedInput
+    user?: ReviewUpdateManyWithoutUserNestedInput
+    reviewer?: ReviewUpdateManyWithoutReviewerNestedInput
     Favourites?: FavouritesUpdateManyWithoutUserNestedInput
     Chat_1?: ChatUpdateManyWithoutUser_1NestedInput
     Chat_2?: ChatUpdateManyWithoutUser_2NestedInput
@@ -17773,7 +17985,8 @@ export namespace Prisma {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     message?: MessageUncheckedUpdateManyWithoutUserNestedInput
-    Review?: ReviewUncheckedUpdateManyWithoutUserNestedInput
+    user?: ReviewUncheckedUpdateManyWithoutUserNestedInput
+    reviewer?: ReviewUncheckedUpdateManyWithoutReviewerNestedInput
     Favourites?: FavouritesUncheckedUpdateManyWithoutUserNestedInput
     Chat_1?: ChatUncheckedUpdateManyWithoutUser_1NestedInput
     Chat_2?: ChatUncheckedUpdateManyWithoutUser_2NestedInput
@@ -18067,7 +18280,8 @@ export namespace Prisma {
     updatedAt?: Date | string
     announcement?: AnnouncementCreateNestedManyWithoutUserInput
     message?: MessageCreateNestedManyWithoutUserInput
-    Review?: ReviewCreateNestedManyWithoutUserInput
+    user?: ReviewCreateNestedManyWithoutUserInput
+    reviewer?: ReviewCreateNestedManyWithoutReviewerInput
     Favourites?: FavouritesCreateNestedManyWithoutUserInput
     Chat_2?: ChatCreateNestedManyWithoutUser_2Input
     SocialLink?: SocialLinkCreateNestedManyWithoutUserInput
@@ -18087,7 +18301,8 @@ export namespace Prisma {
     updatedAt?: Date | string
     announcement?: AnnouncementUncheckedCreateNestedManyWithoutUserInput
     message?: MessageUncheckedCreateNestedManyWithoutUserInput
-    Review?: ReviewUncheckedCreateNestedManyWithoutUserInput
+    user?: ReviewUncheckedCreateNestedManyWithoutUserInput
+    reviewer?: ReviewUncheckedCreateNestedManyWithoutReviewerInput
     Favourites?: FavouritesUncheckedCreateNestedManyWithoutUserInput
     Chat_2?: ChatUncheckedCreateNestedManyWithoutUser_2Input
     SocialLink?: SocialLinkUncheckedCreateNestedManyWithoutUserInput
@@ -18112,7 +18327,8 @@ export namespace Prisma {
     updatedAt?: Date | string
     announcement?: AnnouncementCreateNestedManyWithoutUserInput
     message?: MessageCreateNestedManyWithoutUserInput
-    Review?: ReviewCreateNestedManyWithoutUserInput
+    user?: ReviewCreateNestedManyWithoutUserInput
+    reviewer?: ReviewCreateNestedManyWithoutReviewerInput
     Favourites?: FavouritesCreateNestedManyWithoutUserInput
     Chat_1?: ChatCreateNestedManyWithoutUser_1Input
     SocialLink?: SocialLinkCreateNestedManyWithoutUserInput
@@ -18132,7 +18348,8 @@ export namespace Prisma {
     updatedAt?: Date | string
     announcement?: AnnouncementUncheckedCreateNestedManyWithoutUserInput
     message?: MessageUncheckedCreateNestedManyWithoutUserInput
-    Review?: ReviewUncheckedCreateNestedManyWithoutUserInput
+    user?: ReviewUncheckedCreateNestedManyWithoutUserInput
+    reviewer?: ReviewUncheckedCreateNestedManyWithoutReviewerInput
     Favourites?: FavouritesUncheckedCreateNestedManyWithoutUserInput
     Chat_1?: ChatUncheckedCreateNestedManyWithoutUser_1Input
     SocialLink?: SocialLinkUncheckedCreateNestedManyWithoutUserInput
@@ -18221,7 +18438,8 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     announcement?: AnnouncementUpdateManyWithoutUserNestedInput
     message?: MessageUpdateManyWithoutUserNestedInput
-    Review?: ReviewUpdateManyWithoutUserNestedInput
+    user?: ReviewUpdateManyWithoutUserNestedInput
+    reviewer?: ReviewUpdateManyWithoutReviewerNestedInput
     Favourites?: FavouritesUpdateManyWithoutUserNestedInput
     Chat_2?: ChatUpdateManyWithoutUser_2NestedInput
     SocialLink?: SocialLinkUpdateManyWithoutUserNestedInput
@@ -18241,7 +18459,8 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     announcement?: AnnouncementUncheckedUpdateManyWithoutUserNestedInput
     message?: MessageUncheckedUpdateManyWithoutUserNestedInput
-    Review?: ReviewUncheckedUpdateManyWithoutUserNestedInput
+    user?: ReviewUncheckedUpdateManyWithoutUserNestedInput
+    reviewer?: ReviewUncheckedUpdateManyWithoutReviewerNestedInput
     Favourites?: FavouritesUncheckedUpdateManyWithoutUserNestedInput
     Chat_2?: ChatUncheckedUpdateManyWithoutUser_2NestedInput
     SocialLink?: SocialLinkUncheckedUpdateManyWithoutUserNestedInput
@@ -18272,7 +18491,8 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     announcement?: AnnouncementUpdateManyWithoutUserNestedInput
     message?: MessageUpdateManyWithoutUserNestedInput
-    Review?: ReviewUpdateManyWithoutUserNestedInput
+    user?: ReviewUpdateManyWithoutUserNestedInput
+    reviewer?: ReviewUpdateManyWithoutReviewerNestedInput
     Favourites?: FavouritesUpdateManyWithoutUserNestedInput
     Chat_1?: ChatUpdateManyWithoutUser_1NestedInput
     SocialLink?: SocialLinkUpdateManyWithoutUserNestedInput
@@ -18292,7 +18512,8 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     announcement?: AnnouncementUncheckedUpdateManyWithoutUserNestedInput
     message?: MessageUncheckedUpdateManyWithoutUserNestedInput
-    Review?: ReviewUncheckedUpdateManyWithoutUserNestedInput
+    user?: ReviewUncheckedUpdateManyWithoutUserNestedInput
+    reviewer?: ReviewUncheckedUpdateManyWithoutReviewerNestedInput
     Favourites?: FavouritesUncheckedUpdateManyWithoutUserNestedInput
     Chat_1?: ChatUncheckedUpdateManyWithoutUser_1NestedInput
     SocialLink?: SocialLinkUncheckedUpdateManyWithoutUserNestedInput
@@ -18354,7 +18575,8 @@ export namespace Prisma {
     createdAt?: Date | string
     updatedAt?: Date | string
     announcement?: AnnouncementCreateNestedManyWithoutUserInput
-    Review?: ReviewCreateNestedManyWithoutUserInput
+    user?: ReviewCreateNestedManyWithoutUserInput
+    reviewer?: ReviewCreateNestedManyWithoutReviewerInput
     Favourites?: FavouritesCreateNestedManyWithoutUserInput
     Chat_1?: ChatCreateNestedManyWithoutUser_1Input
     Chat_2?: ChatCreateNestedManyWithoutUser_2Input
@@ -18374,7 +18596,8 @@ export namespace Prisma {
     createdAt?: Date | string
     updatedAt?: Date | string
     announcement?: AnnouncementUncheckedCreateNestedManyWithoutUserInput
-    Review?: ReviewUncheckedCreateNestedManyWithoutUserInput
+    user?: ReviewUncheckedCreateNestedManyWithoutUserInput
+    reviewer?: ReviewUncheckedCreateNestedManyWithoutReviewerInput
     Favourites?: FavouritesUncheckedCreateNestedManyWithoutUserInput
     Chat_1?: ChatUncheckedCreateNestedManyWithoutUser_1Input
     Chat_2?: ChatUncheckedCreateNestedManyWithoutUser_2Input
@@ -18431,7 +18654,8 @@ export namespace Prisma {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     announcement?: AnnouncementUpdateManyWithoutUserNestedInput
-    Review?: ReviewUpdateManyWithoutUserNestedInput
+    user?: ReviewUpdateManyWithoutUserNestedInput
+    reviewer?: ReviewUpdateManyWithoutReviewerNestedInput
     Favourites?: FavouritesUpdateManyWithoutUserNestedInput
     Chat_1?: ChatUpdateManyWithoutUser_1NestedInput
     Chat_2?: ChatUpdateManyWithoutUser_2NestedInput
@@ -18451,7 +18675,8 @@ export namespace Prisma {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     announcement?: AnnouncementUncheckedUpdateManyWithoutUserNestedInput
-    Review?: ReviewUncheckedUpdateManyWithoutUserNestedInput
+    user?: ReviewUncheckedUpdateManyWithoutUserNestedInput
+    reviewer?: ReviewUncheckedUpdateManyWithoutReviewerNestedInput
     Favourites?: FavouritesUncheckedUpdateManyWithoutUserNestedInput
     Chat_1?: ChatUncheckedUpdateManyWithoutUser_1NestedInput
     Chat_2?: ChatUncheckedUpdateManyWithoutUser_2NestedInput
@@ -18485,7 +18710,7 @@ export namespace Prisma {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
-  export type UserCreateWithoutReviewInput = {
+  export type UserCreateWithoutUserInput = {
     id?: string
     email?: string | null
     phoneNumber?: string | null
@@ -18499,13 +18724,14 @@ export namespace Prisma {
     updatedAt?: Date | string
     announcement?: AnnouncementCreateNestedManyWithoutUserInput
     message?: MessageCreateNestedManyWithoutUserInput
+    reviewer?: ReviewCreateNestedManyWithoutReviewerInput
     Favourites?: FavouritesCreateNestedManyWithoutUserInput
     Chat_1?: ChatCreateNestedManyWithoutUser_1Input
     Chat_2?: ChatCreateNestedManyWithoutUser_2Input
     SocialLink?: SocialLinkCreateNestedManyWithoutUserInput
   }
 
-  export type UserUncheckedCreateWithoutReviewInput = {
+  export type UserUncheckedCreateWithoutUserInput = {
     id?: string
     email?: string | null
     phoneNumber?: string | null
@@ -18519,15 +18745,63 @@ export namespace Prisma {
     updatedAt?: Date | string
     announcement?: AnnouncementUncheckedCreateNestedManyWithoutUserInput
     message?: MessageUncheckedCreateNestedManyWithoutUserInput
+    reviewer?: ReviewUncheckedCreateNestedManyWithoutReviewerInput
     Favourites?: FavouritesUncheckedCreateNestedManyWithoutUserInput
     Chat_1?: ChatUncheckedCreateNestedManyWithoutUser_1Input
     Chat_2?: ChatUncheckedCreateNestedManyWithoutUser_2Input
     SocialLink?: SocialLinkUncheckedCreateNestedManyWithoutUserInput
   }
 
-  export type UserCreateOrConnectWithoutReviewInput = {
+  export type UserCreateOrConnectWithoutUserInput = {
     where: UserWhereUniqueInput
-    create: XOR<UserCreateWithoutReviewInput, UserUncheckedCreateWithoutReviewInput>
+    create: XOR<UserCreateWithoutUserInput, UserUncheckedCreateWithoutUserInput>
+  }
+
+  export type UserCreateWithoutReviewerInput = {
+    id?: string
+    email?: string | null
+    phoneNumber?: string | null
+    password: string
+    displayName: string
+    typeProfile: string
+    rating?: number | null
+    avatar?: string | null
+    bio?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    announcement?: AnnouncementCreateNestedManyWithoutUserInput
+    message?: MessageCreateNestedManyWithoutUserInput
+    user?: ReviewCreateNestedManyWithoutUserInput
+    Favourites?: FavouritesCreateNestedManyWithoutUserInput
+    Chat_1?: ChatCreateNestedManyWithoutUser_1Input
+    Chat_2?: ChatCreateNestedManyWithoutUser_2Input
+    SocialLink?: SocialLinkCreateNestedManyWithoutUserInput
+  }
+
+  export type UserUncheckedCreateWithoutReviewerInput = {
+    id?: string
+    email?: string | null
+    phoneNumber?: string | null
+    password: string
+    displayName: string
+    typeProfile: string
+    rating?: number | null
+    avatar?: string | null
+    bio?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    announcement?: AnnouncementUncheckedCreateNestedManyWithoutUserInput
+    message?: MessageUncheckedCreateNestedManyWithoutUserInput
+    user?: ReviewUncheckedCreateNestedManyWithoutUserInput
+    Favourites?: FavouritesUncheckedCreateNestedManyWithoutUserInput
+    Chat_1?: ChatUncheckedCreateNestedManyWithoutUser_1Input
+    Chat_2?: ChatUncheckedCreateNestedManyWithoutUser_2Input
+    SocialLink?: SocialLinkUncheckedCreateNestedManyWithoutUserInput
+  }
+
+  export type UserCreateOrConnectWithoutReviewerInput = {
+    where: UserWhereUniqueInput
+    create: XOR<UserCreateWithoutReviewerInput, UserUncheckedCreateWithoutReviewerInput>
   }
 
   export type AnnouncementCreateWithoutReviewInput = {
@@ -18567,18 +18841,18 @@ export namespace Prisma {
     create: XOR<AnnouncementCreateWithoutReviewInput, AnnouncementUncheckedCreateWithoutReviewInput>
   }
 
-  export type UserUpsertWithoutReviewInput = {
-    update: XOR<UserUpdateWithoutReviewInput, UserUncheckedUpdateWithoutReviewInput>
-    create: XOR<UserCreateWithoutReviewInput, UserUncheckedCreateWithoutReviewInput>
+  export type UserUpsertWithoutUserInput = {
+    update: XOR<UserUpdateWithoutUserInput, UserUncheckedUpdateWithoutUserInput>
+    create: XOR<UserCreateWithoutUserInput, UserUncheckedCreateWithoutUserInput>
     where?: UserWhereInput
   }
 
-  export type UserUpdateToOneWithWhereWithoutReviewInput = {
+  export type UserUpdateToOneWithWhereWithoutUserInput = {
     where?: UserWhereInput
-    data: XOR<UserUpdateWithoutReviewInput, UserUncheckedUpdateWithoutReviewInput>
+    data: XOR<UserUpdateWithoutUserInput, UserUncheckedUpdateWithoutUserInput>
   }
 
-  export type UserUpdateWithoutReviewInput = {
+  export type UserUpdateWithoutUserInput = {
     id?: StringFieldUpdateOperationsInput | string
     email?: NullableStringFieldUpdateOperationsInput | string | null
     phoneNumber?: NullableStringFieldUpdateOperationsInput | string | null
@@ -18592,13 +18866,14 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     announcement?: AnnouncementUpdateManyWithoutUserNestedInput
     message?: MessageUpdateManyWithoutUserNestedInput
+    reviewer?: ReviewUpdateManyWithoutReviewerNestedInput
     Favourites?: FavouritesUpdateManyWithoutUserNestedInput
     Chat_1?: ChatUpdateManyWithoutUser_1NestedInput
     Chat_2?: ChatUpdateManyWithoutUser_2NestedInput
     SocialLink?: SocialLinkUpdateManyWithoutUserNestedInput
   }
 
-  export type UserUncheckedUpdateWithoutReviewInput = {
+  export type UserUncheckedUpdateWithoutUserInput = {
     id?: StringFieldUpdateOperationsInput | string
     email?: NullableStringFieldUpdateOperationsInput | string | null
     phoneNumber?: NullableStringFieldUpdateOperationsInput | string | null
@@ -18612,6 +18887,60 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     announcement?: AnnouncementUncheckedUpdateManyWithoutUserNestedInput
     message?: MessageUncheckedUpdateManyWithoutUserNestedInput
+    reviewer?: ReviewUncheckedUpdateManyWithoutReviewerNestedInput
+    Favourites?: FavouritesUncheckedUpdateManyWithoutUserNestedInput
+    Chat_1?: ChatUncheckedUpdateManyWithoutUser_1NestedInput
+    Chat_2?: ChatUncheckedUpdateManyWithoutUser_2NestedInput
+    SocialLink?: SocialLinkUncheckedUpdateManyWithoutUserNestedInput
+  }
+
+  export type UserUpsertWithoutReviewerInput = {
+    update: XOR<UserUpdateWithoutReviewerInput, UserUncheckedUpdateWithoutReviewerInput>
+    create: XOR<UserCreateWithoutReviewerInput, UserUncheckedCreateWithoutReviewerInput>
+    where?: UserWhereInput
+  }
+
+  export type UserUpdateToOneWithWhereWithoutReviewerInput = {
+    where?: UserWhereInput
+    data: XOR<UserUpdateWithoutReviewerInput, UserUncheckedUpdateWithoutReviewerInput>
+  }
+
+  export type UserUpdateWithoutReviewerInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    email?: NullableStringFieldUpdateOperationsInput | string | null
+    phoneNumber?: NullableStringFieldUpdateOperationsInput | string | null
+    password?: StringFieldUpdateOperationsInput | string
+    displayName?: StringFieldUpdateOperationsInput | string
+    typeProfile?: StringFieldUpdateOperationsInput | string
+    rating?: NullableFloatFieldUpdateOperationsInput | number | null
+    avatar?: NullableStringFieldUpdateOperationsInput | string | null
+    bio?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    announcement?: AnnouncementUpdateManyWithoutUserNestedInput
+    message?: MessageUpdateManyWithoutUserNestedInput
+    user?: ReviewUpdateManyWithoutUserNestedInput
+    Favourites?: FavouritesUpdateManyWithoutUserNestedInput
+    Chat_1?: ChatUpdateManyWithoutUser_1NestedInput
+    Chat_2?: ChatUpdateManyWithoutUser_2NestedInput
+    SocialLink?: SocialLinkUpdateManyWithoutUserNestedInput
+  }
+
+  export type UserUncheckedUpdateWithoutReviewerInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    email?: NullableStringFieldUpdateOperationsInput | string | null
+    phoneNumber?: NullableStringFieldUpdateOperationsInput | string | null
+    password?: StringFieldUpdateOperationsInput | string
+    displayName?: StringFieldUpdateOperationsInput | string
+    typeProfile?: StringFieldUpdateOperationsInput | string
+    rating?: NullableFloatFieldUpdateOperationsInput | number | null
+    avatar?: NullableStringFieldUpdateOperationsInput | string | null
+    bio?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    announcement?: AnnouncementUncheckedUpdateManyWithoutUserNestedInput
+    message?: MessageUncheckedUpdateManyWithoutUserNestedInput
+    user?: ReviewUncheckedUpdateManyWithoutUserNestedInput
     Favourites?: FavouritesUncheckedUpdateManyWithoutUserNestedInput
     Chat_1?: ChatUncheckedUpdateManyWithoutUser_1NestedInput
     Chat_2?: ChatUncheckedUpdateManyWithoutUser_2NestedInput
@@ -18675,7 +19004,8 @@ export namespace Prisma {
     updatedAt?: Date | string
     announcement?: AnnouncementCreateNestedManyWithoutUserInput
     message?: MessageCreateNestedManyWithoutUserInput
-    Review?: ReviewCreateNestedManyWithoutUserInput
+    user?: ReviewCreateNestedManyWithoutUserInput
+    reviewer?: ReviewCreateNestedManyWithoutReviewerInput
     Chat_1?: ChatCreateNestedManyWithoutUser_1Input
     Chat_2?: ChatCreateNestedManyWithoutUser_2Input
     SocialLink?: SocialLinkCreateNestedManyWithoutUserInput
@@ -18695,7 +19025,8 @@ export namespace Prisma {
     updatedAt?: Date | string
     announcement?: AnnouncementUncheckedCreateNestedManyWithoutUserInput
     message?: MessageUncheckedCreateNestedManyWithoutUserInput
-    Review?: ReviewUncheckedCreateNestedManyWithoutUserInput
+    user?: ReviewUncheckedCreateNestedManyWithoutUserInput
+    reviewer?: ReviewUncheckedCreateNestedManyWithoutReviewerInput
     Chat_1?: ChatUncheckedCreateNestedManyWithoutUser_1Input
     Chat_2?: ChatUncheckedCreateNestedManyWithoutUser_2Input
     SocialLink?: SocialLinkUncheckedCreateNestedManyWithoutUserInput
@@ -18768,7 +19099,8 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     announcement?: AnnouncementUpdateManyWithoutUserNestedInput
     message?: MessageUpdateManyWithoutUserNestedInput
-    Review?: ReviewUpdateManyWithoutUserNestedInput
+    user?: ReviewUpdateManyWithoutUserNestedInput
+    reviewer?: ReviewUpdateManyWithoutReviewerNestedInput
     Chat_1?: ChatUpdateManyWithoutUser_1NestedInput
     Chat_2?: ChatUpdateManyWithoutUser_2NestedInput
     SocialLink?: SocialLinkUpdateManyWithoutUserNestedInput
@@ -18788,7 +19120,8 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     announcement?: AnnouncementUncheckedUpdateManyWithoutUserNestedInput
     message?: MessageUncheckedUpdateManyWithoutUserNestedInput
-    Review?: ReviewUncheckedUpdateManyWithoutUserNestedInput
+    user?: ReviewUncheckedUpdateManyWithoutUserNestedInput
+    reviewer?: ReviewUncheckedUpdateManyWithoutReviewerNestedInput
     Chat_1?: ChatUncheckedUpdateManyWithoutUser_1NestedInput
     Chat_2?: ChatUncheckedUpdateManyWithoutUser_2NestedInput
     SocialLink?: SocialLinkUncheckedUpdateManyWithoutUserNestedInput
@@ -18941,7 +19274,18 @@ export namespace Prisma {
     id?: string
     rating: number
     content: string
-    announcementId: string
+    reviewerId: string
+    announcementId?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type ReviewCreateManyReviewerInput = {
+    id?: string
+    rating: number
+    content: string
+    userId: string
+    announcementId?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
   }
@@ -19051,14 +19395,16 @@ export namespace Prisma {
     content?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    announcement?: AnnouncementUpdateOneRequiredWithoutReviewNestedInput
+    reviewer?: UserUpdateOneRequiredWithoutReviewerNestedInput
+    announcement?: AnnouncementUpdateOneWithoutReviewNestedInput
   }
 
   export type ReviewUncheckedUpdateWithoutUserInput = {
     id?: StringFieldUpdateOperationsInput | string
     rating?: FloatFieldUpdateOperationsInput | number
     content?: StringFieldUpdateOperationsInput | string
-    announcementId?: StringFieldUpdateOperationsInput | string
+    reviewerId?: StringFieldUpdateOperationsInput | string
+    announcementId?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -19067,7 +19413,38 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     rating?: FloatFieldUpdateOperationsInput | number
     content?: StringFieldUpdateOperationsInput | string
-    announcementId?: StringFieldUpdateOperationsInput | string
+    reviewerId?: StringFieldUpdateOperationsInput | string
+    announcementId?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type ReviewUpdateWithoutReviewerInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    rating?: FloatFieldUpdateOperationsInput | number
+    content?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    user?: UserUpdateOneRequiredWithoutUserNestedInput
+    announcement?: AnnouncementUpdateOneWithoutReviewNestedInput
+  }
+
+  export type ReviewUncheckedUpdateWithoutReviewerInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    rating?: FloatFieldUpdateOperationsInput | number
+    content?: StringFieldUpdateOperationsInput | string
+    userId?: StringFieldUpdateOperationsInput | string
+    announcementId?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type ReviewUncheckedUpdateManyWithoutReviewerInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    rating?: FloatFieldUpdateOperationsInput | number
+    content?: StringFieldUpdateOperationsInput | string
+    userId?: StringFieldUpdateOperationsInput | string
+    announcementId?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -19294,6 +19671,7 @@ export namespace Prisma {
     rating: number
     content: string
     userId: string
+    reviewerId: string
     createdAt?: Date | string
     updatedAt?: Date | string
   }
@@ -19353,7 +19731,8 @@ export namespace Prisma {
     content?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    user?: UserUpdateOneRequiredWithoutReviewNestedInput
+    user?: UserUpdateOneRequiredWithoutUserNestedInput
+    reviewer?: UserUpdateOneRequiredWithoutReviewerNestedInput
   }
 
   export type ReviewUncheckedUpdateWithoutAnnouncementInput = {
@@ -19361,6 +19740,7 @@ export namespace Prisma {
     rating?: FloatFieldUpdateOperationsInput | number
     content?: StringFieldUpdateOperationsInput | string
     userId?: StringFieldUpdateOperationsInput | string
+    reviewerId?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -19370,6 +19750,7 @@ export namespace Prisma {
     rating?: FloatFieldUpdateOperationsInput | number
     content?: StringFieldUpdateOperationsInput | string
     userId?: StringFieldUpdateOperationsInput | string
+    reviewerId?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }

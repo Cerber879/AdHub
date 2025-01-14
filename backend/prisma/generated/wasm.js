@@ -199,6 +199,7 @@ exports.Prisma.ReviewScalarFieldEnum = {
   rating: 'rating',
   content: 'content',
   userId: 'userId',
+  reviewerId: 'reviewerId',
   announcementId: 'announcementId',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'

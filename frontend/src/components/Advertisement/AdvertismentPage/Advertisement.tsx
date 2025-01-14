@@ -112,11 +112,10 @@ const Advertisement = () => {
 
   const [showAllCharacteristics, setShowAllCharacteristics] = useState(false);
 
-  let charLength = 4;
-
+  let charLength = 2;
   if (announcementCharacteristics && "characteristics" in announcementCharacteristics){
 
-    charLength = showAllCharacteristics ? announcementCharacteristics.characteristics.length : 4;
+    charLength = showAllCharacteristics ? announcementCharacteristics.characteristics.length : 2;
   }
 
   const [showAllReviews, setShowAllReviews] = useState(false);
@@ -229,34 +228,31 @@ const Advertisement = () => {
               </div>
             </dl>
           </div>
-
-          
         </div>
 
         <div className={styles.info_block}>
           <div className={styles.user_block}>
-
-          <div className={styles.header}>
-            <p className={styles.price}>{advertisment?.price} ₽</p>
-            <img onClick={() => handleFavourites} className={styles.heart_icon} src={`${!check ? '/images/Advertisment/heart_black_out.svg' : '/images/Advertisment/heart_black_fill.svg'}`} alt="heart" /> 
-          </div>
-          <Link className={styles.user_info}
-            to={ROUTES.USER + '/' + advertisment?.userId}
-          >
-            <span className={styles.user_name}>{user?.displayName}</span>
-            <img
-              className={styles.avatar}
-              src={user?.avatar != null ? user.avatar : '/images/Profile/user.svg'}
-              alt="User Avatar"
-            />
-          </Link>
-
-          <div className={styles.social_buttons}>
-            <button className={styles.social}>Показать номер</button>
-            <Link to={ROUTES.MESSENGER}>
-              <button className={styles.social}>Написать</button>
+            <div className={styles.header}>
+              <p className={styles.price}>{advertisment?.price} ₽</p>
+              <img onClick={() => handleFavourites} className={styles.heart_icon} src={`${!check ? '/images/Advertisment/heart_black_out.svg' : '/images/Advertisment/heart_black_fill.svg'}`} alt="heart" /> 
+            </div>
+            <Link className={styles.user_info}
+              to={ROUTES.USER + '/' + advertisment?.userId}
+            >
+              <span className={styles.user_name}>{user?.displayName}</span>
+              <img
+                className={styles.avatar}
+                src={user?.avatar != null ? user.avatar : '/images/Profile/user.svg'}
+                alt="User Avatar"
+              />
             </Link>
-          </div>
+
+            <div className={styles.social_buttons}>
+              <button className={styles.social}>Показать номер</button>
+              <Link to={ROUTES.MESSENGER}>
+                <button className={styles.social}>Написать</button>
+              </Link>
+            </div>
           </div>
           <form id="reviewForm" className={styles.form} onSubmit={handleSubmit}>
             <label htmlFor="rating" className={styles.form__label}>Рейтинг:</label>
@@ -281,7 +277,6 @@ const Advertisement = () => {
             <button type="submit" className={styles.form__button}>Оставить отзыв</button>
           </form>
           <div>
-
             {reviews.slice(0, visibleReviewsLength).map((review, index) => (
               <div key={index} className={styles.review}>
                 <div className={styles.review__header}>

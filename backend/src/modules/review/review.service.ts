@@ -8,22 +8,49 @@ import { User } from '@/prisma/generated';
 export class ReviewService {
   constructor(private readonly prismaService: PrismaService) {}
 
-  async create(input: CreateReviewInput) {
+  async create(user: User, input: CreateReviewInput) {
+    const { userId, ...rest } = input
+
     await this.prismaService.review.create({
       data: {
-        ...input
+        ...rest,
+        reviewerId: user.id,
+        userId: userId
       },
     });
+  
+    const reviews = await this.prismaService.review.findMany({
+      where: {
+        userId: input.userId, 
+      },
+    });
+  
+    const totalReviews = reviews.length; 
+    const totalRating = reviews.reduce((sum, review) => sum + review.rating, 0); 
+  
+    const averageRating = totalReviews > 0 ? totalRating / totalReviews : 0;
+  
+    await this.prismaService.user.update({
+      where: {
+        id: user.id, 
+      },
+      data: {
+        rating: averageRating, 
+      },
+    });
+  
     return true;
   }
+  
 
   async getMyReviews(userId: string) {
     return this.prismaService.review.findMany({
       where: { 
-        userId 
+        userId: userId 
       },
       include: {
         announcement: true, 
+        reviewer: true
       },
     });
   }
@@ -31,10 +58,11 @@ export class ReviewService {
   async getReviewsByUser(userId: string) {
     return this.prismaService.review.findMany({
       where: { 
-        userId 
+        userId: userId 
       },
       include: {
-        announcement: true
+        announcement: true,
+        reviewer: true
       },
     });
   }

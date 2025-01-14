@@ -8,6 +8,7 @@ import { Authorized } from '@/src/shared/decorators/authorized.decorator'
 import { ProfileService } from './profile.service'
 import { SocialLinkInput, SocialLinkOrderInput } from './inputs/social-link.input'
 import { SocialLinkModel } from './models/social-link.model'
+import { UserInfoResponse } from './responses/user-info.response'
 
 @Resolver('Profile')
 export class ProfileResolver {
@@ -32,6 +33,11 @@ export class ProfileResolver {
 	@Query(() => [SocialLinkModel], { name: 'findSocialLinks' })
 	public async findSocialLinks(@Authorized() user: User) {
 		return this.profileService.findSocialLinks(user)
+	}
+
+	@Query(() => UserInfoResponse, { name: 'findUserInfo' })
+	public async findUserInfo(@Args('userId') userId: string) {
+		return this.profileService.findUserInfo(userId)
 	}
 
 	@Authorization()

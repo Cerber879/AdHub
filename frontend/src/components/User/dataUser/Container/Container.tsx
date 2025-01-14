@@ -5,24 +5,29 @@ import UserInfo from '../Data/Info/Info';
 import UserReviews from '../Data/Reviews/Reviews';
 
 import styles from './container.module.css';
+import { useParams } from 'react-router-dom';
 
 const Container = () => {
+
+  const { userId } = useParams<{userId: string}>();
+  const validUserId = userId ?? ''
+  
   return (
     <div className={styles.container}>
 
       <section id="ads" className={styles.section}>
         <span className={styles.name}>Объявления пользователя</span>
-        <ListAdvertisments />
+        <ListAdvertisments id={validUserId} />
       </section>
 
       <section id="info" className={styles.section}>
         <span className={styles.name}>Информация</span>
-        <UserInfo />
+        <UserInfo id={validUserId}/>
       </section>
 
       <section id="reviews" className={styles.section}>
         <span className={styles.name}>Отзывы</span>
-        <UserReviews />
+        <UserReviews id={validUserId}/>
       </section>
     </div>
   );

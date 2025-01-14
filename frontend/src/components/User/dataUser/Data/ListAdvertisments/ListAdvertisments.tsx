@@ -5,16 +5,13 @@
   import { useGetAnnouncementByUserQuery } from '../../../../../graphql/generated/output';
   import { statusMap } from '../../../../../types';
 
-  import { useParams } from 'react-router-dom';
   import PreviewSmallAdvertisment from '../../../../Advertisement/PreviewAdvertisment/PreviewBlocks/PreviewSmallAdvertisment/PreviewSmallAdvertisment';
 
-    const ProfileListAdvertisments = () => {
-
-    const { userId } = useParams();
+    const ProfileListAdvertisments = ({ id }: { id: string }) => {
 
     const { data } = useGetAnnouncementByUserQuery({
       variables: { 
-        id: userId || ''
+        id: id || ''
       }
     })
 

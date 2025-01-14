@@ -28,7 +28,8 @@ model User {
 
   announcement Announcement[]
   message      Message[]
-  Review       Review[]
+  user         Review[]       @relation("user")
+  reviewer     Review[]       @relation("reviewer")
   Favourites   Favourites[]
 
   Chat_1     Chat[]       @relation("user_1")
@@ -166,10 +167,13 @@ model Review {
   content String @db.Text
 
   userId         String
-  announcementId String
+  reviewerId     String
+  announcementId String?
 
-  user         User         @relation(fields: [userId], references: [id], onDelete: Cascade)
-  announcement Announcement @relation(fields: [announcementId], references: [id], onDelete: Cascade)
+  user     User @relation("user", fields: [userId], references: [id], onDelete: Cascade)
+  reviewer User @relation("reviewer", fields: [reviewerId], references: [id], onDelete: Cascade)
+
+  announcement Announcement? @relation(fields: [announcementId], references: [id], onDelete: Cascade)
 
   createdAt DateTime @default(now()) @map("created_at")
   updatedAt DateTime @updatedAt @map("updated_at")

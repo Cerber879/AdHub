@@ -1,19 +1,18 @@
 import React, { useState } from 'react';
 import styles from './info.module.css';
+import { useFindUserInfoQuery } from '../../../../../graphql/generated/output';
+import Loader from '../../../../../utils/Loader/Loader';
 
-interface Social {
-  name: string;
-  link: string;
-  description?: string;
-}
-
-interface UserInfoProps {
-  description?: string;
-  socials?: Social[];
-}
-
-const UserInfo: React.FC<UserInfoProps> = ({ description = 'Нет описания', socials = [] }) => {
+const UserInfo: React.FC<{ id: string }> = ({ id }) => {
   const [infoTab, setInfoTab] = useState<'description' | 'socials'>('description');
+
+  const { data, loading } = useFindUserInfoQuery({
+    variables: { 
+      id: id || '' 
+    },
+  });
+
+  const userInfo = data?.findUserInfo
 
   return (
     <div className={styles.infoBlock}>
@@ -31,35 +30,37 @@ const UserInfo: React.FC<UserInfoProps> = ({ description = 'Нет описан�
           Соц. сети
         </button>
       </div>
-      <div className={styles.infoContent}>
-        {infoTab === 'description' ? (
-          description.trim().length > 0 ? (
-            <p>{description}</p>
-          ) : (
-            <p>Нет описания</p>
-          )
-        ) : (
-          <div className={styles.socialsList}>
-            {socials.length > 0 ? (
-              socials.map(({ name, link, description }, index) => (
-                <div key={name + index} className={styles.socialItem}>
-                  {description && <p>{`${description}:`}</p>}
-                  <a
-                    href={link}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    aria-label={`Ссылка на ${name}`}
-                  >
-                    {name}
-                  </a>
-                </div>
-              ))
+      {loading ? <Loader /> : (
+        <div className={styles.infoContent}>
+          {infoTab === 'description' ? (
+            userInfo?.bio && userInfo?.bio.trim().length > 0 ? (
+              <p>{userInfo?.bio}</p>
             ) : (
-              <p>Нет социальных сетей</p>
-            )}
-          </div>
-        )}
-      </div>
+              <p>Нет описания</p>
+            )
+          ) : infoTab === 'socials' ? (
+            <div className={styles.socialsList}>
+              {userInfo?.socialLinks && userInfo?.socialLinks.length > 0 ? (
+                userInfo?.socialLinks.map(({ title, url, description }, index) => (
+                  <div key={index} className={styles.socialItem}>
+                    {description && <p>{`${description}:`}</p>}
+                    <a
+                      href={url}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      aria-label={`Ссылка на ${title}`}
+                    >
+                      {title}
+                    </a>
+                  </div>
+                ))
+              ) : (
+                <p>Нет социальных сетей</p>
+              )}
+            </div>
+          ) : null}
+        </div>
+      )}
     </div>
   );
 };

@@ -470,6 +470,7 @@ export type Query = {
   findSessionsByUser: Array<SessionModel>;
   findSocialLinks: Array<SocialLinkModel>;
   findUser: UserModel;
+  findUserInfo: UserInfoResponse;
   getAnnouncementById: AnnouncementModel;
   getAnnouncementByIds: Array<AnnouncementModel>;
   getAnnouncementByName: AnnouncementModel;
@@ -518,6 +519,11 @@ export type QueryFindPrewiewSubcategoriesArgs = {
 
 export type QueryFindUserArgs = {
   id: Scalars['String']['input'];
+};
+
+
+export type QueryFindUserInfoArgs = {
+  userId: Scalars['String']['input'];
 };
 
 
@@ -588,6 +594,8 @@ export type ReviewModel = {
   createdAt: Scalars['DateTime']['output'];
   id: Scalars['String']['output'];
   rating: Scalars['Float']['output'];
+  reviewer: UserModel;
+  reviewerId: Scalars['String']['output'];
   updatedAt: Scalars['DateTime']['output'];
   userId: Scalars['String']['output'];
 };
@@ -628,6 +636,13 @@ export type SocialLinkModel = {
 export type SocialLinkOrderInput = {
   id: Scalars['String']['input'];
   position: Scalars['Float']['input'];
+};
+
+export type SocialLinksResponse = {
+  __typename?: 'SocialLinksResponse';
+  description: Scalars['String']['output'];
+  title: Scalars['String']['output'];
+  url: Scalars['String']['output'];
 };
 
 export type SubCutegoryModel = {
@@ -687,6 +702,12 @@ export type UpdateCharacteristicMixedInput = {
 export type UpdateReviewInput = {
   content?: InputMaybe<Scalars['String']['input']>;
   rating?: InputMaybe<Scalars['Float']['input']>;
+};
+
+export type UserInfoResponse = {
+  __typename?: 'UserInfoResponse';
+  bio?: Maybe<Scalars['String']['output']>;
+  socialLinks?: Maybe<Array<SocialLinksResponse>>;
 };
 
 export type UserModel = {
@@ -1108,7 +1129,7 @@ export type GetPhotosByAnnouncementIdQuery = { __typename?: 'Query', getPhotosBy
 export type GetMyReviewsQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type GetMyReviewsQuery = { __typename?: 'Query', getMyReviews: Array<{ __typename?: 'ReviewModel', id: string, rating: number, content: string, createdAt: any, updatedAt: any, announcement: { __typename?: 'AnnouncementModel', name: string, price: number } }> };
+export type GetMyReviewsQuery = { __typename?: 'Query', getMyReviews: Array<{ __typename?: 'ReviewModel', id: string, rating: number, content: string, createdAt: any, updatedAt: any, announcement: { __typename?: 'AnnouncementModel', name: string, price: number }, reviewer: { __typename?: 'UserModel', displayName: string, avatar?: string | null } }> };
 
 export type GetReviewsByAnnouncementQueryVariables = Exact<{
   announcementId: Scalars['String']['input'];
@@ -1122,7 +1143,7 @@ export type GetReviewsByUserQueryVariables = Exact<{
 }>;
 
 
-export type GetReviewsByUserQuery = { __typename?: 'Query', getReviewsByUser: Array<{ __typename?: 'ReviewModel', id: string, rating: number, content: string, createdAt: any, updatedAt: any, announcement: { __typename?: 'AnnouncementModel', name: string, price: number } }> };
+export type GetReviewsByUserQuery = { __typename?: 'Query', getReviewsByUser: Array<{ __typename?: 'ReviewModel', id: string, rating: number, content: string, createdAt: any, updatedAt: any, announcement: { __typename?: 'AnnouncementModel', name: string, price: number }, reviewer: { __typename?: 'UserModel', displayName: string, avatar?: string | null } }> };
 
 export type FindProfileQueryVariables = Exact<{ [key: string]: never; }>;
 
@@ -1145,6 +1166,13 @@ export type FindUserQueryVariables = Exact<{
 
 
 export type FindUserQuery = { __typename?: 'Query', findUser: { __typename?: 'UserModel', id: string, email?: string | null, phoneNumber?: string | null, typeProfile: string, displayName: string, avatar?: string | null, bio?: string | null, rating?: number | null, createdAt: any } };
+
+export type FindUserInfoQueryVariables = Exact<{
+  id: Scalars['String']['input'];
+}>;
+
+
+export type FindUserInfoQuery = { __typename?: 'Query', findUserInfo: { __typename?: 'UserInfoResponse', bio?: string | null, socialLinks?: Array<{ __typename?: 'SocialLinksResponse', title: string, description: string, url: string }> | null } };
 
 export type FindCurrentSessionQueryVariables = Exact<{ [key: string]: never; }>;
 
@@ -3240,6 +3268,10 @@ export const GetMyReviewsDocument = gql`
       name
       price
     }
+    reviewer {
+      displayName
+      avatar
+    }
     createdAt
     updatedAt
   }
@@ -3332,6 +3364,10 @@ export const GetReviewsByUserDocument = gql`
     announcement {
       name
       price
+    }
+    reviewer {
+      displayName
+      avatar
     }
     createdAt
     updatedAt
@@ -3563,6 +3599,51 @@ export type FindUserQueryHookResult = ReturnType<typeof useFindUserQuery>;
 export type FindUserLazyQueryHookResult = ReturnType<typeof useFindUserLazyQuery>;
 export type FindUserSuspenseQueryHookResult = ReturnType<typeof useFindUserSuspenseQuery>;
 export type FindUserQueryResult = Apollo.QueryResult<FindUserQuery, FindUserQueryVariables>;
+export const FindUserInfoDocument = gql`
+    query FindUserInfo($id: String!) {
+  findUserInfo(userId: $id) {
+    bio
+    socialLinks {
+      title
+      description
+      url
+    }
+  }
+}
+    `;
+
+/**
+ * __useFindUserInfoQuery__
+ *
+ * To run a query within a React component, call `useFindUserInfoQuery` and pass it any options that fit your needs.
+ * When your component renders, `useFindUserInfoQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useFindUserInfoQuery({
+ *   variables: {
+ *      id: // value for 'id'
+ *   },
+ * });
+ */
+export function useFindUserInfoQuery(baseOptions: Apollo.QueryHookOptions<FindUserInfoQuery, FindUserInfoQueryVariables> & ({ variables: FindUserInfoQueryVariables; skip?: boolean; } | { skip: boolean; }) ) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<FindUserInfoQuery, FindUserInfoQueryVariables>(FindUserInfoDocument, options);
+      }
+export function useFindUserInfoLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<FindUserInfoQuery, FindUserInfoQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<FindUserInfoQuery, FindUserInfoQueryVariables>(FindUserInfoDocument, options);
+        }
+export function useFindUserInfoSuspenseQuery(baseOptions?: Apollo.SkipToken | Apollo.SuspenseQueryHookOptions<FindUserInfoQuery, FindUserInfoQueryVariables>) {
+          const options = baseOptions === Apollo.skipToken ? baseOptions : {...defaultOptions, ...baseOptions}
+          return Apollo.useSuspenseQuery<FindUserInfoQuery, FindUserInfoQueryVariables>(FindUserInfoDocument, options);
+        }
+export type FindUserInfoQueryHookResult = ReturnType<typeof useFindUserInfoQuery>;
+export type FindUserInfoLazyQueryHookResult = ReturnType<typeof useFindUserInfoLazyQuery>;
+export type FindUserInfoSuspenseQueryHookResult = ReturnType<typeof useFindUserInfoSuspenseQuery>;
+export type FindUserInfoQueryResult = Apollo.QueryResult<FindUserInfoQuery, FindUserInfoQueryVariables>;
 export const FindCurrentSessionDocument = gql`
     query FindCurrentSession {
   findCurrentSession {

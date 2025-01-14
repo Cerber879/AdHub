@@ -91,6 +91,32 @@ export class ProfileService {
 		return socialLinks
 	}
 
+	public async findUserInfo(userId: string) {
+		const infoUser = await this.prismaService.user.findUnique({
+			where: {
+				id: userId
+			},
+			select: {
+				bio: true,
+				SocialLink: {
+						select: {
+								title: true,
+								url: true,
+								description: true
+						},
+						orderBy: {
+								position: 'asc',
+						},
+				},
+			}
+		})
+
+		return {
+			bio: infoUser.bio,
+			socialLinks: infoUser.SocialLink || [],
+		}
+	}
+
 	public async createSocialLink(user: User, input: SocialLinkInput) {
 		const { title, url, description } = input
 
