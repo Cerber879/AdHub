@@ -121,6 +121,26 @@ export class ReviewService {
       where: { id },
     });
 
+    const reviews = await this.prismaService.review.findMany({
+      where: {
+        userId: user.id, 
+      },
+    });
+  
+    const totalReviews = reviews.length; 
+    const totalRating = reviews.reduce((sum, review) => sum + review.rating, 0); 
+  
+    const averageRating = totalReviews > 0 ? totalRating / totalReviews : 0;
+  
+    await this.prismaService.user.update({
+      where: {
+        id: user.id, 
+      },
+      data: {
+        rating: averageRating, 
+      },
+    });
+
     return true;
   }
 }

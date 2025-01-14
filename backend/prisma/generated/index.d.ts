@@ -10470,7 +10470,7 @@ export namespace Prisma {
     rating: number
     content: string
     userId: string
-    reviewerId: string
+    reviewerId: string | null
     announcementId: string | null
     createdAt: Date
     updatedAt: Date
@@ -10505,7 +10505,7 @@ export namespace Prisma {
     createdAt?: boolean
     updatedAt?: boolean
     user?: boolean | UserDefaultArgs<ExtArgs>
-    reviewer?: boolean | UserDefaultArgs<ExtArgs>
+    reviewer?: boolean | Review$reviewerArgs<ExtArgs>
     announcement?: boolean | Review$announcementArgs<ExtArgs>
   }, ExtArgs["result"]["review"]>
 
@@ -10519,7 +10519,7 @@ export namespace Prisma {
     createdAt?: boolean
     updatedAt?: boolean
     user?: boolean | UserDefaultArgs<ExtArgs>
-    reviewer?: boolean | UserDefaultArgs<ExtArgs>
+    reviewer?: boolean | Review$reviewerArgs<ExtArgs>
     announcement?: boolean | Review$announcementArgs<ExtArgs>
   }, ExtArgs["result"]["review"]>
 
@@ -10536,12 +10536,12 @@ export namespace Prisma {
 
   export type ReviewInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     user?: boolean | UserDefaultArgs<ExtArgs>
-    reviewer?: boolean | UserDefaultArgs<ExtArgs>
+    reviewer?: boolean | Review$reviewerArgs<ExtArgs>
     announcement?: boolean | Review$announcementArgs<ExtArgs>
   }
   export type ReviewIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     user?: boolean | UserDefaultArgs<ExtArgs>
-    reviewer?: boolean | UserDefaultArgs<ExtArgs>
+    reviewer?: boolean | Review$reviewerArgs<ExtArgs>
     announcement?: boolean | Review$announcementArgs<ExtArgs>
   }
 
@@ -10549,7 +10549,7 @@ export namespace Prisma {
     name: "Review"
     objects: {
       user: Prisma.$UserPayload<ExtArgs>
-      reviewer: Prisma.$UserPayload<ExtArgs>
+      reviewer: Prisma.$UserPayload<ExtArgs> | null
       announcement: Prisma.$AnnouncementPayload<ExtArgs> | null
     }
     scalars: $Extensions.GetPayloadResult<{
@@ -10557,7 +10557,7 @@ export namespace Prisma {
       rating: number
       content: string
       userId: string
-      reviewerId: string
+      reviewerId: string | null
       announcementId: string | null
       createdAt: Date
       updatedAt: Date
@@ -10926,7 +10926,7 @@ export namespace Prisma {
   export interface Prisma__ReviewClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> extends Prisma.PrismaPromise<T> {
     readonly [Symbol.toStringTag]: "PrismaPromise"
     user<T extends UserDefaultArgs<ExtArgs> = {}>(args?: Subset<T, UserDefaultArgs<ExtArgs>>): Prisma__UserClient<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow"> | Null, Null, ExtArgs>
-    reviewer<T extends UserDefaultArgs<ExtArgs> = {}>(args?: Subset<T, UserDefaultArgs<ExtArgs>>): Prisma__UserClient<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow"> | Null, Null, ExtArgs>
+    reviewer<T extends Review$reviewerArgs<ExtArgs> = {}>(args?: Subset<T, Review$reviewerArgs<ExtArgs>>): Prisma__UserClient<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow"> | null, null, ExtArgs>
     announcement<T extends Review$announcementArgs<ExtArgs> = {}>(args?: Subset<T, Review$announcementArgs<ExtArgs>>): Prisma__AnnouncementClient<$Result.GetResult<Prisma.$AnnouncementPayload<ExtArgs>, T, "findUniqueOrThrow"> | null, null, ExtArgs>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
@@ -11280,6 +11280,21 @@ export namespace Prisma {
      * Filter which Reviews to delete
      */
     where?: ReviewWhereInput
+  }
+
+  /**
+   * Review.reviewer
+   */
+  export type Review$reviewerArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the User
+     */
+    select?: UserSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: UserInclude<ExtArgs> | null
+    where?: UserWhereInput
   }
 
   /**
@@ -13993,12 +14008,12 @@ export namespace Prisma {
     rating?: FloatFilter<"Review"> | number
     content?: StringFilter<"Review"> | string
     userId?: StringFilter<"Review"> | string
-    reviewerId?: StringFilter<"Review"> | string
+    reviewerId?: StringNullableFilter<"Review"> | string | null
     announcementId?: StringNullableFilter<"Review"> | string | null
     createdAt?: DateTimeFilter<"Review"> | Date | string
     updatedAt?: DateTimeFilter<"Review"> | Date | string
     user?: XOR<UserScalarRelationFilter, UserWhereInput>
-    reviewer?: XOR<UserScalarRelationFilter, UserWhereInput>
+    reviewer?: XOR<UserNullableScalarRelationFilter, UserWhereInput> | null
     announcement?: XOR<AnnouncementNullableScalarRelationFilter, AnnouncementWhereInput> | null
   }
 
@@ -14007,7 +14022,7 @@ export namespace Prisma {
     rating?: SortOrder
     content?: SortOrder
     userId?: SortOrder
-    reviewerId?: SortOrder
+    reviewerId?: SortOrderInput | SortOrder
     announcementId?: SortOrderInput | SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
@@ -14024,12 +14039,12 @@ export namespace Prisma {
     rating?: FloatFilter<"Review"> | number
     content?: StringFilter<"Review"> | string
     userId?: StringFilter<"Review"> | string
-    reviewerId?: StringFilter<"Review"> | string
+    reviewerId?: StringNullableFilter<"Review"> | string | null
     announcementId?: StringNullableFilter<"Review"> | string | null
     createdAt?: DateTimeFilter<"Review"> | Date | string
     updatedAt?: DateTimeFilter<"Review"> | Date | string
     user?: XOR<UserScalarRelationFilter, UserWhereInput>
-    reviewer?: XOR<UserScalarRelationFilter, UserWhereInput>
+    reviewer?: XOR<UserNullableScalarRelationFilter, UserWhereInput> | null
     announcement?: XOR<AnnouncementNullableScalarRelationFilter, AnnouncementWhereInput> | null
   }, "id">
 
@@ -14038,7 +14053,7 @@ export namespace Prisma {
     rating?: SortOrder
     content?: SortOrder
     userId?: SortOrder
-    reviewerId?: SortOrder
+    reviewerId?: SortOrderInput | SortOrder
     announcementId?: SortOrderInput | SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
@@ -14057,7 +14072,7 @@ export namespace Prisma {
     rating?: FloatWithAggregatesFilter<"Review"> | number
     content?: StringWithAggregatesFilter<"Review"> | string
     userId?: StringWithAggregatesFilter<"Review"> | string
-    reviewerId?: StringWithAggregatesFilter<"Review"> | string
+    reviewerId?: StringNullableWithAggregatesFilter<"Review"> | string | null
     announcementId?: StringNullableWithAggregatesFilter<"Review"> | string | null
     createdAt?: DateTimeWithAggregatesFilter<"Review"> | Date | string
     updatedAt?: DateTimeWithAggregatesFilter<"Review"> | Date | string
@@ -14762,7 +14777,7 @@ export namespace Prisma {
     createdAt?: Date | string
     updatedAt?: Date | string
     user: UserCreateNestedOneWithoutUserInput
-    reviewer: UserCreateNestedOneWithoutReviewerInput
+    reviewer?: UserCreateNestedOneWithoutReviewerInput
     announcement?: AnnouncementCreateNestedOneWithoutReviewInput
   }
 
@@ -14771,7 +14786,7 @@ export namespace Prisma {
     rating: number
     content: string
     userId: string
-    reviewerId: string
+    reviewerId?: string | null
     announcementId?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
@@ -14784,7 +14799,7 @@ export namespace Prisma {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     user?: UserUpdateOneRequiredWithoutUserNestedInput
-    reviewer?: UserUpdateOneRequiredWithoutReviewerNestedInput
+    reviewer?: UserUpdateOneWithoutReviewerNestedInput
     announcement?: AnnouncementUpdateOneWithoutReviewNestedInput
   }
 
@@ -14793,7 +14808,7 @@ export namespace Prisma {
     rating?: FloatFieldUpdateOperationsInput | number
     content?: StringFieldUpdateOperationsInput | string
     userId?: StringFieldUpdateOperationsInput | string
-    reviewerId?: StringFieldUpdateOperationsInput | string
+    reviewerId?: NullableStringFieldUpdateOperationsInput | string | null
     announcementId?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -14804,7 +14819,7 @@ export namespace Prisma {
     rating: number
     content: string
     userId: string
-    reviewerId: string
+    reviewerId?: string | null
     announcementId?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
@@ -14823,7 +14838,7 @@ export namespace Prisma {
     rating?: FloatFieldUpdateOperationsInput | number
     content?: StringFieldUpdateOperationsInput | string
     userId?: StringFieldUpdateOperationsInput | string
-    reviewerId?: StringFieldUpdateOperationsInput | string
+    reviewerId?: NullableStringFieldUpdateOperationsInput | string | null
     announcementId?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -16620,10 +16635,12 @@ export namespace Prisma {
     update?: XOR<XOR<UserUpdateToOneWithWhereWithoutUserInput, UserUpdateWithoutUserInput>, UserUncheckedUpdateWithoutUserInput>
   }
 
-  export type UserUpdateOneRequiredWithoutReviewerNestedInput = {
+  export type UserUpdateOneWithoutReviewerNestedInput = {
     create?: XOR<UserCreateWithoutReviewerInput, UserUncheckedCreateWithoutReviewerInput>
     connectOrCreate?: UserCreateOrConnectWithoutReviewerInput
     upsert?: UserUpsertWithoutReviewerInput
+    disconnect?: UserWhereInput | boolean
+    delete?: UserWhereInput | boolean
     connect?: UserWhereUniqueInput
     update?: XOR<XOR<UserUpdateToOneWithWhereWithoutReviewerInput, UserUpdateWithoutReviewerInput>, UserUncheckedUpdateWithoutReviewerInput>
   }
@@ -16982,7 +16999,7 @@ export namespace Prisma {
     content: string
     createdAt?: Date | string
     updatedAt?: Date | string
-    reviewer: UserCreateNestedOneWithoutReviewerInput
+    reviewer?: UserCreateNestedOneWithoutReviewerInput
     announcement?: AnnouncementCreateNestedOneWithoutReviewInput
   }
 
@@ -16990,7 +17007,7 @@ export namespace Prisma {
     id?: string
     rating: number
     content: string
-    reviewerId: string
+    reviewerId?: string | null
     announcementId?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
@@ -17222,7 +17239,7 @@ export namespace Prisma {
     rating?: FloatFilter<"Review"> | number
     content?: StringFilter<"Review"> | string
     userId?: StringFilter<"Review"> | string
-    reviewerId?: StringFilter<"Review"> | string
+    reviewerId?: StringNullableFilter<"Review"> | string | null
     announcementId?: StringNullableFilter<"Review"> | string | null
     createdAt?: DateTimeFilter<"Review"> | Date | string
     updatedAt?: DateTimeFilter<"Review"> | Date | string
@@ -17708,7 +17725,7 @@ export namespace Prisma {
     createdAt?: Date | string
     updatedAt?: Date | string
     user: UserCreateNestedOneWithoutUserInput
-    reviewer: UserCreateNestedOneWithoutReviewerInput
+    reviewer?: UserCreateNestedOneWithoutReviewerInput
   }
 
   export type ReviewUncheckedCreateWithoutAnnouncementInput = {
@@ -17716,7 +17733,7 @@ export namespace Prisma {
     rating: number
     content: string
     userId: string
-    reviewerId: string
+    reviewerId?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
   }
@@ -19274,7 +19291,7 @@ export namespace Prisma {
     id?: string
     rating: number
     content: string
-    reviewerId: string
+    reviewerId?: string | null
     announcementId?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
@@ -19395,7 +19412,7 @@ export namespace Prisma {
     content?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    reviewer?: UserUpdateOneRequiredWithoutReviewerNestedInput
+    reviewer?: UserUpdateOneWithoutReviewerNestedInput
     announcement?: AnnouncementUpdateOneWithoutReviewNestedInput
   }
 
@@ -19403,7 +19420,7 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     rating?: FloatFieldUpdateOperationsInput | number
     content?: StringFieldUpdateOperationsInput | string
-    reviewerId?: StringFieldUpdateOperationsInput | string
+    reviewerId?: NullableStringFieldUpdateOperationsInput | string | null
     announcementId?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -19413,7 +19430,7 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     rating?: FloatFieldUpdateOperationsInput | number
     content?: StringFieldUpdateOperationsInput | string
-    reviewerId?: StringFieldUpdateOperationsInput | string
+    reviewerId?: NullableStringFieldUpdateOperationsInput | string | null
     announcementId?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -19671,7 +19688,7 @@ export namespace Prisma {
     rating: number
     content: string
     userId: string
-    reviewerId: string
+    reviewerId?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
   }
@@ -19732,7 +19749,7 @@ export namespace Prisma {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     user?: UserUpdateOneRequiredWithoutUserNestedInput
-    reviewer?: UserUpdateOneRequiredWithoutReviewerNestedInput
+    reviewer?: UserUpdateOneWithoutReviewerNestedInput
   }
 
   export type ReviewUncheckedUpdateWithoutAnnouncementInput = {
@@ -19740,7 +19757,7 @@ export namespace Prisma {
     rating?: FloatFieldUpdateOperationsInput | number
     content?: StringFieldUpdateOperationsInput | string
     userId?: StringFieldUpdateOperationsInput | string
-    reviewerId?: StringFieldUpdateOperationsInput | string
+    reviewerId?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -19750,7 +19767,7 @@ export namespace Prisma {
     rating?: FloatFieldUpdateOperationsInput | number
     content?: StringFieldUpdateOperationsInput | string
     userId?: StringFieldUpdateOperationsInput | string
-    reviewerId?: StringFieldUpdateOperationsInput | string
+    reviewerId?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }

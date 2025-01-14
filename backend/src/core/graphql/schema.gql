@@ -273,13 +273,13 @@ type Query {
 }
 
 type ReviewModel {
-  announcement: AnnouncementModel!
+  announcement: AnnouncementModel
   announcementId: String!
   content: String!
   createdAt: DateTime!
-  id: String!
+  id: ID!
   rating: Float!
-  reviewer: UserModel!
+  reviewer: UserModel
   reviewerId: String!
   updatedAt: DateTime!
   userId: String!

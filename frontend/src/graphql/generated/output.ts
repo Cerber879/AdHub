@@ -588,13 +588,13 @@ export type QueryGetSubcategoriesArgs = {
 
 export type ReviewModel = {
   __typename?: 'ReviewModel';
-  announcement: AnnouncementModel;
+  announcement?: Maybe<AnnouncementModel>;
   announcementId: Scalars['String']['output'];
   content: Scalars['String']['output'];
   createdAt: Scalars['DateTime']['output'];
-  id: Scalars['String']['output'];
+  id: Scalars['ID']['output'];
   rating: Scalars['Float']['output'];
-  reviewer: UserModel;
+  reviewer?: Maybe<UserModel>;
   reviewerId: Scalars['String']['output'];
   updatedAt: Scalars['DateTime']['output'];
   userId: Scalars['String']['output'];
@@ -1129,7 +1129,7 @@ export type GetPhotosByAnnouncementIdQuery = { __typename?: 'Query', getPhotosBy
 export type GetMyReviewsQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type GetMyReviewsQuery = { __typename?: 'Query', getMyReviews: Array<{ __typename?: 'ReviewModel', id: string, rating: number, content: string, createdAt: any, updatedAt: any, announcement: { __typename?: 'AnnouncementModel', name: string, price: number }, reviewer: { __typename?: 'UserModel', displayName: string, avatar?: string | null } }> };
+export type GetMyReviewsQuery = { __typename?: 'Query', getMyReviews: Array<{ __typename?: 'ReviewModel', id: string, rating: number, content: string, createdAt: any, updatedAt: any, announcement?: { __typename?: 'AnnouncementModel', name: string, price: number } | null, reviewer?: { __typename?: 'UserModel', displayName: string, avatar?: string | null } | null }> };
 
 export type GetReviewsByAnnouncementQueryVariables = Exact<{
   announcementId: Scalars['String']['input'];
@@ -1143,7 +1143,7 @@ export type GetReviewsByUserQueryVariables = Exact<{
 }>;
 
 
-export type GetReviewsByUserQuery = { __typename?: 'Query', getReviewsByUser: Array<{ __typename?: 'ReviewModel', id: string, rating: number, content: string, createdAt: any, updatedAt: any, announcement: { __typename?: 'AnnouncementModel', name: string, price: number }, reviewer: { __typename?: 'UserModel', displayName: string, avatar?: string | null } }> };
+export type GetReviewsByUserQuery = { __typename?: 'Query', getReviewsByUser: Array<{ __typename?: 'ReviewModel', id: string, rating: number, content: string, createdAt: any, updatedAt: any, announcement?: { __typename?: 'AnnouncementModel', name: string, price: number } | null, reviewer?: { __typename?: 'UserModel', displayName: string, avatar?: string | null } | null }> };
 
 export type FindProfileQueryVariables = Exact<{ [key: string]: never; }>;
 

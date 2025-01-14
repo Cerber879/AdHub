@@ -43,14 +43,17 @@ const UserInfo: React.FC<{ id: string }> = ({ id }) => {
               {userInfo?.socialLinks && userInfo?.socialLinks.length > 0 ? (
                 userInfo?.socialLinks.map(({ title, url, description }, index) => (
                   <div key={index} className={styles.socialItem}>
-                    {description && <p>{`${description}:`}</p>}
+                    <span className={styles.social_description}>{`${description}:`}</span>
                     <a
                       href={url}
+                      className={styles.social_link}
                       target="_blank"
                       rel="noopener noreferrer"
                       aria-label={`Ссылка на ${title}`}
                     >
-                      {title}
+                      <span className={styles.social_link_title}>
+                        {title}
+                      </span>
                     </a>
                   </div>
                 ))

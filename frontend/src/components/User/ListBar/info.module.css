@@ -1,7 +1,7 @@
 .bar_block {
   display: flex;
   flex-direction: column;
-  width: 250px;
+  width: 350px;
   height: 500px;
   top: 50px;
   position: sticky
@@ -62,6 +62,12 @@
 
 .button_message:hover {
   background-color: rgb(0, 100, 255);
+}
+
+.button_name {
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .nav_block {

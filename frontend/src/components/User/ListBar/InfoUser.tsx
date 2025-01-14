@@ -26,14 +26,16 @@ const InfoUser = () => {
           <span className={styles.user_count_feedback}>126 отзывов</span>
         </div>
       </div>
-      <Link to={ROUTES.MESSENGER} className={styles.button_message}>Написать</Link>
+      <Link to={ROUTES.MESSENGER} className={styles.button_message}>
+        <span className={styles.button_name}>Написать</span>
+      </Link>
 
       <div className={styles.nav_block}> 
         <span className={styles.nav_title}>Быстрый доступ</span>
         <div className={styles.nav_links}>
-          <ScrollLink to="ads" smooth={true} duration={500} className={styles.nav_link} activeClass={styles.active} offset={-70}>Объявления</ScrollLink>
-          <ScrollLink to="info" smooth={true} duration={500} className={styles.nav_link} activeClass={styles.active} offset={-70}>Информация</ScrollLink>
-          <ScrollLink to="reviews" smooth={true} duration={500} className={styles.nav_link} activeClass={styles.active} offset={-70}>Отзывы</ScrollLink>
+          <ScrollLink to="ads" smooth={true} duration={500} className={styles.nav_link} activeClass={styles.active} offset={-20}>Объявления</ScrollLink>
+          <ScrollLink to="info" smooth={true} duration={500} className={styles.nav_link} activeClass={styles.active} offset={-20}>Информация</ScrollLink>
+          <ScrollLink to="reviews" smooth={true} duration={500} className={styles.nav_link} activeClass={styles.active} offset={-20}>Отзывы</ScrollLink>
         </div>
       </div>
     </div>

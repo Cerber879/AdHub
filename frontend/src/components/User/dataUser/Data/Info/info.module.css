@@ -35,17 +35,29 @@
 
 .socialsList {
   display: flex;
+  padding: 15px 0px;
   flex-direction: column;
   gap: 10px;
 }
 
 .socialItem {
+  align-items: center;
+  gap: 5px;
   display: flex;
-  flex-direction: column;
 }
 
-.socialItem a {
+.social_description {
+  font-size: 20px;
+}
+
+.social_link {
   color: #007bff;
   text-decoration: none;
   font-weight: bold;
+  font-size: 20px;
 }
+
+.social_link_title:hover {
+  border-bottom: 3px solid #007bff;
+}
+
