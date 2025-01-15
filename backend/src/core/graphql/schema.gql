@@ -196,7 +196,7 @@ type Mutation {
   changeEmail(data: ChangeEmailInput!): Boolean!
   changePassword(data: ChangePasswordInput!): Boolean!
   changePhoneNumber(data: ChangePhoneNumberInput!): Boolean!
-  changeProfileAvatar(file: Upload!): Boolean!
+  changeProfileAvatar(avatar: Upload!): Boolean!
   changeProfileInfo(data: ChangeProfileInfoInput!): Boolean!
   clearSessionCookie: Boolean!
   createAnnouncement(data: CreateAnnouncementInput!): Boolean!

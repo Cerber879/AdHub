@@ -292,7 +292,7 @@ export type MutationChangePhoneNumberArgs = {
 
 
 export type MutationChangeProfileAvatarArgs = {
-  file: Scalars['Upload']['input'];
+  avatar: Scalars['Upload']['input'];
 };
 
 
@@ -923,13 +923,6 @@ export type UpdateReviewMutationVariables = Exact<{
 
 export type UpdateReviewMutation = { __typename?: 'Mutation', updateReview: boolean };
 
-export type ChangeProfileAvatarMutationVariables = Exact<{
-  file: Scalars['Upload']['input'];
-}>;
-
-
-export type ChangeProfileAvatarMutation = { __typename?: 'Mutation', changeProfileAvatar: boolean };
-
 export type ChangeEmailMutationVariables = Exact<{
   data: ChangeEmailInput;
 }>;
@@ -957,6 +950,13 @@ export type ChangePhoneNumberMutationVariables = Exact<{
 
 
 export type ChangePhoneNumberMutation = { __typename?: 'Mutation', changePhoneNumber: boolean };
+
+export type ChangeProfileAvatarMutationVariables = Exact<{
+  avatar: Scalars['Upload']['input'];
+}>;
+
+
+export type ChangeProfileAvatarMutation = { __typename?: 'Mutation', changeProfileAvatar: boolean };
 
 export type ClearSessionCokkieMutationVariables = Exact<{ [key: string]: never; }>;
 
@@ -2054,37 +2054,6 @@ export function useUpdateReviewMutation(baseOptions?: Apollo.MutationHookOptions
 export type UpdateReviewMutationHookResult = ReturnType<typeof useUpdateReviewMutation>;
 export type UpdateReviewMutationResult = Apollo.MutationResult<UpdateReviewMutation>;
 export type UpdateReviewMutationOptions = Apollo.BaseMutationOptions<UpdateReviewMutation, UpdateReviewMutationVariables>;
-export const ChangeProfileAvatarDocument = gql`
-    mutation ChangeProfileAvatar($file: Upload!) {
-  changeProfileAvatar(file: $file)
-}
-    `;
-export type ChangeProfileAvatarMutationFn = Apollo.MutationFunction<ChangeProfileAvatarMutation, ChangeProfileAvatarMutationVariables>;
-
-/**
- * __useChangeProfileAvatarMutation__
- *
- * To run a mutation, you first call `useChangeProfileAvatarMutation` within a React component and pass it any options that fit your needs.
- * When your component renders, `useChangeProfileAvatarMutation` returns a tuple that includes:
- * - A mutate function that you can call at any time to execute the mutation
- * - An object with fields that represent the current status of the mutation's execution
- *
- * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
- *
- * @example
- * const [changeProfileAvatarMutation, { data, loading, error }] = useChangeProfileAvatarMutation({
- *   variables: {
- *      file: // value for 'file'
- *   },
- * });
- */
-export function useChangeProfileAvatarMutation(baseOptions?: Apollo.MutationHookOptions<ChangeProfileAvatarMutation, ChangeProfileAvatarMutationVariables>) {
-        const options = {...defaultOptions, ...baseOptions}
-        return Apollo.useMutation<ChangeProfileAvatarMutation, ChangeProfileAvatarMutationVariables>(ChangeProfileAvatarDocument, options);
-      }
-export type ChangeProfileAvatarMutationHookResult = ReturnType<typeof useChangeProfileAvatarMutation>;
-export type ChangeProfileAvatarMutationResult = Apollo.MutationResult<ChangeProfileAvatarMutation>;
-export type ChangeProfileAvatarMutationOptions = Apollo.BaseMutationOptions<ChangeProfileAvatarMutation, ChangeProfileAvatarMutationVariables>;
 export const ChangeEmailDocument = gql`
     mutation ChangeEmail($data: ChangeEmailInput!) {
   changeEmail(data: $data)
@@ -2209,6 +2178,37 @@ export function useChangePhoneNumberMutation(baseOptions?: Apollo.MutationHookOp
 export type ChangePhoneNumberMutationHookResult = ReturnType<typeof useChangePhoneNumberMutation>;
 export type ChangePhoneNumberMutationResult = Apollo.MutationResult<ChangePhoneNumberMutation>;
 export type ChangePhoneNumberMutationOptions = Apollo.BaseMutationOptions<ChangePhoneNumberMutation, ChangePhoneNumberMutationVariables>;
+export const ChangeProfileAvatarDocument = gql`
+    mutation ChangeProfileAvatar($avatar: Upload!) {
+  changeProfileAvatar(avatar: $avatar)
+}
+    `;
+export type ChangeProfileAvatarMutationFn = Apollo.MutationFunction<ChangeProfileAvatarMutation, ChangeProfileAvatarMutationVariables>;
+
+/**
+ * __useChangeProfileAvatarMutation__
+ *
+ * To run a mutation, you first call `useChangeProfileAvatarMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useChangeProfileAvatarMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [changeProfileAvatarMutation, { data, loading, error }] = useChangeProfileAvatarMutation({
+ *   variables: {
+ *      avatar: // value for 'avatar'
+ *   },
+ * });
+ */
+export function useChangeProfileAvatarMutation(baseOptions?: Apollo.MutationHookOptions<ChangeProfileAvatarMutation, ChangeProfileAvatarMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<ChangeProfileAvatarMutation, ChangeProfileAvatarMutationVariables>(ChangeProfileAvatarDocument, options);
+      }
+export type ChangeProfileAvatarMutationHookResult = ReturnType<typeof useChangeProfileAvatarMutation>;
+export type ChangeProfileAvatarMutationResult = Apollo.MutationResult<ChangeProfileAvatarMutation>;
+export type ChangeProfileAvatarMutationOptions = Apollo.BaseMutationOptions<ChangeProfileAvatarMutation, ChangeProfileAvatarMutationVariables>;
 export const ClearSessionCokkieDocument = gql`
     mutation ClearSessionCokkie {
   clearSessionCookie

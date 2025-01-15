@@ -11,9 +11,11 @@ export class FavouritesService {
 
   async add(input: AddFavouriteInput, user: User) {
     const { announcementID, ...rest } = input
+    
     const existing = await this.prismaService.favourites.findFirst({
       where: { announcementID, userID: user.id }
     })
+
     if (existing) {
       throw new NotFoundException('Объявление уже добавлено в избранное')
     }
@@ -39,7 +41,7 @@ export class FavouritesService {
     const existing = await this.prismaService.favourites.findFirst({
       where: { 
         AND: [
-          { announcementID:id },
+          { announcementID: id },
           { userID: user.id }
         ]
       }

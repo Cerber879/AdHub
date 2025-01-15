@@ -63,6 +63,11 @@ export class CategoryService {
       where: { id },
       include: { parent: true }
     })
+
+    if (!currentCategory || !currentCategory.id|| !currentCategory.name) {
+      throw new Error('Category or category.id is null or undefined');
+    }
+
     parentNames.push(currentCategory.id, currentCategory.name)
     while (currentCategory?.parent) {
       parentNames.push(currentCategory.parent.name)
@@ -71,6 +76,10 @@ export class CategoryService {
         where: { id: currentCategory.parent.id },
         include: { parent: true }
       })
+
+      if (!currentCategory || !currentCategory.id|| !currentCategory.name) {
+        throw new Error('Category or category.id is null or undefined');
+      }
     }
 
     return parentNames.reverse()
