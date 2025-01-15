@@ -80,27 +80,50 @@ const Advertisement = () => {
   const ratingRef = useRef<HTMLInputElement>(null);
   const contentRef = useRef<HTMLTextAreaElement>(null);
   const [createReview] = useCreateReviewMutation();
+
+  const [reviewsMas, setReviewsMas] = useState(reviewsData?.getReviewsByAnnouncement || []);
+
+  useEffect(() => {
+    if (reviewsData) {
+      setReviewsMas(reviewsData.getReviewsByAnnouncement || []);
+    }
+  }, [reviewsData]);
+
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
-    event.preventDefault(); // Предотвращаем обновление страницы
+    event.preventDefault();
 
     if (ratingRef.current && contentRef.current && advertisment?.id && user?.id) {
       const rating = ratingRef.current.value;
       const content = contentRef.current.value;
       console.log(advertisment.id, user.id)
       try {
-        // Выполняем мутацию для создания отзыва
-        await createReview({
+        
+        const { data } = await createReview({
           variables: {
             data: {
               rating: parseInt(rating),
               content: content,
-              announcementId: advertisment.id, // Используем ID объявления
+              announcementId: advertisment.id,
               userId: user.id,
             },
           },
         });
-  
-        // Дополнительно можно добавить уведомление об успешной отправке
+        if (data?.createReview) {
+          
+          const newReview = {
+            id: Date.now().toString(),
+            announcementId: advertisment.id,
+            content: content,
+            rating: parseInt(rating),
+            createdAt: new Date().toISOString(),
+            updatedAt: new Date().toISOString(),
+            userId: user.id,
+            
+          };
+          
+          
+        setReviewsMas((prevReviews) => [...prevReviews, newReview]);}
+        
         console.log("Отзыв успешно создан");
       } catch (error) {
         console.error("Ошибка при создании отзыва", error);
@@ -121,7 +144,7 @@ const Advertisement = () => {
   const [showAllReviews, setShowAllReviews] = useState(false);
 
   let visibleReviewsLength = 3;
-  visibleReviewsLength = showAllReviews ? reviews.length : 3;
+  visibleReviewsLength = showAllReviews ? reviewsMas.length : 3;
 
   return (
     <div className={styles.container}>
@@ -277,7 +300,7 @@ const Advertisement = () => {
             <button type="submit" className={styles.form__button}>Оставить отзыв</button>
           </form>
           <div>
-            {reviews.slice(0, visibleReviewsLength).map((review, index) => (
+            {reviewsMas.slice(0, visibleReviewsLength).map((review, index) => (
               <div key={index} className={styles.review}>
                 <div className={styles.review__header}>
                   <span className={styles.review__username}>Оценка: {review.rating}</span>
@@ -286,7 +309,7 @@ const Advertisement = () => {
                 <p className={styles.review__content}>{review.content}</p>
               </div>
             ))}
-            {reviews.length > 3 && (
+            {reviewsMas.length > 3 && (
               <button
                 className={styles.showMoreButton}
                 onClick={() => setShowAllReviews(!showAllReviews)}
