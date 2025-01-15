@@ -8,8 +8,11 @@
 }
 
 .usersContainer {
-  width: 250px;
+  width: 400px;
   overflow-y: auto;
+  padding: 10px;
+  border-left: 1px solid #d3d3d3; /* Серый тонкий бордер */
+  border-radius: 5px; /* Радиус для сглаживания углов */
   padding: 10px;
 }
 
@@ -58,7 +61,7 @@
 
 .chat__container {
   padding: 10px;
-  width: 100%;
+  width: 60%;
   gap: 10px;
   background-color: #fff;
   border: 1px solid #ccc;
@@ -80,7 +83,7 @@
 }
 
 .message {
-  margin: 5px 100px;
+  margin: 5px 30px;
   padding: 10px;
   border-radius: 5px;
   max-width: 70%;
@@ -88,13 +91,16 @@
 }
 
 .message.user {
-  background-color: #dcf8c6;
+  background-color: #00b3ff;
   align-self: flex-end;
+  color: rgba(255, 255, 255, 0.823);
 }
 
 .message.other {
-  background-color: #ed4242;
+  background-color: #e3e3e3;
   align-self: flex-start;
+  color: rgba(0, 0, 0, 0.823);
+
 }
 
 .input__container {
@@ -106,8 +112,9 @@
 
 .input__container input {
   flex: 1;
-  border: 1px solid #ccc;
-  border-radius: 5px;
+  border: none; /* Убираем все бордеры */
+  border-top: 1px solid #ccc; /* Бордер сверху */
+  border-bottom: 1px solid #ccc; /* Бордер снизу */
   margin: 0;
 }
 
@@ -122,4 +129,15 @@
 
 .input__container button:hover {
   background-color: #0056b3;
+}
+
+.lastMessage
+{
+  color: gray;
+}
+
+.logo__file__dw
+{
+  width: 23px;
+  height: 23px;
 }

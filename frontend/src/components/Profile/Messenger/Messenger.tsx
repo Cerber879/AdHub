@@ -1,141 +1,160 @@
-import React, { useState, useEffect, useRef } from 'react';
-import styles from './messenger.module.css'
-import { useQuery } from '@apollo/client';
+import React, { useState, useEffect, useRef, useMemo } from 'react';
+import styles from './messenger.module.css';
+import { useFindUserQuery, useGetChatsQuery, useGetMessagesQuery, useSendMessageMutation } from '../../../graphql/generated/output';
+import { useCurrent } from '../../../hooks/useCurrent';
 
 interface Message {
-  id: string;
-  text: string;
   senderId: string;
   content: string;
   sentAt: string;
+  isEdited?: string;
+  chatId: string;
 }
 
 interface User {
-  id: number;
+  id: string;
   name: string;
 }
 
-const CreateMessageComponent: React.FC = () => 
-{
-  const [messages, setMessages] = useState<{ [key: number]: Message[] }>({});
+const CreateMessageComponent: React.FC = () => {
+  const [messages, setMessages] = useState<Message[]>([]);
   const [inputValue, setInputValue] = useState<string>('');
-  const chatBoxRef = useRef<HTMLDivElement>(null);
   const [selectedUser, setSelectedUser] = useState<User | null>(null);
+  const chatBoxRef = useRef<HTMLDivElement>(null);
+  const current = useCurrent();
+  // Получаем список чатов
+  const { data: chatsData, refetch: refetchChats } = useGetChatsQuery();
 
-  // Запрос для получения сообщений
-  const { loading, error, data, refetch } = useQuery(GET_MESSAGES, {
-    variables: { chatId: selectedUser?.id }, // Передаем chatId
-    skip: !selectedUser?.id, // Пропускаем запрос, если чат не выбран
+  // Получаем сообщения
+  const { data: messagesData, refetch: refetchMessages } = useGetMessagesQuery({
+    variables: { data: selectedUser?.id?.toString() || '' },
+    skip: !selectedUser?.id,
+    onCompleted: (data) => {
+      if (data?.getMessages) {
+        setMessages(data.getMessages);
+      }
+    },
   });
+  // Получаем юзера 
+  const { data } = useFindUserQuery({ variables: { id: selectedUser?.id || '' } });
+  const findUser = useMemo(() => data?.findUser, [])
+  const downloadImage = () =>
+  {
+
+  }
 
   // Мутация для отправки сообщения
-  const [sendMessageMutation] = useMutation(SEND_MESSAGE);
+  const [sendMessageMutation] = useSendMessageMutation();
 
   const sendMessage = async () => {
-    if (inputValue.trim() !== '' && selectedUser) {
+    if (inputValue.trim() !== '' && selectedUser) { 
       try {
-        // Отправляем сообщение через мутацию
-        await sendMessageMutation({
-          variables: {
-            chatId: selectedUser.id, // chatId выбранного пользователя
-            content: inputValue.trim(), // Текст сообщения
-            senderId: 'user', // ID отправителя
-          },
-        });
+        const newMessage: Message = {
+          content: inputValue.trim(),
+          senderId: current.user?.id?.toString() || '',
+          sentAt: new Date().toISOString(),
+          chatId: selectedUser.id.toString(),
+        };
+        
+        setMessages((prev) => [...prev, newMessage]); // Обновление локального состояния
+        setInputValue(''); // Очистка поля ввода
 
-        // После отправки перезапрашиваем сообщения
-        await refetch();
-        setInputValue(''); // Очищаем поле ввода
+        await sendMessageMutation({
+          variables: { data: 
+            { 
+              chatId: selectedUser.id.toString() || '', 
+              content: inputValue.trim() 
+            } }
+        });
+        console.log(messagesData);
+        await refetchMessages(); // Перезагрузка сообщений
       } catch (error) {
-        console.error("Ошибка при отправке сообщения", error);
+        console.error('Ошибка отправки сообщения:', error);
       }
     }
   };
 
-
-  const handleKeyDown = (event: React.KeyboardEvent<HTMLInputElement>) => 
-  {
-    if (event.key === 'Enter') 
-    {
+  const handleKeyDown = (event: React.KeyboardEvent<HTMLInputElement>) => {
+    if (event.key === 'Enter') {
       sendMessage();
     }
   };
 
-  const handleUserClick = (user: User) => 
-  {
+  const handleUserClick = (user: User) => {
     setSelectedUser(user);
-    refetch();
+    setMessages([]); // Очистка сообщений при переключении чата
+    refetchMessages(); // Обновление сообщений для выбранного пользователя
   };
 
-  useEffect(() => 
-  {
-    if (chatBoxRef.current) 
-    {
-      chatBoxRef.current.scrollTop = chatBoxRef.current.scrollHeight;
-    }
-  }, [messages[selectedUser?.id || 0]]);
-
-  useEffect(() => 
-  {
-    if (users.length > 0) 
-    {
-      handleUserClick(users[0]); // Выбираем первого пользователя по умолчанию
-    }
-  }, []);
-
   useEffect(() => {
-    if (chatBoxRef.current && selectedUser) {
+    if (chatBoxRef.current) {
       chatBoxRef.current.scrollTop = chatBoxRef.current.scrollHeight;
     }
-  }, [selectedUser]);
+  }, [messages]);
+
+
 
   return (
     <div className={styles.appContainer}>
       <div className={styles.usersContainer}>
         <span className={styles.name_container}>Сообщения</span>
         <div className={styles.list_users}>
-          {data?.users.map((user: User) => (
-            <div
-              key={user.id}
-              className={`${styles.userItem} ${selectedUser?.id === user.id ? styles.selectedUser : ''}`}
-              onClick={() => handleUserClick(user)}
-            >
-              {user.name}
-            </div>
-          ))}
+          {chatsData?.getChats?.map((chat) => {
+            const userName = chat.user_1?.displayName === current.user?.displayName ? chat.user_2 : chat.user_1;
+            console.log(chat.user_1?.displayName, " ", chat.user_2?.displayName);
+            return (
+              <div
+                key={chat.id}
+                className={`${styles.userItem} ${selectedUser?.id.toString() === chat.id ? styles.selectedUser : ''}`}
+                onClick={() =>
+                  handleUserClick({
+                    id: chat.id, // Привязываем ID чата
+                    name: userName.displayName || 'Неизвестный пользователь',
+                  })
+                }
+              >
+                <div>{userName.displayName}</div>
+                <div className={styles.lastMessage}>last message: {chat.lastMessage}</div>
+                <div><img></img></div> someImage
+              </div>
+            );
+          }
+          )}
         </div>
       </div>
       <div className={styles.chat__container}>
         {selectedUser && (
           <div className={styles.chatHeader}>
-            <div className={styles.avatar}></div>
+            <img src={findUser?.avatar != null ? findUser.avatar : '/images/Profile/user.svg'} className={styles.avatar}/>
             <div className={styles.username}>{selectedUser.name}</div>
           </div>
         )}
-        <div className={styles.chat__box} id="chatBox" ref={chatBoxRef}>
-          {selectedUser && messages[selectedUser.id]?.map((message, index) => (
-            <div key={index} className={`${styles.message} ${styles[message.senderId]}`}>
+        <div className={styles.chat__box} ref={chatBoxRef}>
+          {messages.map((message, index) => (
+            <div
+              key={message.chatId}
+              className={`${styles.message} ${message.senderId === current.user?.id ? styles.user : styles.other}`}
+            >
               {message.content}
             </div>
           ))}
         </div>
         <div className={styles.input__container}>
-          <input 
-            type="text" 
-            id="messageInput" 
+          <img className={styles.logo__file__dw} src={ '/images/ImagesChat/paper-clip-dw-file.svg'} alt="avatar" 
+            onClick={downloadImage}
+          />
+          <input
+            type="text"
             placeholder="Введите сообщение..."
             onChange={(e) => setInputValue(e.target.value)}
             value={inputValue}
             onKeyDown={handleKeyDown}
-                        
           />
-          <button
-            onClick={sendMessage}>Отправить
-          </button>
+          <button onClick={sendMessage}>Отправить</button>
         </div>
       </div>
     </div>
-  )
-}
+  );
+};
 
 export default CreateMessageComponent;

@@ -96,7 +96,7 @@ const Advertisement = () => {
       // Если чат найден, перенаправляем в него
       if (existingChat) {
         console.log("Чат найден", existingChat);
-        navigate(`/messenger/${existingChat.id}`); // Перенаправление в чат
+        navigate(`${ROUTES.MESSENGER}/${existingChat.id}`); // Перенаправление в чат
       } else {
         // Если чат не найден, создаем новый
         const response = await createChat({
@@ -121,7 +121,7 @@ const Advertisement = () => {
   
           if (newChat) {
             console.log("Новый чат найден", newChat);
-            navigate(`/messenger/${newChat.id}`); // Перенаправляем в новый чат
+            navigate(`${ROUTES.MESSENGER}/${newChat.id}`); // Перенаправляем в новый чат
           } else {
             console.log("Не удалось найти созданный чат.");
           }

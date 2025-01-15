@@ -32,7 +32,8 @@ const App: React.FC = () => {
               <Route path={ROUTES.HOME} element={<Home />} />
               <Route path={ROUTES.PROFILE} element={<Profile />} />
               <Route path={ROUTES.FAVOURITES} element={<Favourites />} />
-              <Route path={ROUTES.MESSENGER} element={<Chat />} />a
+              <Route path={ROUTES.MESSENGER} element={<Chat />} />
+              <Route path={ROUTES.MESSENGER + 'messengers' + '/:friendId' } element={<Chat />} />
               <Route path={ROUTES.SETTINGS} element={<Settings />} />
               <Route path={'/:category/:categoryId'} element={<Catalogue />} />
               <Route path={ROUTES.ADDITEM} element={<CreateAdvertisementPage />} />
