@@ -186,7 +186,7 @@ const CreateAdForm = ({
             control={control}
             render={({ field }) => (
               <PhotoUploader photos={field.value || []}
-              onChange={field.onChange} />
+                onChange={field.onChange} />
             )}
           />
           {errors.photos && <span className={styles.errorText}>{errors.photos.message}</span>}
