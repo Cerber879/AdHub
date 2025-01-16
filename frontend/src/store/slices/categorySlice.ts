@@ -1,9 +1,14 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit'
 
+interface SubCategories {
+  id: string
+  level: number
+}
+
 export interface CategoryState {
   currentIdCategory: string
   currentNameCategory: string | null
-  selectIdCategories: string[]
+  selectIdCategories: SubCategories[]
   showCatalogueModal: boolean
 }
 
@@ -28,8 +33,8 @@ const categorySlice = createSlice({
     setShowCatalogueModal: (state, action: PayloadAction<boolean>) => {
       state.showCatalogueModal = action.payload
     },
-    addSelectIdCategory: (state, action: PayloadAction<string>) => {
-      state.selectIdCategories.push(action.payload)
+    addSelectCategories: (state, action: PayloadAction<SubCategories[]>) => {
+      state.selectIdCategories = action.payload
     },
     clearCategories: state => {
       state.currentIdCategory = ''
@@ -41,7 +46,7 @@ const categorySlice = createSlice({
 export const {
   setCurrentCategory,
   setShowCatalogueModal,
-  addSelectIdCategory,
+  addSelectCategories,
   clearCategories,
 } = categorySlice.actions
 export default categorySlice.reducer

@@ -1,0 +1,82 @@
+
+
+.photoGrid {
+  display: grid;
+  max-width: 87%;
+  grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+  gap: 30px;
+  list-style: none;
+  overflow: hidden;
+  padding: 0;
+  margin: 0;
+}
+
+.photoPreview {
+  width: 100%;
+  height: 100%;
+  border-radius: 10px;
+  object-fit: cover;
+}
+
+.photoItem {
+  position: relative;
+  display: flex;
+  width: 180px;
+  height: 160px;
+  border-radius: 10px;
+}
+
+.mainLabel {
+  position: absolute;
+  top: 5px;
+  left: 5px;
+  background-color: #007bff;
+  color: white;
+  padding: 2px 8px;
+  font-size: 12px;
+  border-radius: 4px;
+  z-index: 1;
+}
+
+.photoRemoveButton {
+  background-color: white;
+  position: absolute;
+  top: 5px;
+  right: 5px;
+  padding: 5px 8px;
+  border-radius: 50%;
+  cursor: pointer;
+}
+
+.photoRemoveIcon {
+  width: 9px;
+  height: 9px;
+}
+
+.addPhotoItem {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #e9e9e9;
+  border: 1px dashed #ccc;
+  cursor: pointer;
+}
+
+.addPhotoLabel {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  width: 180px;
+  height: 160px;
+}
+
+.addPhotoInput {
+  display: none;
+}
+
+.addPhotoText {
+  font-size: 36px;
+  color: #666;
+}

@@ -4,6 +4,7 @@ import { AnnouncementCharacteristicResolver } from './announcement-characteristi
 import { AnnouncementCharacteristicService } from './announcement-characteristic.service'
 
 @Module({
+  exports: [AnnouncementCharacteristicService],
   providers: [
     AnnouncementCharacteristicResolver,
     AnnouncementCharacteristicService

@@ -1,3 +1,3 @@
-mutation AddPhotoToAnnouncement($data: CreatePhotoInput!) {
-  addPhotoToAnnouncement(data: $data)
+mutation AddPhotoToAnnouncement($announcementID: String!, $files: [Upload!]!) {
+  addPhotoToAnnouncement(announcementID: $announcementID, files: $files)
 }

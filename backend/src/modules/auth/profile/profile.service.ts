@@ -18,8 +18,6 @@ export class ProfileService {
 		private readonly cloudinaryService: CloudinaryService
 	) {}
 
-
-
   public async changeAvatar(user: User, file: Upload) {
     try {
       if (user.avatar) {

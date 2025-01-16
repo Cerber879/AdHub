@@ -12,7 +12,6 @@ import { SocialLinkInput, SocialLinkOrderInput } from './inputs/social-link.inpu
 import { SocialLinkModel } from './models/social-link.model'
 import { UserInfoResponse } from './responses/user-info.response'
 import { FileValidationPipe } from '@/src/shared/pipes/file-validation.pipe'
-import { UploadedFile } from '@/src/shared/types/upload-file'
 
 @Resolver('Profile')
 export class ProfileResolver {

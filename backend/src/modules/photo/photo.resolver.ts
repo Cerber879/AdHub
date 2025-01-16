@@ -1,17 +1,26 @@
 import { Args, Mutation, Query, Resolver } from '@nestjs/graphql'
 
-import { CreatePhotoInput } from './inputs/create-photo.input'
-import { UpdatePhotoInput } from './inputs/update-photo.input'
-import { PhotoModel } from './models/photo.model'
+import * as GraphQLUpload from 'graphql-upload/GraphQLUpload.js'
+import * as Upload from 'graphql-upload/Upload.js'
+
 import { PhotoService } from './photo.service'
+import { FileValidationPipe } from '@/src/shared/pipes/file-validation.pipe'
+import { CloudinaryService } from '../libs/storage/cloudinary.service'
 
 @Resolver('Photo')
 export class PhotoResolver {
-  constructor(private readonly photoService: PhotoService) {}
+  constructor(
+    private readonly photoService: PhotoService,
+    private readonly cloudinaryService: CloudinaryService
+  ) {}
 
   @Mutation(() => Boolean, { name: 'addPhotoToAnnouncement' })
-  async addPhotoToAnnouncement(@Args('data') input: CreatePhotoInput) {
-    return this.photoService.create(input)
+  async addPhotoToAnnouncement(
+    @Args('announcementID') announcementID: string,
+    @Args('files', { type: () => [GraphQLUpload] }, FileValidationPipe)
+    files: Upload[]
+  ) {
+    return this.photoService.addPhotoToAnnouncement(announcementID, files)
   }
 
   @Query(() => [String], { name: 'getPhotosByAnnouncementId' })
@@ -26,22 +35,20 @@ export class PhotoResolver {
 
   @Mutation(() => Boolean)
   async updatePhotos(
+    @Args('announcementID') announcementID: string,
     @Args('deletePhotoIds', { type: () => [String] })
     deletePhotoIds: string[],
-    @Args('newPhotos', { type: () => [CreatePhotoInput] })
-    newPhotos: CreatePhotoInput[]
+    @Args('newPhotos', { type: () => [GraphQLUpload] })
+    newPhotos: Upload[],
   ) {
     if (deletePhotoIds && deletePhotoIds.length > 0) {
       for (const photoId of deletePhotoIds) {
         await this.deletePhoto(photoId)
+			  await this.cloudinaryService.remove(photoId);
       }
     }
 
-    if (newPhotos && newPhotos.length > 0) {
-      for (const photo of newPhotos) {
-        await this.addPhotoToAnnouncement(photo)
-      }
-    }
+    await this.photoService.addPhotoToAnnouncement(announcementID, newPhotos)
 
     return true
   }

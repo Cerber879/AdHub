@@ -1,12 +1,25 @@
-import React from 'react';
-import CreateAdvertisement from '../../components/Advertisement/CreateAdvertisement/CreateAdvertisement';
+import { useState } from "react";
 
-const CreateAdvertisementPage: React.FC = () => {
+import CategorySelection from "../../components/Advertisement/CreateAdvertisement/CategorySelection/CategorySelection";
+import CreateAdForm from "../../components/Advertisement/CreateAdvertisement/CreateAdForm/CreateAdForm";
+
+import styles from "./advertisment.module.css";
+
+const AdCreationPage = () => {
+  const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
+
   return (
-    <div>
-      <CreateAdvertisement />
+    <div className={styles.adCreationPage}>
+      {!selectedCategory ? (
+        <CategorySelection onCategorySelect={setSelectedCategory} />
+      ) : (
+        <CreateAdForm
+          selectedCategory={selectedCategory}
+          onBackToCategory={() => setSelectedCategory(null)}
+        />
+      )}
     </div>
   );
 };
 
-export default CreateAdvertisementPage;
+export default AdCreationPage;

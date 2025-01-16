@@ -24,11 +24,6 @@ const Advertisement = () => {
   const { data: categoriesData } = useFindParentCategoriesQuery({ variables: { id: advertisment?.categoryId || '' } });
   const categories = categoriesData?.findParentCategories;
 
-  let categoryIdd = "";
-  if (categories && categories.length > 0) {
-    categoryIdd = categories[1]
-  }
-
   const { data: userData } = useFindUserQuery({ variables: { id: advertisment?.userId || '' } });
   const user = userData?.findUser;
 
@@ -126,14 +121,18 @@ const Advertisement = () => {
   return (
     <div className={styles.container}>
       <div>
-        <ul className={styles.complex_list}>
+        <div className={styles.complex_list}>
           <Link to={ROUTES.HOME} className={styles.link}>Главная</Link>
-          { categories?.slice(0, categories.length - 1).map((category) => (
-            <li key={category} className={styles.complex_list_item}>
-              <Link className={styles.link} to={`/${category}/${categoryIdd}`}>{category}</Link>
-            </li>
+          <img className={styles.arrow_right} src="/images/additem/right_arrow.svg" alt="right" />
+          {categories?.map((category) => (
+            <div key={category.id} className={styles.complex_list_item}>
+              <Link to={`/${category.name}/${category.id}`} className={styles.link}>{category.name}</Link>
+              {category !== categories[categories.length - 1] && (
+                <img className={styles.arrow_right} src="/images/additem/right_arrow.svg" alt="right" />
+              )}
+            </div>
           ))}
-        </ul>
+        </div>
       </div>
 
       <div className={styles.main_block}>

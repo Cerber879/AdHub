@@ -1,0 +1,73 @@
+.formContainer {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.formGroup {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.labelGroup {
+  display: flex;
+  flex-direction: column;
+  margin-left: 20px;
+  gap: 10px;
+}
+
+.labelGroupCheckbox {
+  display: flex;
+  margin-left: 20px;
+  gap: 10px;
+}
+
+.label_title {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.labelText {
+  font-size: 23px;
+  font-weight: 500;
+}
+
+.labelText_description {
+  font-weight: 400;
+  font-size: 15px;
+  color: gray;
+}
+
+.formGroupName {
+  font-size: 20px;
+  font-weight: 500;
+}
+
+.labelCharacteristics {
+  font-size: 18px;
+  font-weight: 500;
+}
+
+.formInput {
+  width: 100%;
+  padding: 10px;
+  font-size: 16px;
+  border: 1px solid #ccc;
+  background-color:#fcf9f9;
+  border-radius: 10px;
+}
+
+.formCheckbox {
+  height: 25px;
+  width: 25px;
+  border: 1px solid #ccc;
+  background-color:#fcf9f9;
+  border-radius: 10px;
+}
+
+.errorText {
+  font-size: 14px;
+  color: red;
+}

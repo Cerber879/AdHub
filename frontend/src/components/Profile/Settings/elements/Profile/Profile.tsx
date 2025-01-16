@@ -6,6 +6,7 @@ import { useChangeProfileAvatarMutation, useChangeProfileInfoMutation, useRemove
 import SocialLinks from './SocialLinks/SocialLinks';
 import { useCurrent } from '../../../../../hooks/useCurrent';
 import { ApolloError } from '@apollo/client';
+import Loader from '../../../../../utils/Loader/Loader';
 
 const Profile = () => {
   const inputRef = useRef<HTMLInputElement>(null);
@@ -93,7 +94,7 @@ const Profile = () => {
   };
 
   return isLoadingProfile ? (
-    <div className={styles.spinner}></div>
+    <Loader />
   ) : (
     <div className={styles.container}>
       <span className={styles.name}>Профиль</span>

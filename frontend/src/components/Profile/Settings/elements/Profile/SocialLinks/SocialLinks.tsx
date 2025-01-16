@@ -10,6 +10,7 @@ import {
 } from '../../../../../../graphql/generated/output';
 import { arrayMove, SortableContext, useSortable, verticalListSortingStrategy } from '@dnd-kit/sortable';
 import { CSS } from '@dnd-kit/utilities';
+import Loader from '../../../../../../utils/Loader/Loader';
 
 type SocialLink = {
   id: string;
@@ -124,7 +125,7 @@ const SocialLinks = () => {
           {links.length === 0 && <span className={styles.no_links}>Ссылок нет</span>}
           <SortableContext items={links} strategy={verticalListSortingStrategy}>
             {socialLinksLoading ? (
-              <div className={styles.spinner}></div>
+              <Loader />
             ) : (
               links.map((link) => (
                 <LinkItem key={link.id} link={link} refetch={refetch} />
