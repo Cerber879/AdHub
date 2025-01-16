@@ -28,7 +28,8 @@ model User {
 
   announcement Announcement[]
   message      Message[]
-  Review       Review[]
+  user         Review[]       @relation("user")
+  reviewer     Review[]       @relation("reviewer")
   Favourites   Favourites[]
 
   Chat_1     Chat[]       @relation("user_1")
@@ -41,9 +42,10 @@ model User {
 model SocialLink {
   id String @id @default(uuid())
 
-  title    String
-  url      String
-  position Int
+  title       String
+  description String
+  url         String
+  position    Int
 
   user   User?   @relation(fields: [userId], references: [id], onDelete: Cascade)
   userId String? @map("user_id")
@@ -165,10 +167,13 @@ model Review {
   content String @db.Text
 
   userId         String
-  announcementId String
+  reviewerId     String?
+  announcementId String?
 
-  user         User         @relation(fields: [userId], references: [id], onDelete: Cascade)
-  announcement Announcement @relation(fields: [announcementId], references: [id], onDelete: Cascade)
+  user     User  @relation("user", fields: [userId], references: [id], onDelete: Cascade)
+  reviewer User? @relation("reviewer", fields: [reviewerId], references: [id], onDelete: SetNull)
+
+  announcement Announcement? @relation(fields: [announcementId], references: [id], onDelete: SetNull)
 
   createdAt DateTime @default(now()) @map("created_at")
   updatedAt DateTime @updatedAt @map("updated_at")

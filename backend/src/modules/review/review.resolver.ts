@@ -11,11 +11,13 @@ import { Authorization } from '@/src/shared/decorators/auth.decorator';
 export class ReviewResolver {
   constructor(private readonly reviewService: ReviewService) {}
 
+  @Authorization() 
   @Mutation(() => Boolean, { name: 'createReview' })
   async createReview(
+    @Authorized() user: User,
     @Args('data') input: CreateReviewInput,
   ) {
-    return this.reviewService.create(input);
+    return this.reviewService.create(user, input);
   }
 
   @Authorization() 

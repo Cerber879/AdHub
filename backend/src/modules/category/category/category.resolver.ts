@@ -42,7 +42,7 @@ export class CategoryResolver {
     }))
   }
 
-  @Query(() => [String], { name: 'findParentCategories' })
+  @Query(() => [CategoryModel], { name: 'findParentCategories' })
   async findParentCategories(@Args('id') id: string) {
     return this.categoryService.findParentCategories(id)
   }

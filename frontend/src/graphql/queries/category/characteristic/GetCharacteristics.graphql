@@ -1,0 +1,13 @@
+query GetCharacteristics($id: String!) {
+  getCharacteristics(categoryId: $id) {
+    group
+    data {
+      categoryId
+      id
+      name
+      group
+      type
+      unitSuffix
+    }
+  }
+}

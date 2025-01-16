@@ -22,6 +22,7 @@ import { MessageModule } from '../modules/message/message.module';
 import { PrismaModule } from './prisma/prisma.module'
 import { RedisModule } from './redis/redis.module'
 import { ReviewModule } from '../modules/review/review.module'
+import { StorageModule } from '../modules/libs/storage/cloudinary.module'
 
 @Module({
   imports: [
@@ -35,8 +36,10 @@ import { ReviewModule } from '../modules/review/review.module'
       useFactory: getGraphQLConfig,
       inject: [ConfigService]
     }),
+    
     PrismaModule,
     RedisModule,
+    StorageModule,
     AccountModule,
     SessionModule,
     ProfileModule,

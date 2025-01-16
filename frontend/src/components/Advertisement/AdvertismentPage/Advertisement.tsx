@@ -24,11 +24,6 @@ const Advertisement = () => {
   const { data: categoriesData } = useFindParentCategoriesQuery({ variables: { id: advertisment?.categoryId || '' } });
   const categories = categoriesData?.findParentCategories;
 
-  let categoryIdd = "";
-  if (categories && categories.length > 0) {
-    categoryIdd = categories[1]
-  }
-
   const { data: userData } = useFindUserQuery({ variables: { id: advertisment?.userId || '' } });
   const user = userData?.findUser;
 
@@ -137,27 +132,50 @@ const Advertisement = () => {
   const ratingRef = useRef<HTMLInputElement>(null);
   const contentRef = useRef<HTMLTextAreaElement>(null);
   const [createReview] = useCreateReviewMutation();
+
+  const [reviewsMas, setReviewsMas] = useState(reviewsData?.getReviewsByAnnouncement || []);
+
+  useEffect(() => {
+    if (reviewsData) {
+      setReviewsMas(reviewsData.getReviewsByAnnouncement || []);
+    }
+  }, [reviewsData]);
+
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
-    event.preventDefault(); // Предотвращаем обновление страницы
+    event.preventDefault();
 
     if (ratingRef.current && contentRef.current && advertisment?.id && user?.id) {
       const rating = ratingRef.current.value;
       const content = contentRef.current.value;
       console.log(advertisment.id, user.id)
       try {
-        // Выполняем мутацию для создания отзыва
-        await createReview({
+        
+        const { data } = await createReview({
           variables: {
             data: {
               rating: parseInt(rating),
               content: content,
-              announcementId: advertisment.id, // Используем ID объявления
+              announcementId: advertisment.id,
               userId: user.id,
             },
           },
         });
-  
-        // Дополнительно можно добавить уведомление об успешной отправке
+        if (data?.createReview) {
+          
+          const newReview = {
+            id: Date.now().toString(),
+            announcementId: advertisment.id,
+            content: content,
+            rating: parseInt(rating),
+            createdAt: new Date().toISOString(),
+            updatedAt: new Date().toISOString(),
+            userId: user.id,
+            
+          };
+          
+          
+        setReviewsMas((prevReviews) => [...prevReviews, newReview]);}
+        
         console.log("Отзыв успешно создан");
       } catch (error) {
         console.error("Ошибка при создании отзыва", error);
@@ -169,29 +187,32 @@ const Advertisement = () => {
 
   const [showAllCharacteristics, setShowAllCharacteristics] = useState(false);
 
-  let charLength = 4;
-
+  let charLength = 2;
   if (announcementCharacteristics && "characteristics" in announcementCharacteristics){
 
-    charLength = showAllCharacteristics ? announcementCharacteristics.characteristics.length : 4;
+    charLength = showAllCharacteristics ? announcementCharacteristics.characteristics.length : 2;
   }
 
   const [showAllReviews, setShowAllReviews] = useState(false);
 
   let visibleReviewsLength = 3;
-  visibleReviewsLength = showAllReviews ? reviews.length : 3;
+  visibleReviewsLength = showAllReviews ? reviewsMas.length : 3;
 
   return (
     <div className={styles.container}>
       <div>
-        <ul className={styles.complex_list}>
+        <div className={styles.complex_list}>
           <Link to={ROUTES.HOME} className={styles.link}>Главная</Link>
-          { categories?.slice(0, categories.length - 1).map((category) => (
-            <li key={category} className={styles.complex_list_item}>
-              <Link className={styles.link} to={`/${category}/${categoryIdd}`}>{category}</Link>
-            </li>
+          <img className={styles.arrow_right} src="/images/additem/right_arrow.svg" alt="right" />
+          {categories?.map((category) => (
+            <div key={category.id} className={styles.complex_list_item}>
+              <Link to={`/${category.name}/${category.id}`} className={styles.link}>{category.name}</Link>
+              {category !== categories[categories.length - 1] && (
+                <img className={styles.arrow_right} src="/images/additem/right_arrow.svg" alt="right" />
+              )}
+            </div>
           ))}
-        </ul>
+        </div>
       </div>
 
       <div className={styles.main_block}>
@@ -286,35 +307,32 @@ const Advertisement = () => {
               </div>
             </dl>
           </div>
-
-          
         </div>
 
         <div className={styles.info_block}>
           <div className={styles.user_block}>
-
-          <div className={styles.header}>
-            <p className={styles.price}>{advertisment?.price} ₽</p>
-            <img onClick={() => handleFavourites} className={styles.heart_icon} src={`${!check ? '/images/Advertisment/heart_black_out.svg' : '/images/Advertisment/heart_black_fill.svg'}`} alt="heart" /> 
-          </div>
-          <Link className={styles.user_info}
-            to={ROUTES.USER + '/' + advertisment?.userId}
-          >
-            <span className={styles.user_name}>{user?.displayName}</span>
-            <img
-              className={styles.avatar}
-              src={user?.avatar != null ? user.avatar : '/images/Profile/user.svg'}
-              alt="User Avatar"
-            />
-          </Link>
-
-          <div className={styles.social_buttons}>
-            <button className={styles.social}>Показать номер</button>
-            <Link to={ROUTES.MESSENGER}>
-              <button className={styles.social}
-              onClick={() => findOrCreateFriend(advertisment?.userId || '', advertisment?.id || '')}>Написать</button>
+            <div className={styles.header}>
+              <p className={styles.price}>{advertisment?.price} ₽</p>
+              <img onClick={() => handleFavourites} className={styles.heart_icon} src={`${!check ? '/images/Advertisment/heart_black_out.svg' : '/images/Advertisment/heart_black_fill.svg'}`} alt="heart" /> 
+            </div>
+            <Link className={styles.user_info}
+              to={ROUTES.USER + '/' + advertisment?.userId}
+            >
+              <span className={styles.user_name}>{user?.displayName}</span>
+              <img
+                className={styles.avatar}
+                src={user?.avatar != null ? user.avatar : '/images/Profile/user.svg'}
+                alt="User Avatar"
+              />
             </Link>
-          </div>
+            <div className={styles.social_buttons}>
+              <button className={styles.social}>Показать номер</button>
+              <Link to={ROUTES.MESSENGER}>
+                <button className={styles.social}
+                  onClick={() => findOrCreateFriend(advertisment?.userId || '', advertisment?.id || '')}>Написать</button>
+                  >Написать</button>
+              </Link>
+            </div>
           </div>
           <form id="reviewForm" className={styles.form} onSubmit={handleSubmit}>
             <label htmlFor="rating" className={styles.form__label}>Рейтинг:</label>
@@ -339,8 +357,7 @@ const Advertisement = () => {
             <button type="submit" className={styles.form__button}>Оставить отзыв</button>
           </form>
           <div>
-
-            {reviews.slice(0, visibleReviewsLength).map((review, index) => (
+            {reviewsMas.slice(0, visibleReviewsLength).map((review, index) => (
               <div key={index} className={styles.review}>
                 <div className={styles.review__header}>
                   <span className={styles.review__username}>Оценка: {review.rating}</span>
@@ -349,7 +366,7 @@ const Advertisement = () => {
                 <p className={styles.review__content}>{review.content}</p>
               </div>
             ))}
-            {reviews.length > 3 && (
+            {reviewsMas.length > 3 && (
               <button
                 className={styles.showMoreButton}
                 onClick={() => setShowAllReviews(!showAllReviews)}

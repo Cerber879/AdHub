@@ -1,0 +1,13 @@
+query GetAnnouncementByUser($id: String!) {
+  getAnnouncementByUser(userId: $id) {
+    id
+    userId
+    categoryId
+    name
+    price
+    placementDate
+    description
+    status
+    condition
+  }
+}

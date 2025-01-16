@@ -1,5 +1,5 @@
 .modal_overlay {
-  position:fixed;
+  position: fixed;
   bottom: 0;
   left: 0;
   width: 100%;
@@ -17,14 +17,13 @@
   width: 90%;
   height: 530px;
   background-color: rgb(255, 252, 252);
-  z-index: 1; 
+  z-index: 1;
   border-radius: 0 0 10px 10px;
-  
+
   border: solid;
   border-top-color: white;
   border-bottom-color: rgb(216, 224, 228);
   border-left-color: rgb(216, 224, 228);
   border-right-color: rgb(216, 224, 228);
   border-width: 1px;
-
 }

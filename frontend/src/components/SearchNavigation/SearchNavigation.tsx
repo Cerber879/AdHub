@@ -24,19 +24,19 @@ const AdvertisementTop: React.FC = () => {
     <div>
       <div className={styles.container}>
 
-      <button
-        onClick={handleClick}
-        className={styles.button_catalogue}>
-        { showCatalogueModal && 
+        <button
+          onClick={handleClick}
+          className={styles.button_catalogue}>
+          { showCatalogueModal && 
           <img className={styles.icon} src="/images/catalogue/cross.svg" alt="cross" />
-        }
-        { !showCatalogueModal && 
+          }
+          { !showCatalogueModal && 
           <img className={styles.icon} src="/images/catalogue/form.svg" alt="form" />
-        }
-        <span>Каталог</span>
-      </button>
-      <SearchBar/>
-      {showCatalogueModal && <CatalogueModal />}
+          }
+          <span>Каталог</span>
+        </button>
+        <SearchBar/>
+        {showCatalogueModal && <CatalogueModal />}
       </div>
       
       

@@ -1,0 +1,10 @@
+query FindUserInfo($id: String!) {
+	findUserInfo(userId: $id) {
+    bio
+    socialLinks {
+      title
+      description
+      url
+    }
+  }
+}

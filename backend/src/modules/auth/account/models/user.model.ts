@@ -1,7 +1,6 @@
 import { Field, Float, ID, ObjectType } from '@nestjs/graphql'
 
 import type { User } from '@/prisma/generated'
-import { GraphQLUpload, Upload } from 'graphql-upload-minimal'
 
 @ObjectType()
 export class UserModel implements User {

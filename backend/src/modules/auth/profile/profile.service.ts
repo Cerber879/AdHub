@@ -1,57 +1,66 @@
-import { BadRequestException, Injectable } from '@nestjs/common'
-import { FileUpload, Upload } from 'graphql-upload-minimal'
+import { BadRequestException, Injectable, Logger } from '@nestjs/common'
 
-import sharp from 'sharp'
+import * as Upload from 'graphql-upload/Upload.js'
 
 import { User } from '@/prisma/generated'
 import { PrismaService } from '@/src/core/prisma/prisma.service'
 
 import { ChangeProfileInfoInput } from './inputs/change-profile-info.input'
 import { SocialLinkInput, SocialLinkOrderInput } from './inputs/social-link.input'
+import { CloudinaryService } from '../../libs/storage/cloudinary.service'
 
 @Injectable()
 export class ProfileService {
-  public constructor(private readonly prismaService: PrismaService) {}
+	private readonly logger = new Logger(ProfileService.name);
 
-	public async changeAvatar(user: User, file: FileUpload) {
+  public constructor(
+		private readonly prismaService: PrismaService,
+		private readonly cloudinaryService: CloudinaryService
+	) {}
+
+  public async changeAvatar(user: User, file: Upload) {
+    try {
+      if (user.avatar) {
+        await this.cloudinaryService.remove(user.avatar);
+      }
+
+      const buffer = await this.readFile(file);
+      let fileName = `avatars/${user.id}.webp`;
+
+      if (file.mimetype === 'image/gif') {
+        fileName = `avatars/${user.id}.gif`;
+      }
+
+      const fileUrl = await this.cloudinaryService.upload(buffer, fileName, file.mimetype);
+
+      await this.prismaService.user.update({
+        where: { id: user.id },
+        data: { avatar: fileUrl },
+      });
+
+      return true;
+    } catch (error) {
+      this.logger.error(`Error changing avatar for user ${user.id}: ${error.message}`);
+      throw new Error('Error changing avatar');
+    }
+  }
+
+	private async readFile(file: any): Promise<Buffer> {
+    const chunks: Buffer[] = [];
+    for await (const chunk of file.createReadStream()) {
+      chunks.push(chunk);
+    }
+    return Buffer.concat(chunks);
+  }
+
+  public async deleteAvatar(user: User): Promise<boolean> {
+
 		if (user.avatar) {
-			// Удаление старого изображения из БД
-			await this.prismaService.user.update({
-				where: { id: user.id },
-				data: { avatar: null }, // Очищаем старое изображение
-			});
+			await this.cloudinaryService.remove(user.avatar);
 		}
 
-		const chunks: Buffer[] = [];
-
-		for await (const chunk of file.createReadStream()) {
-			chunks.push(chunk);
-		}
-
-		const buffer = Buffer.concat(chunks); // Получаем весь файл в виде буфера
-
-		// Преобразование изображения в формат WebP
-		const processedBuffer = await sharp(buffer)
-			.resize(512, 512) // Преобразуем изображение в размер 512x512
-			.webp() // Преобразуем в формат WebP
-			.toBuffer(); // Конвертируем в буфер
-
-		// Преобразуем изображение в строку Base64
-		const avatarBase64 = processedBuffer.toString('base64');
-
-		// Сохраняем изображение в базе данных (например, как строку Base64)
-		await this.prismaService.user.update({
-			where: { id: user.id },
-			data: { avatar: avatarBase64 },
-		});
-
-		return true;
-	}
-
-
-  public async deleteAvatar(userId: string): Promise<boolean> {
     await this.prismaService.user.update({
-      where: { id: userId },
+      where: { id: user.id },
       data: { avatar: null }, 
     });
 
@@ -91,8 +100,34 @@ export class ProfileService {
 		return socialLinks
 	}
 
+	public async findUserInfo(userId: string) {
+		const infoUser = await this.prismaService.user.findUnique({
+			where: {
+				id: userId
+			},
+			select: {
+				bio: true,
+				SocialLink: {
+						select: {
+								title: true,
+								url: true,
+								description: true
+						},
+						orderBy: {
+								position: 'asc',
+						},
+				},
+			}
+		})
+
+		return {
+			bio: infoUser.bio,
+			socialLinks: infoUser.SocialLink || [],
+		}
+	}
+
 	public async createSocialLink(user: User, input: SocialLinkInput) {
-		const { title, url } = input
+		const { title, url, description } = input
 
 		const lastSocialLink = await this.prismaService.socialLink.findFirst({
 			where: {
@@ -108,6 +143,7 @@ export class ProfileService {
 		await this.prismaService.socialLink.create({
 			data: {
 				title,
+				description,
 				url,
 				position: newPosition,
 				user: {
@@ -143,7 +179,7 @@ export class ProfileService {
 	}
 
 	public async updateSocialLink(id: string, input: SocialLinkInput) {
-		const { title, url } = input
+		const { title, url, description } = input
 
 		await this.prismaService.socialLink.update({
 			where: {
@@ -151,6 +187,7 @@ export class ProfileService {
 			},
 			data: {
 				title,
+				description,
 				url
 			}
 		})

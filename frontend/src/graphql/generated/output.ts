@@ -16,21 +16,12 @@ export type Scalars = {
   Int: { input: number; output: number; }
   Float: { input: number; output: number; }
   DateTime: { input: any; output: any; }
+  JSONObject: { input: any; output: any; }
   Upload: { input: any; output: any; }
 };
 
 export type AddFavouriteInput = {
   announcementID: Scalars['String']['input'];
-};
-
-export type AddToAnnouncementInput = {
-  characteristicId: Scalars['String']['input'];
-  value: Scalars['String']['input'];
-};
-
-export type AddToAnnouncementMixedInput = {
-  id: Scalars['String']['input'];
-  input: AddToAnnouncementInput;
 };
 
 export type AnnouncementCharacteristicResponse = {
@@ -104,15 +95,31 @@ export type ChangeProfileInfoInput = {
   displayName: Scalars['String']['input'];
 };
 
-export type CharacteristicGroup = {
-  __typename?: 'CharacteristicGroup';
+export type CharacteristicDataGroup = {
+  __typename?: 'CharacteristicDataGroup';
   data: Array<AnnouncementCharacteristicResponse>;
   group: Scalars['String']['output'];
 };
 
+export type CharacteristicModel = {
+  __typename?: 'CharacteristicModel';
+  categoryId: Scalars['String']['output'];
+  group: Scalars['String']['output'];
+  id: Scalars['ID']['output'];
+  name: Scalars['String']['output'];
+  type: Scalars['String']['output'];
+  unitSuffix?: Maybe<Scalars['String']['output']>;
+};
+
 export type CharacteristicsResponse = {
   __typename?: 'CharacteristicsResponse';
-  characteristics: Array<CharacteristicGroup>;
+  data: Array<CharacteristicModel>;
+  group: Scalars['String']['output'];
+};
+
+export type CharacteristicsValuesResponse = {
+  __typename?: 'CharacteristicsValuesResponse';
+  characteristics: Array<CharacteristicDataGroup>;
 };
 
 export type ChatInfoOutput = {
@@ -127,9 +134,11 @@ export type ChatInfoOutput = {
 
 export type CreateAnnouncementInput = {
   categoryId: Scalars['String']['input'];
+  charactiristics?: InputMaybe<Scalars['JSONObject']['input']>;
   condition: Scalars['String']['input'];
-  description: Scalars['String']['input'];
+  description?: InputMaybe<Scalars['String']['input']>;
   name: Scalars['String']['input'];
+  photos: Array<Scalars['Upload']['input']>;
   price: Scalars['Float']['input'];
   status: Scalars['String']['input'];
 };
@@ -157,11 +166,6 @@ export type CreateMessageInput = {
 export type CreateMessageInputChat = {
   chatId: Scalars['String']['input'];
   content: Scalars['String']['input'];
-};
-
-export type CreatePhotoInput = {
-  announcementID: Scalars['String']['input'];
-  link: Scalars['String']['input'];
 };
 
 export type CreateReviewInput = {
@@ -263,7 +267,8 @@ export type MutationCreatMessageArgs = {
 
 
 export type MutationAddAnnouncementCharacteristicArgs = {
-  data: AddToAnnouncementMixedInput;
+  data: Scalars['JSONObject']['input'];
+  productId: Scalars['String']['input'];
 };
 
 
@@ -273,7 +278,8 @@ export type MutationAddFavouriteArgs = {
 
 
 export type MutationAddPhotoToAnnouncementArgs = {
-  data: CreatePhotoInput;
+  announcementID: Scalars['String']['input'];
+  files: Array<Scalars['Upload']['input']>;
 };
 
 
@@ -293,7 +299,7 @@ export type MutationChangePhoneNumberArgs = {
 
 
 export type MutationChangeProfileAvatarArgs = {
-  file: Scalars['Upload']['input'];
+  avatar: Scalars['Upload']['input'];
 };
 
 
@@ -435,8 +441,9 @@ export type MutationUpdateMessageArgs = {
 
 
 export type MutationUpdatePhotosArgs = {
+  announcementID: Scalars['String']['input'];
   deletePhotoIds: Array<Scalars['String']['input']>;
-  newPhotos: Array<CreatePhotoInput>;
+  newPhotos: Array<Scalars['Upload']['input']>;
 };
 
 
@@ -465,19 +472,22 @@ export type Query = {
   findAnnouncementsByFilters: Array<AnnouncementModel>;
   findCurrentSession: SessionModel;
   findMessage: Array<MessageModel>;
-  findParentCategories: Array<Scalars['String']['output']>;
+  findParentCategories: Array<CategoryModel>;
   findPrewiewSubcategories: Array<SubCutegoryModel>;
   findProfile: UserModel;
   findSessionsByUser: Array<SessionModel>;
   findSocialLinks: Array<SocialLinkModel>;
   findUser: UserModel;
+  findUserInfo: UserInfoResponse;
   getAnnouncementById: AnnouncementModel;
   getAnnouncementByIds: Array<AnnouncementModel>;
   getAnnouncementByName: AnnouncementModel;
   getAnnouncementByProfile: Array<AnnouncementModel>;
-  getAnnouncementCharacteristics: CharacteristicsResponse;
+  getAnnouncementByUser: Array<AnnouncementModel>;
+  getAnnouncementCharacteristics: CharacteristicsValuesResponse;
   getAnnouncementsByCategory: Array<AnnouncementModel>;
   getCategoryById: CategoryModel;
+  getCharacteristics: Array<CharacteristicsResponse>;
   getChats: Array<ChatInfoOutput>;
   getFavouritesByUserId: Array<AnnouncementModel>;
   getMainCategories: Array<CategoryModel>;
@@ -521,6 +531,11 @@ export type QueryFindUserArgs = {
 };
 
 
+export type QueryFindUserInfoArgs = {
+  userId: Scalars['String']['input'];
+};
+
+
 export type QueryGetAnnouncementByIdArgs = {
   id: Scalars['String']['input'];
 };
@@ -536,6 +551,11 @@ export type QueryGetAnnouncementByNameArgs = {
 };
 
 
+export type QueryGetAnnouncementByUserArgs = {
+  userId: Scalars['String']['input'];
+};
+
+
 export type QueryGetAnnouncementCharacteristicsArgs = {
   id: Scalars['String']['input'];
 };
@@ -548,6 +568,11 @@ export type QueryGetAnnouncementsByCategoryArgs = {
 
 export type QueryGetCategoryByIdArgs = {
   id: Scalars['String']['input'];
+};
+
+
+export type QueryGetCharacteristicsArgs = {
+  categoryId: Scalars['String']['input'];
 };
 
 
@@ -577,12 +602,14 @@ export type QueryGetSubcategoriesArgs = {
 
 export type ReviewModel = {
   __typename?: 'ReviewModel';
-  announcement: AnnouncementModel;
+  announcement?: Maybe<AnnouncementModel>;
   announcementId: Scalars['String']['output'];
   content: Scalars['String']['output'];
   createdAt: Scalars['DateTime']['output'];
-  id: Scalars['String']['output'];
+  id: Scalars['ID']['output'];
   rating: Scalars['Float']['output'];
+  reviewer?: Maybe<UserModel>;
+  reviewerId: Scalars['String']['output'];
   updatedAt: Scalars['DateTime']['output'];
   userId: Scalars['String']['output'];
 };
@@ -603,6 +630,7 @@ export type SessionModel = {
 };
 
 export type SocialLinkInput = {
+  description: Scalars['String']['input'];
   title: Scalars['String']['input'];
   url: Scalars['String']['input'];
 };
@@ -610,6 +638,7 @@ export type SocialLinkInput = {
 export type SocialLinkModel = {
   __typename?: 'SocialLinkModel';
   createdAt: Scalars['DateTime']['output'];
+  description: Scalars['String']['output'];
   id: Scalars['ID']['output'];
   position: Scalars['Float']['output'];
   title: Scalars['String']['output'];
@@ -621,6 +650,13 @@ export type SocialLinkModel = {
 export type SocialLinkOrderInput = {
   id: Scalars['String']['input'];
   position: Scalars['Float']['input'];
+};
+
+export type SocialLinksResponse = {
+  __typename?: 'SocialLinksResponse';
+  description: Scalars['String']['output'];
+  title: Scalars['String']['output'];
+  url: Scalars['String']['output'];
 };
 
 export type SubCutegoryModel = {
@@ -680,6 +716,12 @@ export type UpdateCharacteristicMixedInput = {
 export type UpdateReviewInput = {
   content?: InputMaybe<Scalars['String']['input']>;
   rating?: InputMaybe<Scalars['Float']['input']>;
+};
+
+export type UserInfoResponse = {
+  __typename?: 'UserInfoResponse';
+  bio?: Maybe<Scalars['String']['output']>;
+  socialLinks?: Maybe<Array<SocialLinksResponse>>;
 };
 
 export type UserModel = {
@@ -758,13 +800,6 @@ export type LogoutUserMutationVariables = Exact<{ [key: string]: never; }>;
 
 
 export type LogoutUserMutation = { __typename?: 'Mutation', logoutUser: boolean };
-
-export type AddToAnnouncementMutationVariables = Exact<{
-  data: AddToAnnouncementMixedInput;
-}>;
-
-
-export type AddToAnnouncementMutation = { __typename?: 'Mutation', addAnnouncementCharacteristic: boolean };
 
 export type DeleteAnnouncementCharacteristicMutationVariables = Exact<{
   id: Scalars['String']['input'];
@@ -852,7 +887,8 @@ export type RemoveFavouriteMutationVariables = Exact<{
 export type RemoveFavouriteMutation = { __typename?: 'Mutation', removeFavourite: boolean };
 
 export type AddPhotoToAnnouncementMutationVariables = Exact<{
-  data: CreatePhotoInput;
+  announcementID: Scalars['String']['input'];
+  files: Array<Scalars['Upload']['input']> | Scalars['Upload']['input'];
 }>;
 
 
@@ -866,8 +902,9 @@ export type DeletePhotoMutationVariables = Exact<{
 export type DeletePhotoMutation = { __typename?: 'Mutation', deletePhoto: boolean };
 
 export type UpdatePhotosMutationVariables = Exact<{
+  announcementID: Scalars['String']['input'];
   deletePhotoIds: Array<Scalars['String']['input']> | Scalars['String']['input'];
-  newPhotos: Array<CreatePhotoInput> | CreatePhotoInput;
+  newPhotos: Array<Scalars['Upload']['input']> | Scalars['Upload']['input'];
 }>;
 
 
@@ -894,13 +931,6 @@ export type UpdateReviewMutationVariables = Exact<{
 
 
 export type UpdateReviewMutation = { __typename?: 'Mutation', updateReview: boolean };
-
-export type ChangeProfileAvatarMutationVariables = Exact<{
-  file: Scalars['Upload']['input'];
-}>;
-
-
-export type ChangeProfileAvatarMutation = { __typename?: 'Mutation', changeProfileAvatar: boolean };
 
 export type ChangeEmailMutationVariables = Exact<{
   data: ChangeEmailInput;
@@ -929,6 +959,13 @@ export type ChangePhoneNumberMutationVariables = Exact<{
 
 
 export type ChangePhoneNumberMutation = { __typename?: 'Mutation', changePhoneNumber: boolean };
+
+export type ChangeProfileAvatarMutationVariables = Exact<{
+  avatar: Scalars['Upload']['input'];
+}>;
+
+
+export type ChangeProfileAvatarMutation = { __typename?: 'Mutation', changeProfileAvatar: boolean };
 
 export type ClearSessionCokkieMutationVariables = Exact<{ [key: string]: never; }>;
 
@@ -1020,6 +1057,13 @@ export type GetAnnouncementByProfileQueryVariables = Exact<{ [key: string]: neve
 
 export type GetAnnouncementByProfileQuery = { __typename?: 'Query', getAnnouncementByProfile: Array<{ __typename?: 'AnnouncementModel', id: string, userId: string, categoryId: string, name: string, price: number, placementDate: any, description: string, status: AnnouncementStatus, condition: ProductCondition }> };
 
+export type GetAnnouncementByUserQueryVariables = Exact<{
+  id: Scalars['String']['input'];
+}>;
+
+
+export type GetAnnouncementByUserQuery = { __typename?: 'Query', getAnnouncementByUser: Array<{ __typename?: 'AnnouncementModel', id: string, userId: string, categoryId: string, name: string, price: number, placementDate: any, description: string, status: AnnouncementStatus, condition: ProductCondition }> };
+
 export type GetAnnouncementsByCategoryQueryVariables = Exact<{
   id: Scalars['String']['input'];
 }>;
@@ -1032,14 +1076,14 @@ export type GetAnnouncementCharacteristicsQueryVariables = Exact<{
 }>;
 
 
-export type GetAnnouncementCharacteristicsQuery = { __typename?: 'Query', getAnnouncementCharacteristics: { __typename?: 'CharacteristicsResponse', characteristics: Array<{ __typename?: 'CharacteristicGroup', group: string, data: Array<{ __typename?: 'AnnouncementCharacteristicResponse', value: string, characteristic: string, unitSuffix?: string | null, type: string }> }> } };
+export type GetAnnouncementCharacteristicsQuery = { __typename?: 'Query', getAnnouncementCharacteristics: { __typename?: 'CharacteristicsValuesResponse', characteristics: Array<{ __typename?: 'CharacteristicDataGroup', group: string, data: Array<{ __typename?: 'AnnouncementCharacteristicResponse', value: string, characteristic: string, unitSuffix?: string | null, type: string }> }> } };
 
 export type FindParentCategoriesQueryVariables = Exact<{
   id: Scalars['String']['input'];
 }>;
 
 
-export type FindParentCategoriesQuery = { __typename?: 'Query', findParentCategories: Array<string> };
+export type FindParentCategoriesQuery = { __typename?: 'Query', findParentCategories: Array<{ __typename?: 'CategoryModel', id: string, name: string }> };
 
 export type FindPrewiewSubcategoriesQueryVariables = Exact<{
   id: Scalars['String']['input'];
@@ -1066,6 +1110,13 @@ export type GetSubcategoriesQueryVariables = Exact<{
 
 
 export type GetSubcategoriesQuery = { __typename?: 'Query', getSubcategories: Array<{ __typename?: 'CategoryModel', id: string, name: string }> };
+
+export type GetCharacteristicsQueryVariables = Exact<{
+  id: Scalars['String']['input'];
+}>;
+
+
+export type GetCharacteristicsQuery = { __typename?: 'Query', getCharacteristics: Array<{ __typename?: 'CharacteristicsResponse', group: string, data: Array<{ __typename?: 'CharacteristicModel', categoryId: string, id: string, name: string, group: string, type: string, unitSuffix?: string | null }> }> };
 
 export type GetChatsQueryVariables = Exact<{ [key: string]: never; }>;
 
@@ -1094,7 +1145,7 @@ export type GetPhotosByAnnouncementIdQuery = { __typename?: 'Query', getPhotosBy
 export type GetMyReviewsQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type GetMyReviewsQuery = { __typename?: 'Query', getMyReviews: Array<{ __typename?: 'ReviewModel', id: string, rating: number, content: string, createdAt: any, updatedAt: any, announcement: { __typename?: 'AnnouncementModel', name: string, price: number } }> };
+export type GetMyReviewsQuery = { __typename?: 'Query', getMyReviews: Array<{ __typename?: 'ReviewModel', id: string, rating: number, content: string, createdAt: any, updatedAt: any, announcement?: { __typename?: 'AnnouncementModel', name: string, price: number } | null, reviewer?: { __typename?: 'UserModel', displayName: string, avatar?: string | null } | null }> };
 
 export type GetReviewsByAnnouncementQueryVariables = Exact<{
   announcementId: Scalars['String']['input'];
@@ -1108,7 +1159,7 @@ export type GetReviewsByUserQueryVariables = Exact<{
 }>;
 
 
-export type GetReviewsByUserQuery = { __typename?: 'Query', getReviewsByUser: Array<{ __typename?: 'ReviewModel', id: string, rating: number, content: string, createdAt: any, updatedAt: any, announcement: { __typename?: 'AnnouncementModel', name: string, price: number } }> };
+export type GetReviewsByUserQuery = { __typename?: 'Query', getReviewsByUser: Array<{ __typename?: 'ReviewModel', id: string, rating: number, content: string, createdAt: any, updatedAt: any, announcement?: { __typename?: 'AnnouncementModel', name: string, price: number } | null, reviewer?: { __typename?: 'UserModel', displayName: string, avatar?: string | null } | null }> };
 
 export type FindProfileQueryVariables = Exact<{ [key: string]: never; }>;
 
@@ -1123,7 +1174,7 @@ export type FindSessionByUserQuery = { __typename?: 'Query', findSessionsByUser:
 export type FindSocialLinksQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type FindSocialLinksQuery = { __typename?: 'Query', findSocialLinks: Array<{ __typename?: 'SocialLinkModel', id: string, title: string, url: string, position: number }> };
+export type FindSocialLinksQuery = { __typename?: 'Query', findSocialLinks: Array<{ __typename?: 'SocialLinkModel', id: string, title: string, description: string, url: string, position: number }> };
 
 export type FindUserQueryVariables = Exact<{
   id: Scalars['String']['input'];
@@ -1131,6 +1182,13 @@ export type FindUserQueryVariables = Exact<{
 
 
 export type FindUserQuery = { __typename?: 'Query', findUser: { __typename?: 'UserModel', id: string, email?: string | null, phoneNumber?: string | null, typeProfile: string, displayName: string, avatar?: string | null, bio?: string | null, rating?: number | null, createdAt: any } };
+
+export type FindUserInfoQueryVariables = Exact<{
+  id: Scalars['String']['input'];
+}>;
+
+
+export type FindUserInfoQuery = { __typename?: 'Query', findUserInfo: { __typename?: 'UserInfoResponse', bio?: string | null, socialLinks?: Array<{ __typename?: 'SocialLinksResponse', title: string, description: string, url: string }> | null } };
 
 export type FindCurrentSessionQueryVariables = Exact<{ [key: string]: never; }>;
 
@@ -1420,37 +1478,6 @@ export function useLogoutUserMutation(baseOptions?: Apollo.MutationHookOptions<L
 export type LogoutUserMutationHookResult = ReturnType<typeof useLogoutUserMutation>;
 export type LogoutUserMutationResult = Apollo.MutationResult<LogoutUserMutation>;
 export type LogoutUserMutationOptions = Apollo.BaseMutationOptions<LogoutUserMutation, LogoutUserMutationVariables>;
-export const AddToAnnouncementDocument = gql`
-    mutation AddToAnnouncement($data: AddToAnnouncementMixedInput!) {
-  addAnnouncementCharacteristic(data: $data)
-}
-    `;
-export type AddToAnnouncementMutationFn = Apollo.MutationFunction<AddToAnnouncementMutation, AddToAnnouncementMutationVariables>;
-
-/**
- * __useAddToAnnouncementMutation__
- *
- * To run a mutation, you first call `useAddToAnnouncementMutation` within a React component and pass it any options that fit your needs.
- * When your component renders, `useAddToAnnouncementMutation` returns a tuple that includes:
- * - A mutate function that you can call at any time to execute the mutation
- * - An object with fields that represent the current status of the mutation's execution
- *
- * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
- *
- * @example
- * const [addToAnnouncementMutation, { data, loading, error }] = useAddToAnnouncementMutation({
- *   variables: {
- *      data: // value for 'data'
- *   },
- * });
- */
-export function useAddToAnnouncementMutation(baseOptions?: Apollo.MutationHookOptions<AddToAnnouncementMutation, AddToAnnouncementMutationVariables>) {
-        const options = {...defaultOptions, ...baseOptions}
-        return Apollo.useMutation<AddToAnnouncementMutation, AddToAnnouncementMutationVariables>(AddToAnnouncementDocument, options);
-      }
-export type AddToAnnouncementMutationHookResult = ReturnType<typeof useAddToAnnouncementMutation>;
-export type AddToAnnouncementMutationResult = Apollo.MutationResult<AddToAnnouncementMutation>;
-export type AddToAnnouncementMutationOptions = Apollo.BaseMutationOptions<AddToAnnouncementMutation, AddToAnnouncementMutationVariables>;
 export const DeleteAnnouncementCharacteristicDocument = gql`
     mutation DeleteAnnouncementCharacteristic($id: String!) {
   deleteAnnouncementCharacteristic(id: $id)
@@ -1825,8 +1852,8 @@ export type RemoveFavouriteMutationHookResult = ReturnType<typeof useRemoveFavou
 export type RemoveFavouriteMutationResult = Apollo.MutationResult<RemoveFavouriteMutation>;
 export type RemoveFavouriteMutationOptions = Apollo.BaseMutationOptions<RemoveFavouriteMutation, RemoveFavouriteMutationVariables>;
 export const AddPhotoToAnnouncementDocument = gql`
-    mutation AddPhotoToAnnouncement($data: CreatePhotoInput!) {
-  addPhotoToAnnouncement(data: $data)
+    mutation AddPhotoToAnnouncement($announcementID: String!, $files: [Upload!]!) {
+  addPhotoToAnnouncement(announcementID: $announcementID, files: $files)
 }
     `;
 export type AddPhotoToAnnouncementMutationFn = Apollo.MutationFunction<AddPhotoToAnnouncementMutation, AddPhotoToAnnouncementMutationVariables>;
@@ -1844,7 +1871,8 @@ export type AddPhotoToAnnouncementMutationFn = Apollo.MutationFunction<AddPhotoT
  * @example
  * const [addPhotoToAnnouncementMutation, { data, loading, error }] = useAddPhotoToAnnouncementMutation({
  *   variables: {
- *      data: // value for 'data'
+ *      announcementID: // value for 'announcementID'
+ *      files: // value for 'files'
  *   },
  * });
  */
@@ -1887,8 +1915,12 @@ export type DeletePhotoMutationHookResult = ReturnType<typeof useDeletePhotoMuta
 export type DeletePhotoMutationResult = Apollo.MutationResult<DeletePhotoMutation>;
 export type DeletePhotoMutationOptions = Apollo.BaseMutationOptions<DeletePhotoMutation, DeletePhotoMutationVariables>;
 export const UpdatePhotosDocument = gql`
-    mutation updatePhotos($deletePhotoIds: [String!]!, $newPhotos: [CreatePhotoInput!]!) {
-  updatePhotos(deletePhotoIds: $deletePhotoIds, newPhotos: $newPhotos)
+    mutation UpdatePhotos($announcementID: String!, $deletePhotoIds: [String!]!, $newPhotos: [Upload!]!) {
+  updatePhotos(
+    announcementID: $announcementID
+    deletePhotoIds: $deletePhotoIds
+    newPhotos: $newPhotos
+  )
 }
     `;
 export type UpdatePhotosMutationFn = Apollo.MutationFunction<UpdatePhotosMutation, UpdatePhotosMutationVariables>;
@@ -1906,6 +1938,7 @@ export type UpdatePhotosMutationFn = Apollo.MutationFunction<UpdatePhotosMutatio
  * @example
  * const [updatePhotosMutation, { data, loading, error }] = useUpdatePhotosMutation({
  *   variables: {
+ *      announcementID: // value for 'announcementID'
  *      deletePhotoIds: // value for 'deletePhotoIds'
  *      newPhotos: // value for 'newPhotos'
  *   },
@@ -2012,37 +2045,6 @@ export function useUpdateReviewMutation(baseOptions?: Apollo.MutationHookOptions
 export type UpdateReviewMutationHookResult = ReturnType<typeof useUpdateReviewMutation>;
 export type UpdateReviewMutationResult = Apollo.MutationResult<UpdateReviewMutation>;
 export type UpdateReviewMutationOptions = Apollo.BaseMutationOptions<UpdateReviewMutation, UpdateReviewMutationVariables>;
-export const ChangeProfileAvatarDocument = gql`
-    mutation ChangeProfileAvatar($file: Upload!) {
-  changeProfileAvatar(file: $file)
-}
-    `;
-export type ChangeProfileAvatarMutationFn = Apollo.MutationFunction<ChangeProfileAvatarMutation, ChangeProfileAvatarMutationVariables>;
-
-/**
- * __useChangeProfileAvatarMutation__
- *
- * To run a mutation, you first call `useChangeProfileAvatarMutation` within a React component and pass it any options that fit your needs.
- * When your component renders, `useChangeProfileAvatarMutation` returns a tuple that includes:
- * - A mutate function that you can call at any time to execute the mutation
- * - An object with fields that represent the current status of the mutation's execution
- *
- * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
- *
- * @example
- * const [changeProfileAvatarMutation, { data, loading, error }] = useChangeProfileAvatarMutation({
- *   variables: {
- *      file: // value for 'file'
- *   },
- * });
- */
-export function useChangeProfileAvatarMutation(baseOptions?: Apollo.MutationHookOptions<ChangeProfileAvatarMutation, ChangeProfileAvatarMutationVariables>) {
-        const options = {...defaultOptions, ...baseOptions}
-        return Apollo.useMutation<ChangeProfileAvatarMutation, ChangeProfileAvatarMutationVariables>(ChangeProfileAvatarDocument, options);
-      }
-export type ChangeProfileAvatarMutationHookResult = ReturnType<typeof useChangeProfileAvatarMutation>;
-export type ChangeProfileAvatarMutationResult = Apollo.MutationResult<ChangeProfileAvatarMutation>;
-export type ChangeProfileAvatarMutationOptions = Apollo.BaseMutationOptions<ChangeProfileAvatarMutation, ChangeProfileAvatarMutationVariables>;
 export const ChangeEmailDocument = gql`
     mutation ChangeEmail($data: ChangeEmailInput!) {
   changeEmail(data: $data)
@@ -2167,6 +2169,37 @@ export function useChangePhoneNumberMutation(baseOptions?: Apollo.MutationHookOp
 export type ChangePhoneNumberMutationHookResult = ReturnType<typeof useChangePhoneNumberMutation>;
 export type ChangePhoneNumberMutationResult = Apollo.MutationResult<ChangePhoneNumberMutation>;
 export type ChangePhoneNumberMutationOptions = Apollo.BaseMutationOptions<ChangePhoneNumberMutation, ChangePhoneNumberMutationVariables>;
+export const ChangeProfileAvatarDocument = gql`
+    mutation ChangeProfileAvatar($avatar: Upload!) {
+  changeProfileAvatar(avatar: $avatar)
+}
+    `;
+export type ChangeProfileAvatarMutationFn = Apollo.MutationFunction<ChangeProfileAvatarMutation, ChangeProfileAvatarMutationVariables>;
+
+/**
+ * __useChangeProfileAvatarMutation__
+ *
+ * To run a mutation, you first call `useChangeProfileAvatarMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useChangeProfileAvatarMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [changeProfileAvatarMutation, { data, loading, error }] = useChangeProfileAvatarMutation({
+ *   variables: {
+ *      avatar: // value for 'avatar'
+ *   },
+ * });
+ */
+export function useChangeProfileAvatarMutation(baseOptions?: Apollo.MutationHookOptions<ChangeProfileAvatarMutation, ChangeProfileAvatarMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<ChangeProfileAvatarMutation, ChangeProfileAvatarMutationVariables>(ChangeProfileAvatarDocument, options);
+      }
+export type ChangeProfileAvatarMutationHookResult = ReturnType<typeof useChangeProfileAvatarMutation>;
+export type ChangeProfileAvatarMutationResult = Apollo.MutationResult<ChangeProfileAvatarMutation>;
+export type ChangeProfileAvatarMutationOptions = Apollo.BaseMutationOptions<ChangeProfileAvatarMutation, ChangeProfileAvatarMutationVariables>;
 export const ClearSessionCokkieDocument = gql`
     mutation ClearSessionCokkie {
   clearSessionCookie
@@ -2692,6 +2725,54 @@ export type GetAnnouncementByProfileQueryHookResult = ReturnType<typeof useGetAn
 export type GetAnnouncementByProfileLazyQueryHookResult = ReturnType<typeof useGetAnnouncementByProfileLazyQuery>;
 export type GetAnnouncementByProfileSuspenseQueryHookResult = ReturnType<typeof useGetAnnouncementByProfileSuspenseQuery>;
 export type GetAnnouncementByProfileQueryResult = Apollo.QueryResult<GetAnnouncementByProfileQuery, GetAnnouncementByProfileQueryVariables>;
+export const GetAnnouncementByUserDocument = gql`
+    query GetAnnouncementByUser($id: String!) {
+  getAnnouncementByUser(userId: $id) {
+    id
+    userId
+    categoryId
+    name
+    price
+    placementDate
+    description
+    status
+    condition
+  }
+}
+    `;
+
+/**
+ * __useGetAnnouncementByUserQuery__
+ *
+ * To run a query within a React component, call `useGetAnnouncementByUserQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGetAnnouncementByUserQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useGetAnnouncementByUserQuery({
+ *   variables: {
+ *      id: // value for 'id'
+ *   },
+ * });
+ */
+export function useGetAnnouncementByUserQuery(baseOptions: Apollo.QueryHookOptions<GetAnnouncementByUserQuery, GetAnnouncementByUserQueryVariables> & ({ variables: GetAnnouncementByUserQueryVariables; skip?: boolean; } | { skip: boolean; }) ) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<GetAnnouncementByUserQuery, GetAnnouncementByUserQueryVariables>(GetAnnouncementByUserDocument, options);
+      }
+export function useGetAnnouncementByUserLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<GetAnnouncementByUserQuery, GetAnnouncementByUserQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<GetAnnouncementByUserQuery, GetAnnouncementByUserQueryVariables>(GetAnnouncementByUserDocument, options);
+        }
+export function useGetAnnouncementByUserSuspenseQuery(baseOptions?: Apollo.SkipToken | Apollo.SuspenseQueryHookOptions<GetAnnouncementByUserQuery, GetAnnouncementByUserQueryVariables>) {
+          const options = baseOptions === Apollo.skipToken ? baseOptions : {...defaultOptions, ...baseOptions}
+          return Apollo.useSuspenseQuery<GetAnnouncementByUserQuery, GetAnnouncementByUserQueryVariables>(GetAnnouncementByUserDocument, options);
+        }
+export type GetAnnouncementByUserQueryHookResult = ReturnType<typeof useGetAnnouncementByUserQuery>;
+export type GetAnnouncementByUserLazyQueryHookResult = ReturnType<typeof useGetAnnouncementByUserLazyQuery>;
+export type GetAnnouncementByUserSuspenseQueryHookResult = ReturnType<typeof useGetAnnouncementByUserSuspenseQuery>;
+export type GetAnnouncementByUserQueryResult = Apollo.QueryResult<GetAnnouncementByUserQuery, GetAnnouncementByUserQueryVariables>;
 export const GetAnnouncementsByCategoryDocument = gql`
     query GetAnnouncementsByCategory($id: String!) {
   getAnnouncementsByCategory(id: $id) {
@@ -2788,8 +2869,11 @@ export type GetAnnouncementCharacteristicsLazyQueryHookResult = ReturnType<typeo
 export type GetAnnouncementCharacteristicsSuspenseQueryHookResult = ReturnType<typeof useGetAnnouncementCharacteristicsSuspenseQuery>;
 export type GetAnnouncementCharacteristicsQueryResult = Apollo.QueryResult<GetAnnouncementCharacteristicsQuery, GetAnnouncementCharacteristicsQueryVariables>;
 export const FindParentCategoriesDocument = gql`
-    query FindParentCategories($id: String!) {
-  findParentCategories(id: $id)
+    query findParentCategories($id: String!) {
+  findParentCategories(id: $id) {
+    id
+    name
+  }
 }
     `;
 
@@ -2994,6 +3078,54 @@ export type GetSubcategoriesQueryHookResult = ReturnType<typeof useGetSubcategor
 export type GetSubcategoriesLazyQueryHookResult = ReturnType<typeof useGetSubcategoriesLazyQuery>;
 export type GetSubcategoriesSuspenseQueryHookResult = ReturnType<typeof useGetSubcategoriesSuspenseQuery>;
 export type GetSubcategoriesQueryResult = Apollo.QueryResult<GetSubcategoriesQuery, GetSubcategoriesQueryVariables>;
+export const GetCharacteristicsDocument = gql`
+    query GetCharacteristics($id: String!) {
+  getCharacteristics(categoryId: $id) {
+    group
+    data {
+      categoryId
+      id
+      name
+      group
+      type
+      unitSuffix
+    }
+  }
+}
+    `;
+
+/**
+ * __useGetCharacteristicsQuery__
+ *
+ * To run a query within a React component, call `useGetCharacteristicsQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGetCharacteristicsQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useGetCharacteristicsQuery({
+ *   variables: {
+ *      id: // value for 'id'
+ *   },
+ * });
+ */
+export function useGetCharacteristicsQuery(baseOptions: Apollo.QueryHookOptions<GetCharacteristicsQuery, GetCharacteristicsQueryVariables> & ({ variables: GetCharacteristicsQueryVariables; skip?: boolean; } | { skip: boolean; }) ) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<GetCharacteristicsQuery, GetCharacteristicsQueryVariables>(GetCharacteristicsDocument, options);
+      }
+export function useGetCharacteristicsLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<GetCharacteristicsQuery, GetCharacteristicsQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<GetCharacteristicsQuery, GetCharacteristicsQueryVariables>(GetCharacteristicsDocument, options);
+        }
+export function useGetCharacteristicsSuspenseQuery(baseOptions?: Apollo.SkipToken | Apollo.SuspenseQueryHookOptions<GetCharacteristicsQuery, GetCharacteristicsQueryVariables>) {
+          const options = baseOptions === Apollo.skipToken ? baseOptions : {...defaultOptions, ...baseOptions}
+          return Apollo.useSuspenseQuery<GetCharacteristicsQuery, GetCharacteristicsQueryVariables>(GetCharacteristicsDocument, options);
+        }
+export type GetCharacteristicsQueryHookResult = ReturnType<typeof useGetCharacteristicsQuery>;
+export type GetCharacteristicsLazyQueryHookResult = ReturnType<typeof useGetCharacteristicsLazyQuery>;
+export type GetCharacteristicsSuspenseQueryHookResult = ReturnType<typeof useGetCharacteristicsSuspenseQuery>;
+export type GetCharacteristicsQueryResult = Apollo.QueryResult<GetCharacteristicsQuery, GetCharacteristicsQueryVariables>;
 export const GetChatsDocument = gql`
     query GetChats {
   getChats {
@@ -3179,6 +3311,10 @@ export const GetMyReviewsDocument = gql`
       name
       price
     }
+    reviewer {
+      displayName
+      avatar
+    }
     createdAt
     updatedAt
   }
@@ -3271,6 +3407,10 @@ export const GetReviewsByUserDocument = gql`
     announcement {
       name
       price
+    }
+    reviewer {
+      displayName
+      avatar
     }
     createdAt
     updatedAt
@@ -3416,6 +3556,7 @@ export const FindSocialLinksDocument = gql`
   findSocialLinks {
     id
     title
+    description
     url
     position
   }
@@ -3501,6 +3642,51 @@ export type FindUserQueryHookResult = ReturnType<typeof useFindUserQuery>;
 export type FindUserLazyQueryHookResult = ReturnType<typeof useFindUserLazyQuery>;
 export type FindUserSuspenseQueryHookResult = ReturnType<typeof useFindUserSuspenseQuery>;
 export type FindUserQueryResult = Apollo.QueryResult<FindUserQuery, FindUserQueryVariables>;
+export const FindUserInfoDocument = gql`
+    query FindUserInfo($id: String!) {
+  findUserInfo(userId: $id) {
+    bio
+    socialLinks {
+      title
+      description
+      url
+    }
+  }
+}
+    `;
+
+/**
+ * __useFindUserInfoQuery__
+ *
+ * To run a query within a React component, call `useFindUserInfoQuery` and pass it any options that fit your needs.
+ * When your component renders, `useFindUserInfoQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useFindUserInfoQuery({
+ *   variables: {
+ *      id: // value for 'id'
+ *   },
+ * });
+ */
+export function useFindUserInfoQuery(baseOptions: Apollo.QueryHookOptions<FindUserInfoQuery, FindUserInfoQueryVariables> & ({ variables: FindUserInfoQueryVariables; skip?: boolean; } | { skip: boolean; }) ) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<FindUserInfoQuery, FindUserInfoQueryVariables>(FindUserInfoDocument, options);
+      }
+export function useFindUserInfoLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<FindUserInfoQuery, FindUserInfoQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<FindUserInfoQuery, FindUserInfoQueryVariables>(FindUserInfoDocument, options);
+        }
+export function useFindUserInfoSuspenseQuery(baseOptions?: Apollo.SkipToken | Apollo.SuspenseQueryHookOptions<FindUserInfoQuery, FindUserInfoQueryVariables>) {
+          const options = baseOptions === Apollo.skipToken ? baseOptions : {...defaultOptions, ...baseOptions}
+          return Apollo.useSuspenseQuery<FindUserInfoQuery, FindUserInfoQueryVariables>(FindUserInfoDocument, options);
+        }
+export type FindUserInfoQueryHookResult = ReturnType<typeof useFindUserInfoQuery>;
+export type FindUserInfoLazyQueryHookResult = ReturnType<typeof useFindUserInfoLazyQuery>;
+export type FindUserInfoSuspenseQueryHookResult = ReturnType<typeof useFindUserInfoSuspenseQuery>;
+export type FindUserInfoQueryResult = Apollo.QueryResult<FindUserInfoQuery, FindUserInfoQueryVariables>;
 export const FindCurrentSessionDocument = gql`
     query FindCurrentSession {
   findCurrentSession {

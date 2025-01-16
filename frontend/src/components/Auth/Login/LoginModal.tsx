@@ -54,7 +54,7 @@ const LoginModal: React.FC<{ onClose: () => void, onOpenRegister: () => void }> 
       } else {
         setLoginError('');
       }
-    } else if (/[a-zA-Zа-яА-Я]/.test(value)) {
+    } else if (!/[a-zA-Zа-яА-Я]/.test(value)) {
       if (!validatePhoneNumber(value)) {
         setLoginError('Неправильный телефон');
       } else {

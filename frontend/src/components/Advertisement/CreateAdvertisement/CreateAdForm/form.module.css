@@ -1,0 +1,120 @@
+.container {
+  display: flex;
+  gap: 30px;
+  padding: 80px 20px;
+}
+
+.adForm {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  max-width: 700px;
+}
+
+.formHeader {
+  display: grid;
+  padding-bottom: 20px;
+}
+
+.formTitle {
+  font-size: 34px;
+  font-weight: 600;
+}
+
+.backButton {
+  display: flex;
+  position: sticky;
+  top: 50px;
+  padding: 10px 15px;
+  align-items: center;
+  box-shadow: 0 0 8px rgba(0, 0, 0, 0.1);
+  background-color: white;
+  justify-content: center;
+  width: 50px;
+  height: 50px;
+  font-size: 16px;
+  border-radius: 50%;
+  cursor: pointer;
+}
+
+.backButton:hover {
+  background: #ebebeb;
+}
+
+.complex_list {
+  display: flex;
+  gap: 5px;
+  flex-direction: row;
+  align-items: center;
+  padding: 0;
+  margin: 0;
+}
+
+.complex_list_item {
+  display: flex;
+  width: auto;
+  justify-content: center;
+  align-items: center;
+  gap: 5px;
+  justify-content: space-between;
+}
+
+.link {
+  font-size: 15px;
+  color: gray;
+}
+
+.arrow {
+  width: 8px;
+  padding-top: 3px;
+  opacity: 0.7;
+}
+
+.formGroup {
+  display: flex;
+  flex-direction: column;
+}
+
+.labelText {
+  font-size: 23px;
+  margin-bottom: 10px;
+  font-weight: 500;
+}
+
+.formInput,
+.formTextarea,
+.formSelect {
+  width: 100%;
+  padding: 10px;
+  background-color: #fcf9f9;
+  font-size: 16px;
+  border: 1px solid #ccc;
+  border-radius: 10px;
+}
+
+.formTextarea {
+  resize: vertical;
+  min-height: 100px;
+}
+
+.errorText {
+  font-size: 14px;
+  color: red;
+}
+
+.submitButton {
+  margin-top: 20px;
+  width: 100%;
+  padding: 10px;
+  font-size: 18px;
+  background: #007bff;
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.submitButton:hover {
+  background: #0056b3;
+}

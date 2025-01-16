@@ -1,8 +1,10 @@
 import {
   BadRequestException,
   Injectable,
+  Logger,
   NotFoundException
 } from '@nestjs/common'
+import { v4 as uuidv4 } from 'uuid';
 
 import { User } from '@/prisma/generated'
 import { PrismaService } from '@/src/core/prisma/prisma.service'
@@ -11,43 +13,77 @@ import {
   parseAnnouncementStatus
 } from '@/src/shared/utils/parse-types-ad'
 
-import { FavouritesModel } from '../favourites/models/favourite.model'
-
 import { CreateAnnouncementInput } from './inputs/create-announcement.input'
 import { AnnouncementFiltersInput } from './inputs/search-announcement.input'
 import { UpdateAnnouncementInput } from './inputs/update-announcement.input'
-import { AnnouncementModel } from './models/announcement.model'
+import { PhotoService } from '../photo/photo.service'
+import { AnnouncementCharacteristicService } from '../category/announcement-characteristic/announcement-characteristic.service';
 
 @Injectable()
 export class AnnouncementService {
-  constructor(private readonly prismaService: PrismaService) {}
+  constructor(
+    private readonly prismaService: PrismaService,
+    private readonly photoService: PhotoService,
+    private readonly announcementCharacteristicService: AnnouncementCharacteristicService
+  ) {}
+
+  private readonly logger = new Logger(AnnouncementService.name);
 
   async create(input: CreateAnnouncementInput, user: User) {
-    const { categoryId, status, condition, ...rest } = input
-
-    const announcementStatus = parseAnnouncementStatus(status)
-    const announcementCondition = parseAnnouncementCondition(condition)
-
-    await this.prismaService.announcement.create({
-      data: {
-        ...rest,
-        status: announcementStatus,
-        condition: announcementCondition,
-        category: {
-          connect: {
-            id: categoryId
-          }
-        },
-        user: {
-          connect: {
-            id: user.id
+    const { categoryId, status, condition, name, price, description, photos, charactiristics } = input;
+  
+    this.logger.error(`Creating announcement for user ${user.id}: ${JSON.stringify(input)}`);
+  
+    console.log('Create Input:', input);
+  
+    try {
+      const uniqueID = uuidv4();
+      console.log('Generated UUID:', uniqueID);
+  
+      const announcementStatus = parseAnnouncementStatus(status);
+      const announcementCondition = parseAnnouncementCondition(condition);
+  
+      await this.prismaService.announcement.create({
+        data: {
+          id: uniqueID.toString(),
+          name: name,
+          price: price,
+          description: description ? description : '',
+          status: announcementStatus,
+          condition: announcementCondition,
+          category: {
+            connect: {
+              id: categoryId
+            }
+          },
+          user: {
+            connect: {
+              id: user.id
+            }
           }
         }
-      }
-    })
+      });
+  
+      console.log('Announcement created');
+  
+      const resolvedPhotos = await Promise.all(photos.map(async (photo) => {
+        return photo; 
+      }));
 
-    return true
+      await this.photoService.addPhotoToAnnouncement(uniqueID.toString(), resolvedPhotos);
+      console.log('Photos added to announcement');
+  
+      await this.announcementCharacteristicService.addToAnnouncement(uniqueID.toString(), charactiristics);
+      console.log('Characteristics added to announcement');
+  
+      return true;
+    } catch (error) {
+      this.logger.error(`Error creating announcement for user ${user.id}: ${error.message}`);
+      console.error('Error:', error);
+      return false;
+    }
   }
+  
 
   findAllAnnouncements() {
     return this.prismaService.announcement.findMany({})
@@ -142,7 +178,6 @@ export class AnnouncementService {
   }
 
   async findByIds(data: string[]) {
-    // Массив промисов для всех запросов
     const adsPromises = data.map(async id => {
       const announcement = await this.prismaService.announcement.findUnique({
         where: {
@@ -165,6 +200,20 @@ export class AnnouncementService {
     const announcement = await this.prismaService.announcement.findMany({
       where: {
         userId: user.id
+      }
+    })
+
+    if (!announcement) {
+      throw new NotFoundException('Объявление не найдено')
+    }
+
+    return announcement
+  }
+
+  async findByUser(userId: string) {
+    const announcement = await this.prismaService.announcement.findMany({
+      where: {
+        userId: userId
       }
     })
 

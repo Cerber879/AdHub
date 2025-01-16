@@ -1,13 +1,13 @@
 import { Field, ObjectType } from '@nestjs/graphql'
 
 @ObjectType()
-export class CharacteristicsResponse {
-  @Field(() => [CharacteristicGroup])
-  characteristics: CharacteristicGroup[];
+export class CharacteristicsValuesResponse {
+  @Field(() => [CharacteristicDataGroup])
+  characteristics: CharacteristicDataGroup[];
 }
 
 @ObjectType()
-class CharacteristicGroup {
+class CharacteristicDataGroup {
   @Field(() => String)
   group: string
 

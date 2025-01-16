@@ -9,8 +9,8 @@ import { RootState } from '../../../store/store';
 
 const ListCategories = () => {
   const dispatch = useDispatch();
-  const { data } = useGetMainCategoriesQuery();
   
+  const { data } = useGetMainCategoriesQuery();
   const categories = useMemo(() => data?.getMainCategories || [], [data]);
   
   const currentIdCategory = useSelector((state: RootState) => state.category.currentIdCategory);

@@ -1,4 +1,8 @@
 import { Field, Float, InputType } from '@nestjs/graphql'
+
+import * as GraphQLUpload from 'graphql-upload/GraphQLUpload.js'
+import * as Upload from 'graphql-upload/Upload.js'
+import { GraphQLJSONObject } from 'graphql-type-json';
 import {
   IsNotEmpty,
   IsNumber,
@@ -6,6 +10,8 @@ import {
   IsString,
   MaxLength
 } from 'class-validator'
+import { AddToAnnouncementInput } from '../../category/announcement-characteristic/inputs/add-to-announcement.input'
+import { Optional } from '@nestjs/common';
 
 @InputType()
 export class CreateAnnouncementInput {
@@ -20,11 +26,11 @@ export class CreateAnnouncementInput {
   @IsPositive()
   public price: number
 
-  @Field(() => String)
+  @Field(() => String, { nullable: true })
   @IsString()
-  @IsNotEmpty()
-  @MaxLength(500)
-  public description: string
+  @MaxLength(3000)
+  @Optional()
+  public description?: string
 
   @Field(() => String)
   @IsString()
@@ -40,4 +46,11 @@ export class CreateAnnouncementInput {
   @IsString()
   @IsNotEmpty()
   public categoryId: string
+
+  @Field(() => [GraphQLUpload])
+  public photos: Upload[]
+
+  @Field(() => GraphQLJSONObject, { nullable: true })
+  @Optional()
+  public charactiristics?: Record<string, AddToAnnouncementInput>;
 }

@@ -4,6 +4,7 @@ import { PrismaService } from '@/src/core/prisma/prisma.service'
 
 import { CreateCategoryInput } from './inputs/create-category.input'
 import { UpdateCategoryInput } from './inputs/update-category.input'
+import { CategoryModel } from './models/category.model'
 
 @Injectable()
 export class CategoryService {
@@ -56,24 +57,34 @@ export class CategoryService {
     })
   }
 
-  async findParentCategories(id: string): Promise<string[]> {
-    const parentNames: string[] = []
+  async findParentCategories(id: string) {
+    const parents: CategoryModel[] = []
 
     let currentCategory = await this.prismaService.category.findUnique({
       where: { id },
       include: { parent: true }
     })
-    parentNames.push(currentCategory.id, currentCategory.name)
+
+    if (!currentCategory || !currentCategory.id|| !currentCategory.name) {
+      throw new Error('Category or category.id is null or undefined');
+    }
+
+    parents.push(currentCategory)
+
     while (currentCategory?.parent) {
-      parentNames.push(currentCategory.parent.name)
+      parents.push(currentCategory.parent)
 
       currentCategory = await this.prismaService.category.findUnique({
         where: { id: currentCategory.parent.id },
         include: { parent: true }
       })
+
+      if (!currentCategory || !currentCategory.id|| !currentCategory.name) {
+        throw new Error('Category or category.id is null or undefined');
+      }
     }
 
-    return parentNames.reverse()
+    return parents.reverse()
   }
 
   async update(id: string, input: UpdateCategoryInput) {

@@ -150,14 +150,11 @@
   flex-direction: column;
 }
 
-
-
-
 .spinner {
   width: 24px;
   height: 24px;
   border: 4px solid #ccc;
-  border-top: 4px solid #007bff; 
+  border-top: 4px solid #007bff;
   border-radius: 50%;
   animation: spin 1s linear infinite;
   display: inline-block;

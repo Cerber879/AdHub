@@ -1,9 +1,10 @@
 import { Args, Mutation, Query, Resolver } from '@nestjs/graphql'
+import { GraphQLJSONObject } from 'graphql-type-json';
 
 import { AnnouncementCharacteristicService } from './announcement-characteristic.service'
-import { AddToAnnouncementMixedInput } from './inputs/add-to-announcement.input'
+import { AddToAnnouncementInput, AddToAnnouncementMixedInput } from './inputs/add-to-announcement.input'
 import { UpdateAnnouncementCharacteristicMixedInput } from './inputs/update-announcement-characteristic.input'
-import { CharacteristicsResponse } from './responses/announcement.response'
+import { CharacteristicsValuesResponse } from './responses/announcement.response'
 
 @Resolver()
 export class AnnouncementCharacteristicResolver {
@@ -20,20 +21,21 @@ export class AnnouncementCharacteristicResolver {
       data.input
     )
   }
+
   @Mutation(() => Boolean, { name: 'deleteAnnouncementCharacteristic' })
   async deleteAnnouncementCharacteristic(@Args('id') id: string) {
     return this.announcementCharacteristicService.deleteById(id)
   }
+
   @Mutation(() => Boolean, { name: 'addAnnouncementCharacteristic' })
   async addAnnouncementCharacteristic(
-    @Args('data') data: AddToAnnouncementMixedInput
+    @Args('productId') productId: string,
+    @Args('data', { type: () => GraphQLJSONObject }) data: Record<string, AddToAnnouncementInput>
   ) {
-    return this.announcementCharacteristicService.addToAnnouncement(
-      data.id,
-      data.input
-    )
+    return this.announcementCharacteristicService.addToAnnouncement(productId, data)
   }
-  @Query(() => CharacteristicsResponse, {
+
+  @Query(() => CharacteristicsValuesResponse, {
     name: 'getAnnouncementCharacteristics'
   })
   async getAnnouncementCharacteristics(@Args('id') id: string) {

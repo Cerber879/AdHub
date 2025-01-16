@@ -6,16 +6,6 @@ input AddFavouriteInput {
   announcementID: String!
 }
 
-input AddToAnnouncementInput {
-  characteristicId: String!
-  value: String!
-}
-
-input AddToAnnouncementMixedInput {
-  id: String!
-  input: AddToAnnouncementInput!
-}
-
 type AnnouncementCharacteristicResponse {
   characteristic: String!
   type: String!
@@ -84,13 +74,27 @@ input ChangeProfileInfoInput {
   displayName: String!
 }
 
-type CharacteristicGroup {
+type CharacteristicDataGroup {
   data: [AnnouncementCharacteristicResponse!]!
   group: String!
 }
 
+type CharacteristicModel {
+  categoryId: String!
+  group: String!
+  id: ID!
+  name: String!
+  type: String!
+  unitSuffix: String
+}
+
 type CharacteristicsResponse {
-  characteristics: [CharacteristicGroup!]!
+  data: [CharacteristicModel!]!
+  group: String!
+}
+
+type CharacteristicsValuesResponse {
+  characteristics: [CharacteristicDataGroup!]!
 }
 
 type ChatInfoOutput {
@@ -104,9 +108,11 @@ type ChatInfoOutput {
 
 input CreateAnnouncementInput {
   categoryId: String!
+  charactiristics: JSONObject
   condition: String!
-  description: String!
+  description: String
   name: String!
+  photos: [Upload!]!
   price: Float!
   status: String!
 }
@@ -136,11 +142,6 @@ input CreateMessageInputChat {
   content: String!
 }
 
-input CreatePhotoInput {
-  announcementID: String!
-  link: String!
-}
-
 input CreateReviewInput {
   announcementId: String!
   content: String!
@@ -167,6 +168,11 @@ type DeviceModel {
   type: String!
 }
 
+"""
+The `JSONObject` scalar type represents JSON objects as specified by [ECMA-404](http://www.ecma-international.org/publications/files/ECMA-ST/ECMA-404.pdf).
+"""
+scalar JSONObject
+
 type LocationModel {
   city: String!
   country: String!
@@ -191,13 +197,13 @@ type MessageModel {
 
 type Mutation {
   CreatMessage(data: CreateMessageInput!): Boolean!
-  addAnnouncementCharacteristic(data: AddToAnnouncementMixedInput!): Boolean!
+  addAnnouncementCharacteristic(data: JSONObject!, productId: String!): Boolean!
   addFavourite(data: AddFavouriteInput!): Boolean!
-  addPhotoToAnnouncement(data: CreatePhotoInput!): Boolean!
+  addPhotoToAnnouncement(announcementID: String!, files: [Upload!]!): Boolean!
   changeEmail(data: ChangeEmailInput!): Boolean!
   changePassword(data: ChangePasswordInput!): Boolean!
   changePhoneNumber(data: ChangePhoneNumberInput!): Boolean!
-  changeProfileAvatar(file: Upload!): Boolean!
+  changeProfileAvatar(avatar: Upload!): Boolean!
   changeProfileInfo(data: ChangeProfileInfoInput!): Boolean!
   clearSessionCookie: Boolean!
   createAnnouncement(data: CreateAnnouncementInput!): Boolean!
@@ -229,7 +235,7 @@ type Mutation {
   updateCategory(data: UpdateCategoryMixedInput!): Boolean!
   updateCharacteristic(data: UpdateCharacteristicMixedInput!): Boolean!
   updateMessage(content: String!, id: String!): Boolean!
-  updatePhotos(deletePhotoIds: [String!]!, newPhotos: [CreatePhotoInput!]!): Boolean!
+  updatePhotos(announcementID: String!, deletePhotoIds: [String!]!, newPhotos: [Upload!]!): Boolean!
   updateReview(data: UpdateReviewInput!, id: String!): Boolean!
   updateSocialLink(data: SocialLinkInput!, id: String!): Boolean!
 }
@@ -247,19 +253,22 @@ type Query {
   findAnnouncementsByFilters(data: AnnouncementFiltersInput!): [AnnouncementModel!]!
   findCurrentSession: SessionModel!
   findMessage(content: String!, id: String!): [MessageModel!]!
-  findParentCategories(id: String!): [String!]!
+  findParentCategories(id: String!): [CategoryModel!]!
   findPrewiewSubcategories(id: String!): [SubCutegoryModel!]!
   findProfile: UserModel!
   findSessionsByUser: [SessionModel!]!
   findSocialLinks: [SocialLinkModel!]!
   findUser(id: String!): UserModel!
+  findUserInfo(userId: String!): UserInfoResponse!
   getAnnouncementById(id: String!): AnnouncementModel!
   getAnnouncementByIds(ids: [String!]!): [AnnouncementModel!]!
   getAnnouncementByName(name: String!): AnnouncementModel!
   getAnnouncementByProfile: [AnnouncementModel!]!
-  getAnnouncementCharacteristics(id: String!): CharacteristicsResponse!
+  getAnnouncementByUser(userId: String!): [AnnouncementModel!]!
+  getAnnouncementCharacteristics(id: String!): CharacteristicsValuesResponse!
   getAnnouncementsByCategory(id: String!): [AnnouncementModel!]!
   getCategoryById(id: String!): CategoryModel!
+  getCharacteristics(categoryId: String!): [CharacteristicsResponse!]!
   getChats: [ChatInfoOutput!]!
   getFavouritesByUserId: [AnnouncementModel!]!
   getMainCategories: [CategoryModel!]!
@@ -272,12 +281,14 @@ type Query {
 }
 
 type ReviewModel {
-  announcement: AnnouncementModel!
+  announcement: AnnouncementModel
   announcementId: String!
   content: String!
   createdAt: DateTime!
-  id: String!
+  id: ID!
   rating: Float!
+  reviewer: UserModel
+  reviewerId: String!
   updatedAt: DateTime!
   userId: String!
 }
@@ -296,12 +307,14 @@ type SessionModel {
 }
 
 input SocialLinkInput {
+  description: String!
   title: String!
   url: String!
 }
 
 type SocialLinkModel {
   createdAt: DateTime!
+  description: String!
   id: ID!
   position: Float!
   title: String!
@@ -313,6 +326,12 @@ type SocialLinkModel {
 input SocialLinkOrderInput {
   id: String!
   position: Float!
+}
+
+type SocialLinksResponse {
+  description: String!
+  title: String!
+  url: String!
 }
 
 type SubCutegoryModel {
@@ -375,6 +394,11 @@ input UpdateReviewInput {
 
 """The `Upload` scalar type represents a file upload."""
 scalar Upload
+
+type UserInfoResponse {
+  bio: String
+  socialLinks: [SocialLinksResponse!]
+}
 
 type UserModel {
   avatar: String

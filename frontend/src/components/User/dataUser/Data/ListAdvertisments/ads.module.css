@@ -1,0 +1,42 @@
+.container {
+  width: 100%;
+  height: auto;
+}
+
+.bar_block {
+  display: flex;
+  gap: 20px;
+  border-bottom: 1px solid rgb(150, 150, 150, 0.6);
+  margin-bottom: 20px;
+  margin-top: 20px;
+  max-width: 735px;
+}
+
+.bar_button {
+  background-color: white;
+  font-size: 20px;
+  padding: 10px 0px;
+  border-radius: 0;
+}
+
+.activeButton {
+  border-bottom: 3px solid black;
+}
+
+.passiveButton {
+  color: rgb(193, 193, 193);
+}
+
+.passiveButton:hover {
+  color: rgb(132, 132, 132);
+}
+
+.ads {
+  display: grid;
+  align-items: center;
+  justify-content: center;
+  gap: 15px;
+  width: 100%;
+  max-width: 735px;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+}
