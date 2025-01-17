@@ -2,6 +2,7 @@ import React, { useState, useEffect, useRef, useMemo } from 'react';
 import styles from './messenger.module.css';
 import { useFindUserQuery, useGetChatsQuery, useGetMessagesQuery, useSendMessageMutation } from '../../../graphql/generated/output';
 import { useCurrent } from '../../../hooks/useCurrent';
+import { useLocation } from 'react-router-dom';
 
 interface Message {
   senderId: string;
@@ -22,6 +23,8 @@ const CreateMessageComponent: React.FC = () => {
   const [selectedUser, setSelectedUser] = useState<User | null>(null);
   const chatBoxRef = useRef<HTMLDivElement>(null);
   const current = useCurrent();
+  const { state } = useLocation(); // для того чтобы перенаправить на чат не реализовано
+  
   // Получаем список чатов
   const { data: chatsData, refetch: refetchChats } = useGetChatsQuery();
 
@@ -66,7 +69,7 @@ const CreateMessageComponent: React.FC = () => {
               content: inputValue.trim() 
             } }
         });
-        console.log(messagesData);
+        //console.log(messagesData);
         await refetchMessages(); // Перезагрузка сообщений
       } catch (error) {
         console.error('Ошибка отправки сообщения:', error);
@@ -86,6 +89,11 @@ const CreateMessageComponent: React.FC = () => {
     refetchMessages(); // Обновление сообщений для выбранного пользователя
   };
 
+
+  useEffect(() => {
+    handleUserClick(state);
+  }, [state, useLocation]);
+
   useEffect(() => {
     if (chatBoxRef.current) {
       chatBoxRef.current.scrollTop = chatBoxRef.current.scrollHeight;
@@ -101,7 +109,7 @@ const CreateMessageComponent: React.FC = () => {
         <div className={styles.list_users}>
           {chatsData?.getChats?.map((chat) => {
             const userName = chat.user_1?.displayName === current.user?.displayName ? chat.user_2 : chat.user_1;
-            console.log(chat.user_1?.displayName, " ", chat.user_2?.displayName);
+            //console.log(chat.user_1?.displayName, " ", chat.user_2?.displayName);
             return (
               <div
                 key={chat.id}

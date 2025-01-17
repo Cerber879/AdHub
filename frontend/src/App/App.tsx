@@ -36,7 +36,7 @@ const App: React.FC = () => {
               <Route path={ROUTES.MESSENGER} element={<Chat />} />
               <Route path={ROUTES.MESSENGER + 'messengers' + '/:friendId' } element={<Chat />} />
               <Route path={ROUTES.SETTINGS} element={<Settings />} />
-              <Route path={'/:category/:categoryId'} element={<Catalogue />} />
+              <Route path={'/category/:categoryId'} element={<Catalogue />} />
               <Route path={ROUTES.ADDITEM} element={<CreateAdvertisementPage />} />
               <Route path={ROUTES.ABOUT} element={<AboutUs />} />
               <Route path={ROUTES.PROFILE + '/:userId'} element={<Profile />} /> 

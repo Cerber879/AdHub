@@ -78,11 +78,13 @@ const Advertisement = () => {
   
   const findOrCreateFriend = async (userId: string, advertismentId: string) => {
     try {
+      console.log(" ты долюаеб")
+
       if (!chatsData?.getChats) {
         console.error("Не удалось получить чаты");
         return;
       }
-  
+      console.log("wdefgryh")
       // Проверяем, существует ли чат с этим пользователем
       const existingChat = chatsData.getChats.find(
         (chat) => chat.user_1.displayName === userId || chat.user_2.displayName === userId
@@ -91,7 +93,8 @@ const Advertisement = () => {
       // Если чат найден, перенаправляем в него
       if (existingChat) {
         console.log("Чат найден", existingChat);
-        navigate(`${ROUTES.MESSENGER}/${existingChat.id}`); // Перенаправление в чат
+        const params = {id : existingChat.id, name:  existingChat.user_1.displayName};
+        navigate(`${ROUTES.MESSENGER}/${userId}`); 
       } else {
         // Если чат не найден, создаем новый
         const response = await createChat({
@@ -327,11 +330,12 @@ const Advertisement = () => {
             </Link>
             <div className={styles.social_buttons}>
               <button className={styles.social}>Показать номер</button>
-              <Link to={ROUTES.MESSENGER}>
-                <button className={styles.social}
-                  onClick={() => findOrCreateFriend(advertisment?.userId || '', advertisment?.id || '')}>Написать</button>
-                  >Написать</button>
-              </Link>
+                <button 
+                className={styles.social}
+                  onClick={() => findOrCreateFriend(advertisment?.userId || '', advertisment?.id || '')}
+                  >
+                    Написать
+                </button>
             </div>
           </div>
           <form id="reviewForm" className={styles.form} onSubmit={handleSubmit}>
