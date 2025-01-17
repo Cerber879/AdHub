@@ -1,1116 +1,1186 @@
-import { AnnouncementStatus, ProductCondition } from "../../../../prisma/generated"
+import {
+  AnnouncementStatus,
+  ProductCondition
+} from '../../../../prisma/generated'
 
 export const ANNOUNCEMENTS = [
   {
-    "id": "uuid1",
-    "name": "Смартфон Samsung Galaxy S23",
-    "price": 999.99,
-    "description": "Новый флагманский смартфон с отличной камерой и процессором.",
-    "placementDate": "2025-01-12T12:00:00Z",
-    "status": AnnouncementStatus.ACTIVE,
-    "condition": ProductCondition.NEW,
-    "userId": "uuid3",
-    "categoryId": "uuid3", // Мобильные телефоны
+    id: 'uuid1',
+    name: 'Смартфон Samsung Galaxy S23',
+    price: 999.99,
+    description: 'Новый флагманский смартфон с отличной камерой и процессором.',
+    placementDate: '2025-01-12T12:00:00Z',
+    status: AnnouncementStatus.ACTIVE,
+    condition: ProductCondition.NEW,
+    userId: 'uuid3',
+    categoryId: 'uuid3' // Мобильные телефоны
   },
   {
-    "id": "uuid2",
-    "name": "LG OLED TV 55 дюймов",
-    "price": 2599.99,
-    "description": "Высококачественный OLED телевизор с идеальной цветопередачей.",
-    "placementDate": "2025-01-11T12:00:00Z",
-    "status": AnnouncementStatus.ACTIVE,
-    "condition": ProductCondition.NEW,
-    "userId": "uuid12",
-    "categoryId": "uuid12", // Телевизоры и проекторы
+    id: 'uuid2',
+    name: 'LG OLED TV 55 дюймов',
+    price: 2599.99,
+    description:
+      'Высококачественный OLED телевизор с идеальной цветопередачей.',
+    placementDate: '2025-01-11T12:00:00Z',
+    status: AnnouncementStatus.ACTIVE,
+    condition: ProductCondition.NEW,
+    userId: 'uuid12',
+    categoryId: 'uuid12' // Телевизоры и проекторы
   },
   {
-    "id": "uuid3",
-    "name": "Холодильник Samsung RB34J5031SA",
-    "price": 799.99,
-    "description": "Просторный холодильник с несколькими камерами и функцией No Frost.",
-    "placementDate": "2025-01-10T12:00:00Z",
-    "status": AnnouncementStatus.ACTIVE,
-    "condition": ProductCondition.NEW,
-    "userId": "uuid18",
-    "categoryId": "uuid18", // Холодильники
+    id: 'uuid3',
+    name: 'Холодильник Samsung RB34J5031SA',
+    price: 799.99,
+    description:
+      'Просторный холодильник с несколькими камерами и функцией No Frost.',
+    placementDate: '2025-01-10T12:00:00Z',
+    status: AnnouncementStatus.ACTIVE,
+    condition: ProductCondition.NEW,
+    userId: 'uuid18',
+    categoryId: 'uuid18' // Холодильники
   },
   {
-    "id": "uuid4",
-    "name": "Смарт-часы Apple Watch Series 9",
-    "price": 499.99,
-    "description": "Умные часы с мониторингом здоровья, тренировок и GPS.",
-    "placementDate": "2025-01-09T12:00:00Z",
-    "status": AnnouncementStatus.ACTIVE,
-    "condition": ProductCondition.NEW,
-    "userId": "uuid4",
-    "categoryId": "uuid4", // Смарт-часы
+    id: 'uuid4',
+    name: 'Смарт-часы Apple Watch Series 9',
+    price: 499.99,
+    description: 'Умные часы с мониторингом здоровья, тренировок и GPS.',
+    placementDate: '2025-01-09T12:00:00Z',
+    status: AnnouncementStatus.ACTIVE,
+    condition: ProductCondition.NEW,
+    userId: 'uuid4',
+    categoryId: 'uuid4' // Смарт-часы
   },
   {
-    "id": "uuid5",
-    "name": "Рация Baofeng UV-5R",
-    "price": 45.00,
-    "description": "Двухдиапазонная рация с дальностью до 10 км.",
-    "placementDate": "2025-01-08T12:00:00Z",
-    "status": AnnouncementStatus.ACTIVE,
-    "condition": ProductCondition.NEW,
-    "userId": "uuid5",
-    "categoryId": "uuid5", // Рации
+    id: 'uuid5',
+    name: 'Рация Baofeng UV-5R',
+    price: 45.0,
+    description: 'Двухдиапазонная рация с дальностью до 10 км.',
+    placementDate: '2025-01-08T12:00:00Z',
+    status: AnnouncementStatus.ACTIVE,
+    condition: ProductCondition.NEW,
+    userId: 'uuid5',
+    categoryId: 'uuid5' // Рации
   },
   {
-    "id": "uuid6",
-    "name": "Стиральная машина Bosch WAW28590EU",
-    "price": 649.99,
-    "description": "Энергоэффективная стиральная машина с 10 кг загрузки и функцией отложенного старта.",
-    "placementDate": "2025-01-07T12:00:00Z",
-    "status": AnnouncementStatus.ACTIVE,
-    "condition": ProductCondition.NEW,
-    "userId": "uuid19",
-    "categoryId": "uuid19", // Стиральные машины
+    id: 'uuid6',
+    name: 'Стиральная машина Bosch WAW28590EU',
+    price: 649.99,
+    description:
+      'Энергоэффективная стиральная машина с 10 кг загрузки и функцией отложенного старта.',
+    placementDate: '2025-01-07T12:00:00Z',
+    status: AnnouncementStatus.ACTIVE,
+    condition: ProductCondition.NEW,
+    userId: 'uuid19',
+    categoryId: 'uuid19' // Стиральные машины
   },
   {
-    "id": "uuid7",
-    "name": "Кухонный комбайн KitchenAid Artisan",
-    "price": 599.99,
-    "description": "Мощный кухонный комбайн с несколькими насадками для работы с тестом, овощами и мясом.",
-    "placementDate": "2025-01-06T12:00:00Z",
-    "status": AnnouncementStatus.ACTIVE,
-    "condition": ProductCondition.NEW,
-    "userId": "uuid20",
-    "categoryId": "uuid20", // Кухонная техника
+    id: 'uuid7',
+    name: 'Кухонный комбайн KitchenAid Artisan',
+    price: 599.99,
+    description:
+      'Мощный кухонный комбайн с несколькими насадками для работы с тестом, овощами и мясом.',
+    placementDate: '2025-01-06T12:00:00Z',
+    status: AnnouncementStatus.ACTIVE,
+    condition: ProductCondition.NEW,
+    userId: 'uuid20',
+    categoryId: 'uuid20' // Кухонная техника
   },
   {
-    "id": "uuid8",
-    "name": "Кофемашина Delonghi Magnifica S",
-    "price": 359.99,
-    "description": "Автоматическая кофемашина с функцией капучино и регулируемыми параметрами напитков.",
-    "placementDate": "2025-01-05T12:00:00Z",
-    "status": AnnouncementStatus.ACTIVE,
-    "condition": ProductCondition.NEW,
-    "userId": "uuid21",
-    "categoryId": "uuid21", // Кофемашины
+    id: 'uuid8',
+    name: 'Кофемашина Delonghi Magnifica S',
+    price: 359.99,
+    description:
+      'Автоматическая кофемашина с функцией капучино и регулируемыми параметрами напитков.',
+    placementDate: '2025-01-05T12:00:00Z',
+    status: AnnouncementStatus.ACTIVE,
+    condition: ProductCondition.NEW,
+    userId: 'uuid21',
+    categoryId: 'uuid21' // Кофемашины
   },
   {
-    "id": "uuid9",
-    "name": "Пылесос Dyson V11 Absolute",
-    "price": 649.99,
-    "description": "Беспроводной пылесос с мощным всасыванием и долгим временем работы от аккумулятора.",
-    "placementDate": "2025-01-04T12:00:00Z",
-    "status": AnnouncementStatus.ACTIVE,
-    "condition": ProductCondition.NEW,
-    "userId": "uuid23",
-    "categoryId": "uuid23", // Пылесосы
+    id: 'uuid9',
+    name: 'Пылесос Dyson V11 Absolute',
+    price: 649.99,
+    description:
+      'Беспроводной пылесос с мощным всасыванием и долгим временем работы от аккумулятора.',
+    placementDate: '2025-01-04T12:00:00Z',
+    status: AnnouncementStatus.ACTIVE,
+    condition: ProductCondition.NEW,
+    userId: 'uuid23',
+    categoryId: 'uuid23' // Пылесосы
   },
   {
-    "id": "uuid10",
-    "name": "Фен Dyson Supersonic",
-    "price": 399.99,
-    "description": "Профессиональный фен с технологией защиты волос и несколькими насадками.",
-    "placementDate": "2025-01-03T12:00:00Z",
-    "status": AnnouncementStatus.ACTIVE,
-    "condition": ProductCondition.NEW,
-    "userId": "uuid24",
-    "categoryId": "uuid24", // Фены и утюги
+    id: 'uuid10',
+    name: 'Фен Dyson Supersonic',
+    price: 399.99,
+    description:
+      'Профессиональный фен с технологией защиты волос и несколькими насадками.',
+    placementDate: '2025-01-03T12:00:00Z',
+    status: AnnouncementStatus.ACTIVE,
+    condition: ProductCondition.NEW,
+    userId: 'uuid24',
+    categoryId: 'uuid24' // Фены и утюги
   },
   // 90 оставшихся объявлений аналогично
   {
-    "id": "uuid101",
-    "name": "Йога-коврик для занятий Pilates",
-    "price": 29.99,
-    "description": "Удобный и нескользящий коврик для занятий йогой и пилатесом.",
-    "placementDate": "2025-01-01T12:00:00Z",
-    "status": AnnouncementStatus.ACTIVE,
-    "condition": ProductCondition.NEW,
-    "userId": "uuid5",
-    "categoryId": "uuid59", // Йога и пилатес
-  },
-  {
-    "id": "uuid11",
-    "name": "Микроволновка Samsung MS23K3513AW",
-    "price": 129.99,
-    "description": "Компактная микроволновая печь с функцией гриля и 23 литра объема.",
-    "placementDate": "2025-01-02T12:00:00Z",
-    "status": AnnouncementStatus.ACTIVE,
-    "condition": ProductCondition.NEW,
-    "userId": "uuid25",
-    "categoryId": "uuid25", // Микроволновки
-  },
-  {
-    "id": "uuid12",
-    "name": "Диван Ikea FRIHETEN",
-    "price": 499.99,
-    "description": "Удобный уголковый диван с механизмом трансформации для комфортного сна.",
-    "placementDate": "2025-01-01T12:00:00Z",
-    "status": AnnouncementStatus.ACTIVE,
-    "condition": ProductCondition.NEW,
-    "userId": "uuid28",
-    "categoryId": "uuid28", // Кухонная мебель
-  },
-  {
-    "id": "uuid13",
-    "name": "Кресло-кровать Картель",
-    "price": 249.99,
-    "description": "Кресло-кровать с современной обивкой и удобным механизмом раскладки.",
-    "placementDate": "2025-01-12T12:00:00Z",
-    "status": AnnouncementStatus.ACTIVE,
-    "condition": ProductCondition.NEW,
-    "userId": "uuid29",
-    "categoryId": "uuid29", // Гостиные и спальни
-  },
-  {
-    "id": "uuid14",
-    "name": "Покрывало из микрофибры 240x220",
-    "price": 45.00,
-    "description": "Мягкое и приятное на ощупь покрывало из микрофибры с декоративным узором.",
-    "placementDate": "2025-01-11T12:00:00Z",
-    "status": AnnouncementStatus.ACTIVE,
-    "condition": ProductCondition.NEW,
-    "userId": "uuid32",
-    "categoryId": "uuid32", // Постельное белье
-  },
-  {
-    "id": "uuid15",
-    "name": "Шторы для гостиной 3 метра",
-    "price": 99.99,
-    "description": "Элегантные шторы с современным дизайном и возможностью выбора цвета.",
-    "placementDate": "2025-01-10T12:00:00Z",
-    "status": AnnouncementStatus.ACTIVE,
-    "condition": ProductCondition.NEW,
-    "userId": "uuid31",
-    "categoryId": "uuid31", // Шторы и жалюзи
-  },
-  {
-    "id": "uuid16",
-    "name": "Люстра с пультом управления",
-    "price": 149.99,
-    "description": "Красивая люстра с возможностью регулировки яркости и температуры света.",
-    "placementDate": "2025-01-09T12:00:00Z",
-    "status": AnnouncementStatus.ACTIVE,
-    "condition": ProductCondition.NEW,
-    "userId": "uuid33",
-    "categoryId": "uuid33", // Освещение
-  },
-  {
-    "id": "uuid17",
-    "name": "Картина на холсте абстракция",
-    "price": 79.99,
-    "description": "Яркая абстрактная картина для украшения интерьера.",
-    "placementDate": "2025-01-08T12:00:00Z",
-    "status": AnnouncementStatus.ACTIVE,
-    "condition": ProductCondition.NEW,
-    "userId": "uuid3",
-    "categoryId": "uuid36", // Декор для дома
-  },
-  {
-    "id": "uuid18",
-    "name": "Тренажер для пресса Ab Rocket",
-    "price": 69.99,
-    "description": "Тренажер для пресса с удобными подлокотниками и регулировкой интенсивности.",
-    "placementDate": "2025-01-07T12:00:00Z",
-    "status": AnnouncementStatus.ACTIVE,
-    "condition": ProductCondition.NEW,
-    "userId": "uuid3",
-    "categoryId": "uuid53", // Оборудование для фитнеса
-  },
-  {
-    "id": "uuid19",
-    "name": "Кроссовки Adidas Ultraboost 22",
-    "price": 159.99,
-    "description": "Модные и удобные кроссовки для бега с амортизацией Boost.",
-    "placementDate": "2025-01-06T12:00:00Z",
-    "status": AnnouncementStatus.ACTIVE,
-    "condition": ProductCondition.NEW,
-    "userId": "uuid19",
-    "categoryId": "uuid57", // Спортивная обувь
-  },
-  {
-    "id": "uuid20",
-    "name": "Чехол для телефона iPhone 14",
-    "price": 19.99,
-    "description": "Прочный и стильный чехол для защиты вашего смартфона.",
-    "placementDate": "2025-01-05T12:00:00Z",
-    "status": AnnouncementStatus.ACTIVE,
-    "condition": ProductCondition.NEW,
-    "userId": "uuid2",
-    "categoryId": "uuid62", // Автомобильные аксессуары
-  },
-  {
-    "id": "uuid21",
-    "name": "Автомобильный коврик для багажника",
-    "price": 29.99,
-    "description": "Универсальный коврик для защиты багажника от загрязнений.",
-    "placementDate": "2025-01-04T12:00:00Z",
-    "status": AnnouncementStatus.ACTIVE,
-    "condition": ProductCondition.NEW,
-    "userId": "uuid6",
-    "categoryId": "uuid63", // Чехлы для автомобилей
-  },
-  {
-    "id": "uuid22",
-    "name": "Парфюм Dior Sauvage",
-    "price": 89.99,
-    "description": "Элегантный мужской парфюм с нотами бергамота и пачули.",
-    "placementDate": "2025-01-03T12:00:00Z",
-    "status": AnnouncementStatus.ACTIVE,
-    "condition": ProductCondition.NEW,
-    "userId": "uuid7",
-    "categoryId": "uuid73", // Парфюмерия для мужчин
-  },
-  {
-    "id": "uuid23",
-    "name": "Крем для лица L'Oréal Paris Revitalift",
-    "price": 29.99,
-    "description": "Увлажняющий крем с эффектом лифтинга для зрелой кожи.",
-    "placementDate": "2025-01-02T12:00:00Z",
-    "status": AnnouncementStatus.ACTIVE,
-    "condition": ProductCondition.NEW,
-    "userId": "uuid24",
-    "categoryId": "uuid74", // Уход за кожей
-  },
-  {
-    "id": "uuid24",
-    "name": "Шампунь для волос Pantene Pro-V",
-    "price": 9.99,
-    "description": "Шампунь с увлажняющим эффектом для сухих и поврежденных волос.",
-    "placementDate": "2025-01-01T12:00:00Z",
-    "status": AnnouncementStatus.ACTIVE,
-    "condition": ProductCondition.NEW,
-    "userId": "uuid37",
-    "categoryId": "uuid75", // Уход за волосами
-  },
-  {
-    "id": "uuid25",
-    "name": "Декоративная помада Maybelline New York",
-    "price": 12.99,
-    "description": "Интенсивно увлажняющая помада с яркими оттенками.",
-    "placementDate": "2024-12-31T12:00:00Z",
-    "status": AnnouncementStatus.ACTIVE,
-    "condition": ProductCondition.NEW,
-    "userId": "uuid1",
-    "categoryId": "uuid76", // Декоративная косметика
-  },
-  {
-    "id": "uuid26",
-    "name": "Средство для бритья Gillette Fusion",
-    "price": 14.99,
-    "description": "Гель для бритья с охлаждающим эффектом и увлажнением.",
-    "placementDate": "2024-12-30T12:00:00Z",
-    "status": AnnouncementStatus.ACTIVE,
-    "condition": ProductCondition.NEW,
-    "userId": "uuid33",
-    "categoryId": "uuid78", // Средства для мужчин
-  },
-  {
-    "id": "uuid27",
-    "name": "Детская куртка H&M",
-    "price": 39.99,
-    "description": "Теплая куртка для детей с капюшоном и водоотталкивающей обработкой.",
-    "placementDate": "2024-12-29T12:00:00Z",
-    "status": AnnouncementStatus.ACTIVE,
-    "condition": ProductCondition.NEW,
-    "userId": "uuid33",
-    "categoryId": "uuid43", // Детская одежда
-  },
-  {
-    "id": "uuid28",
-    "name": "Сапоги Timberland мужские",
-    "price": 129.99,
-    "description": "Удобные зимние сапоги с водоотталкивающей мембраной и анатомической стелькой.",
-    "placementDate": "2024-12-28T12:00:00Z",
-    "status": AnnouncementStatus.ACTIVE,
-    "condition": ProductCondition.NEW,
-    "userId": "uuid23",
-    "categoryId": "uuid46", // Мужская обувь
-  },
-  {
-    "id": "uuid29",
-    "name": "Сумка Michael Kors",
-    "price": 249.99,
-    "description": "Элегантная женская сумка из натуральной кожи с золотыми элементами.",
-    "placementDate": "2024-12-27T12:00:00Z",
-    "status": AnnouncementStatus.ACTIVE,
-    "condition": ProductCondition.NEW,
-    "userId": "uuid22",
-    "categoryId": "uuid48", // Сумки и рюкзаки
-  }, {
-    "id": "uuid30",
-    "name": "Очки Ray-Ban Aviator",
-    "price": 129.99,
-    "description": "Классические солнечные очки Ray-Ban с золотой оправой и зелеными линзами.",
-    "placementDate": "2024-12-26T12:00:00Z",
-    "status": AnnouncementStatus.ACTIVE,
-    "condition": ProductCondition.NEW,
-    "userId": "uuid21",
-    "categoryId": "uuid49", // Очки и головные уборы
-  },
-  {
-    "id": "uuid31",
-    "name": "Часы Casio G-Shock",
-    "price": 79.99,
-    "description": "Ударопрочные спортивные часы с функцией подсветки и водозащитой.",
-    "placementDate": "2024-12-25T12:00:00Z",
-    "status": AnnouncementStatus.ACTIVE,
-    "condition": ProductCondition.NEW,
-    "userId": "uuid16",
-    "categoryId": "uuid50", // Часы
-  },
-  {
-    "id": "uuid32",
-    "name": "Кольцо Swarovski",
-    "price": 89.99,
-    "description": "Элегантное кольцо с кристаллами Swarovski в серебряной оправе.",
-    "placementDate": "2024-12-24T12:00:00Z",
-    "status": AnnouncementStatus.ACTIVE,
-    "condition": ProductCondition.NEW,
-    "userId": "uuid1",
-    "categoryId": "uuid51", // Украшения
-  },
-  {
-    "id": "uuid33",
-    "name": "Тренажер для ног Body Solid",
-    "price": 179.99,
-    "description": "Профессиональный тренажер для ног, идеально подходит для домашнего использования.",
-    "placementDate": "2024-12-23T12:00:00Z",
-    "status": AnnouncementStatus.ACTIVE,
-    "condition": ProductCondition.NEW,
-    "userId": "uuid37",
-    "categoryId": "uuid54", // Тренажеры
-  },
-  {
-    "id": "uuid34",
-    "name": "Гантели Hex 10 кг",
-    "price": 49.99,
-    "description": "Набор гантелей с шестигранной формой для удобства хранения и использования.",
-    "placementDate": "2024-12-22T12:00:00Z",
-    "status": AnnouncementStatus.ACTIVE,
-    "condition": ProductCondition.NEW,
-    "userId": "uuid18",
-    "categoryId": "uuid55", // Гантели и гири
-  },
-  {
-    "id": "uuid35",
-    "name": "Рюкзак для спорта Nike",
-    "price": 39.99,
-    "description": "Удобный спортивный рюкзак с несколькими отделениями для одежды и аксессуаров.",
-    "placementDate": "2024-12-21T12:00:00Z",
-    "status": AnnouncementStatus.ACTIVE,
-    "condition": ProductCondition.NEW,
-    "userId": "uuid27",
-    "categoryId": "uuid60", // Спортивные сумки и рюкзаки
-  },
-  {
-    "id": "uuid36",
-    "name": "Йога-мат Adidas",
-    "price": 19.99,
-    "description": "Йога-мат с нескользящей поверхностью для удобства занятий йогой и пилатесом.",
-    "placementDate": "2024-12-20T12:00:00Z",
-    "status": AnnouncementStatus.ACTIVE,
-    "condition": ProductCondition.NEW,
-    "userId": "uuid5",
-    "categoryId": "uuid59", // Йога и пилатес
-  },
-  {
-    "id": "uuid37",
-    "name": "Автоковрики для автомобиля Hyundai",
-    "price": 29.99,
-    "description": "Коврики для автомобилей Hyundai, выполненные из высококачественного материала.",
-    "placementDate": "2024-12-19T12:00:00Z",
-    "status": AnnouncementStatus.ACTIVE,
-    "condition": ProductCondition.NEW,
-    "userId": "uuid4",
-    "categoryId": "uuid64", // Коврики для автомобилей
-  },
-  {
-    "id": "uuid38",
-    "name": "Сумка для путешествий Samsonite",
-    "price": 99.99,
-    "description": "Просторная сумка для путешествий с множеством карманов и отделений.",
-    "placementDate": "2024-12-18T12:00:00Z",
-    "status": AnnouncementStatus.ACTIVE,
-    "condition": ProductCondition.NEW,
-    "userId": "uuid1",
-    "categoryId": "uuid48", // Сумки и рюкзаки
-  },
-  {
-    "id": "uuid39",
-    "name": "Парфюм Chanel No. 5",
-    "price": 179.99,
-    "description": "Легендарный женский парфюм с цветочными нотами и легким восточным аккордом.",
-    "placementDate": "2024-12-17T12:00:00Z",
-    "status": AnnouncementStatus.ACTIVE,
-    "condition": ProductCondition.NEW,
-    "userId": "uuid33",
-    "categoryId": "uuid72", // Парфюмерия для женщин
-  },
-  {
-    "id": "uuid40",
-    "name": "Шампунь для мужчин Head & Shoulders",
-    "price": 7.99,
-    "description": "Шампунь для мужчин с антиперхотным эффектом и свежим ароматом.",
-    "placementDate": "2024-12-16T12:00:00Z",
-    "status": AnnouncementStatus.ACTIVE,
-    "condition": ProductCondition.NEW,
-    "userId": "uuid13",
-    "categoryId": "uuid78", // Средства для мужчин
-  },
-  {
-    "id": "uuid41",
-    "name": "Кофемашина De'Longhi Magnifica",
-    "price": 359.99,
-    "description": "Автоматическая кофемашина с множеством функций для приготовления кофе по вашему вкусу.",
-    "placementDate": "2024-12-15T12:00:00Z",
-    "status": AnnouncementStatus.ACTIVE,
-    "condition": ProductCondition.NEW,
-    "userId": "uuid21",
-    "categoryId": "uuid21", // Кофемашины
-  },
-  {
-    "id": "uuid42",
-    "name": "Смарт-часы Apple Watch Series 8",
-    "price": 399.99,
-    "description": "Смарт-часы с сенсорным экраном и функциями мониторинга здоровья.",
-    "placementDate": "2024-12-14T12:00:00Z",
-    "status": AnnouncementStatus.ACTIVE,
-    "condition": ProductCondition.NEW,
-    "userId": "uuid4",
-    "categoryId": "uuid4", // Смарт-часы
-  },
-  {
-    "id": "uuid43",
-    "name": "Телевизор LG 55UN73006LC",
-    "price": 499.99,
-    "description": "4K телевизор с функцией Smart TV и поддержкой HDR.",
-    "placementDate": "2024-12-13T12:00:00Z",
-    "status": AnnouncementStatus.ACTIVE,
-    "condition": ProductCondition.NEW,
-    "userId": "uuid12",
-    "categoryId": "uuid12", // Телевизоры и проекторы
-  },
-  {
-    "id": "uuid44",
-    "name": "Радиостанция Baofeng BF-888S",
-    "price": 29.99,
-    "description": "Компактная и мощная радиостанция с дальностью до 3 км.",
-    "placementDate": "2024-12-12T12:00:00Z",
-    "status": AnnouncementStatus.ACTIVE,
-    "condition": ProductCondition.NEW,
-    "userId": "uuid5",
-    "categoryId": "uuid5", // Рации
-  },
-  {
-    "id": "uuid45",
-    "name": "Холодильник Bosch KGV36VW31R",
-    "price": 499.99,
-    "description": "Холодильник с морозильной камерой, энергоэффективен и тихий.",
-    "placementDate": "2024-12-11T12:00:00Z",
-    "status": AnnouncementStatus.ACTIVE,
-    "condition": ProductCondition.NEW,
-    "userId": "uuid18",
-    "categoryId": "uuid18", // Холодильники
-  },
-  {
-    "id": "uuid46",
-    "name": "Стиральная машина Samsung WW80J5410CW",
-    "price": 399.99,
-    "description": "Стиральная машина с функцией паровой обработки и энергоэффективностью класса A+++.",
-    "placementDate": "2024-12-10T12:00:00Z",
-    "status": AnnouncementStatus.ACTIVE,
-    "condition": ProductCondition.NEW,
-    "userId": "uuid19",
-    "categoryId": "uuid19", // Стиральные машины
-  },
-  {
-    "id": "uuid47",
-    "name": "Микроволновка LG MS2344DB",
-    "price": 99.99,
-    "description": "Микроволновая печь с грилем и объемом 23 литра.",
-    "placementDate": "2024-12-09T12:00:00Z",
-    "status": AnnouncementStatus.ACTIVE,
-    "condition": ProductCondition.NEW,
-    "userId": "uuid25",
-    "categoryId": "uuid25", // Микроволновки
-  },
-  {
-    "id": "uuid48",
-    "name": "Шторы из льна",
-    "price": 49.99,
-    "description": "Шторы из натурального льна, идеально подходящие для создания уюта в доме.",
-    "placementDate": "2024-12-08T12:00:00Z",
-    "status": AnnouncementStatus.ACTIVE,
-    "condition": ProductCondition.NEW,
-    "userId": "uuid31",
-    "categoryId": "uuid31", // Шторы и жалюзи
-  },
-  {
-    "id": "uuid49",
-    "name": "Светодиодная люстра",
-    "price": 129.99,
-    "description": "Современная светодиодная люстра для гостиной, регулируемая по яркости.",
-    "placementDate": "2024-12-07T12:00:00Z",
-    "status": AnnouncementStatus.ACTIVE,
-    "condition": ProductCondition.NEW,
-    "userId": "uuid33",
-    "categoryId": "uuid33", // Освещение
-  },
-  {
-    "id": "uuid50",
-    "name": "Декор для дома - Картина",
-    "price": 79.99,
-    "description": "Картина в стиле абстракционизм, подойдет для любого интерьера.",
-    "placementDate": "2024-12-06T12:00:00Z",
-    "status": AnnouncementStatus.ACTIVE,
-    "condition": ProductCondition.NEW,
-    "userId": "uuid33",
-    "categoryId": "uuid36", // Декор для дома
-  },
-  {
-    "id": "uuid51",
-    "name": "Ракетка для бадминтона Yonex",
-    "price": 19.99,
-    "description": "Легкая ракетка для бадминтона от бренда Yonex, для любителей спорта.",
-    "placementDate": "2024-12-05T12:00:00Z",
-    "status": AnnouncementStatus.ACTIVE,
-    "condition": ProductCondition.NEW,
-    "userId": "uuid6",
-    "categoryId": "uuid56", // Спортивная одежда
-  },
-  {
-    "id": "uuid52",
-    "name": "Футболка Nike",
-    "price": 29.99,
-    "description": "Комфортная футболка Nike из хлопка для активного отдыха.",
-    "placementDate": "2024-12-04T12:00:00Z",
-    "status": AnnouncementStatus.ACTIVE,
-    "condition": ProductCondition.NEW,
-    "userId": "uuid5",
-    "categoryId": "uuid56", // Спортивная одежда
-  },
-  {
-    "id": "uuid53",
-    "name": "Кроссовки Adidas Ultraboost",
-    "price": 149.99,
-    "description": "Кроссовки Adidas Ultraboost для активных людей, обеспечивающие максимальный комфорт.",
-    "placementDate": "2024-12-03T12:00:00Z",
-    "status": AnnouncementStatus.ACTIVE,
-    "condition": ProductCondition.NEW,
-    "userId": "uuid18",
-    "categoryId": "uuid57", // Спортивная обувь
-  },
-  {
-    "id": "uuid54",
-    "name": "Шлем для велоспорта",
-    "price": 34.99,
-    "description": "Шлем для велосипедистов с вентиляцией и защитой от ударов.",
-    "placementDate": "2024-12-02T12:00:00Z",
-    "status": AnnouncementStatus.ACTIVE,
-    "condition": ProductCondition.NEW,
-    "userId": "uuid5",
-    "categoryId": "uuid58", // Аксессуары для спорта
-  },
-  {
-    "id": "uuid55",
-    "name": "Тренировочный костюм Puma",
-    "price": 59.99,
-    "description": "Спортивный костюм Puma из дышащих материалов, идеально подходит для тренировок.",
-    "placementDate": "2024-12-01T12:00:00Z",
-    "status": AnnouncementStatus.ACTIVE,
-    "condition": ProductCondition.NEW,
-    "userId": "uuid6",
-    "categoryId": "uuid56", // Спортивная одежда
-  },
-  {
-    "id": "uuid56",
-    "name": "Автосигнализация Pandora",
-    "price": 99.99,
-    "description": "Современная автосигнализация с функцией GPS мониторинга и мобильным приложением.",
-    "placementDate": "2024-11-30T12:00:00Z",
-    "status": AnnouncementStatus.ACTIVE,
-    "condition": ProductCondition.NEW,
-    "userId": "uuid6",
-    "categoryId": "uuid62", // Автомобильные аксессуары
-  },
-  {
-    "id": "uuid57",
-    "name": "Чехол для телефона iPhone 14",
-    "price": 9.99,
-    "description": "Стильный чехол для iPhone 14 с защитой от ударов и царапин.",
-    "placementDate": "2024-11-29T12:00:00Z",
-    "status": AnnouncementStatus.ACTIVE,
-    "condition": ProductCondition.NEW,
-    "userId": "uuid6",
-    "categoryId": "uuid63", // Чехлы для автомобилей
-  },
-  {
-    "id": "uuid58",
-    "name": "Коврики в салон для автомобиля Toyota",
-    "price": 39.99,
-    "description": "Коврики с высокой износостойкостью для автомобилей Toyota.",
-    "placementDate": "2024-11-28T12:00:00Z",
-    "status": AnnouncementStatus.ACTIVE,
-    "condition": ProductCondition.NEW,
-    "userId": "uuid4",
-    "categoryId": "uuid64", // Коврики для автомобилей
-  },
-  {
-    "id": "uuid59",
-    "name": "Парфюм Giorgio Armani Acqua di Gio",
-    "price": 129.99,
-    "description": "Парфюм с нотами цитрусовых и морского бриза для элегантных мужчин.",
-    "placementDate": "2024-11-27T12:00:00Z",
-    "status": AnnouncementStatus.ACTIVE,
-    "condition": ProductCondition.NEW,
-    "userId": "uuid3",
-    "categoryId": "uuid73", // Парфюмерия для мужчин
-  },
-  {
-    "id": "uuid60",
-    "name": "Парфюм Lancome Tresor",
-    "price": 159.99,
-    "description": "Классический женский парфюм с фруктово-цветочными нотами.",
-    "placementDate": "2024-11-26T12:00:00Z",
-    "status": AnnouncementStatus.ACTIVE,
-    "condition": ProductCondition.NEW,
-    "userId": "uuid2",
-    "categoryId": "uuid72", // Парфюмерия для женщин
-  },
-  {
-    "id": "uuid61",
-    "name": "Шампунь для волос L'Oreal",
-    "price": 4.99,
-    "description": "Шампунь для укрепления волос с витаминами и питательными компонентами.",
-    "placementDate": "2024-11-25T12:00:00Z",
-    "status": AnnouncementStatus.ACTIVE,
-    "condition": ProductCondition.NEW,
-    "userId": "uuid5",
-    "categoryId": "uuid75", // Уход за волосами
-  },
-  {
-    "id": "uuid62",
-    "name": "Крем для лица Nivea",
-    "price": 6.99,
-    "description": "Увлажняющий крем для лица с витамином E, для сухой и чувствительной кожи.",
-    "placementDate": "2024-11-24T12:00:00Z",
-    "status": AnnouncementStatus.ACTIVE,
-    "condition": ProductCondition.NEW,
-    "userId": "uuid24",
-    "categoryId": "uuid74", // Уход за кожей
-  },
-  {
-    "id": "uuid63",
-    "name": "Средства для бритья Gillette",
-    "price": 14.99,
-    "description": "Средства для бритья Gillette с экстрактом алоэ для идеального комфорта.",
-    "placementDate": "2024-11-23T12:00:00Z",
-    "status": AnnouncementStatus.ACTIVE,
-    "condition": ProductCondition.NEW,
-    "userId": "uuid7",
-    "categoryId": "uuid78", // Средства для мужчин
-  },
-  {
-    "id": "uuid64",
-    "name": "Кофемолка Bosch",
-    "price": 29.99,
-    "description": "Кофемолка с регулируемой степенью помола и мощным мотором.",
-    "placementDate": "2024-11-22T12:00:00Z",
-    "status": AnnouncementStatus.ACTIVE,
-    "condition": ProductCondition.NEW,
-    "userId": "uuid21",
-    "categoryId": "uuid21", // Кофемашины
-  },
-  {
-    "id": "uuid65",
-    "name": "Парковочная система для автомобиля",
-    "price": 149.99,
-    "description": "Современная парковочная система с датчиками для безопасности парковки.",
-    "placementDate": "2024-11-21T12:00:00Z",
-    "status": AnnouncementStatus.ACTIVE,
-    "condition": ProductCondition.NEW,
-    "userId": "uuid6",
-    "categoryId": "uuid61", // Автотовары
-  },
-  {
-    "id": "uuid66",
-    "name": "Микроволновая печь Samsung",
-    "price": 79.99,
-    "description": "Микроволновка с функцией гриля и множеством автоматических программ.",
-    "placementDate": "2024-11-20T12:00:00Z",
-    "status": AnnouncementStatus.ACTIVE,
-    "condition": ProductCondition.NEW,
-    "userId": "uuid25",
-    "categoryId": "uuid25", // Микроволновки
-  },
-  {
-    "id": "uuid67",
-    "name": "Тостер Philips",
-    "price": 29.99,
-    "description": "Тостер с регулируемой степенью поджаривания и функцией размораживания.",
-    "placementDate": "2024-11-19T12:00:00Z",
-    "status": AnnouncementStatus.ACTIVE,
-    "condition": ProductCondition.NEW,
-    "userId": "uuid20",
-    "categoryId": "uuid20", // Кухонная техника
-  },
-  {
-    "id": "uuid68",
-    "name": "Стиральная машина LG",
-    "price": 499.99,
-    "description": "Стиральная машина с функцией парового ухода и защита от протечек.",
-    "placementDate": "2024-11-18T12:00:00Z",
-    "status": AnnouncementStatus.ACTIVE,
-    "condition": ProductCondition.NEW,
-    "userId": "uuid19",
-    "categoryId": "uuid19", // Стиральные машины
-  },
-  {
-    "id": "uuid69",
-    "name": "Гриль Panasonic",
-    "price": 129.99,
-    "description": "Гриль с антипригарным покрытием и возможностью регулировки температуры.",
-    "placementDate": "2024-11-17T12:00:00Z",
-    "status": AnnouncementStatus.ACTIVE,
-    "condition": ProductCondition.NEW,
-    "userId": "uuid20",
-    "categoryId": "uuid20", // Кухонная техника
-  },
-  {
-    "id": "uuid70",
-    "name": "Духовой шкаф Electrolux",
-    "price": 349.99,
-    "description": "Современный духовой шкаф с конвекцией и функцией самоочистки.",
-    "placementDate": "2024-11-16T12:00:00Z",
-    "status": AnnouncementStatus.ACTIVE,
-    "condition": ProductCondition.NEW,
-    "userId": "uuid20",
-    "categoryId": "uuid20", // Кухонная техника
-  },
-  {
-    "id": "uuid71",
-    "name": "Фен Philips",
-    "price": 39.99,
-    "description": "Фен с функцией ионизации для быстрой укладки волос.",
-    "placementDate": "2024-11-15T12:00:00Z",
-    "status": AnnouncementStatus.ACTIVE,
-    "condition": ProductCondition.NEW,
-    "userId": "uuid24",
-    "categoryId": "uuid24", // Фены и утюги
-  },
-  {
-    "id": "uuid72",
-    "name": "Часы Casio",
-    "price": 69.99,
-    "description": "Наручные часы Casio с функцией водоотталкивания и подсветкой.",
-    "placementDate": "2024-11-14T12:00:00Z",
-    "status": AnnouncementStatus.ACTIVE,
-    "condition": ProductCondition.NEW,
-    "userId": "uuid5",
-    "categoryId": "uuid50", // Часы
-  },
-  {
-    "id": "uuid73",
-    "name": "Кухонный нож Zwilling",
-    "price": 49.99,
-    "description": "Острые и долговечные ножи Zwilling с эргономичной ручкой.",
-    "placementDate": "2024-11-13T12:00:00Z",
-    "status": AnnouncementStatus.ACTIVE,
-    "condition": ProductCondition.NEW,
-    "userId": "uuid20",
-    "categoryId": "uuid20", // Кухонная техника
-  },
-  {
-    "id": "uuid74",
-    "name": "Рюкзак Adidas",
-    "price": 39.99,
-    "description": "Стильный рюкзак от Adidas для спорта и повседневного использования.",
-    "placementDate": "2024-11-12T12:00:00Z",
-    "status": AnnouncementStatus.ACTIVE,
-    "condition": ProductCondition.NEW,
-    "userId": "uuid4",
-    "categoryId": "uuid48", // Сумки и рюкзаки
-  },
-  {
-    "id": "uuid75",
-    "name": "Очки Ray-Ban",
-    "price": 119.99,
-    "description": "Очки Ray-Ban с защитой от ультрафиолетовых лучей и стильным дизайном.",
-    "placementDate": "2024-11-11T12:00:00Z",
-    "status": AnnouncementStatus.ACTIVE,
-    "condition": ProductCondition.NEW,
-    "userId": "uuid39",
-    "categoryId": "uuid49", // Очки и головные уборы
-  },
-  {
-    "id": "uuid76",
-    "name": "Утюг Tefal",
-    "price": 59.99,
-    "description": "Паровой утюг с функцией автоотключения и антипригарной подошвой.",
-    "placementDate": "2024-11-10T12:00:00Z",
-    "status": AnnouncementStatus.ACTIVE,
-    "condition": ProductCondition.NEW,
-    "userId": "uuid24",
-    "categoryId": "uuid24", // Фены и утюги
-  },
-  {
-    "id": "uuid77",
-    "name": "Гарнитура Sony",
-    "price": 79.99,
-    "description": "Беспроводная гарнитура Sony с шумоподавлением и длительным временем работы.",
-    "placementDate": "2024-11-09T12:00:00Z",
-    "status": AnnouncementStatus.ACTIVE,
-    "condition": ProductCondition.NEW,
-    "userId": "uuid5",
-    "categoryId": "uuid5", // Рации
-  },
-  {
-    "id": "uuid78",
-    "name": "Рюкзак для ноутбука HP",
-    "price": 49.99,
-    "description": "Прочный и удобный рюкзак для ноутбуков с несколькими карманами.",
-    "placementDate": "2024-11-08T12:00:00Z",
-    "status": AnnouncementStatus.ACTIVE,
-    "condition": ProductCondition.NEW,
-    "userId": "uuid8",
-    "categoryId": "uuid48", // Сумки и рюкзаки
-  },
-  {
-    "id": "uuid79",
-    "name": "Кофемашина DeLonghi",
-    "price": 199.99,
-    "description": "Эспрессо-машина DeLonghi с функцией капучино и настройкой крепости кофе.",
-    "placementDate": "2024-11-07T12:00:00Z",
-    "status": AnnouncementStatus.ACTIVE,
-    "condition": ProductCondition.NEW,
-    "userId": "uuid21",
-    "categoryId": "uuid21", // Кофемашины
-  },
-  {
-    "id": "uuid80",
-    "name": "Миксер Bosch",
-    "price": 39.99,
-    "description": "Миксер с несколькими скоростями и насадками для приготовления теста и взбивания.",
-    "placementDate": "2024-11-06T12:00:00Z",
-    "status": AnnouncementStatus.ACTIVE,
-    "condition": ProductCondition.NEW,
-    "userId": "uuid20",
-    "categoryId": "uuid20", // Кухонная техника
-  },
-  {
-    "id": "uuid81",
-    "name": "Беговая дорожка",
-    "price": 599.99,
-    "description": "Беговая дорожка с множеством программ тренировок и амортизацией.",
-    "placementDate": "2024-11-05T12:00:00Z",
-    "status": AnnouncementStatus.ACTIVE,
-    "condition": ProductCondition.NEW,
-    "userId": "uuid33",
-    "categoryId": "uuid54", // Тренажеры
-  },
-  {
-    "id": "uuid82",
-    "name": "Гантели 10 кг",
-    "price": 39.99,
-    "description": "Набор гантелей для домашних тренировок с регулировкой веса.",
-    "placementDate": "2024-11-04T12:00:00Z",
-    "status": AnnouncementStatus.ACTIVE,
-    "condition": ProductCondition.NEW,
-    "userId": "uuid22",
-    "categoryId": "uuid55", // Гантели и гири
-  },
-  {
-    "id": "uuid83",
-    "name": "Кроссовки Nike",
-    "price": 79.99,
-    "description": "Удобные кроссовки для бега от Nike, с амортизацией и дышащим верхом.",
-    "placementDate": "2024-11-03T12:00:00Z",
-    "status": AnnouncementStatus.ACTIVE,
-    "condition": ProductCondition.NEW,
-    "userId": "uuid28",
-    "categoryId": "uuid57", // Спортивная обувь
-  },
-  {
-    "id": "uuid84",
-    "name": "Спортивная футболка Adidas",
-    "price": 29.99,
-    "description": "Футболка для тренировок из дышащего материала от Adidas.",
-    "placementDate": "2024-11-02T12:00:00Z",
-    "status": AnnouncementStatus.ACTIVE,
-    "condition": ProductCondition.NEW,
-    "userId": "uuid5",
-    "categoryId": "uuid56", // Спортивная одежда
-  },
-  {
-    "id": "uuid85",
-    "name": "Спортивный рюкзак Puma",
-    "price": 49.99,
-    "description": "Прочный и стильный рюкзак для спортзала от Puma.",
-    "placementDate": "2024-11-01T12:00:00Z",
-    "status": AnnouncementStatus.ACTIVE,
-    "condition": ProductCondition.NEW,
-    "userId": "uuid1",
-    "categoryId": "uuid60", // Спортивные сумки и рюкзаки
-  },
-  {
-    "id": "uuid86",
-    "name": "Плавки Speedo",
-    "price": 19.99,
-    "description": "Качественные плавки для плавания от Speedo, комфортные и износостойкие.",
-    "placementDate": "2024-10-31T12:00:00Z",
-    "status": AnnouncementStatus.ACTIVE,
-    "condition": ProductCondition.NEW,
-    "userId": "uuid15",
-    "categoryId": "uuid56", // Спортивная одежда
-  },
-  {
-    "id": "uuid87",
-    "name": "Шлем для велосипедиста",
-    "price": 39.99,
-    "description": "Шлем для велосипедистов с хорошей вентиляцией и прочной защитой.",
-    "placementDate": "2024-10-30T12:00:00Z",
-    "status": AnnouncementStatus.ACTIVE,
-    "condition": ProductCondition.NEW,
-    "userId": "uuid5",
-    "categoryId": "uuid58", // Аксессуары для спорта
-  },
-  {
-    "id": "uuid88",
-    "name": "Коврик для йоги",
-    "price": 14.99,
-    "description": "Удобный коврик для йоги с хорошим сцеплением и амортизацией.",
-    "placementDate": "2024-10-29T12:00:00Z",
-    "status": AnnouncementStatus.ACTIVE,
-    "condition": ProductCondition.NEW,
-    "userId": "uuid15",
-    "categoryId": "uuid59", // Йога и пилатес
-  },
-  {
-    "id": "uuid89",
-    "name": "Шорты для тренировок Under Armour",
-    "price": 24.99,
-    "description": "Легкие и удобные шорты для тренировок от Under Armour.",
-    "placementDate": "2024-10-28T12:00:00Z",
-    "status": AnnouncementStatus.ACTIVE,
-    "condition": ProductCondition.NEW,
-    "userId": "uuid6",
-    "categoryId": "uuid56", // Спортивная одежда
-  },
-  {
-    "id": "uuid90",
-    "name": "Автопылесос Black & Decker",
-    "price": 49.99,
-    "description": "Автомобильный пылесос с мощным всасыванием и удобными насадками.",
-    "placementDate": "2024-10-27T12:00:00Z",
-    "status": AnnouncementStatus.ACTIVE,
-    "condition": ProductCondition.NEW,
-    "userId": "uuid2",
-    "categoryId": "uuid61", // Автотовары
-  },
-  {
-    "id": "uuid91",
-    "name": "Коврики в салон автомобиля",
-    "price": 29.99,
-    "description": "Комплект ковриков для автомобиля с хорошей защитой от грязи и воды.",
-    "placementDate": "2024-10-26T12:00:00Z",
-    "status": AnnouncementStatus.ACTIVE,
-    "condition": ProductCondition.NEW,
-    "userId": "uuid2",
-    "categoryId": "uuid64", // Коврики для автомобилей
-  },
-  {
-    "id": "uuid92",
-    "name": "Автомобильные чехлы на сиденья",
-    "price": 39.99,
-    "description": "Чехлы на сиденья для автомобилей, защищают от грязи и износа.",
-    "placementDate": "2024-10-25T12:00:00Z",
-    "status": AnnouncementStatus.ACTIVE,
-    "condition": ProductCondition.NEW,
-    "userId": "uuid29",
-    "categoryId": "uuid63", // Чехлы для автомобилей
-  },
-  {
-    "id": "uuid93",
-    "name": "Парфюм Dior Sauvage",
-    "price": 79.99,
-    "description": "Парфюм для мужчин с древесными и свежими нотами.",
-    "placementDate": "2024-10-24T12:00:00Z",
-    "status": AnnouncementStatus.ACTIVE,
-    "condition": ProductCondition.NEW,
-    "userId": "uuid7",
-    "categoryId": "uuid73", // Парфюмерия для мужчин
-  },
-  {
-    "id": "uuid94",
-    "name": "Крем для лица L'Oreal",
-    "price": 19.99,
-    "description": "Увлажняющий крем для лица с SPF-защитой от L'Oreal.",
-    "placementDate": "2024-10-23T12:00:00Z",
-    "status": AnnouncementStatus.ACTIVE,
-    "condition": ProductCondition.NEW,
-    "userId": "uuid4",
-    "categoryId": "uuid74", // Уход за кожей
-  },
-  {
-    "id": "uuid95",
-    "name": "Шампунь для волос Pantene",
-    "price": 9.99,
-    "description": "Шампунь для укрепления волос с витаминами и протеинами.",
-    "placementDate": "2024-10-22T12:00:00Z",
-    "status": AnnouncementStatus.ACTIVE,
-    "condition": ProductCondition.NEW,
-    "userId": "uuid26",
-    "categoryId": "uuid75", // Уход за волосами
-  },
-  {
-    "id": "uuid96",
-    "name": "Тушь для ресниц Maybelline",
-    "price": 12.99,
-    "description": "Тушь для ресниц с удлинением и объемом для выразительного взгляда.",
-    "placementDate": "2024-10-21T12:00:00Z",
-    "status": AnnouncementStatus.ACTIVE,
-    "condition": ProductCondition.NEW,
-    "userId": "uuid6",
-    "categoryId": "uuid76", // Декоративная косметика
-  },
-  {
-    "id": "uuid97",
-    "name": "Средства для бритья Gillette",
-    "price": 9.99,
-    "description": "Гель для бритья с увлажняющими компонентами от Gillette.",
-    "placementDate": "2024-10-20T12:00:00Z",
-    "status": AnnouncementStatus.ACTIVE,
-    "condition": ProductCondition.NEW,
-    "userId": "uuid7",
-    "categoryId": "uuid78", // Средства для мужчин
-  },
-  {
-    "id": "uuid98",
-    "name": "Леггинсы для женщин",
-    "price": 19.99,
-    "description": "Удобные леггинсы для женщин для занятий спортом и повседневной носки.",
-    "placementDate": "2024-10-19T12:00:00Z",
-    "status": AnnouncementStatus.ACTIVE,
-    "condition": ProductCondition.NEW,
-    "userId": "uuid40",
-    "categoryId": "uuid41", // Женская одежда
-  },
-  {
-    "id": "uuid99",
-    "name": "Куртка мужская Columbia",
-    "price": 89.99,
-    "description": "Теплая и стильная куртка для мужчин от Columbia.",
-    "placementDate": "2024-10-18T12:00:00Z",
-    "status": AnnouncementStatus.ACTIVE,
-    "condition": ProductCondition.NEW,
-    "userId": "uuid40",
-    "categoryId": "uuid42", // Мужская одежда
-  },
-  {
-    "id": "uuid100",
-    "name": "Туфли женские Louboutin",
-    "price": 299.99,
-    "description": "Элегантные туфли от Louboutin с красной подошвой для особых случаев.",
-    "placementDate": "2024-10-17T12:00:00Z",
-    "status": AnnouncementStatus.ACTIVE,
-    "condition": ProductCondition.NEW,
-    "userId": "uuid4",
-    "categoryId": "uuid44", // Обувь
+    id: 'uuid101',
+    name: 'Йога-коврик для занятий Pilates',
+    price: 29.99,
+    description: 'Удобный и нескользящий коврик для занятий йогой и пилатесом.',
+    placementDate: '2025-01-01T12:00:00Z',
+    status: AnnouncementStatus.ACTIVE,
+    condition: ProductCondition.NEW,
+    userId: 'uuid5',
+    categoryId: 'uuid59' // Йога и пилатес
+  },
+  {
+    id: 'uuid11',
+    name: 'Микроволновка Samsung MS23K3513AW',
+    price: 129.99,
+    description:
+      'Компактная микроволновая печь с функцией гриля и 23 литра объема.',
+    placementDate: '2025-01-02T12:00:00Z',
+    status: AnnouncementStatus.ACTIVE,
+    condition: ProductCondition.NEW,
+    userId: 'uuid25',
+    categoryId: 'uuid25' // Микроволновки
+  },
+  {
+    id: 'uuid12',
+    name: 'Диван Ikea FRIHETEN',
+    price: 499.99,
+    description:
+      'Удобный уголковый диван с механизмом трансформации для комфортного сна.',
+    placementDate: '2025-01-01T12:00:00Z',
+    status: AnnouncementStatus.ACTIVE,
+    condition: ProductCondition.NEW,
+    userId: 'uuid28',
+    categoryId: 'uuid28' // Кухонная мебель
+  },
+  {
+    id: 'uuid13',
+    name: 'Кресло-кровать Картель',
+    price: 249.99,
+    description:
+      'Кресло-кровать с современной обивкой и удобным механизмом раскладки.',
+    placementDate: '2025-01-12T12:00:00Z',
+    status: AnnouncementStatus.ACTIVE,
+    condition: ProductCondition.NEW,
+    userId: 'uuid29',
+    categoryId: 'uuid29' // Гостиные и спальни
+  },
+  {
+    id: 'uuid14',
+    name: 'Покрывало из микрофибры 240x220',
+    price: 45.0,
+    description:
+      'Мягкое и приятное на ощупь покрывало из микрофибры с декоративным узором.',
+    placementDate: '2025-01-11T12:00:00Z',
+    status: AnnouncementStatus.ACTIVE,
+    condition: ProductCondition.NEW,
+    userId: 'uuid32',
+    categoryId: 'uuid32' // Постельное белье
+  },
+  {
+    id: 'uuid15',
+    name: 'Шторы для гостиной 3 метра',
+    price: 99.99,
+    description:
+      'Элегантные шторы с современным дизайном и возможностью выбора цвета.',
+    placementDate: '2025-01-10T12:00:00Z',
+    status: AnnouncementStatus.ACTIVE,
+    condition: ProductCondition.NEW,
+    userId: 'uuid31',
+    categoryId: 'uuid31' // Шторы и жалюзи
+  },
+  {
+    id: 'uuid16',
+    name: 'Люстра с пультом управления',
+    price: 149.99,
+    description:
+      'Красивая люстра с возможностью регулировки яркости и температуры света.',
+    placementDate: '2025-01-09T12:00:00Z',
+    status: AnnouncementStatus.ACTIVE,
+    condition: ProductCondition.NEW,
+    userId: 'uuid33',
+    categoryId: 'uuid33' // Освещение
+  },
+  {
+    id: 'uuid17',
+    name: 'Картина на холсте абстракция',
+    price: 79.99,
+    description: 'Яркая абстрактная картина для украшения интерьера.',
+    placementDate: '2025-01-08T12:00:00Z',
+    status: AnnouncementStatus.ACTIVE,
+    condition: ProductCondition.NEW,
+    userId: 'uuid3',
+    categoryId: 'uuid36' // Декор для дома
+  },
+  {
+    id: 'uuid18',
+    name: 'Тренажер для пресса Ab Rocket',
+    price: 69.99,
+    description:
+      'Тренажер для пресса с удобными подлокотниками и регулировкой интенсивности.',
+    placementDate: '2025-01-07T12:00:00Z',
+    status: AnnouncementStatus.ACTIVE,
+    condition: ProductCondition.NEW,
+    userId: 'uuid3',
+    categoryId: 'uuid53' // Оборудование для фитнеса
+  },
+  {
+    id: 'uuid19',
+    name: 'Кроссовки Adidas Ultraboost 22',
+    price: 159.99,
+    description: 'Модные и удобные кроссовки для бега с амортизацией Boost.',
+    placementDate: '2025-01-06T12:00:00Z',
+    status: AnnouncementStatus.ACTIVE,
+    condition: ProductCondition.NEW,
+    userId: 'uuid19',
+    categoryId: 'uuid57' // Спортивная обувь
+  },
+  {
+    id: 'uuid20',
+    name: 'Чехол для телефона iPhone 14',
+    price: 19.99,
+    description: 'Прочный и стильный чехол для защиты вашего смартфона.',
+    placementDate: '2025-01-05T12:00:00Z',
+    status: AnnouncementStatus.ACTIVE,
+    condition: ProductCondition.NEW,
+    userId: 'uuid2',
+    categoryId: 'uuid62' // Автомобильные аксессуары
+  },
+  {
+    id: 'uuid21',
+    name: 'Автомобильный коврик для багажника',
+    price: 29.99,
+    description: 'Универсальный коврик для защиты багажника от загрязнений.',
+    placementDate: '2025-01-04T12:00:00Z',
+    status: AnnouncementStatus.ACTIVE,
+    condition: ProductCondition.NEW,
+    userId: 'uuid6',
+    categoryId: 'uuid63' // Чехлы для автомобилей
+  },
+  {
+    id: 'uuid22',
+    name: 'Парфюм Dior Sauvage',
+    price: 89.99,
+    description: 'Элегантный мужской парфюм с нотами бергамота и пачули.',
+    placementDate: '2025-01-03T12:00:00Z',
+    status: AnnouncementStatus.ACTIVE,
+    condition: ProductCondition.NEW,
+    userId: 'uuid7',
+    categoryId: 'uuid73' // Парфюмерия для мужчин
+  },
+  {
+    id: 'uuid23',
+    name: "Крем для лица L'Oréal Paris Revitalift",
+    price: 29.99,
+    description: 'Увлажняющий крем с эффектом лифтинга для зрелой кожи.',
+    placementDate: '2025-01-02T12:00:00Z',
+    status: AnnouncementStatus.ACTIVE,
+    condition: ProductCondition.NEW,
+    userId: 'uuid24',
+    categoryId: 'uuid74' // Уход за кожей
+  },
+  {
+    id: 'uuid24',
+    name: 'Шампунь для волос Pantene Pro-V',
+    price: 9.99,
+    description:
+      'Шампунь с увлажняющим эффектом для сухих и поврежденных волос.',
+    placementDate: '2025-01-01T12:00:00Z',
+    status: AnnouncementStatus.ACTIVE,
+    condition: ProductCondition.NEW,
+    userId: 'uuid37',
+    categoryId: 'uuid75' // Уход за волосами
+  },
+  {
+    id: 'uuid25',
+    name: 'Декоративная помада Maybelline New York',
+    price: 12.99,
+    description: 'Интенсивно увлажняющая помада с яркими оттенками.',
+    placementDate: '2024-12-31T12:00:00Z',
+    status: AnnouncementStatus.ACTIVE,
+    condition: ProductCondition.NEW,
+    userId: 'uuid1',
+    categoryId: 'uuid76' // Декоративная косметика
+  },
+  {
+    id: 'uuid26',
+    name: 'Средство для бритья Gillette Fusion',
+    price: 14.99,
+    description: 'Гель для бритья с охлаждающим эффектом и увлажнением.',
+    placementDate: '2024-12-30T12:00:00Z',
+    status: AnnouncementStatus.ACTIVE,
+    condition: ProductCondition.NEW,
+    userId: 'uuid33',
+    categoryId: 'uuid78' // Средства для мужчин
+  },
+  {
+    id: 'uuid27',
+    name: 'Детская куртка H&M',
+    price: 39.99,
+    description:
+      'Теплая куртка для детей с капюшоном и водоотталкивающей обработкой.',
+    placementDate: '2024-12-29T12:00:00Z',
+    status: AnnouncementStatus.ACTIVE,
+    condition: ProductCondition.NEW,
+    userId: 'uuid33',
+    categoryId: 'uuid43' // Детская одежда
+  },
+  {
+    id: 'uuid28',
+    name: 'Сапоги Timberland мужские',
+    price: 129.99,
+    description:
+      'Удобные зимние сапоги с водоотталкивающей мембраной и анатомической стелькой.',
+    placementDate: '2024-12-28T12:00:00Z',
+    status: AnnouncementStatus.ACTIVE,
+    condition: ProductCondition.NEW,
+    userId: 'uuid23',
+    categoryId: 'uuid46' // Мужская обувь
+  },
+  {
+    id: 'uuid29',
+    name: 'Сумка Michael Kors',
+    price: 249.99,
+    description:
+      'Элегантная женская сумка из натуральной кожи с золотыми элементами.',
+    placementDate: '2024-12-27T12:00:00Z',
+    status: AnnouncementStatus.ACTIVE,
+    condition: ProductCondition.NEW,
+    userId: 'uuid22',
+    categoryId: 'uuid48' // Сумки и рюкзаки
+  },
+  {
+    id: 'uuid30',
+    name: 'Очки Ray-Ban Aviator',
+    price: 129.99,
+    description:
+      'Классические солнечные очки Ray-Ban с золотой оправой и зелеными линзами.',
+    placementDate: '2024-12-26T12:00:00Z',
+    status: AnnouncementStatus.ACTIVE,
+    condition: ProductCondition.NEW,
+    userId: 'uuid21',
+    categoryId: 'uuid49' // Очки и головные уборы
+  },
+  {
+    id: 'uuid31',
+    name: 'Часы Casio G-Shock',
+    price: 79.99,
+    description:
+      'Ударопрочные спортивные часы с функцией подсветки и водозащитой.',
+    placementDate: '2024-12-25T12:00:00Z',
+    status: AnnouncementStatus.ACTIVE,
+    condition: ProductCondition.NEW,
+    userId: 'uuid16',
+    categoryId: 'uuid50' // Часы
+  },
+  {
+    id: 'uuid32',
+    name: 'Кольцо Swarovski',
+    price: 89.99,
+    description:
+      'Элегантное кольцо с кристаллами Swarovski в серебряной оправе.',
+    placementDate: '2024-12-24T12:00:00Z',
+    status: AnnouncementStatus.ACTIVE,
+    condition: ProductCondition.NEW,
+    userId: 'uuid1',
+    categoryId: 'uuid51' // Украшения
+  },
+  {
+    id: 'uuid33',
+    name: 'Тренажер для ног Body Solid',
+    price: 179.99,
+    description:
+      'Профессиональный тренажер для ног, идеально подходит для домашнего использования.',
+    placementDate: '2024-12-23T12:00:00Z',
+    status: AnnouncementStatus.ACTIVE,
+    condition: ProductCondition.NEW,
+    userId: 'uuid37',
+    categoryId: 'uuid54' // Тренажеры
+  },
+  {
+    id: 'uuid34',
+    name: 'Гантели Hex 10 кг',
+    price: 49.99,
+    description:
+      'Набор гантелей с шестигранной формой для удобства хранения и использования.',
+    placementDate: '2024-12-22T12:00:00Z',
+    status: AnnouncementStatus.ACTIVE,
+    condition: ProductCondition.NEW,
+    userId: 'uuid18',
+    categoryId: 'uuid55' // Гантели и гири
+  },
+  {
+    id: 'uuid35',
+    name: 'Рюкзак для спорта Nike',
+    price: 39.99,
+    description:
+      'Удобный спортивный рюкзак с несколькими отделениями для одежды и аксессуаров.',
+    placementDate: '2024-12-21T12:00:00Z',
+    status: AnnouncementStatus.ACTIVE,
+    condition: ProductCondition.NEW,
+    userId: 'uuid27',
+    categoryId: 'uuid60' // Спортивные сумки и рюкзаки
+  },
+  {
+    id: 'uuid36',
+    name: 'Йога-мат Adidas',
+    price: 19.99,
+    description:
+      'Йога-мат с нескользящей поверхностью для удобства занятий йогой и пилатесом.',
+    placementDate: '2024-12-20T12:00:00Z',
+    status: AnnouncementStatus.ACTIVE,
+    condition: ProductCondition.NEW,
+    userId: 'uuid5',
+    categoryId: 'uuid59' // Йога и пилатес
+  },
+  {
+    id: 'uuid37',
+    name: 'Автоковрики для автомобиля Hyundai',
+    price: 29.99,
+    description:
+      'Коврики для автомобилей Hyundai, выполненные из высококачественного материала.',
+    placementDate: '2024-12-19T12:00:00Z',
+    status: AnnouncementStatus.ACTIVE,
+    condition: ProductCondition.NEW,
+    userId: 'uuid4',
+    categoryId: 'uuid64' // Коврики для автомобилей
+  },
+  {
+    id: 'uuid38',
+    name: 'Сумка для путешествий Samsonite',
+    price: 99.99,
+    description:
+      'Просторная сумка для путешествий с множеством карманов и отделений.',
+    placementDate: '2024-12-18T12:00:00Z',
+    status: AnnouncementStatus.ACTIVE,
+    condition: ProductCondition.NEW,
+    userId: 'uuid1',
+    categoryId: 'uuid48' // Сумки и рюкзаки
+  },
+  {
+    id: 'uuid39',
+    name: 'Парфюм Chanel No. 5',
+    price: 179.99,
+    description:
+      'Легендарный женский парфюм с цветочными нотами и легким восточным аккордом.',
+    placementDate: '2024-12-17T12:00:00Z',
+    status: AnnouncementStatus.ACTIVE,
+    condition: ProductCondition.NEW,
+    userId: 'uuid33',
+    categoryId: 'uuid72' // Парфюмерия для женщин
+  },
+  {
+    id: 'uuid40',
+    name: 'Шампунь для мужчин Head & Shoulders',
+    price: 7.99,
+    description:
+      'Шампунь для мужчин с антиперхотным эффектом и свежим ароматом.',
+    placementDate: '2024-12-16T12:00:00Z',
+    status: AnnouncementStatus.ACTIVE,
+    condition: ProductCondition.NEW,
+    userId: 'uuid13',
+    categoryId: 'uuid78' // Средства для мужчин
+  },
+  {
+    id: 'uuid41',
+    name: "Кофемашина De'Longhi Magnifica",
+    price: 359.99,
+    description:
+      'Автоматическая кофемашина с множеством функций для приготовления кофе по вашему вкусу.',
+    placementDate: '2024-12-15T12:00:00Z',
+    status: AnnouncementStatus.ACTIVE,
+    condition: ProductCondition.NEW,
+    userId: 'uuid21',
+    categoryId: 'uuid21' // Кофемашины
+  },
+  {
+    id: 'uuid42',
+    name: 'Смарт-часы Apple Watch Series 8',
+    price: 399.99,
+    description:
+      'Смарт-часы с сенсорным экраном и функциями мониторинга здоровья.',
+    placementDate: '2024-12-14T12:00:00Z',
+    status: AnnouncementStatus.ACTIVE,
+    condition: ProductCondition.NEW,
+    userId: 'uuid4',
+    categoryId: 'uuid4' // Смарт-часы
+  },
+  {
+    id: 'uuid43',
+    name: 'Телевизор LG 55UN73006LC',
+    price: 499.99,
+    description: '4K телевизор с функцией Smart TV и поддержкой HDR.',
+    placementDate: '2024-12-13T12:00:00Z',
+    status: AnnouncementStatus.ACTIVE,
+    condition: ProductCondition.NEW,
+    userId: 'uuid12',
+    categoryId: 'uuid12' // Телевизоры и проекторы
+  },
+  {
+    id: 'uuid44',
+    name: 'Радиостанция Baofeng BF-888S',
+    price: 29.99,
+    description: 'Компактная и мощная радиостанция с дальностью до 3 км.',
+    placementDate: '2024-12-12T12:00:00Z',
+    status: AnnouncementStatus.ACTIVE,
+    condition: ProductCondition.NEW,
+    userId: 'uuid5',
+    categoryId: 'uuid5' // Рации
+  },
+  {
+    id: 'uuid45',
+    name: 'Холодильник Bosch KGV36VW31R',
+    price: 499.99,
+    description: 'Холодильник с морозильной камерой, энергоэффективен и тихий.',
+    placementDate: '2024-12-11T12:00:00Z',
+    status: AnnouncementStatus.ACTIVE,
+    condition: ProductCondition.NEW,
+    userId: 'uuid18',
+    categoryId: 'uuid18' // Холодильники
+  },
+  {
+    id: 'uuid46',
+    name: 'Стиральная машина Samsung WW80J5410CW',
+    price: 399.99,
+    description:
+      'Стиральная машина с функцией паровой обработки и энергоэффективностью класса A+++.',
+    placementDate: '2024-12-10T12:00:00Z',
+    status: AnnouncementStatus.ACTIVE,
+    condition: ProductCondition.NEW,
+    userId: 'uuid19',
+    categoryId: 'uuid19' // Стиральные машины
+  },
+  {
+    id: 'uuid47',
+    name: 'Микроволновка LG MS2344DB',
+    price: 99.99,
+    description: 'Микроволновая печь с грилем и объемом 23 литра.',
+    placementDate: '2024-12-09T12:00:00Z',
+    status: AnnouncementStatus.ACTIVE,
+    condition: ProductCondition.NEW,
+    userId: 'uuid25',
+    categoryId: 'uuid25' // Микроволновки
+  },
+  {
+    id: 'uuid48',
+    name: 'Шторы из льна',
+    price: 49.99,
+    description:
+      'Шторы из натурального льна, идеально подходящие для создания уюта в доме.',
+    placementDate: '2024-12-08T12:00:00Z',
+    status: AnnouncementStatus.ACTIVE,
+    condition: ProductCondition.NEW,
+    userId: 'uuid31',
+    categoryId: 'uuid31' // Шторы и жалюзи
+  },
+  {
+    id: 'uuid49',
+    name: 'Светодиодная люстра',
+    price: 129.99,
+    description:
+      'Современная светодиодная люстра для гостиной, регулируемая по яркости.',
+    placementDate: '2024-12-07T12:00:00Z',
+    status: AnnouncementStatus.ACTIVE,
+    condition: ProductCondition.NEW,
+    userId: 'uuid33',
+    categoryId: 'uuid33' // Освещение
+  },
+  {
+    id: 'uuid50',
+    name: 'Декор для дома - Картина',
+    price: 79.99,
+    description:
+      'Картина в стиле абстракционизм, подойдет для любого интерьера.',
+    placementDate: '2024-12-06T12:00:00Z',
+    status: AnnouncementStatus.ACTIVE,
+    condition: ProductCondition.NEW,
+    userId: 'uuid33',
+    categoryId: 'uuid36' // Декор для дома
+  },
+  {
+    id: 'uuid51',
+    name: 'Ракетка для бадминтона Yonex',
+    price: 19.99,
+    description:
+      'Легкая ракетка для бадминтона от бренда Yonex, для любителей спорта.',
+    placementDate: '2024-12-05T12:00:00Z',
+    status: AnnouncementStatus.ACTIVE,
+    condition: ProductCondition.NEW,
+    userId: 'uuid6',
+    categoryId: 'uuid56' // Спортивная одежда
+  },
+  {
+    id: 'uuid52',
+    name: 'Футболка Nike',
+    price: 29.99,
+    description: 'Комфортная футболка Nike из хлопка для активного отдыха.',
+    placementDate: '2024-12-04T12:00:00Z',
+    status: AnnouncementStatus.ACTIVE,
+    condition: ProductCondition.NEW,
+    userId: 'uuid5',
+    categoryId: 'uuid56' // Спортивная одежда
+  },
+  {
+    id: 'uuid53',
+    name: 'Кроссовки Adidas Ultraboost',
+    price: 149.99,
+    description:
+      'Кроссовки Adidas Ultraboost для активных людей, обеспечивающие максимальный комфорт.',
+    placementDate: '2024-12-03T12:00:00Z',
+    status: AnnouncementStatus.ACTIVE,
+    condition: ProductCondition.NEW,
+    userId: 'uuid18',
+    categoryId: 'uuid57' // Спортивная обувь
+  },
+  {
+    id: 'uuid54',
+    name: 'Шлем для велоспорта',
+    price: 34.99,
+    description: 'Шлем для велосипедистов с вентиляцией и защитой от ударов.',
+    placementDate: '2024-12-02T12:00:00Z',
+    status: AnnouncementStatus.ACTIVE,
+    condition: ProductCondition.NEW,
+    userId: 'uuid5',
+    categoryId: 'uuid58' // Аксессуары для спорта
+  },
+  {
+    id: 'uuid55',
+    name: 'Тренировочный костюм Puma',
+    price: 59.99,
+    description:
+      'Спортивный костюм Puma из дышащих материалов, идеально подходит для тренировок.',
+    placementDate: '2024-12-01T12:00:00Z',
+    status: AnnouncementStatus.ACTIVE,
+    condition: ProductCondition.NEW,
+    userId: 'uuid6',
+    categoryId: 'uuid56' // Спортивная одежда
+  },
+  {
+    id: 'uuid56',
+    name: 'Автосигнализация Pandora',
+    price: 99.99,
+    description:
+      'Современная автосигнализация с функцией GPS мониторинга и мобильным приложением.',
+    placementDate: '2024-11-30T12:00:00Z',
+    status: AnnouncementStatus.ACTIVE,
+    condition: ProductCondition.NEW,
+    userId: 'uuid6',
+    categoryId: 'uuid62' // Автомобильные аксессуары
+  },
+  {
+    id: 'uuid57',
+    name: 'Чехол для телефона iPhone 14',
+    price: 9.99,
+    description: 'Стильный чехол для iPhone 14 с защитой от ударов и царапин.',
+    placementDate: '2024-11-29T12:00:00Z',
+    status: AnnouncementStatus.ACTIVE,
+    condition: ProductCondition.NEW,
+    userId: 'uuid6',
+    categoryId: 'uuid63' // Чехлы для автомобилей
+  },
+  {
+    id: 'uuid58',
+    name: 'Коврики в салон для автомобиля Toyota',
+    price: 39.99,
+    description: 'Коврики с высокой износостойкостью для автомобилей Toyota.',
+    placementDate: '2024-11-28T12:00:00Z',
+    status: AnnouncementStatus.ACTIVE,
+    condition: ProductCondition.NEW,
+    userId: 'uuid4',
+    categoryId: 'uuid64' // Коврики для автомобилей
+  },
+  {
+    id: 'uuid59',
+    name: 'Парфюм Giorgio Armani Acqua di Gio',
+    price: 129.99,
+    description:
+      'Парфюм с нотами цитрусовых и морского бриза для элегантных мужчин.',
+    placementDate: '2024-11-27T12:00:00Z',
+    status: AnnouncementStatus.ACTIVE,
+    condition: ProductCondition.NEW,
+    userId: 'uuid3',
+    categoryId: 'uuid73' // Парфюмерия для мужчин
+  },
+  {
+    id: 'uuid60',
+    name: 'Парфюм Lancome Tresor',
+    price: 159.99,
+    description: 'Классический женский парфюм с фруктово-цветочными нотами.',
+    placementDate: '2024-11-26T12:00:00Z',
+    status: AnnouncementStatus.ACTIVE,
+    condition: ProductCondition.NEW,
+    userId: 'uuid2',
+    categoryId: 'uuid72' // Парфюмерия для женщин
+  },
+  {
+    id: 'uuid61',
+    name: "Шампунь для волос L'Oreal",
+    price: 4.99,
+    description:
+      'Шампунь для укрепления волос с витаминами и питательными компонентами.',
+    placementDate: '2024-11-25T12:00:00Z',
+    status: AnnouncementStatus.ACTIVE,
+    condition: ProductCondition.NEW,
+    userId: 'uuid5',
+    categoryId: 'uuid75' // Уход за волосами
+  },
+  {
+    id: 'uuid62',
+    name: 'Крем для лица Nivea',
+    price: 6.99,
+    description:
+      'Увлажняющий крем для лица с витамином E, для сухой и чувствительной кожи.',
+    placementDate: '2024-11-24T12:00:00Z',
+    status: AnnouncementStatus.ACTIVE,
+    condition: ProductCondition.NEW,
+    userId: 'uuid24',
+    categoryId: 'uuid74' // Уход за кожей
+  },
+  {
+    id: 'uuid63',
+    name: 'Средства для бритья Gillette',
+    price: 14.99,
+    description:
+      'Средства для бритья Gillette с экстрактом алоэ для идеального комфорта.',
+    placementDate: '2024-11-23T12:00:00Z',
+    status: AnnouncementStatus.ACTIVE,
+    condition: ProductCondition.NEW,
+    userId: 'uuid7',
+    categoryId: 'uuid78' // Средства для мужчин
+  },
+  {
+    id: 'uuid64',
+    name: 'Кофемолка Bosch',
+    price: 29.99,
+    description: 'Кофемолка с регулируемой степенью помола и мощным мотором.',
+    placementDate: '2024-11-22T12:00:00Z',
+    status: AnnouncementStatus.ACTIVE,
+    condition: ProductCondition.NEW,
+    userId: 'uuid21',
+    categoryId: 'uuid21' // Кофемашины
+  },
+  {
+    id: 'uuid65',
+    name: 'Парковочная система для автомобиля',
+    price: 149.99,
+    description:
+      'Современная парковочная система с датчиками для безопасности парковки.',
+    placementDate: '2024-11-21T12:00:00Z',
+    status: AnnouncementStatus.ACTIVE,
+    condition: ProductCondition.NEW,
+    userId: 'uuid6',
+    categoryId: 'uuid61' // Автотовары
+  },
+  {
+    id: 'uuid66',
+    name: 'Микроволновая печь Samsung',
+    price: 79.99,
+    description:
+      'Микроволновка с функцией гриля и множеством автоматических программ.',
+    placementDate: '2024-11-20T12:00:00Z',
+    status: AnnouncementStatus.ACTIVE,
+    condition: ProductCondition.NEW,
+    userId: 'uuid25',
+    categoryId: 'uuid25' // Микроволновки
+  },
+  {
+    id: 'uuid67',
+    name: 'Тостер Philips',
+    price: 29.99,
+    description:
+      'Тостер с регулируемой степенью поджаривания и функцией размораживания.',
+    placementDate: '2024-11-19T12:00:00Z',
+    status: AnnouncementStatus.ACTIVE,
+    condition: ProductCondition.NEW,
+    userId: 'uuid20',
+    categoryId: 'uuid20' // Кухонная техника
+  },
+  {
+    id: 'uuid68',
+    name: 'Стиральная машина LG',
+    price: 499.99,
+    description:
+      'Стиральная машина с функцией парового ухода и защита от протечек.',
+    placementDate: '2024-11-18T12:00:00Z',
+    status: AnnouncementStatus.ACTIVE,
+    condition: ProductCondition.NEW,
+    userId: 'uuid19',
+    categoryId: 'uuid19' // Стиральные машины
+  },
+  {
+    id: 'uuid69',
+    name: 'Гриль Panasonic',
+    price: 129.99,
+    description:
+      'Гриль с антипригарным покрытием и возможностью регулировки температуры.',
+    placementDate: '2024-11-17T12:00:00Z',
+    status: AnnouncementStatus.ACTIVE,
+    condition: ProductCondition.NEW,
+    userId: 'uuid20',
+    categoryId: 'uuid20' // Кухонная техника
+  },
+  {
+    id: 'uuid70',
+    name: 'Духовой шкаф Electrolux',
+    price: 349.99,
+    description:
+      'Современный духовой шкаф с конвекцией и функцией самоочистки.',
+    placementDate: '2024-11-16T12:00:00Z',
+    status: AnnouncementStatus.ACTIVE,
+    condition: ProductCondition.NEW,
+    userId: 'uuid20',
+    categoryId: 'uuid20' // Кухонная техника
+  },
+  {
+    id: 'uuid71',
+    name: 'Фен Philips',
+    price: 39.99,
+    description: 'Фен с функцией ионизации для быстрой укладки волос.',
+    placementDate: '2024-11-15T12:00:00Z',
+    status: AnnouncementStatus.ACTIVE,
+    condition: ProductCondition.NEW,
+    userId: 'uuid24',
+    categoryId: 'uuid24' // Фены и утюги
+  },
+  {
+    id: 'uuid72',
+    name: 'Часы Casio',
+    price: 69.99,
+    description:
+      'Наручные часы Casio с функцией водоотталкивания и подсветкой.',
+    placementDate: '2024-11-14T12:00:00Z',
+    status: AnnouncementStatus.ACTIVE,
+    condition: ProductCondition.NEW,
+    userId: 'uuid5',
+    categoryId: 'uuid50' // Часы
+  },
+  {
+    id: 'uuid73',
+    name: 'Кухонный нож Zwilling',
+    price: 49.99,
+    description: 'Острые и долговечные ножи Zwilling с эргономичной ручкой.',
+    placementDate: '2024-11-13T12:00:00Z',
+    status: AnnouncementStatus.ACTIVE,
+    condition: ProductCondition.NEW,
+    userId: 'uuid20',
+    categoryId: 'uuid20' // Кухонная техника
+  },
+  {
+    id: 'uuid74',
+    name: 'Рюкзак Adidas',
+    price: 39.99,
+    description:
+      'Стильный рюкзак от Adidas для спорта и повседневного использования.',
+    placementDate: '2024-11-12T12:00:00Z',
+    status: AnnouncementStatus.ACTIVE,
+    condition: ProductCondition.NEW,
+    userId: 'uuid4',
+    categoryId: 'uuid48' // Сумки и рюкзаки
+  },
+  {
+    id: 'uuid75',
+    name: 'Очки Ray-Ban',
+    price: 119.99,
+    description:
+      'Очки Ray-Ban с защитой от ультрафиолетовых лучей и стильным дизайном.',
+    placementDate: '2024-11-11T12:00:00Z',
+    status: AnnouncementStatus.ACTIVE,
+    condition: ProductCondition.NEW,
+    userId: 'uuid39',
+    categoryId: 'uuid49' // Очки и головные уборы
+  },
+  {
+    id: 'uuid76',
+    name: 'Утюг Tefal',
+    price: 59.99,
+    description:
+      'Паровой утюг с функцией автоотключения и антипригарной подошвой.',
+    placementDate: '2024-11-10T12:00:00Z',
+    status: AnnouncementStatus.ACTIVE,
+    condition: ProductCondition.NEW,
+    userId: 'uuid24',
+    categoryId: 'uuid24' // Фены и утюги
+  },
+  {
+    id: 'uuid77',
+    name: 'Гарнитура Sony',
+    price: 79.99,
+    description:
+      'Беспроводная гарнитура Sony с шумоподавлением и длительным временем работы.',
+    placementDate: '2024-11-09T12:00:00Z',
+    status: AnnouncementStatus.ACTIVE,
+    condition: ProductCondition.NEW,
+    userId: 'uuid5',
+    categoryId: 'uuid5' // Рации
+  },
+  {
+    id: 'uuid78',
+    name: 'Рюкзак для ноутбука HP',
+    price: 49.99,
+    description:
+      'Прочный и удобный рюкзак для ноутбуков с несколькими карманами.',
+    placementDate: '2024-11-08T12:00:00Z',
+    status: AnnouncementStatus.ACTIVE,
+    condition: ProductCondition.NEW,
+    userId: 'uuid8',
+    categoryId: 'uuid48' // Сумки и рюкзаки
+  },
+  {
+    id: 'uuid79',
+    name: 'Кофемашина DeLonghi',
+    price: 199.99,
+    description:
+      'Эспрессо-машина DeLonghi с функцией капучино и настройкой крепости кофе.',
+    placementDate: '2024-11-07T12:00:00Z',
+    status: AnnouncementStatus.ACTIVE,
+    condition: ProductCondition.NEW,
+    userId: 'uuid21',
+    categoryId: 'uuid21' // Кофемашины
+  },
+  {
+    id: 'uuid80',
+    name: 'Миксер Bosch',
+    price: 39.99,
+    description:
+      'Миксер с несколькими скоростями и насадками для приготовления теста и взбивания.',
+    placementDate: '2024-11-06T12:00:00Z',
+    status: AnnouncementStatus.ACTIVE,
+    condition: ProductCondition.NEW,
+    userId: 'uuid20',
+    categoryId: 'uuid20' // Кухонная техника
+  },
+  {
+    id: 'uuid81',
+    name: 'Беговая дорожка',
+    price: 599.99,
+    description:
+      'Беговая дорожка с множеством программ тренировок и амортизацией.',
+    placementDate: '2024-11-05T12:00:00Z',
+    status: AnnouncementStatus.ACTIVE,
+    condition: ProductCondition.NEW,
+    userId: 'uuid33',
+    categoryId: 'uuid54' // Тренажеры
+  },
+  {
+    id: 'uuid82',
+    name: 'Гантели 10 кг',
+    price: 39.99,
+    description: 'Набор гантелей для домашних тренировок с регулировкой веса.',
+    placementDate: '2024-11-04T12:00:00Z',
+    status: AnnouncementStatus.ACTIVE,
+    condition: ProductCondition.NEW,
+    userId: 'uuid22',
+    categoryId: 'uuid55' // Гантели и гири
+  },
+  {
+    id: 'uuid83',
+    name: 'Кроссовки Nike',
+    price: 79.99,
+    description:
+      'Удобные кроссовки для бега от Nike, с амортизацией и дышащим верхом.',
+    placementDate: '2024-11-03T12:00:00Z',
+    status: AnnouncementStatus.ACTIVE,
+    condition: ProductCondition.NEW,
+    userId: 'uuid28',
+    categoryId: 'uuid57' // Спортивная обувь
+  },
+  {
+    id: 'uuid84',
+    name: 'Спортивная футболка Adidas',
+    price: 29.99,
+    description: 'Футболка для тренировок из дышащего материала от Adidas.',
+    placementDate: '2024-11-02T12:00:00Z',
+    status: AnnouncementStatus.ACTIVE,
+    condition: ProductCondition.NEW,
+    userId: 'uuid5',
+    categoryId: 'uuid56' // Спортивная одежда
+  },
+  {
+    id: 'uuid85',
+    name: 'Спортивный рюкзак Puma',
+    price: 49.99,
+    description: 'Прочный и стильный рюкзак для спортзала от Puma.',
+    placementDate: '2024-11-01T12:00:00Z',
+    status: AnnouncementStatus.ACTIVE,
+    condition: ProductCondition.NEW,
+    userId: 'uuid1',
+    categoryId: 'uuid60' // Спортивные сумки и рюкзаки
+  },
+  {
+    id: 'uuid86',
+    name: 'Плавки Speedo',
+    price: 19.99,
+    description:
+      'Качественные плавки для плавания от Speedo, комфортные и износостойкие.',
+    placementDate: '2024-10-31T12:00:00Z',
+    status: AnnouncementStatus.ACTIVE,
+    condition: ProductCondition.NEW,
+    userId: 'uuid15',
+    categoryId: 'uuid56' // Спортивная одежда
+  },
+  {
+    id: 'uuid87',
+    name: 'Шлем для велосипедиста',
+    price: 39.99,
+    description:
+      'Шлем для велосипедистов с хорошей вентиляцией и прочной защитой.',
+    placementDate: '2024-10-30T12:00:00Z',
+    status: AnnouncementStatus.ACTIVE,
+    condition: ProductCondition.NEW,
+    userId: 'uuid5',
+    categoryId: 'uuid58' // Аксессуары для спорта
+  },
+  {
+    id: 'uuid88',
+    name: 'Коврик для йоги',
+    price: 14.99,
+    description: 'Удобный коврик для йоги с хорошим сцеплением и амортизацией.',
+    placementDate: '2024-10-29T12:00:00Z',
+    status: AnnouncementStatus.ACTIVE,
+    condition: ProductCondition.NEW,
+    userId: 'uuid15',
+    categoryId: 'uuid59' // Йога и пилатес
+  },
+  {
+    id: 'uuid89',
+    name: 'Шорты для тренировок Under Armour',
+    price: 24.99,
+    description: 'Легкие и удобные шорты для тренировок от Under Armour.',
+    placementDate: '2024-10-28T12:00:00Z',
+    status: AnnouncementStatus.ACTIVE,
+    condition: ProductCondition.NEW,
+    userId: 'uuid6',
+    categoryId: 'uuid56' // Спортивная одежда
+  },
+  {
+    id: 'uuid90',
+    name: 'Автопылесос Black & Decker',
+    price: 49.99,
+    description:
+      'Автомобильный пылесос с мощным всасыванием и удобными насадками.',
+    placementDate: '2024-10-27T12:00:00Z',
+    status: AnnouncementStatus.ACTIVE,
+    condition: ProductCondition.NEW,
+    userId: 'uuid2',
+    categoryId: 'uuid61' // Автотовары
+  },
+  {
+    id: 'uuid91',
+    name: 'Коврики в салон автомобиля',
+    price: 29.99,
+    description:
+      'Комплект ковриков для автомобиля с хорошей защитой от грязи и воды.',
+    placementDate: '2024-10-26T12:00:00Z',
+    status: AnnouncementStatus.ACTIVE,
+    condition: ProductCondition.NEW,
+    userId: 'uuid2',
+    categoryId: 'uuid64' // Коврики для автомобилей
+  },
+  {
+    id: 'uuid92',
+    name: 'Автомобильные чехлы на сиденья',
+    price: 39.99,
+    description:
+      'Чехлы на сиденья для автомобилей, защищают от грязи и износа.',
+    placementDate: '2024-10-25T12:00:00Z',
+    status: AnnouncementStatus.ACTIVE,
+    condition: ProductCondition.NEW,
+    userId: 'uuid29',
+    categoryId: 'uuid63' // Чехлы для автомобилей
+  },
+  {
+    id: 'uuid93',
+    name: 'Парфюм Dior Sauvage',
+    price: 79.99,
+    description: 'Парфюм для мужчин с древесными и свежими нотами.',
+    placementDate: '2024-10-24T12:00:00Z',
+    status: AnnouncementStatus.ACTIVE,
+    condition: ProductCondition.NEW,
+    userId: 'uuid7',
+    categoryId: 'uuid73' // Парфюмерия для мужчин
+  },
+  {
+    id: 'uuid94',
+    name: "Крем для лица L'Oreal",
+    price: 19.99,
+    description: "Увлажняющий крем для лица с SPF-защитой от L'Oreal.",
+    placementDate: '2024-10-23T12:00:00Z',
+    status: AnnouncementStatus.ACTIVE,
+    condition: ProductCondition.NEW,
+    userId: 'uuid4',
+    categoryId: 'uuid74' // Уход за кожей
+  },
+  {
+    id: 'uuid95',
+    name: 'Шампунь для волос Pantene',
+    price: 9.99,
+    description: 'Шампунь для укрепления волос с витаминами и протеинами.',
+    placementDate: '2024-10-22T12:00:00Z',
+    status: AnnouncementStatus.ACTIVE,
+    condition: ProductCondition.NEW,
+    userId: 'uuid26',
+    categoryId: 'uuid75' // Уход за волосами
+  },
+  {
+    id: 'uuid96',
+    name: 'Тушь для ресниц Maybelline',
+    price: 12.99,
+    description:
+      'Тушь для ресниц с удлинением и объемом для выразительного взгляда.',
+    placementDate: '2024-10-21T12:00:00Z',
+    status: AnnouncementStatus.ACTIVE,
+    condition: ProductCondition.NEW,
+    userId: 'uuid6',
+    categoryId: 'uuid76' // Декоративная косметика
+  },
+  {
+    id: 'uuid97',
+    name: 'Средства для бритья Gillette',
+    price: 9.99,
+    description: 'Гель для бритья с увлажняющими компонентами от Gillette.',
+    placementDate: '2024-10-20T12:00:00Z',
+    status: AnnouncementStatus.ACTIVE,
+    condition: ProductCondition.NEW,
+    userId: 'uuid7',
+    categoryId: 'uuid78' // Средства для мужчин
+  },
+  {
+    id: 'uuid98',
+    name: 'Леггинсы для женщин',
+    price: 19.99,
+    description:
+      'Удобные леггинсы для женщин для занятий спортом и повседневной носки.',
+    placementDate: '2024-10-19T12:00:00Z',
+    status: AnnouncementStatus.ACTIVE,
+    condition: ProductCondition.NEW,
+    userId: 'uuid40',
+    categoryId: 'uuid41' // Женская одежда
+  },
+  {
+    id: 'uuid99',
+    name: 'Куртка мужская Columbia',
+    price: 89.99,
+    description: 'Теплая и стильная куртка для мужчин от Columbia.',
+    placementDate: '2024-10-18T12:00:00Z',
+    status: AnnouncementStatus.ACTIVE,
+    condition: ProductCondition.NEW,
+    userId: 'uuid40',
+    categoryId: 'uuid42' // Мужская одежда
+  },
+  {
+    id: 'uuid100',
+    name: 'Туфли женские Louboutin',
+    price: 299.99,
+    description:
+      'Элегантные туфли от Louboutin с красной подошвой для особых случаев.',
+    placementDate: '2024-10-17T12:00:00Z',
+    status: AnnouncementStatus.ACTIVE,
+    condition: ProductCondition.NEW,
+    userId: 'uuid4',
+    categoryId: 'uuid44' // Обувь
   }
-
-];
+]

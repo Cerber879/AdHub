@@ -9,20 +9,18 @@ import { SessionModule } from '../modules/auth/session/session.module'
 import { AnnouncementCharacteristicModule } from '../modules/category/announcement-characteristic/announcement-characteristic.module'
 import { CategoryModule } from '../modules/category/category/category.module'
 import { CharacteristicModule } from '../modules/category/characteristic/characteristic.module'
+import { ChatModule } from '../modules/chat/chat.module'
 import { FavouritesModule } from '../modules/favourites/favourites.module'
+import { StorageModule } from '../modules/libs/storage/cloudinary.module'
+import { MessageModule } from '../modules/message/message.module'
 import { PhotoModule } from '../modules/photo/photo.module'
+import { ReviewModule } from '../modules/review/review.module'
 import { IS_DEV_ENV } from '../shared/utils/is-dev.util'
 
 import { AccountModule } from './../modules/auth/account/account.module'
 import { getGraphQLConfig } from './config/graphql.config'
-
-import { ChatModule } from '../modules/chat/chat.module';
-import { MessageModule } from '../modules/message/message.module';
-
 import { PrismaModule } from './prisma/prisma.module'
 import { RedisModule } from './redis/redis.module'
-import { ReviewModule } from '../modules/review/review.module'
-import { StorageModule } from '../modules/libs/storage/cloudinary.module'
 
 @Module({
   imports: [
@@ -36,7 +34,7 @@ import { StorageModule } from '../modules/libs/storage/cloudinary.module'
       useFactory: getGraphQLConfig,
       inject: [ConfigService]
     }),
-    
+
     PrismaModule,
     RedisModule,
     StorageModule,
@@ -51,7 +49,7 @@ import { StorageModule } from '../modules/libs/storage/cloudinary.module'
     CharacteristicModule,
     AnnouncementCharacteristicModule,
     ChatModule,
-		MessageModule
+    MessageModule
   ]
 })
 export class CoreModule {}

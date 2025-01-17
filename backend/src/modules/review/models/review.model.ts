@@ -1,27 +1,29 @@
-import { Review } from '@/prisma/generated';
-import { ObjectType, Field, ID } from '@nestjs/graphql';
-import { AnnouncementModel } from '../../announcement/models/announcement.model';
-import { UserModel } from '../../auth/account/models/user.model';
+import { Field, ID, ObjectType } from '@nestjs/graphql'
+
+import { Review } from '@/prisma/generated'
+
+import { AnnouncementModel } from '../../announcement/models/announcement.model'
+import { UserModel } from '../../auth/account/models/user.model'
 
 @ObjectType()
 export class ReviewModel implements Review {
   @Field(() => ID)
-  id: string;
+  id: string
 
   @Field(() => String)
-  content: string;
+  content: string
 
   @Field(() => Number)
-  rating: number;
-  
-  @Field(() => String)
-  userId: string;
+  rating: number
 
   @Field(() => String)
-  reviewerId: string;
+  userId: string
 
   @Field(() => String)
-  announcementId: string;
+  reviewerId: string
+
+  @Field(() => String)
+  announcementId: string
 
   @Field(() => AnnouncementModel, { nullable: true })
   announcement: AnnouncementModel
@@ -30,8 +32,8 @@ export class ReviewModel implements Review {
   reviewer: UserModel
 
   @Field(() => Date)
-  createdAt: Date;
+  createdAt: Date
 
   @Field(() => Date)
-  updatedAt: Date;
+  updatedAt: Date
 }

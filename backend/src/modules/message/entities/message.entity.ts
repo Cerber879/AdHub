@@ -1,27 +1,28 @@
-import { Message } from '@/prisma/generated';
-import { ObjectType, Field, Int, ID } from '@nestjs/graphql';
-import { IsInt, IsNotEmpty, IsString } from 'class-validator';
+import { Field, ID, Int, ObjectType } from '@nestjs/graphql'
+import { IsInt, IsNotEmpty, IsString } from 'class-validator'
+
+import { Message } from '@/prisma/generated'
 
 @ObjectType()
 export class MessageModel implements Message {
   @Field(() => ID)
-  public id: string;
+  public id: string
 
   @Field(() => String)
-  public content: string;
+  public content: string
 
   @Field(() => Int)
-  public status: number;
+  public status: number
 
   @Field(() => Date)
-  public sentAt: Date;
+  public sentAt: Date
 
   @Field(() => String)
-  public isEdited: boolean;
+  public isEdited: boolean
 
   @Field(() => String)
-  public senderId: string;
-  
+  public senderId: string
+
   @Field(() => String)
-  public chatId: string;
+  public chatId: string
 }

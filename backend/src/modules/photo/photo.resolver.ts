@@ -1,11 +1,12 @@
 import { Args, Mutation, Query, Resolver } from '@nestjs/graphql'
-
 import * as GraphQLUpload from 'graphql-upload/GraphQLUpload.js'
 import * as Upload from 'graphql-upload/Upload.js'
 
-import { PhotoService } from './photo.service'
 import { FileValidationPipe } from '@/src/shared/pipes/file-validation.pipe'
+
 import { CloudinaryService } from '../libs/storage/cloudinary.service'
+
+import { PhotoService } from './photo.service'
 
 @Resolver('Photo')
 export class PhotoResolver {
@@ -39,12 +40,12 @@ export class PhotoResolver {
     @Args('deletePhotoIds', { type: () => [String] })
     deletePhotoIds: string[],
     @Args('newPhotos', { type: () => [GraphQLUpload] })
-    newPhotos: Upload[],
+    newPhotos: Upload[]
   ) {
     if (deletePhotoIds && deletePhotoIds.length > 0) {
       for (const photoId of deletePhotoIds) {
         await this.deletePhoto(photoId)
-			  await this.cloudinaryService.remove(photoId);
+        await this.cloudinaryService.remove(photoId)
       }
     }
 

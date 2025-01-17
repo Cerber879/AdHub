@@ -5,7 +5,6 @@ import { CreateCharacteristicInput } from './inputs/create-characteristic.input'
 import { UpdateCharacteristicMixedInput } from './inputs/update-charateristic.input'
 import { CharacteristicsResponse } from './responses/characteristic.response'
 
-
 @Resolver()
 export class CharacteristicResolver {
   constructor(private readonly characteristicService: CharacteristicService) {}
@@ -26,17 +25,16 @@ export class CharacteristicResolver {
 
     const formattedResult = Object.entries(result).map(([group, data]) => ({
       group,
-      data,
-    }));
+      data
+    }))
 
     return formattedResult
   }
-  
+
   @Mutation(() => Boolean, { name: 'updateCharacteristic' })
   async updateCharacteristic(
     @Args('data') data: UpdateCharacteristicMixedInput
   ) {
     return this.characteristicService.updateCharacteristic(data.id, data.input)
   }
-
 }

@@ -21,7 +21,7 @@ export async function getSessionMetadata(
   userAgent: string
 ): Promise<SessionMetadata> {
   const ip = IS_DEV_ENV
-    ? await getPublicIP() 
+    ? await getPublicIP()
     : Array.isArray(req.headers['cf-connecting-ip'])
       ? req.headers['cf-connecting-ip'][0]
       : req.headers['cf-connecting-ip'] ||

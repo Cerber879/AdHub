@@ -4,7 +4,7 @@ import {
   Logger,
   NotFoundException
 } from '@nestjs/common'
-import { v4 as uuidv4 } from 'uuid';
+import { v4 as uuidv4 } from 'uuid'
 
 import { User } from '@/prisma/generated'
 import { PrismaService } from '@/src/core/prisma/prisma.service'
@@ -13,11 +13,12 @@ import {
   parseAnnouncementStatus
 } from '@/src/shared/utils/parse-types-ad'
 
+import { AnnouncementCharacteristicService } from '../category/announcement-characteristic/announcement-characteristic.service'
+import { PhotoService } from '../photo/photo.service'
+
 import { CreateAnnouncementInput } from './inputs/create-announcement.input'
 import { AnnouncementFiltersInput } from './inputs/search-announcement.input'
 import { UpdateAnnouncementInput } from './inputs/update-announcement.input'
-import { PhotoService } from '../photo/photo.service'
-import { AnnouncementCharacteristicService } from '../category/announcement-characteristic/announcement-characteristic.service';
 
 @Injectable()
 export class AnnouncementService {
@@ -27,22 +28,33 @@ export class AnnouncementService {
     private readonly announcementCharacteristicService: AnnouncementCharacteristicService
   ) {}
 
-  private readonly logger = new Logger(AnnouncementService.name);
+  private readonly logger = new Logger(AnnouncementService.name)
 
   async create(input: CreateAnnouncementInput, user: User) {
-    const { categoryId, status, condition, name, price, description, photos, charactiristics } = input;
-  
-    this.logger.error(`Creating announcement for user ${user.id}: ${JSON.stringify(input)}`);
-  
-    console.log('Create Input:', input);
-  
+    const {
+      categoryId,
+      status,
+      condition,
+      name,
+      price,
+      description,
+      photos,
+      charactiristics
+    } = input
+
+    this.logger.error(
+      `Creating announcement for user ${user.id}: ${JSON.stringify(input)}`
+    )
+
+    console.log('Create Input:', input)
+
     try {
-      const uniqueID = uuidv4();
-      console.log('Generated UUID:', uniqueID);
-  
-      const announcementStatus = parseAnnouncementStatus(status);
-      const announcementCondition = parseAnnouncementCondition(condition);
-  
+      const uniqueID = uuidv4()
+      console.log('Generated UUID:', uniqueID)
+
+      const announcementStatus = parseAnnouncementStatus(status)
+      const announcementCondition = parseAnnouncementCondition(condition)
+
       await this.prismaService.announcement.create({
         data: {
           id: uniqueID.toString(),
@@ -62,28 +74,37 @@ export class AnnouncementService {
             }
           }
         }
-      });
-  
-      console.log('Announcement created');
-  
-      const resolvedPhotos = await Promise.all(photos.map(async (photo) => {
-        return photo; 
-      }));
+      })
 
-      await this.photoService.addPhotoToAnnouncement(uniqueID.toString(), resolvedPhotos);
-      console.log('Photos added to announcement');
-  
-      await this.announcementCharacteristicService.addToAnnouncement(uniqueID.toString(), charactiristics);
-      console.log('Characteristics added to announcement');
-  
-      return true;
+      console.log('Announcement created')
+
+      const resolvedPhotos = await Promise.all(
+        photos.map(async photo => {
+          return photo
+        })
+      )
+
+      await this.photoService.addPhotoToAnnouncement(
+        uniqueID.toString(),
+        resolvedPhotos
+      )
+      console.log('Photos added to announcement')
+
+      await this.announcementCharacteristicService.addToAnnouncement(
+        uniqueID.toString(),
+        charactiristics
+      )
+      console.log('Characteristics added to announcement')
+
+      return true
     } catch (error) {
-      this.logger.error(`Error creating announcement for user ${user.id}: ${error.message}`);
-      console.error('Error:', error);
-      return false;
+      this.logger.error(
+        `Error creating announcement for user ${user.id}: ${error.message}`
+      )
+      console.error('Error:', error)
+      return false
     }
   }
-  
 
   findAllAnnouncements() {
     return this.prismaService.announcement.findMany({})

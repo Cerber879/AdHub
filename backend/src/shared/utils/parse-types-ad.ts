@@ -3,7 +3,6 @@ import {
   ProductCondition
 } from '../types/announcement-types'
 
-
 export function parseAnnouncementStatus(
   status: string
 ): AnnouncementStatus | null {

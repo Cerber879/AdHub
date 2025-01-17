@@ -1,10 +1,10 @@
-import { InputType, Field } from '@nestjs/graphql';
+import { Field, InputType } from '@nestjs/graphql'
 
 @InputType()
 export class UpdateReviewInput {
   @Field({ nullable: true })
-  content?: string;
+  content?: string
 
   @Field({ nullable: true })
-  rating?: number;
+  rating?: number
 }

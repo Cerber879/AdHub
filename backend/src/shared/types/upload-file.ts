@@ -1,7 +1,7 @@
-import { ReadStream } from "fs";
+import { ReadStream } from 'fs'
 
 export interface UploadedFile {
-  filename: string;
-  mimetype: string;
-  createReadStream: () => ReadStream;
+  filename: string
+  mimetype: string
+  createReadStream: () => ReadStream
 }

@@ -10,68 +10,79 @@ import { AnnouncementCharacteristicResponse } from './responses/announcement.res
 export class AnnouncementCharacteristicService {
   constructor(private readonly prismaService: PrismaService) {}
 
-  async addToAnnouncement(productId: string, input: Record<string, AddToAnnouncementInput>) {
+  async addToAnnouncement(
+    productId: string,
+    input: Record<string, AddToAnnouncementInput>
+  ) {
     for (const [key, item] of Object.entries(input)) {
       await this.prismaService.announcementCharacteristic.create({
         data: {
           value: item.toString(),
           productId: productId,
-          characteristicId: key,
-        },
-      });
+          characteristicId: key
+        }
+      })
     }
-    return true;
+    return true
   }
-  
+
   async getByAnnouncementId(id: string) {
-    const values = await this.prismaService.announcementCharacteristic.findMany({
-      where: {
-        productId: id
+    const values = await this.prismaService.announcementCharacteristic.findMany(
+      {
+        where: {
+          productId: id
+        },
+        include: {
+          characteristic: true
+        }
+      }
+    )
+
+    const groupedCharacteristics = values.reduce(
+      (acc, content) => {
+        const group = content.characteristic.group
+
+        if (!acc[group]) {
+          acc[group] = []
+        }
+
+        acc[group].push({
+          value: content.value,
+          characteristic: content.characteristic.name,
+          unitSuffix: content.characteristic.unitSuffix,
+          type: content.characteristic.type
+        })
+
+        return acc
       },
-      include: {
-        characteristic: true
-      }
-    })
+      {} as Record<string, AnnouncementCharacteristicResponse[]>
+    )
 
-    const groupedCharacteristics = values.reduce((acc, content) => {
-      
-      const group = content.characteristic.group 
+    const orderedGroups: Record<string, AnnouncementCharacteristicResponse[]> =
+      {}
 
-      if (!acc[group]) {
-        acc[group] = [];
-      }
-
-      acc[group].push({
-        value: content.value,
-        characteristic: content.characteristic.name,
-        unitSuffix: content.characteristic.unitSuffix,
-        type: content.characteristic.type
-      });
-
-      return acc;
-    }, {} as Record<string, AnnouncementCharacteristicResponse[]>);
-
-    const orderedGroups: Record<string, AnnouncementCharacteristicResponse[]> = {};
-
-    if(groupedCharacteristics['Основные']) {
-      orderedGroups['Основные'] = groupedCharacteristics['Основные'];
-      delete groupedCharacteristics['Основные'];
+    if (groupedCharacteristics['Основные']) {
+      orderedGroups['Основные'] = groupedCharacteristics['Основные']
+      delete groupedCharacteristics['Основные']
     }
 
     const otherGroups = Object.keys(groupedCharacteristics)
       .sort()
-      .reduce((acc, key) => {
-        acc[key] = groupedCharacteristics[key];
-        return acc;
-      }, {} as Record<string, AnnouncementCharacteristicResponse[]>);
+      .reduce(
+        (acc, key) => {
+          acc[key] = groupedCharacteristics[key]
+          return acc
+        },
+        {} as Record<string, AnnouncementCharacteristicResponse[]>
+      )
 
-    Object.assign(orderedGroups, otherGroups);
+    Object.assign(orderedGroups, otherGroups)
 
-    if(groupedCharacteristics['Дополнительно']) {
-      orderedGroups['Дополнительно'] = groupedCharacteristics['Дополнительно'];
-      delete groupedCharacteristics['Дополнительно'];
+    if (groupedCharacteristics['Дополнительно']) {
+      orderedGroups['Дополнительно'] = groupedCharacteristics['Дополнительно']
+      delete groupedCharacteristics['Дополнительно']
     }
-    
+
     return orderedGroups
   }
 

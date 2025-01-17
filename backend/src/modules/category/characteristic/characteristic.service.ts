@@ -49,40 +49,45 @@ export class CharacteristicService {
       }
     })
 
-    const groupedCharacteristics = values.reduce((acc, characteristic) => {
-      
-      const group = characteristic.group 
+    const groupedCharacteristics = values.reduce(
+      (acc, characteristic) => {
+        const group = characteristic.group
 
-      if (!acc[group]) {
-        acc[group] = [];
-      }
+        if (!acc[group]) {
+          acc[group] = []
+        }
 
-      acc[group].push(characteristic);
+        acc[group].push(characteristic)
 
-      return acc;
-    }, {} as Record<string, CharacteristicModel[]>);
+        return acc
+      },
+      {} as Record<string, CharacteristicModel[]>
+    )
 
-    const orderedGroups: Record<string, CharacteristicModel[]> = {};
+    const orderedGroups: Record<string, CharacteristicModel[]> = {}
 
-    if(groupedCharacteristics['Основные']) {
-      orderedGroups['Основные'] = groupedCharacteristics['Основные'];
-      delete groupedCharacteristics['Основные'];
+    if (groupedCharacteristics['Основные']) {
+      orderedGroups['Основные'] = groupedCharacteristics['Основные']
+      delete groupedCharacteristics['Основные']
     }
 
     const otherGroups = Object.keys(groupedCharacteristics)
       .sort()
-      .reduce((acc, key) => {
-        acc[key] = groupedCharacteristics[key];
-        return acc;
-      }, {} as Record<string, CharacteristicModel[]>);
+      .reduce(
+        (acc, key) => {
+          acc[key] = groupedCharacteristics[key]
+          return acc
+        },
+        {} as Record<string, CharacteristicModel[]>
+      )
 
-    Object.assign(orderedGroups, otherGroups);
+    Object.assign(orderedGroups, otherGroups)
 
-    if(groupedCharacteristics['Дополнительно']) {
-      orderedGroups['Дополнительно'] = groupedCharacteristics['Дополнительно'];
-      delete groupedCharacteristics['Дополнительно'];
+    if (groupedCharacteristics['Дополнительно']) {
+      orderedGroups['Дополнительно'] = groupedCharacteristics['Дополнительно']
+      delete groupedCharacteristics['Дополнительно']
     }
-    
+
     return orderedGroups
   }
 }

@@ -65,8 +65,8 @@ export class CategoryService {
       include: { parent: true }
     })
 
-    if (!currentCategory || !currentCategory.id|| !currentCategory.name) {
-      throw new Error('Category or category.id is null or undefined');
+    if (!currentCategory || !currentCategory.id || !currentCategory.name) {
+      throw new Error('Category or category.id is null or undefined')
     }
 
     parents.push(currentCategory)
@@ -79,8 +79,8 @@ export class CategoryService {
         include: { parent: true }
       })
 
-      if (!currentCategory || !currentCategory.id|| !currentCategory.name) {
-        throw new Error('Category or category.id is null or undefined');
+      if (!currentCategory || !currentCategory.id || !currentCategory.name) {
+        throw new Error('Category or category.id is null or undefined')
       }
     }
 

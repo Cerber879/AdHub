@@ -1,23 +1,27 @@
-import { ConflictException, Injectable, NotFoundException } from '@nestjs/common';
-import { CreateMessageInput } from './dto/create-message.input';
-import { PrismaService } from '@/src/core/prisma/prisma.service';
+import {
+  ConflictException,
+  Injectable,
+  NotFoundException
+} from '@nestjs/common'
+
+import { PrismaService } from '@/src/core/prisma/prisma.service'
+
+import { CreateMessageInput } from './dto/create-message.input'
 
 @Injectable()
 export class MessageService {
-
   constructor(private readonly prismaService: PrismaService) {}
-  
+
   async create(createMessageInput: CreateMessageInput) {
-    const { Content, status, userID, chatID } = createMessageInput;
+    const { Content, status, userID, chatID } = createMessageInput
 
     await this.prismaService.message.create({
-      data: 
-      {
+      data: {
         content: Content,
         status: status,
         isEdited: false,
         chat: {
-          connect:{
+          connect: {
             id: chatID
           }
         },
@@ -25,9 +29,9 @@ export class MessageService {
           connect: {
             id: userID
           }
-        },
+        }
       }
-    });
+    })
 
     return true
   }
@@ -35,46 +39,46 @@ export class MessageService {
   public async editMessage(messageId: string, newContent: string) {
     return this.prismaService.message.update({
       where: {
-        id: messageId,
+        id: messageId
       },
       data: {
         content: newContent,
         isEdited: true,
-        sentAt: new Date(),
-      },
-    });
+        sentAt: new Date()
+      }
+    })
   }
 
-
   async findMessage(search: string, chatId: string) {
-    const message = await this.prismaService.message.findMany({ 
-      where : {
+    const message = await this.prismaService.message.findMany({
+      where: {
         AND: [
           chatId ? { chatId: chatId } : {},
-          search !== null && search !== '' ? 
-          {
-            content: {
-              contains: search,
-              mode: 'insensitive'
-            }
-          } : {},
+          search !== null && search !== ''
+            ? {
+                content: {
+                  contains: search,
+                  mode: 'insensitive'
+                }
+              }
+            : {}
         ]
-    }});
+      }
+    })
 
     if (!message) {
-      throw new NotFoundException('Сообщение не найдено');
+      throw new NotFoundException('Сообщение не найдено')
     }
 
-    return message;
+    return message
   }
 
   async update(id: string, content: string) {
-
     if (!content || content === '') {
       throw new ConflictException('Сообщение не может быть пустым')
     }
 
-    await this.prismaService.message.update({ 
+    await this.prismaService.message.update({
       where: {
         id
       },
@@ -82,23 +86,22 @@ export class MessageService {
         isEdited: true,
         content: content
       }
-    });
+    })
 
-    return true;
+    return true
   }
 
   async remove(id: string) {
-    const message = await this.prismaService.message.delete({ 
+    const message = await this.prismaService.message.delete({
       where: {
         id
       }
-    });
+    })
 
     if (!message) {
-      throw new NotFoundException('Сообщение не найдено');
+      throw new NotFoundException('Сообщение не найдено')
     }
 
-    return true;
+    return true
   }
 }
-

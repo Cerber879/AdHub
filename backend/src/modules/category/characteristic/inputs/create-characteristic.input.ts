@@ -11,7 +11,7 @@ export class CreateCharacteristicInput {
   @Field(() => String)
   @IsNotEmpty()
   public type: string
-  
+
   @Field(() => String)
   @IsNotEmpty()
   public group: string

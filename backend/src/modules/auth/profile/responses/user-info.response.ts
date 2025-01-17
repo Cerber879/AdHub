@@ -1,4 +1,5 @@
 import { Field, ObjectType } from '@nestjs/graphql'
+
 import { SocialLinkModel } from '../models/social-link.model'
 
 @ObjectType()
@@ -12,7 +13,6 @@ export class UserInfoResponse {
 
 @ObjectType()
 export class SocialLinksResponse {
-
   @Field(() => String)
   public title: string
 

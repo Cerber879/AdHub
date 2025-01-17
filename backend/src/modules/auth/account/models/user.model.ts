@@ -25,7 +25,7 @@ export class UserModel implements User {
   @Field(() => Float, { nullable: true })
   public rating: number
 
-  @Field(() => String, { nullable: true }) 
+  @Field(() => String, { nullable: true })
   public avatar: string
 
   @Field(() => String, { nullable: true })

@@ -1,8 +1,5 @@
 import { Field, Float, InputType } from '@nestjs/graphql'
-import {
-  IsNotEmpty,
-  MaxLength
-} from 'class-validator'
+import { IsNotEmpty, MaxLength } from 'class-validator'
 
 @InputType()
 export class AddToAnnouncementInput {

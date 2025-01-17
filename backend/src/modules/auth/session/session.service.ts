@@ -9,12 +9,12 @@ import { ConfigService } from '@nestjs/config'
 import { verify } from 'argon2'
 import type { Request } from 'express'
 
+import { User } from '@/prisma/generated'
 import { RedisService } from '@/src/core/redis/redis.service'
 import { getSessionMetadata } from '@/src/shared/utils/session-metadata.util'
 
 import { PrismaService } from './../../../core/prisma/prisma.service'
 import { LoginInput } from './inputs/login.input'
-import { User } from '@/prisma/generated'
 
 @Injectable()
 export class SessionService {
@@ -151,7 +151,7 @@ export class SessionService {
 
     return true
   }
-  
+
   public async delete(user: User) {
     await this.prismaService.user.delete({
       where: {

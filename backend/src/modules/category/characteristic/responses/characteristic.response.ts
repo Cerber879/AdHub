@@ -1,5 +1,6 @@
 import { Field, ObjectType } from '@nestjs/graphql'
-import { CharacteristicModel } from '../models/characteristic.model';
+
+import { CharacteristicModel } from '../models/characteristic.model'
 
 @ObjectType()
 export class CharacteristicsResponse {
@@ -7,5 +8,5 @@ export class CharacteristicsResponse {
   group: string
 
   @Field(() => [CharacteristicModel])
-  data: CharacteristicModel[];
+  data: CharacteristicModel[]
 }

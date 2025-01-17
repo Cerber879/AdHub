@@ -11,7 +11,7 @@ export class FavouritesService {
 
   async add(input: AddFavouriteInput, user: User) {
     const { announcementID, ...rest } = input
-    
+
     const existing = await this.prismaService.favourites.findFirst({
       where: { announcementID, userID: user.id }
     })
@@ -39,11 +39,8 @@ export class FavouritesService {
   }
   async delete(id: string, user: User) {
     const existing = await this.prismaService.favourites.findFirst({
-      where: { 
-        AND: [
-          { announcementID: id },
-          { userID: user.id }
-        ]
+      where: {
+        AND: [{ announcementID: id }, { userID: user.id }]
       }
     })
 

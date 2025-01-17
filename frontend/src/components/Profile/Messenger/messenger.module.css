@@ -100,7 +100,6 @@
   background-color: #e3e3e3;
   align-self: flex-start;
   color: rgba(0, 0, 0, 0.823);
-
 }
 
 .input__container {
@@ -131,13 +130,11 @@
   background-color: #0056b3;
 }
 
-.lastMessage
-{
+.lastMessage {
   color: gray;
 }
 
-.logo__file__dw
-{
+.logo__file__dw {
   width: 23px;
   height: 23px;
 }

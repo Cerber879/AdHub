@@ -93,7 +93,7 @@ const Advertisement = () => {
       // Если чат найден, перенаправляем в него
       if (existingChat) {
         console.log("Чат найден", existingChat);
-        const params = {id : existingChat.id, name:  existingChat.user_1.displayName};
+        const params = { id: existingChat.id, name: existingChat.user_1.displayName };
         navigate(`${ROUTES.MESSENGER}/${userId}`); 
       } else {
         // Если чат не найден, создаем новый
@@ -177,7 +177,7 @@ const Advertisement = () => {
           };
           
           
-        setReviewsMas((prevReviews) => [...prevReviews, newReview]);}
+          setReviewsMas((prevReviews) => [...prevReviews, newReview]);}
         
         console.log("Отзыв успешно создан");
       } catch (error) {
@@ -330,12 +330,12 @@ const Advertisement = () => {
             </Link>
             <div className={styles.social_buttons}>
               <button className={styles.social}>Показать номер</button>
-                <button 
+              <button 
                 className={styles.social}
-                  onClick={() => findOrCreateFriend(advertisment?.userId || '', advertisment?.id || '')}
-                  >
-                    Написать
-                </button>
+                onClick={() => findOrCreateFriend(advertisment?.userId || '', advertisment?.id || '')}
+              >
+                Написать
+              </button>
             </div>
           </div>
           <form id="reviewForm" className={styles.form} onSubmit={handleSubmit}>
