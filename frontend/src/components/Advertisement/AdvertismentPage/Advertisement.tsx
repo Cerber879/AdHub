@@ -354,6 +354,7 @@ const Advertisement = () => {
             <textarea
               id="content"
               name="content"
+              minLength={5}
               required
               ref={contentRef}
               className={styles.form__textarea}
