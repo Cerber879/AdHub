@@ -13,7 +13,7 @@ interface PreviewSmallAdvertismentProps {
 const DataAdvertisment = ({ input, stopPropagation }: PreviewSmallAdvertismentProps) => {
   const { user } = useCurrent();
 
-  const { data } = useCheckAnnouncementInFavouritesQuery({
+  const { data, refetch } = useCheckAnnouncementInFavouritesQuery({
     variables: { adId: input.id },
     skip: !user,
   });
@@ -26,13 +26,13 @@ const DataAdvertisment = ({ input, stopPropagation }: PreviewSmallAdvertismentPr
     }
   }, [data]);
 
-  const [addFavourites] = useAddFavouriteMutation({
+  const [addFavourites, { loading: addLoading }] = useAddFavouriteMutation({
     onCompleted() {
       console.log("Added to favourites");
     },
   });
 
-  const [removeFavourites] = useRemoveFavouriteMutation({
+  const [removeFavourites, { loading: removeLoading }] = useRemoveFavouriteMutation({
     onCompleted() {
       console.log("Removed from favourites");
     },
@@ -41,7 +41,7 @@ const DataAdvertisment = ({ input, stopPropagation }: PreviewSmallAdvertismentPr
   const handleFavourites = (id: string, event: React.MouseEvent) => {
     stopPropagation(event);
 
-    if (user) {
+    if (user && !addLoading && !removeLoading) {
       if (check) {
         setCheck(false); 
         removeFavourites({ variables: { id: id } });
@@ -49,6 +49,7 @@ const DataAdvertisment = ({ input, stopPropagation }: PreviewSmallAdvertismentPr
         setCheck(true); 
         addFavourites({ variables: { data: { announcementID: id } } });
       }
+      refetch()
     } else {
       alert('Вы не авторизованы');
     }

@@ -1,15 +1,19 @@
 .container {
-  display: flex;
-  flex-direction: column;
+  width: 100%;
+  height: auto;
 }
 
 .name {
+  display: flex;
   font-size: 35px;
   padding-bottom: 10px;
   font-weight: 500;
+  width: auto;
 }
 
 .description {
+  display: flex;
+  width: auto;
   color: #433f3f;
   font-size: 15px;
   padding-bottom: 7px;

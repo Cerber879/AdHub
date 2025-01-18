@@ -17,13 +17,18 @@ interface PreviewBigAdvertismentProps {
 
 const PreviewBigAdvertisment: React.FC<PreviewBigAdvertismentProps> = ({ input }) => { 
   
+  const handlePreventLinkClick = (event: React.MouseEvent) => {
+    event.stopPropagation();
+    event.preventDefault();
+  };
+
   return (
     <Link 
       to={ROUTES.ITEMS + "/" + input.name + "/" + input.id} 
       className={styles.container}
     >
       <PhotosBlock useStylesProfile={false} input={input}/>
-      <DataAdvertisment input={input} /> 
+      <DataAdvertisment input={input} stopPropagation={handlePreventLinkClick} /> 
       <UserAdvertisment input={input} />
     </Link>
   )

@@ -48,16 +48,19 @@ export class CloudinaryService {
 
   public async remove(key: string) {
     try {
-      const result = await cloudinary.uploader.destroy(key)
+      const publicId = key.split('/').slice(7).join('/').replace(/\.(jpg|jpeg|png|webp)$/i, '');
+  
+      const result = await cloudinary.uploader.destroy(publicId);
+  
       if (result.result === 'ok') {
-        return true
+        return true;
       } else {
-        this.logger.error(`Failed to remove image: ${key}`)
-        throw new Error(`Failed to remove image from Cloudinary: ${key}`)
+        this.logger.error(`Failed to remove image: ${key}`);
+        throw new Error(`Failed to remove image from Cloudinary: ${key}`);
       }
     } catch (error) {
-      this.logger.error(`Error removing image: ${error.message}`)
-      throw new Error(`Error removing file from Cloudinary: ${error.message}`)
+      this.logger.error(`Error removing image: ${error.message}`);
+      throw new Error(`Error removing file from Cloudinary: ${error.message}`);
     }
   }
 }

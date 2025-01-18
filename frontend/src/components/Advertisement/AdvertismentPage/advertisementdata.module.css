@@ -33,7 +33,7 @@
 }
 
 .link:hover {
-  border-bottom: 1px solid gray;
+  color: #007bff;
 }
 
 .arrow_right {

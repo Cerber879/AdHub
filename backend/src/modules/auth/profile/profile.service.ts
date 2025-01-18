@@ -6,7 +6,6 @@ import { PrismaService } from '@/src/core/prisma/prisma.service'
 
 import { CloudinaryService } from '../../libs/storage/cloudinary.service'
 
-import { ChangeProfileInfoInput } from './inputs/change-profile-info.input'
 import {
   SocialLinkInput,
   SocialLinkOrderInput
@@ -23,6 +22,12 @@ export class ProfileService {
 
   public async changeAvatar(user: User, file: Upload) {
     try {
+
+      await this.prismaService.user.update({
+        where: { id: user.id },
+        data: { avatar: null }
+      })
+
       if (user.avatar) {
         await this.cloudinaryService.remove(user.avatar)
       }
@@ -63,6 +68,7 @@ export class ProfileService {
   }
 
   public async deleteAvatar(user: User): Promise<boolean> {
+
     if (user.avatar) {
       await this.cloudinaryService.remove(user.avatar)
     }
@@ -70,26 +76,6 @@ export class ProfileService {
     await this.prismaService.user.update({
       where: { id: user.id },
       data: { avatar: null }
-    })
-
-    return true
-  }
-
-  public async changeInfo(user: User, input: ChangeProfileInfoInput) {
-    const { displayName, bio } = input
-
-    if (displayName === '') {
-      throw new BadRequestException('Имя не должно быть пустым')
-    }
-
-    await this.prismaService.user.update({
-      where: {
-        id: user.id
-      },
-      data: {
-        displayName,
-        bio
-      }
     })
 
     return true

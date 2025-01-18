@@ -1,0 +1,24 @@
+.data_block {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.data_block button {
+  background-color: #fcf9f9;
+  border: 1px solid #ccc;
+  border-radius: 10px;
+  padding: 7px 10px;
+  cursor: pointer;
+  transition: all 0.2s ease-in-out;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  font-size: 14px;
+  font-weight: 500;
+}
+
+.data_block button:hover {
+  background-color: #eeecec;
+}

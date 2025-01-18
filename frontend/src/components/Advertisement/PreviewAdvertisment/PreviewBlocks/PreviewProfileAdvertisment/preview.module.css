@@ -4,7 +4,7 @@
   align-items: center;
   padding: 20px;
   border-radius: 8px;
-  width: 980px;
+  width: 900px;
   height: 160px;
   gap: 20px;
   cursor: pointer;
@@ -13,4 +13,12 @@
 
 .container:hover {
   background-color: rgba(78, 87, 218, 0.1);
+}
+
+.actions {
+  display: none;
+}
+
+.container:hover .actions {
+  display: block;
 }

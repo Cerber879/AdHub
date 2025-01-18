@@ -15,6 +15,7 @@ export class AnnouncementCharacteristicService {
     input: Record<string, AddToAnnouncementInput>
   ) {
     for (const [key, item] of Object.entries(input)) {
+      console.log(item, productId, key)
       await this.prismaService.announcementCharacteristic.create({
         data: {
           value: item.toString(),

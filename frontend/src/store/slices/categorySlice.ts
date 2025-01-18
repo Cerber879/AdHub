@@ -10,6 +10,7 @@ export interface CategoryState {
   currentNameCategory: string | null
   selectIdCategories: SubCategories[]
   showCatalogueModal: boolean
+  emptyAnouncements: boolean
 }
 
 const initialState: CategoryState = {
@@ -17,6 +18,7 @@ const initialState: CategoryState = {
   currentNameCategory: null,
   selectIdCategories: [],
   showCatalogueModal: false,
+  emptyAnouncements: false
 }
 
 const categorySlice = createSlice({
@@ -29,6 +31,9 @@ const categorySlice = createSlice({
     ) => {
       state.currentIdCategory = action.payload.id
       state.currentNameCategory = action.payload.name
+    },
+    setEmptyAnnouncements: (state, action) => {
+      state.emptyAnouncements = action.payload
     },
     setShowCatalogueModal: (state, action: PayloadAction<boolean>) => {
       state.showCatalogueModal = action.payload
@@ -47,6 +52,7 @@ export const {
   setCurrentCategory,
   setShowCatalogueModal,
   addSelectCategories,
+  setEmptyAnnouncements,
   clearCategories,
 } = categorySlice.actions
 export default categorySlice.reducer

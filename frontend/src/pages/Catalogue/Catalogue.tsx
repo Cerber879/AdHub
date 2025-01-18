@@ -5,12 +5,17 @@ import AdvertisementTop from '../../components/SearchNavigation/SearchNavigation
 import styles from './catalogue.module.css'
 import Filters from '../../components/Advertisement/Filters/Filters';
 import Characteristics from '../../components/Advertisement/Filters/Characteristics/Characteristics';
+import { useParams } from 'react-router-dom';
 
 const Catalogue: React.FC = () => {
+
+  const { categoryName, categoryId } = useParams();
+  console.log(categoryName, categoryId);
+
   return (
     <div className={styles.container}>
       <AdvertisementTop/>
-      <h1 className={styles.title}>Машины</h1>
+      <h1 className={styles.title}>{categoryName}</h1>
       <div className={styles.content}>
         <Characteristics />
         <div className={styles.list}>

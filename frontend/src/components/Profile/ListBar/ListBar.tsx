@@ -1,9 +1,10 @@
 import { useLocation, Link, useNavigate } from 'react-router-dom'; 
 import styles from './list.module.css';
 import { ROUTES } from '../../../utils/routes';
-import { useFindProfileQuery, useLogoutUserMutation } from '../../../graphql/generated/output';
+import { useFindProfileQuery, useGetReviewsByUserQuery, useLogoutUserMutation } from '../../../graphql/generated/output';
 import { useDispatch } from 'react-redux';
 import { exit } from '../../../store/slices/userSlise';
+import { printRewiewsLength } from '../../../utils/reviews-length';
 
 const ListBar = () => {
   const dispatch = useDispatch();
@@ -21,6 +22,14 @@ const ListBar = () => {
 
   const { data, refetch } = useFindProfileQuery();
   const user = data?.findProfile;
+
+  const { data: dataReviews, loading } = useGetReviewsByUserQuery({
+    variables: {
+      userId: user?.id || '',
+    },
+  })
+
+  const reviews = dataReviews?.getReviewsByUser || [];
 
   const location = useLocation();
 
@@ -42,8 +51,8 @@ const ListBar = () => {
         <img className={styles.user_logo} src={user?.avatar || '/images/Profile/user.svg'} alt="avatar" />
         <span className={styles.user_name}>{user?.displayName}</span>
         <div className={styles.user_rating_block}>
-          <span className={styles.user_rating_number}>{user?.rating}</span>
-          <span className={styles.user_count_feedback}>126 отзывов</span>
+          {user?.rating && <span className={styles.user_rating_number}>{user.rating}</span>}
+          <span className={styles.user_count_feedback}>{printRewiewsLength(reviews.length)}</span>
         </div>
       </div>
       <div className={styles.links}>

@@ -6,7 +6,7 @@ import { Authorized } from '@/src/shared/decorators/authorized.decorator'
 
 import { AccountService } from './account.service'
 import { ChangeEmailInput } from './inputs/change-email.input'
-import { ChangeProfileInfoInput } from './inputs/change-name.input'
+import { ChangeProfileInfoInput } from './inputs/change-info.input'
 import { ChangePasswordInput } from './inputs/change-password.input'
 import { ChangePhoneNumberInput } from './inputs/change-phone.input'
 import { CreateUserInput } from './inputs/create-user.input'

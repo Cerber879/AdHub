@@ -7,27 +7,33 @@ import SocialLinks from './SocialLinks/SocialLinks';
 import { useCurrent } from '../../../../../hooks/useCurrent';
 import { ApolloError } from '@apollo/client';
 import Loader from '../../../../../utils/Loader/Loader';
+import { set } from 'react-hook-form';
 
 const Profile = () => {
   const inputRef = useRef<HTMLInputElement>(null);
   const { user, refetch, isLoadingProfile } = useCurrent();
 
-  const [changeInfo] = useChangeProfileInfoMutation({
+  const [changeInfo, { loading: loadingChangeInfo }] = useChangeProfileInfoMutation({
     onCompleted() {
+      setSuccessfully((prev) => ({ ...prev, info: 'Информация о профиле успешно изменена' }));
       refetch();
+    },
+    onError(error) {
+      setSuccessfully((prev) => ({ ...prev, info: '' }));
+      setErrors((prev) => ({ ...prev, info: error.message }));
     },
   });
 
-  const [update, { loading }] = useChangeProfileAvatarMutation({
+  const [update, { loading: loadingUpdateAvatar }] = useChangeProfileAvatarMutation({
     onCompleted() {
       refetch();
     },
     onError(error) { 
-      console.log(error)
+      setErrors((prev) => ({ ...prev, avatar: error.message }));
     }
   });
 
-  const [remove] = useRemoveProfileAvatarMutation({
+  const [remove, { loading: loadingRemoveAvatar }] = useRemoveProfileAvatarMutation({
     onCompleted() {
       refetch();
     },
@@ -35,6 +41,9 @@ const Profile = () => {
 
   const [name, setName] = useState(user?.displayName || '');
   const [bio, setBio] = useState(user?.bio || '');
+
+  const [errors, setErrors] = useState<{info?: string; avatar?: string}>({});
+  const [successfully, setSuccessfully] = useState<{info?: string; avatar?: string}>({});
 
   useEffect(() => {
     if (user) {
@@ -60,6 +69,7 @@ const Profile = () => {
   };
 
   const handleImageChange = async (event: ChangeEvent<HTMLInputElement>) => {
+    setErrors((prev) => ({ ...prev, avatar: '' }));
     const file = event.target.files?.[0];
     if (file) {
       try {
@@ -90,7 +100,10 @@ const Profile = () => {
   };
 
   const handleDeleteAvatar = async () => {
-    remove();
+    if (!loadingChangeInfo) {
+      setErrors((prev) => ({ ...prev, avatar: '' }));
+      remove();
+    }
   };
 
   return isLoadingProfile ? (
@@ -104,6 +117,11 @@ const Profile = () => {
       </span>
       <div className={styles.block}>
         <span className={styles.block_name}>Изображение профиля</span>
+
+        {successfully.avatar && <span className={styles.successfully}>{successfully.avatar}</span>}
+        {errors.avatar && <span className={styles.error}>{errors.avatar}</span>}
+        {loadingUpdateAvatar || loadingRemoveAvatar && <Loader />}
+
         <div className={styles.avatar}>
           <img
             src={user?.avatar || '../../../../images/Profile/user.svg'}
@@ -122,7 +140,7 @@ const Profile = () => {
               <button
                 onClick={() => inputRef.current?.click()}
                 className={styles.avatar_update_button}
-                disabled={loading}
+                disabled={loadingUpdateAvatar}
               >
                 Загрузить изображение
               </button>
@@ -142,10 +160,13 @@ const Profile = () => {
       <div className={styles.block}>
         <span className={styles.block_name}>Настройки профиля</span>
 
+        {successfully.info && <span className={styles.successfully}>{successfully.info}</span>}
+        {errors.info && <span className={styles.error}>{errors.info}</span>}
+
         <div className={styles.block_section}>
           <span className={styles.block_section_name}>Имя пользователя</span>
           <input
-            onChange={(event) => setName(event.target.value)}
+            onChange={(event) => {setName(event.target.value); setSuccessfully({ ...successfully, info: '' }); setErrors({ ...errors, info: '' })}}
             value={name}
             type="text"
             className={styles.avatar_update_input}
@@ -158,16 +179,17 @@ const Profile = () => {
         <div className={styles.block_section}>
           <span className={styles.block_section_name}>О себе</span>
           <textarea
-            onChange={(event) => setBio(event.target.value)}
+            onChange={(event) => {setBio(event.target.value); setSuccessfully({ ...successfully, info: '' }); setErrors({ ...errors, info: '' })}}
             value={bio}
+            maxLength={1000}
             className={styles.bio}
           />
           <span className={styles.block_section_description}>
-            Информация о себе должна содержать не более 300 символов
+            Информация о себе должна содержать не более 1000 символов
           </span>
         </div>
 
-        <button onClick={handleProfileInfoChange} className={styles.save_button}>
+        <button disabled={loadingChangeInfo} onClick={handleProfileInfoChange} className={styles.save_button}>
           Сохранить изменения
         </button>
       </div>

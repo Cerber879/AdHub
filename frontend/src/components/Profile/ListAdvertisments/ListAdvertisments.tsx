@@ -1,4 +1,4 @@
-import React, { useMemo, useState } from 'react'
+import React, { useEffect, useMemo, useState } from 'react'
 
 import styles from './ads.module.css'
 
@@ -6,14 +6,19 @@ import { useGetAnnouncementByProfileQuery } from '../../../graphql/generated/out
 import { statusMap } from '../../../types';
 
 import PreviewProfileAdvertisment from '../../Advertisement/PreviewAdvertisment/PreviewBlocks/PreviewProfileAdvertisment/PreviewProfileAdvertisment';
+import Loader from '../../../utils/Loader/Loader';
 
 const ProfileListAdvertisments = () => {
 
-  const { data } = useGetAnnouncementByProfileQuery()
+  const { data, refetch, loading } = useGetAnnouncementByProfileQuery()
   const ads = useMemo(() => data?.getAnnouncementByProfile || [], [data]);
 
   const [releaseButton, setReleaseButton] = useState(true);
   const [archiveButton, setArchiveButton] = useState(false);
+
+  useEffect(() => {
+    refetch();
+  }, [refetch]);
 
   const handleReleaseButton = () => {
     setReleaseButton(true)
@@ -41,7 +46,7 @@ const ProfileListAdvertisments = () => {
         </button>
       </div>
 
-      <div className={styles.ads}>
+      {loading ? <Loader /> : <div className={styles.ads}>
         {ads?.map((ad) => {
           const status = statusMap[ad.status]
           if (status === "Активное") {
@@ -49,7 +54,7 @@ const ProfileListAdvertisments = () => {
           }
           return null; 
         })}
-      </div>
+      </div>}
     </div>
   )
 }

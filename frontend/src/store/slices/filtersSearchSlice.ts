@@ -49,7 +49,8 @@ const filtersSearchSlice = createSlice({
       state.search = null
       state.take = 12
       state.sort = null
-      state.displayType = 'small'
+      state.displayType = 'small',
+      state.categoryId = null
     },
   },
 })

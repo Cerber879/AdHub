@@ -17,6 +17,18 @@ export class ReviewService {
   async create(user: User, input: CreateReviewInput) {
     const { userId, ...rest } = input
 
+    const existingReview = await this.prismaService.review.findFirst({
+      where: {
+        reviewerId: user.id, 
+        userId: userId,     
+        announcementId: input.announcementId, 
+      },
+    });
+  
+    if (existingReview) {
+      throw new ConflictException('Вы уже оставили отзыв на это объявление.');
+    }
+
     await this.prismaService.review.create({
       data: {
         ...rest,
@@ -27,7 +39,7 @@ export class ReviewService {
 
     const reviews = await this.prismaService.review.findMany({
       where: {
-        userId: input.userId
+        userId: userId
       }
     })
 
@@ -38,7 +50,7 @@ export class ReviewService {
 
     await this.prismaService.user.update({
       where: {
-        id: user.id
+        id: userId
       },
       data: {
         rating: averageRating
@@ -56,6 +68,9 @@ export class ReviewService {
       include: {
         announcement: true,
         reviewer: true
+      },
+      orderBy: {
+        createdAt: 'desc' 
       }
     })
   }
@@ -68,6 +83,9 @@ export class ReviewService {
       include: {
         announcement: true,
         reviewer: true
+      },
+      orderBy: {
+        createdAt: 'desc' 
       }
     })
   }
@@ -79,6 +97,9 @@ export class ReviewService {
       },
       include: {
         announcement: true
+      },
+      orderBy: {
+        createdAt: 'desc' 
       }
     })
   }

@@ -8,6 +8,7 @@ const Filters: React.FC = () => {
   const dispatch = useDispatch();
 
   const filters = useSelector((state: RootState) => state.filtersSearch);
+  const emptyAnouncements = useSelector((state: RootState) => state.category.emptyAnouncements);
 
   const [isOpen, setIsOpen] = useState(false);
   const [selectedLabel, setSelectedLabel] = useState('Сортировка');
@@ -36,7 +37,7 @@ const Filters: React.FC = () => {
     };
   }, []);
 
-  return (
+  return emptyAnouncements ? <div></div> : (
     <div className={styles.container}>
       <button className={styles.view} onClick={() => handleDisplayTypeChange('big')}>
         <img className={styles.view_icon} src="/images/Advertisment/big_ad.svg" alt="big"></img>

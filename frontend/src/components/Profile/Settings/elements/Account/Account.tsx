@@ -1,47 +1,69 @@
-import React, { useEffect, useState } from 'react'
-
-import styles from './account.module.css'
-import { useCurrent } from '../../../../../hooks/useCurrent'
-import { useChangeEmailMutation, useChangePasswordMutation, useChangePhoneNumberMutation, useChangeProfileInfoMutation, useRemoveProfileMutation } from '../../../../../graphql/generated/output'
-import { exit } from '../../../../../store/slices/userSlise'
-import { ROUTES } from '../../../../../utils/routes'
-import { useDispatch } from 'react-redux'
-import { useNavigate } from 'react-router-dom'
+import React, { useEffect, useState } from 'react';
+import styles from './account.module.css';
+import { useCurrent } from '../../../../../hooks/useCurrent';
+import { useChangeEmailMutation, useChangePasswordMutation, useChangePhoneNumberMutation, useRemoveProfileMutation } from '../../../../../graphql/generated/output';
+import { exit } from '../../../../../store/slices/userSlise';
+import { ROUTES } from '../../../../../utils/routes';
+import { useDispatch } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
+import { validateEmail, validatePhoneNumber } from '../../../../../utils/auth-validate';
+import Loader from '../../../../../utils/Loader/Loader';
+import { set } from 'react-hook-form';
 
 const Account = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const { user, refetch, isLoadingProfile } = useCurrent()
+  const { user, refetch, isLoadingProfile } = useCurrent();
 
-  const [changeEmail] = useChangeEmailMutation({
-    onCompleted() {
-      refetch()
+  const [changeEmail, { loading: loadingChangeEmail }] = useChangeEmailMutation({ 
+    onCompleted: () => {
+      refetch();
+      setSuccessfully((prev) => ({ ...prev, email: 'Почта успешно изменена' }));
+    },
+    onError: (error) => {
+      setSuccessfully((prev) => ({ ...prev, email: '' }));
+      setErrors((prev) => ({ ...prev, email: error.message }));
     }
-  })
+  });
 
-  const [changePhone] = useChangePhoneNumberMutation({
-    onCompleted() {
-      refetch()
+  const [changePhone, { loading: loadingChangePhone }] = useChangePhoneNumberMutation({ 
+    onCompleted: () => {
+      setSuccessfully((prev) => ({ ...prev, phone: 'Номер телефона успешно изменен' }));
+      refetch();
+    },
+    onError: (error) => {
+      setSuccessfully((prev) => ({ ...prev, phone: '' }));
+      setErrors((prev) => ({ ...prev, phone: error.message }));
     }
-  })
-  
-  const [changePassword] = useChangePasswordMutation({
-    onCompleted() {
-      refetch()
-    }
-  })
+  });
 
-  const [remove] = useRemoveProfileMutation({
-    onCompleted() {
-      refetch()
+  const [changePassword, { loading: loadingChangePassword }] = useChangePasswordMutation({ 
+    onCompleted: () => {
+      setSuccessfully((prev) => ({ ...prev, password: 'Пароль успешно изменен' }));
+      refetch();
+    },
+    onError: (error) => {
+      setSuccessfully((prev) => ({ ...prev, password: '' }));
+      setErrors((prev) => ({ ...prev, password: error.message }));
+    }
+  });
+
+  const [remove] = useRemoveProfileMutation({ 
+    onCompleted: () => {
+      refetch();
       dispatch(exit());
-      navigate(ROUTES.HOME);  
+      navigate(ROUTES.HOME);
     }
   })
 
   const [email, setEmail] = useState(user?.email || '');
+  const [phone, setPhone] = useState(user?.phoneNumber || '');
+
   const [newPassword, setNewPassword] = useState('');
   const [oldPassword, setOldPassword] = useState('');
+
+  const [errors, setErrors] = useState<{ email?: string; password?: string; phone?: string }>({});
+  const [successfully, setSuccessfully] = useState<{ email?: string; password?: string; phone?: string }>({});
 
   const [showPassword, setShowPassword] = useState(false);
 
@@ -50,33 +72,38 @@ const Account = () => {
   };
 
   const handleEmailChange = async () => {
+    if (!validateEmail(email)) {
+      setErrors((prev) => ({ ...prev, email: 'Некорректный адрес электронной почты' }));
+      return;
+    }
     try {
-      const response = await changeEmail({ 
-        variables: { 
-          data: { 
-            email: email
-          }
-        } 
-      });
-      console.log('Name updated:', response);
+      await changeEmail({ variables: { data: { email } } });
     } catch (error) {
-      console.error('Error updating name:', error);
+      console.error('Error updating email:', error);
+    }
+  };
+
+  const handlePhoneChange = async () => {
+    if (!validatePhoneNumber(phone)) {
+      setErrors((prev) => ({ ...prev, phone: 'Некорректный номер телефона' }));
+      return;
+    }
+    try {
+      await changePhone({ variables: { data: { phoneNumber: phone } } });
+    } catch (error) {
+      console.error('Error updating email:', error);
     }
   };
 
   const handlePasswordChange = async () => {
+    if (newPassword.length < 8) {
+      setErrors((prev) => ({ ...prev, password: 'Пароль должен содержать не менее 8 символов' }));
+      return;
+    }
     try {
-      const response = await changePassword({ 
-        variables: { 
-          data: { 
-            oldPassword: oldPassword,
-            newPassword: newPassword
-          }
-        } 
-      });
-      console.log('Name updated:', response);
+      await changePassword({ variables: { data: { oldPassword, newPassword } } });
     } catch (error) {
-      console.error('Error updating name:', error);
+      console.error('Error updating password:', error);
     }
   };
 
@@ -92,38 +119,65 @@ const Account = () => {
   useEffect(() => {
     if (user) {
       setEmail(user?.email || '');
+      setPhone(user?.phoneNumber || '');
     }
   }, [user]);
 
-  return isLoadingProfile ? <div className={styles.spinner}></div> : (
+  return isLoadingProfile ? <Loader /> : (
     <div className={styles.container}>
       <span className={styles.name}>Аккаунт</span>
       <span className={styles.description}>Управляйте настройками вашего аккаунта</span>
 
       <div className={styles.block}>
         <span className={styles.block_name}>Адрес электронной почты</span>
-
+        {errors.email && <span className={styles.error}>{errors.email}</span>}
+        {successfully.email && <span className={styles.successfully}>{successfully.email}</span>}
         <div className={styles.block_section}>
           <span className={styles.block_section_name}>Почта</span>
           <input 
-            onChange={(event) => setEmail(event.target.value)} 
+            onChange={(event) => {setEmail(event.target.value); setErrors((prev) => ({ ...prev, email: '' })); setSuccessfully((prev) => ({ ...prev, email: '' }))}} 
             value={email} 
+            type="text" 
+            placeholder={email ? '' : 'У вас нет адреса электронной почты'}
+            className={styles.avatar_update_input}
+          />
+          <span className={styles.block_section_description}>{email ? 'Введите ваш новый адрес электронной почты' : 'Вы можете привязать адрес электронной почты'}</span>
+        </div>
+
+        <button disabled={loadingChangeEmail || email === user?.email} onClick={handleEmailChange} className={styles.save_button}>{email ? 'Сохранить' : 'Создать'}</button>
+      </div> 
+
+      <div className={styles.block}>
+        <span className={styles.block_name}>Номер телефона</span>
+
+        {errors.phone && <span className={styles.error}>{errors.phone}</span>}
+        {successfully.phone && <span className={styles.successfully}>{successfully.phone}</span>}
+
+        <div className={styles.block_section}>
+          <span className={styles.block_section_name}>Номер</span>
+          <input 
+            onChange={(event) => {setPhone(event.target.value); setErrors((prev) => ({ ...prev, phone: '' })); setSuccessfully((prev) => ({ ...prev, phone: '' }))}} 
+            value={phone} 
+            placeholder={phone ? '' : 'У вас нет номера телефона'}
             type="text" 
             className={styles.avatar_update_input}
           />
-          <span className={styles.block_section_description}>Введите ваш новый адрес электронной почты</span>
+          <span className={styles.block_section_description}>{phone ? 'Введите ваш новый номер телефона' : 'Вы можете привязать номер телефона'}</span>
         </div>
 
-        <button onClick={handleEmailChange} className={styles.save_button}>Сохранить</button>
-      </div>
+        <button disabled={loadingChangePhone || phone === user?.phoneNumber} onClick={handlePhoneChange} className={styles.save_button}>{phone ? 'Сохранить' : 'Создать'}</button>
+      </div>   
 
       <div className={styles.block}>
-        <span className={styles.block_name}>Настройки профиля</span>
+        <span className={styles.block_name}>Настройки профиля</span>  
+
+        {errors.password && <span className={styles.error}>{errors.password}</span>}
+        {successfully.password && <span className={styles.successfully}>{successfully.password}</span>}
 
         <div className={styles.block_section}>
           <span className={styles.block_section_name}>Старый пароль</span>
           <input 
-            onChange={(event) => setOldPassword(event.target.value)} 
+            onChange={(event) => {setOldPassword(event.target.value); setErrors((prev) => ({ ...prev, password: '' })); setSuccessfully((prev) => ({ ...prev, password: '' }))}} 
             value={oldPassword} 
             type={showPassword ? 'text' : 'password'} 
             className={styles.avatar_update_input}
@@ -146,7 +200,7 @@ const Account = () => {
           <button onClick={togglePasswordVisibility} className={styles.eye_button}>
             {showPassword ? 'Скрыть' : 'Показать'} пароль
           </button>
-          <button onClick={handlePasswordChange} className={styles.save_button}>Сохранить изменения</button>
+          <button disabled={loadingChangePassword} onClick={handlePasswordChange} className={styles.save_button}>Сохранить изменения</button>
         </div>
       </div>
 

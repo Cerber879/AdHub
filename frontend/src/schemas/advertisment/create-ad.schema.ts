@@ -22,6 +22,7 @@ export const createAdSchema = z.object({
     .optional(),
   characteristics: z
     .record(
+      z.string().optional(),
       z.union([
         z.preprocess(val => {
           if (typeof val === 'string' && !isNaN(Number(val))) {

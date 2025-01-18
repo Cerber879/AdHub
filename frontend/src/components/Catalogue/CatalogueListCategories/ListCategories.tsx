@@ -7,7 +7,7 @@ import { Link } from 'react-router-dom';
 import { useEffect, useMemo } from 'react';
 import { RootState } from '../../../store/store';
 
-const ListCategories = () => {
+const ListCategories = ({ onCategoryClick }: { onCategoryClick: (id: string, name: string) => void }) => {
   const dispatch = useDispatch();
   
   const { data } = useGetMainCategoriesQuery();
@@ -20,11 +20,6 @@ const ListCategories = () => {
       dispatch(setCurrentCategory({ id: categories[0].id, name: categories[0].name }));
     }
   }, [categories, dispatch]);
-
-  const handleMouseClick = (id: string, name: string) => {
-    dispatch(setCurrentCategory({ id, name }))
-    dispatch(setShowCatalogueModal(false))
-  };
 
   const handleMouseEnter = (id: string, name: string) => {
     if(id !== currentIdCategory) {
@@ -42,7 +37,7 @@ const ListCategories = () => {
             ? `${styles.category} ${styles.category_active}`
             : styles.category
           }
-          onClick={() => handleMouseClick(category.id, category.name)}
+          onClick={() => onCategoryClick(category.id, category.name)}
           onMouseEnter={() => handleMouseEnter(category.id, category.name)}
         >
           <div>

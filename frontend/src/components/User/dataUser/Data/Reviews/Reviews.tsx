@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import styles from './reviews.module.css';
 import { useFindUserQuery, useGetReviewsByUserQuery } from '../../../../../graphql/generated/output';
 import Loader from '../../../../../utils/Loader/Loader';
@@ -7,7 +7,7 @@ import { ROUTES } from '../../../../../utils/routes';
 
 const UserReviews: React.FC<{ id: string }> = ({ id }) => {
 
-  const { data: userData } = useFindUserQuery({
+  const { data: userData, refetch: refetchUserData } = useFindUserQuery({
     variables: { 
       id: id || '' 
     },
@@ -15,14 +15,18 @@ const UserReviews: React.FC<{ id: string }> = ({ id }) => {
 
   const userInfo = userData?.findUser
 
-  const { data, loading } = useGetReviewsByUserQuery({
+  const { data, loading, refetch } = useGetReviewsByUserQuery({
     variables: {
       userId: id || '',
     },
   })
 
+  useEffect(() => {
+    refetch()
+    refetchUserData()
+  }, [refetch, refetchUserData])
+
   const reviews = data?.getReviewsByUser || [];
-  console.log(reviews)
 
   const reviewStatistics = [5, 4, 3, 2, 1].map((rating) => {
     const count = reviews.filter((r) => r.rating === rating).length;
@@ -33,7 +37,7 @@ const UserReviews: React.FC<{ id: string }> = ({ id }) => {
   return loading ? <Loader /> : reviews.length === 0 ? <p>Нет отзывов</p> : (
     <div className={styles.reviewsBlock}>
       <div className={styles.overallRating}>
-        <span className={styles.ratingValue}>{userInfo?.rating}</span>
+        {userInfo?.rating && <span className={styles.ratingValue}>{userInfo.rating.toFixed(1)}</span>}
         <div className={styles.averageRating}>
           <div className={styles.stars_big}>
             {[1, 2, 3, 4, 5].map((star) => (

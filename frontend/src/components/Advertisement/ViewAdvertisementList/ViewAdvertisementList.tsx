@@ -1,17 +1,22 @@
 import React, { useEffect, useMemo, useState } from 'react';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { useFindAnnouncementsByFiltersQuery } from '../../../graphql/generated/output';
 import PreviewBigAdvertisment from '../PreviewAdvertisment/PreviewBlocks/PreviewBigAdvertisment/PreviewBigAdvertisment';
 import PreviewSmallAdvertisment from '../PreviewAdvertisment/PreviewBlocks/PreviewSmallAdvertisment/PreviewSmallAdvertisment';
 import SmallSkeleton from '../Skeleton/SmallSkeleton/SmallSkeleton'; 
 
 import styles from './advertisment.module.css';
-import { useParams } from 'react-router-dom';
+import { useLocation, useParams } from 'react-router-dom';
 import BigSkeleton from '../Skeleton/BigSkeleton/BigSkeleton';
 import { RootState } from '../../../store/store';
+import { resetFilters } from '../../../store/slices/filtersSearchSlice';
+import { setEmptyAnnouncements } from '../../../store/slices/categorySlice';
 
 const AdvertisementList: React.FC = () => {
+  const dispatch = useDispatch();
+
   const { categoryId } = useParams();
+  const location = useLocation();
 
   const [skip, setSkip] = useState(0);
   const [allAdvertisements, setAllAdvertisements] = useState<any[]>([]);
@@ -21,6 +26,7 @@ const AdvertisementList: React.FC = () => {
   const [searchKey, setSearchKey] = useState(0); 
 
   const globalFilters = useSelector((state: RootState) => state.filtersSearch);
+
   const filters = useMemo(() => {
     return categoryId ? { ...globalFilters, categoryId } : globalFilters;
   }, [categoryId, globalFilters]);
@@ -31,15 +37,25 @@ const AdvertisementList: React.FC = () => {
 
   useEffect(() => {
     if (filteredData?.findAnnouncementsByFilters) {
+      const advertisements = filteredData.findAnnouncementsByFilters;
+
       setAllAdvertisements((prev) =>
         skip === 0 
-          ? filteredData.findAnnouncementsByFilters
-          : [...prev, ...filteredData.findAnnouncementsByFilters]
+          ? advertisements
+          : [...prev, ...advertisements]
       );
       setHasMore(filteredData.findAnnouncementsByFilters.length === filters.take);
     }
     setLoadingMore(false);
   }, [filteredData, skip, filters.take]);
+
+  useEffect(() => {
+    if (allAdvertisements.length === 0) {
+      dispatch(setEmptyAnnouncements(true));
+    } else {
+      dispatch(setEmptyAnnouncements(false));
+    }
+  }, [allAdvertisements.length]); 
 
   useEffect(() => {
     setSearchKey((prev) => prev + 1); 
@@ -62,6 +78,16 @@ const AdvertisementList: React.FC = () => {
     window.addEventListener('scroll', handleScroll);
     return () => window.removeEventListener('scroll', handleScroll);
   }, [loading, filters.take, loadingMore, hasMore]);
+
+  useEffect(() => {
+    return () => {
+      performCleanup();
+    };
+  }, [location]);
+
+  const performCleanup = () => {
+    dispatch(resetFilters());
+  };
 
   const renderAdvertisements = () => {
     if (loading && skip === 0) {
@@ -96,3 +122,4 @@ const AdvertisementList: React.FC = () => {
 };
 
 export default AdvertisementList;
+

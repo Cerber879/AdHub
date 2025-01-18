@@ -2,7 +2,7 @@ import React, { useEffect, useRef, useState, useMemo } from 'react';
 import styles from './advertisementdata.module.css'
 import { Link, useNavigate, useParams } from 'react-router-dom';
 import { ROUTES } from '../../../utils/routes';
-import { CharacteristicsResponse, useAddFavouriteMutation, useCheckAnnouncementInFavouritesQuery, useCreateChatMutation, useCreateReviewMutation, useFindParentCategoriesQuery, useFindUserQuery, useGetAnnouncementCharacteristicsQuery, useGetAnnouncementQuery, useGetChatsQuery, useGetPhotosByAnnouncementIdQuery, useGetReviewsByAnnouncementQuery, useGetReviewsByUserQuery, useRemoveFavouriteMutation } from '../../../graphql/generated/output';
+import { useAddFavouriteMutation, useCheckAnnouncementInFavouritesQuery, useCreateChatMutation, useCreateReviewMutation, useFindParentCategoriesQuery, useFindUserQuery, useGetAnnouncementCharacteristicsQuery, useGetAnnouncementQuery, useGetChatsQuery, useGetPhotosByAnnouncementIdQuery, useGetReviewsByAnnouncementQuery, useGetReviewsByUserQuery, useRemoveFavouriteMutation } from '../../../graphql/generated/output';
 import { parseAnnouncementCondition, parseAnnouncementStatus } from '../../../utils/parse-types-ad';
 import Loader from '../../../utils/Loader/Loader';
 
@@ -27,36 +27,53 @@ const Advertisement = () => {
   const { data: userData } = useFindUserQuery({ variables: { id: advertisment?.userId || '' } });
   const user = userData?.findUser;
 
-  const { data: checkData } = useCheckAnnouncementInFavouritesQuery({ variables: { adId: advertisment?.id || '' } })
-  const [check, setCheck] = useState(checkData?.checkAnnouncementInFavourites || false)
-
-  const { data: reviewsData } = useGetReviewsByAnnouncementQuery({ variables: { announcementId: advertisment?.id || '' } })
-  const reviews = useMemo(() => reviewsData?.getReviewsByAnnouncement || [], [reviewsData])
-
-  useEffect(() => {
-    setCheck(checkData?.checkAnnouncementInFavourites || false);
-  }, [checkData]);
+  const { data: reviewsData, refetch: refetchReviews } = useGetReviewsByAnnouncementQuery({ 
+    variables: { announcementId: advertisment?.id || '' }
+  })
 
   const [isHovered, setIsHovered] = useState(false);
 
-  const [addFavourites] = useAddFavouriteMutation()
-  const [removeFavourites] = useRemoveFavouriteMutation()
-
-  const handleAddFavourites = (id: string) => {
-    addFavourites({ variables: { data: { announcementID: id } } })
-  }
-
-  const handleremoveFavourites = (id: string) => {
-    removeFavourites({ variables: { id: id } })
-  }
-
-  const handleFavourites = (id: string) => {
-    if (check) {
-      handleremoveFavourites(id)
-    } else {
-      handleAddFavourites(id)
+  const { data, refetch } = useCheckAnnouncementInFavouritesQuery({
+    variables: { adId: adId || '' },
+    skip: !user,
+    onCompleted: () => {
+      refetch()
     }
-  }
+  });
+
+  const [check, setCheck] = useState(data?.checkAnnouncementInFavourites || false);
+
+  useEffect(() => {
+    if (data) {
+      setCheck(data.checkAnnouncementInFavourites);
+    }
+  }, [data]);
+
+  const [addFavourites, { loading: addLoading }] = useAddFavouriteMutation({
+    onCompleted() {
+      console.log("Added to favourites");
+    },
+  });
+
+  const [removeFavourites, { loading: removeLoading }] = useRemoveFavouriteMutation({
+    onCompleted() {
+      console.log("Removed from favourites");
+    },
+  });
+
+  const handleFavourites = (id: string | undefined, event: React.MouseEvent) => {
+    event.stopPropagation();
+    if (id &&user && !addLoading && !removeLoading) {
+      if (check) {
+        setCheck(false); 
+        removeFavourites({ variables: { id: id } });
+      } else {
+        setCheck(true); 
+        addFavourites({ variables: { data: { announcementID: id } } });
+      }
+      refetch()
+    } 
+  };
 
   const handlePrevImage = () => {
     setCurrentImage((prevImage) => (prevImage - 1 + images?.length) % images?.length);
@@ -72,8 +89,9 @@ const Advertisement = () => {
     }
   }, [currentImage, images]);
 
-  const { data: chatsData, refetch: refetchChats } = useGetChatsQuery(); // Получаем чаты
-  const [createChat] = useCreateChatMutation(); // Мутация для создания чата
+  const { data: chatsData, refetch: refetchChats } = useGetChatsQuery();
+  const [createChat] = useCreateChatMutation(); 
+
   const navigate = useNavigate();
   
   const findOrCreateFriend = async (userId: string, advertismentId: string) => {
@@ -85,41 +103,35 @@ const Advertisement = () => {
         return;
       }
       console.log("wdefgryh")
-      // Проверяем, существует ли чат с этим пользователем
       const existingChat = chatsData.getChats.find(
         (chat) => chat.user_1.displayName === userId || chat.user_2.displayName === userId
       );
   
-      // Если чат найден, перенаправляем в него
       if (existingChat) {
         console.log("Чат найден", existingChat);
         const params = { id: existingChat.id, name: existingChat.user_1.displayName };
         navigate(`${ROUTES.MESSENGER}/${userId}`); 
       } else {
-        // Если чат не найден, создаем новый
         const response = await createChat({
           variables: {
             data: userId,
-            productId: advertismentId, // ID объявления
+            productId: advertismentId,
           },
         });
   
-        // Обработка ответа о создании чата
         if (response.data && response.data.createChat === true) {
           console.log("Чат создан");
           
-          // Ждем обновления данных чатов после создания нового чата
           await refetchChats();
   
-          // После обновления чатов снова проверяем существование нового чата
-          const updatedChatsData = await refetchChats(); // Получаем актуальные данные чатов
+          const updatedChatsData = await refetchChats(); 
           const newChat = updatedChatsData?.data?.getChats?.find(
             (chat) => chat.user_1.displayName === userId || chat.user_2.displayName === userId
           );
   
           if (newChat) {
             console.log("Новый чат найден", newChat);
-            navigate(`${ROUTES.MESSENGER}/${newChat.id}`); // Перенаправляем в новый чат
+            navigate(`${ROUTES.MESSENGER}/${newChat.id}`); 
           } else {
             console.log("Не удалось найти созданный чат.");
           }
@@ -134,7 +146,19 @@ const Advertisement = () => {
 
   const ratingRef = useRef<HTMLInputElement>(null);
   const contentRef = useRef<HTMLTextAreaElement>(null);
-  const [createReview] = useCreateReviewMutation();
+  const [error, setError] = useState<{message: string, show: boolean | null}>({
+    message: '',
+    show: null
+  });
+  const [createReview, { loading: createReviewLoading, error: createReviewError }] = useCreateReviewMutation({
+    onCompleted: () => {
+      refetchReviews()
+      setError({ message: '', show: false });
+    },
+    onError: (error) => {
+      setError({ message: error.message, show: true });
+    }
+  });
 
   const [reviewsMas, setReviewsMas] = useState(reviewsData?.getReviewsByAnnouncement || []);
 
@@ -146,14 +170,13 @@ const Advertisement = () => {
 
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-
+  
     if (ratingRef.current && contentRef.current && advertisment?.id && user?.id) {
       const rating = ratingRef.current.value;
       const content = contentRef.current.value;
-      console.log(advertisment.id, user.id)
+  
       try {
-        
-        const { data } = await createReview({
+        await createReview({
           variables: {
             data: {
               rating: parseInt(rating),
@@ -163,23 +186,11 @@ const Advertisement = () => {
             },
           },
         });
-        if (data?.createReview) {
-          
-          const newReview = {
-            id: Date.now().toString(),
-            announcementId: advertisment.id,
-            content: content,
-            rating: parseInt(rating),
-            createdAt: new Date().toISOString(),
-            updatedAt: new Date().toISOString(),
-            userId: user.id,
-            
-          };
-          
-          
-          setReviewsMas((prevReviews) => [...prevReviews, newReview]);}
-        
-        console.log("Отзыв успешно создан");
+
+        if (ratingRef.current && contentRef.current) {
+          ratingRef.current.value = "";
+          contentRef.current.value = "";
+        }
       } catch (error) {
         console.error("Ошибка при создании отзыва", error);
       }
@@ -187,6 +198,7 @@ const Advertisement = () => {
       console.error("Элементы формы не найдены.");
     }
   };
+  
 
   const [showAllCharacteristics, setShowAllCharacteristics] = useState(false);
 
@@ -291,7 +303,7 @@ const Advertisement = () => {
                         {characteristic.data.map((item, subIndex) => (
                           <div key={subIndex} className={styles.characteristic_item}>
                             <dt>{item.characteristic}</dt>
-                            <dd>{item.value}</dd>
+                            <dd>{item.value === 'true' ? 'Да' : item.value === 'false' ? 'Нет' : item.value || '-'}</dd>
                             {item.unitSuffix && <span>{item.unitSuffix}</span>}
                           </div>
                         ))}
@@ -299,7 +311,7 @@ const Advertisement = () => {
                     </div>
                   ))
                 }
-                { announcementCharacteristics && "characteristics" in announcementCharacteristics && announcementCharacteristics.characteristics.length > 4 && (
+                { announcementCharacteristics && "characteristics" in announcementCharacteristics && announcementCharacteristics.characteristics.length > 2 && (
                   <button
                     className={styles.showMoreButton}
                     onClick={() => setShowAllCharacteristics(!showAllCharacteristics)}
@@ -316,7 +328,16 @@ const Advertisement = () => {
           <div className={styles.user_block}>
             <div className={styles.header}>
               <p className={styles.price}>{advertisment?.price} ₽</p>
-              <img onClick={() => handleFavourites} className={styles.heart_icon} src={`${!check ? '/images/Advertisment/heart_black_out.svg' : '/images/Advertisment/heart_black_fill.svg'}`} alt="heart" /> 
+              <img
+                className={styles.heart_icon}
+                onClick={(e) => handleFavourites(adId, e)}
+                src={
+                  check
+                    ? '/images/Advertisment/heart_black_fill.svg'
+                    : '/images/Advertisment/heart_black_out.svg'
+                }
+                alt="heart"
+              />
             </div>
             <Link className={styles.user_info}
               to={ROUTES.USER + '/' + advertisment?.userId}
@@ -329,7 +350,7 @@ const Advertisement = () => {
               />
             </Link>
             <div className={styles.social_buttons}>
-              <button className={styles.social}>Показать номер</button>
+              <button className={styles.social}>Показать способы связи</button>
               <button 
                 className={styles.social}
                 onClick={() => findOrCreateFriend(advertisment?.userId || '', advertisment?.id || '')}
@@ -355,10 +376,13 @@ const Advertisement = () => {
               id="content"
               name="content"
               minLength={5}
+              maxLength={1000}
               required
               ref={contentRef}
               className={styles.form__textarea}
             />
+            {error.show && <div style={{ color: 'red', marginBottom: '10px' }}>{error.message}</div>}
+            {error.show === false && <div style={{ color: 'green', marginBottom: '10px' }}>Отзыв успешно отправлен!</div>}
             <button type="submit" className={styles.form__button}>Оставить отзыв</button>
           </form>
           <div>

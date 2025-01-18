@@ -49,16 +49,17 @@ const CreateAdForm = ({
   const {
     control,
     handleSubmit,
+    setValue,
     formState: { errors, isValid },
   } = useForm<CreateAdFormData>({
     resolver: zodResolver(createAdSchema),
     defaultValues: {
       title: "",
-      price: 0,
+      price: undefined,
       description: "",
       condition: undefined,
       photos: [],
-      characteristics: {},
+      characteristics: {}
     },
   });
 

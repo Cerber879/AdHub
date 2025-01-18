@@ -34,7 +34,7 @@ const RegisterModal: React.FC<{ onClose: () => void, onOpenLogin: () => void }> 
       onCompleted: () => {
         dispatch(auth())
         onClose()
-        window.location.reload();
+        onOpenLogin()
       },
       onError: (error) => {
         setError(error.message);
