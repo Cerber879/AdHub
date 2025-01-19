@@ -96,14 +96,30 @@ type CharacteristicsValuesResponse {
   characteristics: [CharacteristicDataGroup!]!
 }
 
+type ChatAnnouncementResponse {
+  description: String!
+  name: String!
+  price: Float!
+}
+
 type ChatInfoOutput {
-  announcement: AnnouncementModel
+  announcement: ChatAnnouncementResponse
   createdAt: DateTime!
   id: ID!
   lastMessage: String
-  mainPhoto: String
-  user_1: UserModel!
-  user_2: UserModel!
+  mainPhoto: ChatPhotoResponse
+  user_1: ChatUserResponse!
+  user_2: ChatUserResponse!
+}
+
+type ChatPhotoResponse {
+  link: String
+}
+
+type ChatUserResponse {
+  avatar: String
+  displayName: String!
+  id: ID!
 }
 
 input CreateAnnouncementInput {
@@ -210,7 +226,7 @@ type Mutation {
   createAnnouncement(data: CreateAnnouncementInput!): Boolean!
   createCategory(data: CreateCategoryInput!): Boolean!
   createCharacteristic(data: CreateCharacteristicInput!): Boolean!
-  createChat(friendId: String!, productId: String!): Boolean!
+  createChat(content: String!, friendId: String!, productId: String!, uniqueID: String!): Boolean!
   createReview(data: CreateReviewInput!): Boolean!
   createSocialLink(data: SocialLinkInput!): Boolean!
   createUser(data: CreateUserInput!): Boolean!
@@ -279,6 +295,7 @@ type Query {
   getReviewsByAnnouncement(announcementId: String!): [ReviewModel!]!
   getReviewsByUser(userId: String!): [ReviewModel!]!
   getSubcategories(id: String!): [CategoryModel!]!
+  isThereChat(friendId: String!): String
 }
 
 type ReviewModel {

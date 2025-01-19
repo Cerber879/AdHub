@@ -1,5 +1,5 @@
-query getMessages($data: String!) {
-  getMessages(chatId: $data) {
+query getMessages($chatId: String!) {
+  getMessages(chatId: $chatId) {
     id
     chatId
     senderId

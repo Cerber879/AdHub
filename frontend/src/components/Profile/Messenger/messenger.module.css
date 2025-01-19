@@ -1,15 +1,23 @@
 .appContainer {
   width: 100%;
+  max-height: 600px;
 }
 
 .usersContainer {
-  overflow-y: auto;
+  overflow-y: scroll;
   display: flex;
+  overflow: auto;
+  -ms-overflow-style: none; 
+  scrollbar-width: none;
   flex-direction: column;
   border-right: 1px solid rgba(188, 207, 228, 0.5);
-  width: 300px;
+  width: 360px;
   padding: 10px;
   gap: 5px;
+}
+
+.usersContainer::-webkit-scrollbar {
+  display: none; 
 }
 
 .name {
@@ -35,25 +43,48 @@
   align-items: center;
 }
 
-.userItem {
+.chatItem {
+  display: flex;
+  gap: 10px;
+  height: 70px;
   padding: 10px;
   cursor: pointer;
   border-radius: 10px;
 }
 
-.userItem:hover {
-  background-color: #e0e0e0;
+.chatItem:hover {
+  background-color: #eeeded;
 }
 
-.selectedUser {
-  background-color: #d0d0d0;
+.selectedChat {
+  display: flex;
+  gap: 10px;
+  height: 70px;
+  padding: 10px;
+  cursor: pointer;
+  border-radius: 10px;
+  background-color: #00b3ffd2;
+  color: white;
 }
 
 .ad_icon {
-  width: 30px;
-  height: 30px;
-  border-radius: 50%;
+  width: 70px;
+  height: 70px;
+  border-radius: 10px;
   object-fit: cover;
+}
+
+.chat_item {
+  display: flex;
+  width: auto;
+  flex-direction: column;
+}
+
+.chat_item span {
+  max-width: 90%;
+  white-space: nowrap;         
+  overflow: hidden;           
+  text-overflow: ellipsis; 
 }
 
 .chatHeader {
@@ -74,7 +105,6 @@
 .chat__container {
   display: flex;
   flex-direction: column;
-  justify-content: center;
   flex-grow: 1;
 }
 
@@ -84,12 +114,11 @@
 }
 
 .chat__box {
-  width: 100%;
-  height: 100%;
-  overflow-y: auto;
+  flex: 1;
+  overflow-y: scroll;
   padding: 10px;
   display: flex;
-  flex-direction: column;
+  flex-direction: column-reverse;
   box-shadow: 0px 1px 1px rgba(188, 207, 228, 0.5);
 }
 
@@ -129,6 +158,10 @@
 
 .lastMessage {
   color: gray;
+}
+
+.lastMessage_white {
+  color: rgb(233, 228, 228);
 }
 
 .logo__file__dw {

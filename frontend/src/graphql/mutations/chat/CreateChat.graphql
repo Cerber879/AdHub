@@ -1,3 +1,3 @@
-mutation CreateChat($data: String!, $productId: String!) {
-  createChat(friendId: $data, productId: $productId)
+mutation CreateChat($uniqueID: String!, $friendId: String!, $productId: String!, $content: String!) {
+  createChat(uniqueID: $uniqueID, friendId: $friendId, productId: $productId, content: $content)
 }

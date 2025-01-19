@@ -121,15 +121,34 @@ export type CharacteristicsValuesResponse = {
   characteristics: Array<CharacteristicDataGroup>;
 };
 
+export type ChatAnnouncementResponse = {
+  __typename?: 'ChatAnnouncementResponse';
+  description: Scalars['String']['output'];
+  name: Scalars['String']['output'];
+  price: Scalars['Float']['output'];
+};
+
 export type ChatInfoOutput = {
   __typename?: 'ChatInfoOutput';
-  announcement?: Maybe<AnnouncementModel>;
+  announcement?: Maybe<ChatAnnouncementResponse>;
   createdAt: Scalars['DateTime']['output'];
   id: Scalars['ID']['output'];
   lastMessage?: Maybe<Scalars['String']['output']>;
-  mainPhoto?: Maybe<Scalars['String']['output']>;
-  user_1: UserModel;
-  user_2: UserModel;
+  mainPhoto?: Maybe<ChatPhotoResponse>;
+  user_1: ChatUserResponse;
+  user_2: ChatUserResponse;
+};
+
+export type ChatPhotoResponse = {
+  __typename?: 'ChatPhotoResponse';
+  link?: Maybe<Scalars['String']['output']>;
+};
+
+export type ChatUserResponse = {
+  __typename?: 'ChatUserResponse';
+  avatar?: Maybe<Scalars['String']['output']>;
+  displayName: Scalars['String']['output'];
+  id: Scalars['ID']['output'];
 };
 
 export type CreateAnnouncementInput = {
@@ -331,8 +350,10 @@ export type MutationCreateCharacteristicArgs = {
 
 
 export type MutationCreateChatArgs = {
+  content: Scalars['String']['input'];
   friendId: Scalars['String']['input'];
   productId: Scalars['String']['input'];
+  uniqueID: Scalars['String']['input'];
 };
 
 
@@ -504,6 +525,7 @@ export type Query = {
   getReviewsByAnnouncement: Array<ReviewModel>;
   getReviewsByUser: Array<ReviewModel>;
   getSubcategories: Array<CategoryModel>;
+  isThereChat?: Maybe<Scalars['String']['output']>;
 };
 
 
@@ -605,6 +627,11 @@ export type QueryGetReviewsByUserArgs = {
 
 export type QueryGetSubcategoriesArgs = {
   id: Scalars['String']['input'];
+};
+
+
+export type QueryIsThereChatArgs = {
+  friendId: Scalars['String']['input'];
 };
 
 export type ReviewModel = {
@@ -873,8 +900,10 @@ export type UpdateCharacteristicMutationVariables = Exact<{
 export type UpdateCharacteristicMutation = { __typename?: 'Mutation', updateCharacteristic: boolean };
 
 export type CreateChatMutationVariables = Exact<{
-  data: Scalars['String']['input'];
+  uniqueID: Scalars['String']['input'];
+  friendId: Scalars['String']['input'];
   productId: Scalars['String']['input'];
+  content: Scalars['String']['input'];
 }>;
 
 
@@ -1042,7 +1071,7 @@ export type FindMessageQueryVariables = Exact<{
 export type FindMessageQuery = { __typename?: 'Query', findMessage: Array<{ __typename?: 'MessageModel', status: number, senderId: string, content: string, id: string }> };
 
 export type GetMessagesQueryVariables = Exact<{
-  data: Scalars['String']['input'];
+  chatId: Scalars['String']['input'];
 }>;
 
 
@@ -1136,7 +1165,14 @@ export type GetCharacteristicsQuery = { __typename?: 'Query', getCharacteristics
 export type GetChatsQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type GetChatsQuery = { __typename?: 'Query', getChats: Array<{ __typename?: 'ChatInfoOutput', id: string, createdAt: any, lastMessage?: string | null, mainPhoto?: string | null, user_1: { __typename?: 'UserModel', displayName: string }, user_2: { __typename?: 'UserModel', displayName: string }, announcement?: { __typename?: 'AnnouncementModel', name: string, price: number, description: string } | null }> };
+export type GetChatsQuery = { __typename?: 'Query', getChats: Array<{ __typename?: 'ChatInfoOutput', id: string, createdAt: any, lastMessage?: string | null, mainPhoto?: { __typename?: 'ChatPhotoResponse', link?: string | null } | null, user_1: { __typename?: 'ChatUserResponse', id: string, displayName: string, avatar?: string | null }, user_2: { __typename?: 'ChatUserResponse', id: string, displayName: string, avatar?: string | null }, announcement?: { __typename?: 'ChatAnnouncementResponse', name: string, price: number, description: string } | null }> };
+
+export type IsThereChatQueryVariables = Exact<{
+  friendId: Scalars['String']['input'];
+}>;
+
+
+export type IsThereChatQuery = { __typename?: 'Query', isThereChat?: string | null };
 
 export type CheckAnnouncementInFavouritesQueryVariables = Exact<{
   adId: Scalars['String']['input'];
@@ -1774,8 +1810,13 @@ export type UpdateCharacteristicMutationHookResult = ReturnType<typeof useUpdate
 export type UpdateCharacteristicMutationResult = Apollo.MutationResult<UpdateCharacteristicMutation>;
 export type UpdateCharacteristicMutationOptions = Apollo.BaseMutationOptions<UpdateCharacteristicMutation, UpdateCharacteristicMutationVariables>;
 export const CreateChatDocument = gql`
-    mutation CreateChat($data: String!, $productId: String!) {
-  createChat(friendId: $data, productId: $productId)
+    mutation CreateChat($uniqueID: String!, $friendId: String!, $productId: String!, $content: String!) {
+  createChat(
+    uniqueID: $uniqueID
+    friendId: $friendId
+    productId: $productId
+    content: $content
+  )
 }
     `;
 export type CreateChatMutationFn = Apollo.MutationFunction<CreateChatMutation, CreateChatMutationVariables>;
@@ -1793,8 +1834,10 @@ export type CreateChatMutationFn = Apollo.MutationFunction<CreateChatMutation, C
  * @example
  * const [createChatMutation, { data, loading, error }] = useCreateChatMutation({
  *   variables: {
- *      data: // value for 'data'
+ *      uniqueID: // value for 'uniqueID'
+ *      friendId: // value for 'friendId'
  *      productId: // value for 'productId'
+ *      content: // value for 'content'
  *   },
  * });
  */
@@ -2538,8 +2581,8 @@ export type FindMessageLazyQueryHookResult = ReturnType<typeof useFindMessageLaz
 export type FindMessageSuspenseQueryHookResult = ReturnType<typeof useFindMessageSuspenseQuery>;
 export type FindMessageQueryResult = Apollo.QueryResult<FindMessageQuery, FindMessageQueryVariables>;
 export const GetMessagesDocument = gql`
-    query getMessages($data: String!) {
-  getMessages(chatId: $data) {
+    query getMessages($chatId: String!) {
+  getMessages(chatId: $chatId) {
     id
     chatId
     senderId
@@ -2562,7 +2605,7 @@ export const GetMessagesDocument = gql`
  * @example
  * const { data, loading, error } = useGetMessagesQuery({
  *   variables: {
- *      data: // value for 'data'
+ *      chatId: // value for 'chatId'
  *   },
  * });
  */
@@ -3179,12 +3222,18 @@ export const GetChatsDocument = gql`
     id
     createdAt
     lastMessage
-    mainPhoto
+    mainPhoto {
+      link
+    }
     user_1 {
+      id
       displayName
+      avatar
     }
     user_2 {
+      id
       displayName
+      avatar
     }
     announcement {
       name
@@ -3226,6 +3275,44 @@ export type GetChatsQueryHookResult = ReturnType<typeof useGetChatsQuery>;
 export type GetChatsLazyQueryHookResult = ReturnType<typeof useGetChatsLazyQuery>;
 export type GetChatsSuspenseQueryHookResult = ReturnType<typeof useGetChatsSuspenseQuery>;
 export type GetChatsQueryResult = Apollo.QueryResult<GetChatsQuery, GetChatsQueryVariables>;
+export const IsThereChatDocument = gql`
+    query IsThereChat($friendId: String!) {
+  isThereChat(friendId: $friendId)
+}
+    `;
+
+/**
+ * __useIsThereChatQuery__
+ *
+ * To run a query within a React component, call `useIsThereChatQuery` and pass it any options that fit your needs.
+ * When your component renders, `useIsThereChatQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useIsThereChatQuery({
+ *   variables: {
+ *      friendId: // value for 'friendId'
+ *   },
+ * });
+ */
+export function useIsThereChatQuery(baseOptions: Apollo.QueryHookOptions<IsThereChatQuery, IsThereChatQueryVariables> & ({ variables: IsThereChatQueryVariables; skip?: boolean; } | { skip: boolean; }) ) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<IsThereChatQuery, IsThereChatQueryVariables>(IsThereChatDocument, options);
+      }
+export function useIsThereChatLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<IsThereChatQuery, IsThereChatQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<IsThereChatQuery, IsThereChatQueryVariables>(IsThereChatDocument, options);
+        }
+export function useIsThereChatSuspenseQuery(baseOptions?: Apollo.SkipToken | Apollo.SuspenseQueryHookOptions<IsThereChatQuery, IsThereChatQueryVariables>) {
+          const options = baseOptions === Apollo.skipToken ? baseOptions : {...defaultOptions, ...baseOptions}
+          return Apollo.useSuspenseQuery<IsThereChatQuery, IsThereChatQueryVariables>(IsThereChatDocument, options);
+        }
+export type IsThereChatQueryHookResult = ReturnType<typeof useIsThereChatQuery>;
+export type IsThereChatLazyQueryHookResult = ReturnType<typeof useIsThereChatLazyQuery>;
+export type IsThereChatSuspenseQueryHookResult = ReturnType<typeof useIsThereChatSuspenseQuery>;
+export type IsThereChatQueryResult = Apollo.QueryResult<IsThereChatQuery, IsThereChatQueryVariables>;
 export const CheckAnnouncementInFavouritesDocument = gql`
     query CheckAnnouncementInFavourites($adId: String!) {
   checkAnnouncementInFavourites(adId: $adId)

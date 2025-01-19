@@ -18,10 +18,12 @@ export class ChatResolver {
   @Mutation(() => Boolean, { name: 'createChat' })
   async createChat(
     @Authorized() user: User,
+    @Args('uniqueID') uniqueID: string,
     @Args('friendId') friendId: string,
-    @Args('productId') productId: string
+    @Args('productId') productId: string,
+    @Args('content') content: string
   ): Promise<boolean> {
-    return this.chatService.create(user.id, friendId, productId)
+    return this.chatService.create(user.id, uniqueID, friendId, productId, content)
   }
 
   @Authorization()
@@ -33,6 +35,12 @@ export class ChatResolver {
   }
 
   @Authorization()
+  @Query(() => String, { name: 'isThereChat', nullable: true })
+  public async isThereChat(@Authorized() user: User, @Args('friendId') friendId: string) {
+    return this.chatService.isThereChat(user, friendId)
+  }
+
+  @Authorization()
   @Query(() => [ChatInfoOutput], { name: 'getChats' })
   public async getChats(@Authorized() user: User) {
     return this.chatService.getChats(user.id)
@@ -40,7 +48,7 @@ export class ChatResolver {
 
   @Authorization()
   @Query(() => [MessageModel], { name: 'getMessages' })
-  public async getMessages(@Authorized() user, @Args('chatId') chatId: string) {
+  public async getMessages(@Authorized() user: User, @Args('chatId') chatId: string) {
     return this.chatService.getMessages(user.id, chatId)
   }
 

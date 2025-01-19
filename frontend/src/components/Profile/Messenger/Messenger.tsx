@@ -1,70 +1,155 @@
 import React, { useState, useEffect, useRef, useMemo } from 'react';
 import styles from './messenger.module.css';
-import { useFindUserQuery, useGetChatsQuery, useGetMessagesQuery, useSendMessageMutation } from '../../../graphql/generated/output';
+import { ChatInfoOutput, ChatUserResponse, useCreateChatMutation, useFindUserQuery, useGetChatsQuery, useGetMessagesQuery, UserModel, useSendMessageMutation } from '../../../graphql/generated/output';
 import { useCurrent } from '../../../hooks/useCurrent';
-import { useLocation } from 'react-router-dom';
-
-interface Message {
-  senderId: string;
-  content: string;
-  sentAt: string;
-  isEdited?: string;
-  chatId: string;
-}
-
-interface User {
-  id: string;
-  name: string;
-}
+import { v4 as uuidv4 } from 'uuid';
+import { useLocation, useNavigate, useParams } from 'react-router-dom';
+import { ROUTES } from '../../../utils/routes';
 
 const CreateMessageComponent: React.FC = () => {
-  const [messages, setMessages] = useState<Message[]>([]);
-  const [inputValue, setInputValue] = useState<string>('');
-  const [selectedUser, setSelectedUser] = useState<User | null>(null);
   const chatBoxRef = useRef<HTMLDivElement>(null);
   const current = useCurrent();
-  const { state } = useLocation(); 
-  
+  const navigate = useNavigate();
+
+  const location = useLocation();
+  const isTempPresent = location.pathname.includes('/temp');
+
+  const { productId, friendId } = useParams();
+
+  const [sendMessageMutation] = useSendMessageMutation({
+    onCompleted: () => {
+      refetchChats()
+      refetchMessages()
+    }
+  });
+
+  const [createChat] = useCreateChatMutation({
+    onCompleted: () => {
+      refetchChats()
+      refetchMessages()
+    }
+  });
+
   const { data: chatsData, refetch: refetchChats } = useGetChatsQuery();
 
   const { data: messagesData, refetch: refetchMessages } = useGetMessagesQuery({
-    variables: { data: selectedUser?.id?.toString() || '' },
-    skip: !selectedUser?.id,
-    onCompleted: (data) => {
-      if (data?.getMessages) {
-        setMessages(data.getMessages);
-      }
-    },
+    variables: { 
+      chatId: !isTempPresent && friendId ? friendId : ''
+    }
   });
-  const { data } = useFindUserQuery({ variables: { id: selectedUser?.id || '' } });
 
-  const findUser = useMemo(() => data?.findUser, [])
-  const [sendMessageMutation] = useSendMessageMutation();
+  const { data: userData, refetch: refetchUser } = useFindUserQuery({ 
+    variables: { 
+      id: friendId || ''
+    }
+  });
+
+  const [inputValue, setInputValue] = useState<string>('');
+
+  const [chats, setChats] = useState(chatsData?.getChats);
+  const [messages, setMessages] = useState(messagesData?.getMessages);
+
+  const [selectedUser, setSelectedUser] = useState<ChatUserResponse | null>(() => {
+    if (!isTempPresent && chatsData) {
+      const chat = chatsData.getChats.find(
+        (chat) => chat.user_1.id === current.user?.id || chat.user_2.id === current.user?.id
+      );
+  
+      if (chat) {
+        const selected = chat.user_1.id === current.user?.id ? chat.user_2 : chat.user_1;
+        return {
+          id: selected.id,
+          displayName: selected.displayName,
+          avatar: selected.avatar || null
+        };
+      }
+    }
+
+    if (isTempPresent && userData) {
+      const user = userData.findUser;
+      console.log(user)
+      return {
+        id: user.id,
+        displayName: user.displayName,
+        avatar: user.avatar || null
+      };
+    }
+  
+    return null;
+  });
+
+
+  console.log(selectedUser)
+  
+  const [selectedChat, setSelectedChat] = useState<ChatInfoOutput | null>(
+    !isTempPresent && chatsData
+      ? chatsData.getChats.find(chat => chat.id === friendId) || null
+      : null
+  );
+
+  useEffect(() => {
+    if (chatsData?.getChats) {
+      setChats(chatsData.getChats);
+
+      const chat = chatsData.getChats.find(chat => chat.id === friendId) || null;
+      setSelectedChat(chat);
+  
+      if (chat) {
+        const selected = chat.user_1.id === current.user?.id ? chat.user_2 : chat.user_1;
+        setSelectedUser({
+          id: selected.id,
+          displayName: selected.displayName,
+          avatar: selected.avatar || null,
+        });
+      } else if (isTempPresent && userData) {
+        const user = userData.findUser;
+        console.log(user)
+        setSelectedUser({
+          id: user.id,
+          displayName: user.displayName,
+          avatar: user.avatar || null
+        });
+      }
+    }
+  
+    if (messagesData?.getMessages) {
+      setMessages(messagesData.getMessages);
+    }
+  
+  }, [messagesData, chatsData, friendId, current.user]);
+  
 
   const sendMessage = async () => {
-    if (inputValue.trim() !== '' && selectedUser) { 
+    if (inputValue.trim() !== '' && selectedChat) { 
       try {
-        const newMessage: Message = {
-          content: inputValue.trim(),
-          senderId: current.user?.id?.toString() || '',
-          sentAt: new Date().toISOString(),
-          chatId: selectedUser.id.toString(),
-        };
         
-        setMessages((prev) => [...prev, newMessage]);
+        await sendMessageMutation({
+          variables: { 
+            data: { 
+              chatId: selectedChat?.id || '', 
+              content: inputValue.trim() 
+            } 
+          }
+        });
+
         setInputValue(''); 
 
-        await sendMessageMutation({
-          variables: { data: 
-            { 
-              chatId: selectedUser.id.toString() || '', 
-              content: inputValue.trim() 
-            } }
-        });
-        await refetchMessages(); 
       } catch (error) {
         console.error('Ошибка отправки сообщения:', error);
       }
+    } else if (inputValue.trim() !== '' && isTempPresent && friendId && productId) {
+      const uniqueID = uuidv4()
+
+      await createChat({
+        variables: {
+          uniqueID: uniqueID,
+          friendId: friendId,
+          productId: productId,
+          content: inputValue.trim()
+        }
+      })
+
+      navigate(`${ROUTES.MESSEGES}/${uniqueID}`)
     }
   };
 
@@ -74,16 +159,13 @@ const CreateMessageComponent: React.FC = () => {
     }
   };
 
-  const handleUserClick = (user: User) => {
-    setSelectedUser(user);
-    setMessages([]);
+  const handleUserClick = (chat: ChatInfoOutput) => {
+    setSelectedChat(chat)
+    navigate(`${ROUTES.MESSEGES}/${chat.id}`)
+    setMessages([])
     refetchMessages(); 
+    refetchUser()
   };
-
-
-  useEffect(() => {
-    handleUserClick(state);
-  }, [state, useLocation]);
 
   useEffect(() => {
     if (chatBoxRef.current) {
@@ -96,39 +178,37 @@ const CreateMessageComponent: React.FC = () => {
       <span className={styles.name}>Сообщения</span>
       <div className={styles.data_block}>
         <div className={styles.usersContainer}>
-          {chatsData?.getChats?.map((chat) => {
-            const userName = chat.user_1?.displayName === current.user?.displayName ? chat.user_2 : chat.user_1;
-            return (
-              <div
-                key={chat.id}
-                className={`${styles.userItem} ${selectedUser?.id.toString() === chat.id ? styles.selectedUser : ''}`}
-                onClick={() =>
-                  handleUserClick({
-                    id: chat.id, 
-                    name: userName.displayName || 'Неизвестный пользователь',
-                  })
-                }
-              >
-                <img className={styles.ad_icon} src={chat.mainPhoto ? chat.mainPhoto : ''} alt="main" />
-
-                <div>{userName.displayName}</div>
-                <div className={styles.lastMessage}>{chat.lastMessage ? chat.lastMessage : ''}</div>
-                <div><img></img></div>
-              </div>
-            );
-          })}
-          {chatsData?.getChats?.length === 0 &&
-            <span className={styles.no_chats}>Чатов нет</span>
-          }
+          {chats ? 
+            chats.length !== 0 ? chats.map((chat) => {
+              const user = chat.user_1?.displayName === current.user?.displayName ? chat.user_2 : chat.user_1;
+              return (
+                <div
+                  key={chat.id}
+                  className={`${selectedChat?.id === chat.id ? styles.selectedChat : styles.chatItem}`}
+                  onClick={() =>
+                    handleUserClick(chat)
+                  }
+                >
+                  <img className={styles.ad_icon} src={chat.mainPhoto?.link ? chat.mainPhoto.link : ''} alt="main" />
+                  <div className={styles.chat_item}>
+                    <span>{user.displayName}</span>
+                    <span>{`${chat.announcement?.name}·${chat.announcement?.price}`}</span>
+                    <span className={`${selectedChat?.id !== chat.id ? styles.lastMessage : styles.lastMessage_white}`}>{chat.lastMessage ? chat.lastMessage : ''}</span>
+                  </div>
+                </div>
+              );
+            }) :
+              <span className={styles.no_chats}>Чатов нет</span>
+          : null}
         </div>
         {selectedUser ?
           <div className={styles.chat__container}>
             <div className={styles.chatHeader}>
-              <img src={findUser?.avatar != null ? findUser.avatar : '/images/Profile/user.svg'} className={styles.avatar}/>
-              <div className={styles.username}>{selectedUser?.name}</div>
+              <img src={selectedUser?.avatar != null ? selectedUser.avatar : '/images/Profile/user.svg'} className={styles.avatar}/>
+              <div className={styles.username}>{selectedUser?.displayName}</div>
             </div>
             <div className={styles.chat__box} ref={chatBoxRef}>
-              {messages.map((message, index) => (
+              {messages && messages.map((message) => (
                 <div
                   key={message.chatId}
                   className={`${styles.message} ${message.senderId === current.user?.id ? styles.user : styles.other}`}

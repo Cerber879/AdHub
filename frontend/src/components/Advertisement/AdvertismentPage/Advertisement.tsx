@@ -2,7 +2,7 @@ import React, { useEffect, useRef, useState, useMemo } from 'react';
 import styles from './advertisementdata.module.css'
 import { Link, useNavigate, useParams } from 'react-router-dom';
 import { ROUTES } from '../../../utils/routes';
-import { useAddFavouriteMutation, useCheckAnnouncementInFavouritesQuery, useCreateChatMutation, useCreateReviewMutation, useFindParentCategoriesQuery, useFindUserQuery, useGetAnnouncementCharacteristicsQuery, useGetAnnouncementQuery, useGetChatsQuery, useGetPhotosByAnnouncementIdQuery, useGetReviewsByAnnouncementQuery, useGetReviewsByUserQuery, useRemoveFavouriteMutation } from '../../../graphql/generated/output';
+import { useAddFavouriteMutation, useCheckAnnouncementInFavouritesQuery, useCreateReviewMutation, useFindParentCategoriesQuery, useFindUserQuery, useGetAnnouncementCharacteristicsQuery, useGetAnnouncementQuery, useGetChatsQuery, useGetPhotosByAnnouncementIdQuery, useGetReviewsByAnnouncementQuery, useGetReviewsByUserQuery, useIsThereChatQuery, useRemoveFavouriteMutation } from '../../../graphql/generated/output';
 import { parseAnnouncementCondition, parseAnnouncementStatus } from '../../../utils/parse-types-ad';
 import Loader from '../../../utils/Loader/Loader';
 
@@ -11,6 +11,7 @@ const Advertisement = () => {
   const imageDivRef = useRef<HTMLDivElement>(null);
 
   const { adId } = useParams();
+  const navigate = useNavigate();
 
   const { data: imagesData } = useGetPhotosByAnnouncementIdQuery({ variables: { id: adId || '' } }); 
   const images = useMemo(() => imagesData?.getPhotosByAnnouncementId || [], [imagesData]);
@@ -89,58 +90,21 @@ const Advertisement = () => {
     }
   }, [currentImage, images]);
 
-  const { data: chatsData, refetch: refetchChats } = useGetChatsQuery();
-  const [createChat] = useCreateChatMutation(); 
+  const { data: chatData } = useIsThereChatQuery({
+    variables: {
+      friendId: user?.id || ''
+    }
+  })
 
-  const navigate = useNavigate();
-  
-  const findOrCreateFriend = async (userId: string, advertismentId: string) => {
-    try {
-      console.log(" ты долюаеб")
-
-      if (!chatsData?.getChats) {
-        console.error("Не удалось получить чаты");
-        return;
-      }
-      console.log("wdefgryh")
-      const existingChat = chatsData.getChats.find(
-        (chat) => chat.user_1.displayName === userId || chat.user_2.displayName === userId
-      );
-  
-      if (existingChat) {
-        console.log("Чат найден", existingChat);
-        const params = { id: existingChat.id, name: existingChat.user_1.displayName };
-        navigate(`${ROUTES.MESSENGER}/${userId}`); 
-      } else {
-        const response = await createChat({
-          variables: {
-            data: userId,
-            productId: advertismentId,
-          },
-        });
-  
-        if (response.data && response.data.createChat === true) {
-          console.log("Чат создан");
-          
-          await refetchChats();
-  
-          const updatedChatsData = await refetchChats(); 
-          const newChat = updatedChatsData?.data?.getChats?.find(
-            (chat) => chat.user_1.displayName === userId || chat.user_2.displayName === userId
-          );
-  
-          if (newChat) {
-            console.log("Новый чат найден", newChat);
-            navigate(`${ROUTES.MESSENGER}/${newChat.id}`); 
-          } else {
-            console.log("Не удалось найти созданный чат.");
-          }
-        } else {
-          console.log("Ошибка при создании чата");
-        }
-      }
-    } catch (error) {
-      console.error("Ошибка при поиске или создании чата", error);
+  const TransitionToChat = (userId: string, adId: string) => {
+    const isThereChat = chatData?.isThereChat
+    console.log(isThereChat)
+    if (isThereChat) {
+      navigate(`${ROUTES.MESSEGES}/${isThereChat}`); 
+    } else if (isThereChat === null) {
+      navigate(`${ROUTES.MESSENGER_TEMP}/${adId}/${userId}`); 
+    } else {
+      throw Error('Ошибка при проверке чата')
     }
   };
 
@@ -351,7 +315,7 @@ const Advertisement = () => {
               <button className={styles.social}>Показать способы связи</button>
               <button 
                 className={styles.social}
-                onClick={() => findOrCreateFriend(advertisment?.userId || '', advertisment?.id || '')}
+                onClick={() => TransitionToChat(advertisment?.userId || '', advertisment?.id || '')}
               >
                 Написать
               </button>

@@ -17,9 +17,15 @@ import { ROUTES } from "../../../../utils/routes";
 const CreateAdForm = ({
   selectedCategory,
   onBackToCategory,
+  advertismentData,
+  characteristicsDatas,
+  imagesData
 }: {
   selectedCategory: string;
   onBackToCategory: () => void;
+  advertismentData?: any;
+  characteristicsDatas?: any; 
+  imagesData?: any[];
 }) => {
   const navigate = useNavigate();
 

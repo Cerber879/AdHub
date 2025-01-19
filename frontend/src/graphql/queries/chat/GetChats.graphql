@@ -3,12 +3,18 @@ query GetChats {
     id
     createdAt
     lastMessage
-    mainPhoto
+    mainPhoto {
+      link
+    }
     user_1 {
+      id
       displayName
+      avatar
     }
     user_2 {
+      id
       displayName
+      avatar
     }
     announcement {
       name

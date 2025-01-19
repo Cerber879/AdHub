@@ -1,24 +1,50 @@
-import { Field, ID, ObjectType } from '@nestjs/graphql'
+import { Field, Float, ID, ObjectType } from '@nestjs/graphql'
 
-import { AnnouncementModel } from '../../announcement/models/announcement.model'
-import { UserModel } from '../../auth/account/models/user.model'
+@ObjectType()
+export class ChatAnnouncementResponse {
+  @Field(() => String)
+  public name: string
+
+  @Field(() => Float)
+  public price: number
+
+  @Field(() => String)
+  public description: string
+}
+@ObjectType()
+export class ChatUserResponse {
+  @Field(() => ID)
+  public id: string
+  
+  @Field(() => String, { nullable: true })
+  public avatar: string
+
+  @Field(() => String)
+  public displayName: string
+}
+
+@ObjectType()
+export class ChatPhotoResponse {
+  @Field(() => String, { nullable: true })
+  public link: string
+}
 
 @ObjectType()
 export class ChatInfoOutput {
   @Field(() => ID)
   id: string
 
-  @Field(() => UserModel)
-  public user_1: UserModel
+  @Field(() => ChatUserResponse)
+  public user_1: ChatUserResponse
 
-  @Field(() => UserModel)
-  public user_2: UserModel
+  @Field(() => ChatUserResponse)
+  public user_2: ChatUserResponse
 
-  @Field(() => AnnouncementModel, { nullable: true })
-  public announcement: AnnouncementModel
+  @Field(() => ChatAnnouncementResponse, { nullable: true })
+  public announcement: ChatAnnouncementResponse
 
-  @Field(() => String, { nullable: true })
-  public mainPhoto: string
+  @Field(() => ChatPhotoResponse, { nullable: true })
+  public mainPhoto: ChatPhotoResponse
 
   @Field(() => String, { nullable: true })
   public lastMessage: string

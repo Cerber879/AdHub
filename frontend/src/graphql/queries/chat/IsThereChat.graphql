@@ -1,0 +1,3 @@
+query IsThereChat($friendId: String!) {
+  isThereChat(friendId: $friendId)
+}

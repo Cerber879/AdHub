@@ -1,16 +1,15 @@
 import { ConflictException, Injectable } from '@nestjs/common'
 
-import { Chat } from '@/prisma/generated'
+import { User } from '@/prisma/generated'
 import { PrismaService } from '@/src/core/prisma/prisma.service'
 
 import { CreateMessageInputChat } from './dto/create-message.input'
-import { ChatModel } from './entities/chat.entity'
 
 @Injectable()
 export class ChatService {
   constructor(private readonly prismaService: PrismaService) {}
 
-  async create(id: string, friendId: string, productId: string) {
+  async create(id: string, uniqueID: string, friendId: string, productId: string, content: string) {
     if (id === friendId) {
       throw new ConflictException('Нельзя создать чат с самим собой!')
     }
@@ -34,13 +33,49 @@ export class ChatService {
 
     await this.prismaService.chat.create({
       data: {
+        id: uniqueID,
         user_1_id: id,
         user_2_id: friendId,
         productId: productId
       }
     })
 
+    await this.prismaService.message.create({
+      data: {
+        content: content,
+        status: 0,
+        isEdited: false,
+        chat: {
+          connect: {
+            id: uniqueID
+          }
+        },
+        user: {
+          connect: {
+            id: id
+          }
+        }
+      }
+    })
+
     return true
+  }
+
+  public async isThereChat(user: User, friendId: string): Promise<string | null> {
+    const existingChat = await this.prismaService.chat.findFirst({
+      where: {
+        OR: [
+          {
+            AND: [{ user_1_id: user.id }, { user_2_id: friendId }]
+          },
+          {
+            AND: [{ user_1_id: friendId }, { user_2_id: user.id }]
+          }
+        ]
+      }
+    })
+
+    return existingChat ? existingChat.id : null;
   }
 
   public async getChats(userId: string) {
@@ -57,7 +92,7 @@ export class ChatService {
         }
       }
     });
-  
+
     const chatWithAnnouncemntInfo = await Promise.all(chats.map(async (chat) => ({
       ...chat,
       lastMessage: chat.messages.length > 0 ? chat.messages[0].content : null,
@@ -77,19 +112,22 @@ export class ChatService {
   }
   
 
+
   public async getMessages(userId: string, chatId: string) {
     const chat = await this.prismaService.chat.findUnique({
       where: { id: chatId }
     })
 
     if (!chat || (chat.user_1_id !== userId && chat.user_2_id !== userId)) {
-      throw new Error('Access denied')
+      return
     }
 
-    return this.prismaService.message.findMany({
+    const messages = await this.prismaService.message.findMany({
       where: { chatId },
-      orderBy: { sentAt: 'asc' }
+      orderBy: { sentAt: 'desc' }
     })
+    console.log(messages)
+    return messages
   }
 
   public async sendMessage(userId: string, input: CreateMessageInputChat) {
