@@ -23,12 +23,10 @@ const CreateMessageComponent: React.FC = () => {
   const [selectedUser, setSelectedUser] = useState<User | null>(null);
   const chatBoxRef = useRef<HTMLDivElement>(null);
   const current = useCurrent();
-  const { state } = useLocation(); // для того чтобы перенаправить на чат не реализовано
+  const { state } = useLocation(); 
   
-  // Получаем список чатов
   const { data: chatsData, refetch: refetchChats } = useGetChatsQuery();
 
-  // Получаем сообщения
   const { data: messagesData, refetch: refetchMessages } = useGetMessagesQuery({
     variables: { data: selectedUser?.id?.toString() || '' },
     skip: !selectedUser?.id,
@@ -38,15 +36,9 @@ const CreateMessageComponent: React.FC = () => {
       }
     },
   });
-  // Получаем юзера 
   const { data } = useFindUserQuery({ variables: { id: selectedUser?.id || '' } });
+
   const findUser = useMemo(() => data?.findUser, [])
-  const downloadImage = () =>
-  {
-
-  }
-
-  // Мутация для отправки сообщения
   const [sendMessageMutation] = useSendMessageMutation();
 
   const sendMessage = async () => {
@@ -59,8 +51,8 @@ const CreateMessageComponent: React.FC = () => {
           chatId: selectedUser.id.toString(),
         };
         
-        setMessages((prev) => [...prev, newMessage]); // Обновление локального состояния
-        setInputValue(''); // Очистка поля ввода
+        setMessages((prev) => [...prev, newMessage]);
+        setInputValue(''); 
 
         await sendMessageMutation({
           variables: { data: 
@@ -69,8 +61,7 @@ const CreateMessageComponent: React.FC = () => {
               content: inputValue.trim() 
             } }
         });
-        //console.log(messagesData);
-        await refetchMessages(); // Перезагрузка сообщений
+        await refetchMessages(); 
       } catch (error) {
         console.error('Ошибка отправки сообщения:', error);
       }
@@ -85,8 +76,8 @@ const CreateMessageComponent: React.FC = () => {
 
   const handleUserClick = (user: User) => {
     setSelectedUser(user);
-    setMessages([]); // Очистка сообщений при переключении чата
-    refetchMessages(); // Обновление сообщений для выбранного пользователя
+    setMessages([]);
+    refetchMessages(); 
   };
 
 
@@ -100,66 +91,73 @@ const CreateMessageComponent: React.FC = () => {
     }
   }, [messages]);
 
-
-
   return (
     <div className={styles.appContainer}>
-      <div className={styles.usersContainer}>
-        <span className={styles.name_container}>Сообщения</span>
-        <div className={styles.list_users}>
+      <span className={styles.name}>Сообщения</span>
+      <div className={styles.data_block}>
+        <div className={styles.usersContainer}>
           {chatsData?.getChats?.map((chat) => {
             const userName = chat.user_1?.displayName === current.user?.displayName ? chat.user_2 : chat.user_1;
-            //console.log(chat.user_1?.displayName, " ", chat.user_2?.displayName);
             return (
               <div
                 key={chat.id}
                 className={`${styles.userItem} ${selectedUser?.id.toString() === chat.id ? styles.selectedUser : ''}`}
                 onClick={() =>
                   handleUserClick({
-                    id: chat.id, // Привязываем ID чата
+                    id: chat.id, 
                     name: userName.displayName || 'Неизвестный пользователь',
                   })
                 }
               >
+                <img className={styles.ad_icon} src={chat.mainPhoto ? chat.mainPhoto : ''} alt="main" />
+
                 <div>{userName.displayName}</div>
-                <div className={styles.lastMessage}>last message: {chat.lastMessage}</div>
-                <div><img></img></div> someImage
+                <div className={styles.lastMessage}>{chat.lastMessage ? chat.lastMessage : ''}</div>
+                <div><img></img></div>
               </div>
             );
+          })}
+          {chatsData?.getChats?.length === 0 &&
+            <span className={styles.no_chats}>Чатов нет</span>
           }
-          )}
         </div>
-      </div>
-      <div className={styles.chat__container}>
-        {selectedUser && (
-          <div className={styles.chatHeader}>
-            <img src={findUser?.avatar != null ? findUser.avatar : '/images/Profile/user.svg'} className={styles.avatar}/>
-            <div className={styles.username}>{selectedUser.name}</div>
-          </div>
-        )}
-        <div className={styles.chat__box} ref={chatBoxRef}>
-          {messages.map((message, index) => (
-            <div
-              key={message.chatId}
-              className={`${styles.message} ${message.senderId === current.user?.id ? styles.user : styles.other}`}
-            >
-              {message.content}
+        {selectedUser ?
+          <div className={styles.chat__container}>
+            <div className={styles.chatHeader}>
+              <img src={findUser?.avatar != null ? findUser.avatar : '/images/Profile/user.svg'} className={styles.avatar}/>
+              <div className={styles.username}>{selectedUser?.name}</div>
             </div>
-          ))}
-        </div>
-        <div className={styles.input__container}>
-          <img className={styles.logo__file__dw} src={ '/images/ImagesChat/paper-clip-dw-file.svg'} alt="avatar" 
-            onClick={downloadImage}
-          />
-          <input
-            type="text"
-            placeholder="Введите сообщение..."
-            onChange={(e) => setInputValue(e.target.value)}
-            value={inputValue}
-            onKeyDown={handleKeyDown}
-          />
-          <button onClick={sendMessage}>Отправить</button>
-        </div>
+            <div className={styles.chat__box} ref={chatBoxRef}>
+              {messages.map((message, index) => (
+                <div
+                  key={message.chatId}
+                  className={`${styles.message} ${message.senderId === current.user?.id ? styles.user : styles.other}`}
+                >
+                  {message.content}
+                </div>
+              ))}
+            </div>
+            <div className={styles.input__container}>
+              <img className={styles.logo__file__dw} src={ '/images/ImagesChat/paper-clip-dw-file.svg'} alt="avatar" 
+              />
+              <input
+                type="text"
+                placeholder="Введите сообщение..."
+                onChange={(e) => setInputValue(e.target.value)}
+                className={styles.input_text}
+                value={inputValue}
+                onKeyDown={handleKeyDown}
+              />
+              <button className={styles.button_send} onClick={sendMessage}>
+                <img src="/images/profile/send.svg" alt="send" />
+              </button>
+            </div>
+          </div>
+          :
+          <div className={styles.chat__container}>
+            <span className={styles.preview_chat}>Выберите, кому бы вы хотели написать</span>
+          </div>
+        }
       </div>
     </div>
   );

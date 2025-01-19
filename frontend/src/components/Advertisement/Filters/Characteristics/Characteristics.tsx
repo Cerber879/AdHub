@@ -64,7 +64,7 @@ const Characteristics: React.FC = () => {
 export default Characteristics;
 
 const conditionOptions = [
-  { value: '', label: 'Все' },
+  { value: 'all', label: 'Все' },
   { value: 'new', label: 'Новое' },
   { value: 'used', label: 'Б/у' },
 ];

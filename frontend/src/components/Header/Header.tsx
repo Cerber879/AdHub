@@ -64,18 +64,6 @@ export function Header() {
             <span>Мои Объявления</span>
           </Link>
         }
-                
-        <Link
-          {...user 
-            ? { to: ROUTES.ADDITEM } 
-            : { onClick: () => setShowLoginModal(true),
-              to: ROUTES.HOME
-            }}
-        >
-          <button className={`${styles.button_link} ${styles.button_add_advertisment}`}>
-            <span>Создать Объявление</span>
-          </button>
-        </Link>
 
         <Link 
           {...user 
@@ -105,6 +93,18 @@ export function Header() {
             }}
           className={styles.button_link}>
           <img src="/images/ImagesTopPanel/profile.svg" alt="Icon" width="16px" height="16px" />
+        </Link>
+
+        <Link
+          {...user 
+            ? { to: ROUTES.ADDITEM } 
+            : { onClick: () => setShowLoginModal(true),
+              to: ROUTES.HOME
+            }}
+        >
+          <button className={`${styles.button_link} ${styles.button_add_advertisment}`}>
+            <span>Создать Объявление</span>
+          </button>
         </Link>
       </div>
 

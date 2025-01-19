@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common'
+import { BadRequestException, Injectable } from '@nestjs/common'
 import * as Upload from 'graphql-upload/Upload.js'
 import { v4 as uuidv4 } from 'uuid'
 
@@ -75,4 +75,32 @@ export class PhotoService {
 
     return true
   }
+
+  async deleteForAnnouncementId(id: string) {
+    const photos = await this.prismaService.photo.findMany({
+      where: {
+        announcementID: id
+      },
+      select: {
+        id: true
+      }
+    });
+  
+    if (photos.length === 0) {
+      throw new BadRequestException('Фотографии не найдены');
+    }
+  
+    for (const photo of photos) {
+      await this.cloudinaryService.remove(photo.id);
+    }
+  
+    await this.prismaService.photo.deleteMany({
+      where: {
+        announcementID: id
+      }
+    });
+  
+    return true; 
+  }
+  
 }

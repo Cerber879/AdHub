@@ -105,6 +105,17 @@ export class AnnouncementCharacteristicService {
         id
       }
     })
+
+    return true
+  }
+
+  async deleteByAnnouncementId(id: string) {
+    await this.prismaService.announcementCharacteristic.deleteMany({
+      where: {
+        productId: id
+      }
+    })
+    
     return true
   }
 }

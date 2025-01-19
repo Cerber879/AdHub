@@ -86,7 +86,7 @@ export type AnnouncementStatus = (typeof AnnouncementStatus)[keyof typeof Announ
 export const ProductCondition: {
   NEW: 'NEW',
   USED: 'USED',
-  REFURBISHED: 'REFURBISHED'
+  ALL: 'ALL'
 };
 
 export type ProductCondition = (typeof ProductCondition)[keyof typeof ProductCondition]

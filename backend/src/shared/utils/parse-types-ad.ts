@@ -9,7 +9,6 @@ export function parseAnnouncementStatus(
   try {
     if (status) {
       const upperStatus = status.toUpperCase()
-      console.log(upperStatus)
       if (upperStatus == AnnouncementStatus.ACTIVE) {
         return AnnouncementStatus.ACTIVE
       } else if (upperStatus == AnnouncementStatus.SOLD) {
@@ -38,11 +37,9 @@ export function parseAnnouncementCondition(
         return ProductCondition.NEW
       } else if (upperCondition == ProductCondition.USED) {
         return ProductCondition.USED
-      } else if (upperCondition == ProductCondition.REFURBISHED) {
-        return ProductCondition.REFURBISHED
-      } else if (upperCondition == ProductCondition.REFURBISHED) {
-        return ProductCondition.REFURBISHED
-      }
+      } else if (upperCondition == ProductCondition.ALL) {
+        return ProductCondition.ALL
+      } 
     }
 
     return null

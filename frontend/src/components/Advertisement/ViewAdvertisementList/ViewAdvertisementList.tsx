@@ -31,7 +31,7 @@ const AdvertisementList: React.FC = () => {
     return categoryId ? { ...globalFilters, categoryId } : globalFilters;
   }, [categoryId, globalFilters]);
 
-  const { data: filteredData, loading } = useFindAnnouncementsByFiltersQuery({
+  const { data: filteredData, loading, refetch } = useFindAnnouncementsByFiltersQuery({
     variables: { filters: { ...filters, skip } },
   });
 
@@ -58,9 +58,10 @@ const AdvertisementList: React.FC = () => {
   }, [allAdvertisements.length]); 
 
   useEffect(() => {
+    refetch()
     setSearchKey((prev) => prev + 1); 
     setSkip(0); 
-  }, [filters, categoryId]); 
+  }, [filters, categoryId, refetch]); 
 
   useEffect(() => {
     const handleScroll = () => {

@@ -6,7 +6,7 @@ import {
 } from '@nestjs/common'
 import { v4 as uuidv4 } from 'uuid'
 
-import { User } from '@/prisma/generated'
+import { AnnouncementStatus, User } from '@/prisma/generated'
 import { PrismaService } from '@/src/core/prisma/prisma.service'
 import {
   parseAnnouncementCondition,
@@ -19,11 +19,14 @@ import { PhotoService } from '../photo/photo.service'
 import { CreateAnnouncementInput } from './inputs/create-announcement.input'
 import { AnnouncementFiltersInput } from './inputs/search-announcement.input'
 import { UpdateAnnouncementInput } from './inputs/update-announcement.input'
+import { ProductCondition } from '@/src/shared/types/announcement-types'
+import { CategoryService } from '../category/category/category.service'
 
 @Injectable()
 export class AnnouncementService {
   constructor(
     private readonly prismaService: PrismaService,
+    private readonly categoryService: CategoryService,
     private readonly photoService: PhotoService,
     private readonly announcementCharacteristicService: AnnouncementCharacteristicService
   ) {}
@@ -108,14 +111,13 @@ export class AnnouncementService {
 
   findAllAnnouncements() {
     return this.prismaService.announcement.findMany({})
-  }
+  }  
 
   async findManyWithFilters(filters: AnnouncementFiltersInput) {
     const {
       minPrice,
       maxPrice,
       condition,
-      status,
       search,
       sort,
       skip,
@@ -123,7 +125,7 @@ export class AnnouncementService {
       categoryId
     } = filters
 
-    const announcementStatus = parseAnnouncementStatus(status)
+    const announcementStatus = parseAnnouncementStatus(AnnouncementStatus.ACTIVE)
     const announcementCondition = parseAnnouncementCondition(condition)
 
     if (
@@ -134,16 +136,20 @@ export class AnnouncementService {
       throw new BadRequestException('minPrice не может быть больше maxPrice')
     }
 
+    const subcategories = await this.categoryService.findSubcategoriesRecursive(categoryId)
+
     const query = this.prismaService.announcement.findMany({
       where: {
         AND: [
           minPrice ? { price: { gte: minPrice } } : {},
           maxPrice ? { price: { lte: maxPrice } } : {},
           announcementCondition !== null
-            ? { condition: announcementCondition }
+            ? announcementCondition !== ProductCondition.ALL
+              ? { condition: announcementCondition }
+              : {}
             : {},
           announcementStatus !== null ? { status: announcementStatus } : {},
-          categoryId ? { categoryId: categoryId } : {},
+          categoryId ? { categoryId: { in: subcategories } } : {},
           search !== null && search !== ''
             ? {
                 OR: [
@@ -280,7 +286,7 @@ export class AnnouncementService {
       throw new NotFoundException('Объявление не найдено')
     }
 
-    return this.prismaService.announcement.update({
+    await this.prismaService.announcement.update({
       where: {
         id
       },
@@ -299,6 +305,32 @@ export class AnnouncementService {
         }
       }
     })
+
+    return true
+  }
+
+  async changeStatus(id: string, status: string) {
+
+    const existing = await this.prismaService.announcement.findUnique({
+      where: {
+        id
+      }
+    })
+
+    if (!existing) {
+      throw new NotFoundException('Объявление не найдено')
+    }
+
+    await this.prismaService.announcement.update({
+      where: {
+        id
+      },
+      data: {
+        status: status ? parseAnnouncementStatus(status) : existing.status,
+      }
+    })
+
+    return true
   }
 
   async delete(id: string) {
@@ -309,6 +341,14 @@ export class AnnouncementService {
     if (!existing) {
       throw new NotFoundException('Объявление не найдено')
     }
+
+    await this.announcementCharacteristicService.deleteByAnnouncementId(id)
+
+    console.log('Удаление характеристик успешно завершено!')
+
+    await this.photoService.deleteForAnnouncementId(id)
+
+    console.log('Удаление фотографий успешно завершено!')
 
     await this.prismaService.announcement.delete({
       where: {

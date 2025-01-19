@@ -209,5 +209,5 @@ enum AnnouncementStatus {
 enum ProductCondition {
   NEW
   USED
-  REFURBISHED
+  ALL
 }

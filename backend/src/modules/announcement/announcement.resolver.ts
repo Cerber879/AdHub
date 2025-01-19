@@ -1,6 +1,6 @@
 import { Args, Mutation, Query, Resolver } from '@nestjs/graphql'
 
-import { User } from '@/prisma/generated'
+import { AnnouncementStatus, User } from '@/prisma/generated'
 import { Authorization } from '@/src/shared/decorators/auth.decorator'
 import { Authorized } from '@/src/shared/decorators/authorized.decorator'
 
@@ -76,6 +76,15 @@ export class AnnouncementResolver {
   @Mutation(() => Boolean, { name: 'updateAnnouncement' })
   async update(@Args('data') data: UpdateAnnouncementMixedInput) {
     return this.announcementService.update(data.id, data.input)
+  }
+  
+  @Authorization()
+  @Mutation(() => Boolean, { name: 'changeStatusAnnouncement' })
+  async changeStatus(
+    @Args('id') id: string,
+    @Args('status') status: string
+  ) {
+    return this.announcementService.changeStatus(id, status)
   }
 
   @Authorization()

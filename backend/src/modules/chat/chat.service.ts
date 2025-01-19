@@ -56,24 +56,26 @@ export class ChatService {
           orderBy: { sentAt: 'desc' }
         }
       }
-    })
-
-    const chatsWithLastMessage = chats.map(chat => ({
+    });
+  
+    const chatWithAnnouncemntInfo = await Promise.all(chats.map(async (chat) => ({
       ...chat,
-      lastMessage: chat.messages.length > 0 ? chat.messages[0].content : null
-    }))
-
-    const chatWithAnnouncemntInfo = chatsWithLastMessage.map(chat => ({
-      ...chat,
-      announcement: this.prismaService.announcement.findUnique({
+      lastMessage: chat.messages.length > 0 ? chat.messages[0].content : null,
+      mainPhoto: await this.prismaService.photo.findFirst({
+        where: {
+          announcementID: chat.productId
+        }
+      }),
+      announcement: await this.prismaService.announcement.findUnique({
         where: {
           id: chat.productId
         }
-      })
-    }))
-
-    return chatWithAnnouncemntInfo
+      }),
+    })));
+  
+    return chatWithAnnouncemntInfo;
   }
+  
 
   public async getMessages(userId: string, chatId: string) {
     const chat = await this.prismaService.chat.findUnique({

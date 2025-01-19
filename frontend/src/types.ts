@@ -6,7 +6,7 @@ import {
 export const conditionMap: Record<ProductCondition, string> = {
   NEW: 'Новый',
   USED: 'Б/у',
-  REFURBISHED: 'Восстановленный',
+  ALL: 'Все',
 }
 
 export const statusMap: Record<AnnouncementStatus, string> = {

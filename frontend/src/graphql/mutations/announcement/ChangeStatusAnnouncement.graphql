@@ -1,0 +1,3 @@
+mutation ChangeStatusAnnouncement($id: String!, $status: String!) {
+  changeStatusAnnouncement(id: $id, status: $status) 
+}

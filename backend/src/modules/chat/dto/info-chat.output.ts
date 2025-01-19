@@ -18,6 +18,9 @@ export class ChatInfoOutput {
   public announcement: AnnouncementModel
 
   @Field(() => String, { nullable: true })
+  public mainPhoto: string
+
+  @Field(() => String, { nullable: true })
   public lastMessage: string
 
   @Field(() => Date)

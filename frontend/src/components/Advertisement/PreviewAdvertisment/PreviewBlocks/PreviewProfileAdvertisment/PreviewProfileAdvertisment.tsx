@@ -7,14 +7,21 @@ import styles from './preview.module.css';
 import PhotosBlock from '../../componentsPreview/PhotosBlock/PhotosBlock';
 import DataAdvertisment from '../../componentsPreview/ProfileAdvertisment/DataAdvertisment/DataAdvertisment';
 
-import { AnnouncementModel } from '../../../../../graphql/generated/output';
+import { AnnouncementModel, useChangeStatusAnnouncementMutation, useDeleteAnnouncementMutation } from '../../../../../graphql/generated/output';
 import ActionsAdvertisment from '../../componentsPreview/ProfileAdvertisment/ActionsAdvertisment/ActionsAdvertisment';
 
 interface PreviewSmallAdvertismentProps {
   input: AnnouncementModel;
+  refetch: any;
 }
 
-const PreviewProfileAdvertisment: React.FC<PreviewSmallAdvertismentProps> = ({ input }) => { 
+const PreviewProfileAdvertisment: React.FC<PreviewSmallAdvertismentProps> = ({ input, refetch }) => { 
+
+  const handlePreventLinkClick = (event: React.MouseEvent) => {
+    event.stopPropagation();
+    event.preventDefault();
+  };
+
   return (
     <Link     
       to={ROUTES.ITEMS + '/' + input.name + '/' + input.id} 
@@ -23,7 +30,7 @@ const PreviewProfileAdvertisment: React.FC<PreviewSmallAdvertismentProps> = ({ i
       <PhotosBlock useStylesProfile={true} input={input} />
       <DataAdvertisment input={input} />
       <div className={styles.actions}>
-        <ActionsAdvertisment input={input} />
+        <ActionsAdvertisment stopPropagation={handlePreventLinkClick} refetch={refetch} input={input} />
       </div>
     </Link>
   );

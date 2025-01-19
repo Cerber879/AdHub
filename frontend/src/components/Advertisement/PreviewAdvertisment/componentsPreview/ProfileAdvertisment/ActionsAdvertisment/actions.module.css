@@ -5,10 +5,11 @@
 }
 
 .data_block button {
+  width: 170px;
   background-color: #fcf9f9;
   border: 1px solid #ccc;
   border-radius: 10px;
-  padding: 7px 10px;
+  padding: 10px 15px;
   cursor: pointer;
   transition: all 0.2s ease-in-out;
   display: flex;

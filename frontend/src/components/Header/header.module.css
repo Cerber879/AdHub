@@ -10,15 +10,9 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  width: 100%;
-  padding: 10px;
-
   height: 60px;
-  top: 0;
   flex-direction: row;
-  left: 0px;
-  right: 0px;
-  padding: 0;
+  padding: 0px 17%;
   overflow-x: auto;
   white-space: nowrap;
   background-color: white;

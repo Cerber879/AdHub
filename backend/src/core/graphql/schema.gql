@@ -22,7 +22,6 @@ input AnnouncementFiltersInput {
   search: String
   skip: Int
   sort: String
-  status: String
   take: Int
 }
 
@@ -102,6 +101,7 @@ type ChatInfoOutput {
   createdAt: DateTime!
   id: ID!
   lastMessage: String
+  mainPhoto: String
   user_1: UserModel!
   user_2: UserModel!
 }
@@ -205,6 +205,7 @@ type Mutation {
   changePhoneNumber(data: ChangePhoneNumberInput!): Boolean!
   changeProfileAvatar(avatar: Upload!): Boolean!
   changeProfileInfo(data: ChangeProfileInfoInput!): Boolean!
+  changeStatusAnnouncement(id: String!, status: String!): Boolean!
   clearSessionCookie: Boolean!
   createAnnouncement(data: CreateAnnouncementInput!): Boolean!
   createCategory(data: CreateCategoryInput!): Boolean!
@@ -242,8 +243,8 @@ type Mutation {
 
 """Состояние товара"""
 enum ProductCondition {
+  ALL
   NEW
-  REFURBISHED
   USED
 }
 

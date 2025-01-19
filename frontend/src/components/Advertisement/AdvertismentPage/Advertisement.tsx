@@ -215,19 +215,17 @@ const Advertisement = () => {
 
   return (
     <div className={styles.container}>
-      <div>
-        <div className={styles.complex_list}>
-          <Link to={ROUTES.HOME} className={styles.link}>Главная</Link>
-          <img className={styles.arrow_right} src="/images/additem/right_arrow.svg" alt="right" />
-          {categories?.map((category) => (
-            <div key={category.id} className={styles.complex_list_item}>
-              <Link to={`/${category.name}/${category.id}`} className={styles.link}>{category.name}</Link>
-              {category !== categories[categories.length - 1] && (
-                <img className={styles.arrow_right} src="/images/additem/right_arrow.svg" alt="right" />
-              )}
-            </div>
-          ))}
-        </div>
+      <div className={styles.complex_list}>
+        <Link to={ROUTES.HOME} className={styles.link}>Главная</Link>
+        <img className={styles.arrow_right} src="/images/additem/right_arrow.svg" alt="right" />
+        {categories?.map((category) => (
+          <div key={category.id} className={styles.complex_list_item}>
+            <Link to={`/${category.name}/${category.id}`} className={styles.link}>{category.name}</Link>
+            {category !== categories[categories.length - 1] && (
+              <img className={styles.arrow_right} src="/images/additem/right_arrow.svg" alt="right" />
+            )}
+          </div>
+        ))}
       </div>
 
       <div className={styles.main_block}>

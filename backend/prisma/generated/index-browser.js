@@ -241,7 +241,7 @@ exports.AnnouncementStatus = exports.$Enums.AnnouncementStatus = {
 exports.ProductCondition = exports.$Enums.ProductCondition = {
   NEW: 'NEW',
   USED: 'USED',
-  REFURBISHED: 'REFURBISHED'
+  ALL: 'ALL'
 };
 
 exports.Prisma.ModelName = {

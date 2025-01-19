@@ -41,7 +41,6 @@ export type AnnouncementFiltersInput = {
   search?: InputMaybe<Scalars['String']['input']>;
   skip?: InputMaybe<Scalars['Int']['input']>;
   sort?: InputMaybe<Scalars['String']['input']>;
-  status?: InputMaybe<Scalars['String']['input']>;
   take?: InputMaybe<Scalars['Int']['input']>;
 };
 
@@ -128,6 +127,7 @@ export type ChatInfoOutput = {
   createdAt: Scalars['DateTime']['output'];
   id: Scalars['ID']['output'];
   lastMessage?: Maybe<Scalars['String']['output']>;
+  mainPhoto?: Maybe<Scalars['String']['output']>;
   user_1: UserModel;
   user_2: UserModel;
 };
@@ -225,6 +225,7 @@ export type Mutation = {
   changePhoneNumber: Scalars['Boolean']['output'];
   changeProfileAvatar: Scalars['Boolean']['output'];
   changeProfileInfo: Scalars['Boolean']['output'];
+  changeStatusAnnouncement: Scalars['Boolean']['output'];
   clearSessionCookie: Scalars['Boolean']['output'];
   createAnnouncement: Scalars['Boolean']['output'];
   createCategory: Scalars['Boolean']['output'];
@@ -305,6 +306,12 @@ export type MutationChangeProfileAvatarArgs = {
 
 export type MutationChangeProfileInfoArgs = {
   data: ChangeProfileInfoInput;
+};
+
+
+export type MutationChangeStatusAnnouncementArgs = {
+  id: Scalars['String']['input'];
+  status: Scalars['String']['input'];
 };
 
 
@@ -460,8 +467,8 @@ export type MutationUpdateSocialLinkArgs = {
 
 /** Состояние товара */
 export enum ProductCondition {
+  All = 'ALL',
   New = 'NEW',
-  Refurbished = 'REFURBISHED',
   Used = 'USED'
 }
 
@@ -761,6 +768,14 @@ export type UpdateMessageMutationVariables = Exact<{
 
 export type UpdateMessageMutation = { __typename?: 'Mutation', updateMessage: boolean };
 
+export type ChangeStatusAnnouncementMutationVariables = Exact<{
+  id: Scalars['String']['input'];
+  status: Scalars['String']['input'];
+}>;
+
+
+export type ChangeStatusAnnouncementMutation = { __typename?: 'Mutation', changeStatusAnnouncement: boolean };
+
 export type CreateAnnouncementMutationVariables = Exact<{
   data: CreateAnnouncementInput;
 }>;
@@ -939,13 +954,6 @@ export type ChangeEmailMutationVariables = Exact<{
 
 export type ChangeEmailMutation = { __typename?: 'Mutation', changeEmail: boolean };
 
-export type ChangeProfileInfoMutationVariables = Exact<{
-  data: ChangeProfileInfoInput;
-}>;
-
-
-export type ChangeProfileInfoMutation = { __typename?: 'Mutation', changeProfileInfo: boolean };
-
 export type ChangePasswordMutationVariables = Exact<{
   data: ChangePasswordInput;
 }>;
@@ -966,6 +974,13 @@ export type ChangeProfileAvatarMutationVariables = Exact<{
 
 
 export type ChangeProfileAvatarMutation = { __typename?: 'Mutation', changeProfileAvatar: boolean };
+
+export type ChangeProfileInfoMutationVariables = Exact<{
+  data: ChangeProfileInfoInput;
+}>;
+
+
+export type ChangeProfileInfoMutation = { __typename?: 'Mutation', changeProfileInfo: boolean };
 
 export type ClearSessionCokkieMutationVariables = Exact<{ [key: string]: never; }>;
 
@@ -1121,7 +1136,7 @@ export type GetCharacteristicsQuery = { __typename?: 'Query', getCharacteristics
 export type GetChatsQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type GetChatsQuery = { __typename?: 'Query', getChats: Array<{ __typename?: 'ChatInfoOutput', id: string, createdAt: any, lastMessage?: string | null, user_1: { __typename?: 'UserModel', displayName: string }, user_2: { __typename?: 'UserModel', displayName: string }, announcement?: { __typename?: 'AnnouncementModel', name: string, price: number, description: string } | null }> };
+export type GetChatsQuery = { __typename?: 'Query', getChats: Array<{ __typename?: 'ChatInfoOutput', id: string, createdAt: any, lastMessage?: string | null, mainPhoto?: string | null, user_1: { __typename?: 'UserModel', displayName: string }, user_2: { __typename?: 'UserModel', displayName: string }, announcement?: { __typename?: 'AnnouncementModel', name: string, price: number, description: string } | null }> };
 
 export type CheckAnnouncementInFavouritesQueryVariables = Exact<{
   adId: Scalars['String']['input'];
@@ -1290,6 +1305,38 @@ export function useUpdateMessageMutation(baseOptions?: Apollo.MutationHookOption
 export type UpdateMessageMutationHookResult = ReturnType<typeof useUpdateMessageMutation>;
 export type UpdateMessageMutationResult = Apollo.MutationResult<UpdateMessageMutation>;
 export type UpdateMessageMutationOptions = Apollo.BaseMutationOptions<UpdateMessageMutation, UpdateMessageMutationVariables>;
+export const ChangeStatusAnnouncementDocument = gql`
+    mutation ChangeStatusAnnouncement($id: String!, $status: String!) {
+  changeStatusAnnouncement(id: $id, status: $status)
+}
+    `;
+export type ChangeStatusAnnouncementMutationFn = Apollo.MutationFunction<ChangeStatusAnnouncementMutation, ChangeStatusAnnouncementMutationVariables>;
+
+/**
+ * __useChangeStatusAnnouncementMutation__
+ *
+ * To run a mutation, you first call `useChangeStatusAnnouncementMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useChangeStatusAnnouncementMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [changeStatusAnnouncementMutation, { data, loading, error }] = useChangeStatusAnnouncementMutation({
+ *   variables: {
+ *      id: // value for 'id'
+ *      status: // value for 'status'
+ *   },
+ * });
+ */
+export function useChangeStatusAnnouncementMutation(baseOptions?: Apollo.MutationHookOptions<ChangeStatusAnnouncementMutation, ChangeStatusAnnouncementMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<ChangeStatusAnnouncementMutation, ChangeStatusAnnouncementMutationVariables>(ChangeStatusAnnouncementDocument, options);
+      }
+export type ChangeStatusAnnouncementMutationHookResult = ReturnType<typeof useChangeStatusAnnouncementMutation>;
+export type ChangeStatusAnnouncementMutationResult = Apollo.MutationResult<ChangeStatusAnnouncementMutation>;
+export type ChangeStatusAnnouncementMutationOptions = Apollo.BaseMutationOptions<ChangeStatusAnnouncementMutation, ChangeStatusAnnouncementMutationVariables>;
 export const CreateAnnouncementDocument = gql`
     mutation CreateAnnouncement($data: CreateAnnouncementInput!) {
   createAnnouncement(data: $data)
@@ -2076,37 +2123,6 @@ export function useChangeEmailMutation(baseOptions?: Apollo.MutationHookOptions<
 export type ChangeEmailMutationHookResult = ReturnType<typeof useChangeEmailMutation>;
 export type ChangeEmailMutationResult = Apollo.MutationResult<ChangeEmailMutation>;
 export type ChangeEmailMutationOptions = Apollo.BaseMutationOptions<ChangeEmailMutation, ChangeEmailMutationVariables>;
-export const ChangeProfileInfoDocument = gql`
-    mutation ChangeProfileInfo($data: ChangeProfileInfoInput!) {
-  changeProfileInfo(data: $data)
-}
-    `;
-export type ChangeProfileInfoMutationFn = Apollo.MutationFunction<ChangeProfileInfoMutation, ChangeProfileInfoMutationVariables>;
-
-/**
- * __useChangeProfileInfoMutation__
- *
- * To run a mutation, you first call `useChangeProfileInfoMutation` within a React component and pass it any options that fit your needs.
- * When your component renders, `useChangeProfileInfoMutation` returns a tuple that includes:
- * - A mutate function that you can call at any time to execute the mutation
- * - An object with fields that represent the current status of the mutation's execution
- *
- * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
- *
- * @example
- * const [changeProfileInfoMutation, { data, loading, error }] = useChangeProfileInfoMutation({
- *   variables: {
- *      data: // value for 'data'
- *   },
- * });
- */
-export function useChangeProfileInfoMutation(baseOptions?: Apollo.MutationHookOptions<ChangeProfileInfoMutation, ChangeProfileInfoMutationVariables>) {
-        const options = {...defaultOptions, ...baseOptions}
-        return Apollo.useMutation<ChangeProfileInfoMutation, ChangeProfileInfoMutationVariables>(ChangeProfileInfoDocument, options);
-      }
-export type ChangeProfileInfoMutationHookResult = ReturnType<typeof useChangeProfileInfoMutation>;
-export type ChangeProfileInfoMutationResult = Apollo.MutationResult<ChangeProfileInfoMutation>;
-export type ChangeProfileInfoMutationOptions = Apollo.BaseMutationOptions<ChangeProfileInfoMutation, ChangeProfileInfoMutationVariables>;
 export const ChangePasswordDocument = gql`
     mutation ChangePassword($data: ChangePasswordInput!) {
   changePassword(data: $data)
@@ -2200,6 +2216,37 @@ export function useChangeProfileAvatarMutation(baseOptions?: Apollo.MutationHook
 export type ChangeProfileAvatarMutationHookResult = ReturnType<typeof useChangeProfileAvatarMutation>;
 export type ChangeProfileAvatarMutationResult = Apollo.MutationResult<ChangeProfileAvatarMutation>;
 export type ChangeProfileAvatarMutationOptions = Apollo.BaseMutationOptions<ChangeProfileAvatarMutation, ChangeProfileAvatarMutationVariables>;
+export const ChangeProfileInfoDocument = gql`
+    mutation ChangeProfileInfo($data: ChangeProfileInfoInput!) {
+  changeProfileInfo(data: $data)
+}
+    `;
+export type ChangeProfileInfoMutationFn = Apollo.MutationFunction<ChangeProfileInfoMutation, ChangeProfileInfoMutationVariables>;
+
+/**
+ * __useChangeProfileInfoMutation__
+ *
+ * To run a mutation, you first call `useChangeProfileInfoMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useChangeProfileInfoMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [changeProfileInfoMutation, { data, loading, error }] = useChangeProfileInfoMutation({
+ *   variables: {
+ *      data: // value for 'data'
+ *   },
+ * });
+ */
+export function useChangeProfileInfoMutation(baseOptions?: Apollo.MutationHookOptions<ChangeProfileInfoMutation, ChangeProfileInfoMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<ChangeProfileInfoMutation, ChangeProfileInfoMutationVariables>(ChangeProfileInfoDocument, options);
+      }
+export type ChangeProfileInfoMutationHookResult = ReturnType<typeof useChangeProfileInfoMutation>;
+export type ChangeProfileInfoMutationResult = Apollo.MutationResult<ChangeProfileInfoMutation>;
+export type ChangeProfileInfoMutationOptions = Apollo.BaseMutationOptions<ChangeProfileInfoMutation, ChangeProfileInfoMutationVariables>;
 export const ClearSessionCokkieDocument = gql`
     mutation ClearSessionCokkie {
   clearSessionCookie
@@ -3132,6 +3179,7 @@ export const GetChatsDocument = gql`
     id
     createdAt
     lastMessage
+    mainPhoto
     user_1 {
       displayName
     }

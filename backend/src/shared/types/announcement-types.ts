@@ -3,7 +3,7 @@ import { registerEnumType } from '@nestjs/graphql'
 export enum ProductCondition {
   NEW = 'NEW',
   USED = 'USED',
-  REFURBISHED = 'REFURBISHED'
+  ALL = 'ALL'
 }
 
 registerEnumType(ProductCondition, {

@@ -57,6 +57,36 @@ export class CategoryService {
     })
   }
 
+  async findSubcategoriesRecursive(parentId: string) {
+
+    const subcategories: string[] = [parentId]
+
+    const findChildren = async (id: string) => {
+
+      const categories = await this.prismaService.category.findMany({
+        where: { 
+          parentId: id 
+        },
+        select: { 
+          id: true 
+        }
+      });
+      
+      if (categories.length !== 0) {
+        for (const category of categories) {
+          await findChildren(category.id);
+        }
+      } else {
+        subcategories.push(id)
+      }
+    };
+
+    await findChildren(parentId)
+  
+    return subcategories;
+  }
+  
+
   async findParentCategories(id: string) {
     const parents: CategoryModel[] = []
 

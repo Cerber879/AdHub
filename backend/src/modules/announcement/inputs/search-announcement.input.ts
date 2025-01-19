@@ -34,11 +34,6 @@ export class AnnouncementFiltersInput {
   @Field({ nullable: true })
   @IsOptional()
   @IsString()
-  status?: string
-
-  @Field({ nullable: true })
-  @IsOptional()
-  @IsString()
   categoryId?: string
 
   @Field({ nullable: true })

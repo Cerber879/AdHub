@@ -8,7 +8,7 @@ import { useCurrent } from '../../../../../../hooks/useCurrent'
 
 interface DataAdvertismentProps {
   input: FindAllAnnouncementsQuery['findAllAnnouncements'][number]
-    stopPropagation: (event: React.MouseEvent) => void
+  stopPropagation: (event: React.MouseEvent) => void
 }
 
 const DataAdvertisment: React.FC<DataAdvertismentProps> = ({ input, stopPropagation }) => {

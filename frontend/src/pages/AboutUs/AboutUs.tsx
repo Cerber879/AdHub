@@ -5,7 +5,6 @@ const AboutUs: React.FC = () => {
   return (
     <div>
       <AboutUsContent/>
-      {/* Add more content here */}
     </div>
   );
 };

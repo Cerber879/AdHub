@@ -18,7 +18,7 @@ const initialState: CategoryState = {
   currentNameCategory: null,
   selectIdCategories: [],
   showCatalogueModal: false,
-  emptyAnouncements: false
+  emptyAnouncements: false,
 }
 
 const categorySlice = createSlice({

@@ -3,6 +3,7 @@ query GetChats {
     id
     createdAt
     lastMessage
+    mainPhoto
     user_1 {
       displayName
     }
